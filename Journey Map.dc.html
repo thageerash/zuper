@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F3EE;color:#1B1A17;font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#1B1A17;text-decoration:underline;text-underline-offset:2px}
+a:hover{color:#A23B1E}
+</style>
+</helmet>
+<div style="max-width:1480px;margin:0 auto;padding:56px 32px 96px;display:flex;flex-direction:column;gap:64px">
+
+<header style="display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:48px;align-items:end">
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#5E5A52">Halden Roofing · Photo documentation · Journey map v1</div>
+    <h1 style="margin:0;font-size:52px;line-height:1.02;font-weight:600;letter-spacing:-0.02em;text-wrap:balance">One roofing job, three people, and the moments where proof gets lost.</h1>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px;font-size:15px;line-height:1.55;color:#3D3A34">
+    <p style="margin:0;text-wrap:pretty">Built from the brief's three quotes and desk research on residential re-roof workflows and insurer photo expectations. No user interviews yet. Open assumptions are listed at the end of the page under <a href="#assumptions">Assumptions to validate</a>.</p>
+  </div>
+</header>
+
+<section style="display:flex;flex-direction:column;gap:20px">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap">
+    <h2 style="margin:0;font-size:24px;font-weight:600;letter-spacing:-0.01em">The job lifecycle</h2>
+    <div style="display:flex;gap:20px;font-size:13px;color:#5E5A52;flex-wrap:wrap">
+      <div style="display:flex;gap:8px;align-items:center"><span style="width:10px;height:10px;background:#A23B1E;border-radius:2px"></span>Evidence destroyed or covered</div>
+      <div style="display:flex;gap:8px;align-items:center"><span style="width:10px;height:10px;background:#2F6B4F;border-radius:2px"></span>Design opportunity</div>
+    </div>
+  </div>
+
+  <div style="overflow-x:auto;padding-bottom:8px">
+    <div style="display:grid;grid-template-columns:150px repeat(8,minmax(172px,1fr));gap:6px;min-width:1550px">
+
+      <div></div>
+      <div style="padding:14px;display:flex;flex-direction:column;gap:6px;border-top:2px solid #1B1A17"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">01 · Days–weeks before</div><div style="font-size:16px;font-weight:600">Pre-job inspection</div></div>
+      <div style="padding:14px;display:flex;flex-direction:column;gap:6px;border-top:2px solid #1B1A17"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">02 · Day 1, 7:00</div><div style="font-size:16px;font-weight:600">Arrival &amp; setup</div></div>
+      <div style="padding:14px;display:flex;flex-direction:column;gap:6px;border-top:4px solid #A23B1E"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#A23B1E">03 · 8:00–10:00</div><div style="font-size:16px;font-weight:600">Tear-off</div></div>
+      <div style="padding:14px;display:flex;flex-direction:column;gap:6px;border-top:4px solid #A23B1E"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#A23B1E">04 · 10:00–12:00</div><div style="font-size:16px;font-weight:600">Deck inspection</div></div>
+      <div style="padding:14px;display:flex;flex-direction:column;gap:6px;border-top:4px solid #A23B1E"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#A23B1E">05 · Afternoon / Day 2</div><div style="font-size:16px;font-weight:600">Install</div></div>
+      <div style="padding:14px;display:flex;flex-direction:column;gap:6px;border-top:2px solid #1B1A17"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">06 · End of job</div><div style="font-size:16px;font-weight:600">Cleanup &amp; walkthrough</div></div>
+      <div style="padding:14px;display:flex;flex-direction:column;gap:6px;border-top:2px solid #1B1A17"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">07 · Same night</div><div style="font-size:16px;font-weight:600">Upload</div></div>
+      <div style="padding:14px;display:flex;flex-direction:column;gap:6px;border-top:2px solid #1B1A17"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">08 · 2–8 weeks later</div><div style="font-size:16px;font-weight:600">Dispute or claim</div></div>
+
+      <div style="padding:14px 14px 14px 0;display:flex;flex-direction:column;gap:4px;opacity:{{ crewOpacity }}"><div style="font-size:15px;font-weight:600">Crew lead</div><div style="font-size:12px;color:#5E5A52">Ravi · on the roof</div></div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;font-size:13px;line-height:1.45;color:#8C877D;opacity:{{ crewOpacity }}">Not involved.</div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.45;opacity:{{ crewOpacity }}"><div>Stages materials, lays tarps, moves fast.</div><div style="color:#A23B1E">Property-condition shots (gutters, driveway, siding) skipped.</div></div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.45;opacity:{{ crewOpacity }}"><div>Strips shingles to the deck. Loud, hands full, time pressure.</div><div style="color:#A23B1E">Stopping to shoot feels like slowing the job.</div></div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.45;opacity:{{ crewOpacity }}"><div>Finds rotten decking. Must report before covering it.</div><div style="color:#A23B1E">No signal to send proof to the PM.</div></div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.45;opacity:{{ crewOpacity }}"><div>Underlayment, flashing, new shingles.</div><div style="color:#A23B1E">Hidden layers are easy to forget to shoot.</div></div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.45;opacity:{{ crewOpacity }}"><div>Nail sweep, final shots, walkthrough with homeowner.</div><div style="color:#A23B1E">After set rushed at the end of a long day.</div></div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.45;opacity:{{ crewOpacity }}"><div>Uploads hundreds of photos at home on Wi-Fi.</div><div style="color:#A23B1E">"Half never make it." No confirmation of what arrived.</div></div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.45;opacity:{{ crewOpacity }}"><div>Gets a text: "Anyone have the before photo?"</div><div style="color:#A23B1E">Scrolls a personal camera roll to find it.</div></div>
+
+      <div style="padding:14px 14px 14px 0;display:flex;flex-direction:column;gap:4px;opacity:{{ pmOpacity }}"><div style="font-size:15px;font-weight:600">Project manager</div><div style="font-size:12px;color:#5E5A52">Sean · office &amp; site visits</div></div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.45;opacity:{{ pmOpacity }}"><div>Inspects roof, photographs damage, writes estimate.</div><div style="color:#A23B1E">Photos live on his phone, not on the job.</div></div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;font-size:13px;line-height:1.45;opacity:{{ pmOpacity }}">Confirms start with the customer. Juggles other jobs.</div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;font-size:13px;line-height:1.45;color:#8C877D;opacity:{{ pmOpacity }}">Off site.</div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.45;opacity:{{ pmOpacity }}"><div>Change-order call to the customer.</div><div style="color:#A23B1E">Customer wants to see the rot. Photo hasn't arrived.</div></div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;font-size:13px;line-height:1.45;opacity:{{ pmOpacity }}">Quality checks, remotely or on a visit.</div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.45;opacity:{{ pmOpacity }}"><div>Closeout and invoice.</div><div style="color:#A23B1E">Can't tell if documentation is complete.</div></div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;font-size:13px;line-height:1.45;opacity:{{ pmOpacity }}">Waits for photos and the daily report.</div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.45;opacity:{{ pmOpacity }}"><div>Customer: "You broke my gutter."</div><div style="color:#A23B1E">"The before photo is on someone's phone. Maybe."</div></div>
+
+      <div style="padding:14px 14px 14px 0;display:flex;flex-direction:column;gap:4px;opacity:{{ claimsOpacity }}"><div style="font-size:15px;font-weight:600">Insurance claims</div><div style="font-size:12px;color:#5E5A52">Priya · office ↔ adjuster</div></div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.45;opacity:{{ claimsOpacity }}"><div>Opens claim, requests inspection photos.</div><div style="color:#A23B1E">Receives forwarded images with metadata stripped.</div></div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;font-size:13px;line-height:1.45;color:#8C877D;opacity:{{ claimsOpacity }}">Not involved.</div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;font-size:13px;line-height:1.45;color:#8C877D;opacity:{{ claimsOpacity }}">Not involved.</div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;font-size:13px;line-height:1.45;opacity:{{ claimsOpacity }}">May need a supplement for hidden damage.</div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;font-size:13px;line-height:1.45;color:#8C877D;opacity:{{ claimsOpacity }}">Not involved.</div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;font-size:13px;line-height:1.45;color:#8C877D;opacity:{{ claimsOpacity }}">Not involved.</div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;font-size:13px;line-height:1.45;color:#8C877D;opacity:{{ claimsOpacity }}">Not involved.</div>
+      <div style="padding:14px;background:#FFFFFF;border-radius:4px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.45;opacity:{{ claimsOpacity }}"><div>Builds the adjuster package.</div><div style="color:#A23B1E">"No date, no location, no proof." Rejected.</div></div>
+
+      <div style="padding:14px 14px 14px 0;display:flex;flex-direction:column;gap:4px"><div style="font-size:15px;font-weight:600;color:#A23B1E">Evidence at risk</div></div>
+      <div style="padding:14px;background:#F3E3DC;border-radius:4px;font-size:13px;line-height:1.45;color:#5C2010">First "before" set sits on one person's phone.</div>
+      <div style="padding:14px;background:#F3E3DC;border-radius:4px;font-size:13px;line-height:1.45;color:#5C2010">No baseline of property condition. Root of "you broke my gutter."</div>
+      <div style="padding:14px;background:#A23B1E;border-radius:4px;font-size:13px;line-height:1.45;color:#FFFFFF;font-weight:500">Original damage destroyed. Cannot be re-shot.</div>
+      <div style="padding:14px;background:#A23B1E;border-radius:4px;font-size:13px;line-height:1.45;color:#FFFFFF;font-weight:500">Exposed deck is covered within hours.</div>
+      <div style="padding:14px;background:#A23B1E;border-radius:4px;font-size:13px;line-height:1.45;color:#FFFFFF;font-weight:500">Underlayment and flashing covered permanently.</div>
+      <div style="padding:14px;background:#F3E3DC;border-radius:4px;font-size:13px;line-height:1.45;color:#5C2010">No matching before/after pairs.</div>
+      <div style="padding:14px;background:#F3E3DC;border-radius:4px;font-size:13px;line-height:1.45;color:#5C2010">Silent upload loss.</div>
+      <div style="padding:14px;background:#F3E3DC;border-radius:4px;font-size:13px;line-height:1.45;color:#5C2010">Proof may exist but can't be found or trusted.</div>
+
+      <sc-if value="{{ showOpps }}" hint-placeholder-val="{{ true }}">
+        <div style="padding:14px 14px 14px 0;display:flex;flex-direction:column;gap:4px"><div style="font-size:15px;font-weight:600;color:#2F6B4F">Opportunity</div></div>
+        <div style="padding:14px;background:#E2EDE6;border-radius:4px;font-size:13px;line-height:1.45;color:#1D4432">Inspection photos captured into the job record from day one.</div>
+        <div style="padding:14px;background:#E2EDE6;border-radius:4px;font-size:13px;line-height:1.45;color:#1D4432">Short arrival set: four elevations and gutters, before anyone climbs.</div>
+        <div style="padding:14px;background:#E2EDE6;border-radius:4px;font-size:13px;line-height:1.45;color:#1D4432">Point-of-no-return check: before set complete before tear-off starts.</div>
+        <div style="padding:14px;background:#E2EDE6;border-radius:4px;font-size:13px;line-height:1.45;color:#1D4432">Urgent photo jumps the queue; PM gets it first when signal returns.</div>
+        <div style="padding:14px;background:#E2EDE6;border-radius:4px;font-size:13px;line-height:1.45;color:#1D4432">Prompts timed to the work stage, not one static list.</div>
+        <div style="padding:14px;background:#E2EDE6;border-radius:4px;font-size:13px;line-height:1.45;color:#1D4432">Completion summary shows gaps while the crew is still on site.</div>
+        <div style="padding:14px;background:#E2EDE6;border-radius:4px;font-size:13px;line-height:1.45;color:#1D4432">Auto-upload queue: "safe on device" vs "office has it", per photo.</div>
+        <div style="padding:14px;background:#E2EDE6;border-radius:4px;font-size:13px;line-height:1.45;color:#1D4432">Search by job, area and phase; share a package with time, location and author.</div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:20px">
+  <h2 style="margin:0;font-size:24px;font-weight:600;letter-spacing:-0.01em">Three moments that decide whether proof exists</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+    <div style="background:#FFFFFF;border-radius:4px;padding:24px;display:flex;flex-direction:column;gap:12px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A23B1E">Stage 03 · Tear-off</div>
+      <div style="font-size:20px;font-weight:600;line-height:1.25">The before set has a deadline.</div>
+      <p style="margin:0;font-size:14px;line-height:1.55;color:#3D3A34;text-wrap:pretty">Once shingles come off, original damage and pre-existing condition are gone. Every dispute and claim depends on photos taken in the first hour on site.</p>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:24px;display:flex;flex-direction:column;gap:12px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A23B1E">Stage 04 · Deck inspection</div>
+      <div style="font-size:20px;font-weight:600;line-height:1.25">A photo is needed now, with no signal.</div>
+      <p style="margin:0;font-size:14px;line-height:1.55;color:#3D3A34;text-wrap:pretty">Rotten decking triggers a change order. The PM needs the photo to get customer approval while the deck is still open.</p>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:24px;display:flex;flex-direction:column;gap:12px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A23B1E">Stage 08 · Weeks later</div>
+      <div style="font-size:20px;font-weight:600;line-height:1.25">Finding it and trusting it.</div>
+      <p style="margin:0;font-size:14px;line-height:1.55;color:#3D3A34;text-wrap:pretty">The office needs one specific photo, fast, with a capture time and location an adjuster or customer will accept.</p>
+    </div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:20px">
+  <h2 style="margin:0;font-size:24px;font-weight:600;letter-spacing:-0.01em">Personas</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+
+    <div style="background:#FFFFFF;border-radius:4px;padding:28px;display:flex;flex-direction:column;gap:20px;opacity:{{ crewOpacity }}">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-size:22px;font-weight:600">Ravi Menon</div><div style="font-size:13px;color:#5E5A52">Crew lead</div></div>
+      <blockquote style="margin:0;font-size:17px;line-height:1.4;border-top:1px solid #DEDAD1;padding-top:16px">"No signal on site, so I upload at night. Half never make it."</blockquote>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#5E5A52">Context</div>
+        <div style="font-size:14px;line-height:1.55;color:#3D3A34">Outdoors, bright sun, gloves, one hand free, often on a slope. Ten-hour days. Reports progress, issues, change orders and photos to the office.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#5E5A52">Needs</div>
+        <div style="font-size:14px;line-height:1.55;color:#3D3A34">Know which shot is next. Know it's saved. Know the office has it. Never redo work.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#5E5A52">Success</div>
+        <div style="font-size:14px;line-height:1.55;color:#3D3A34">Leaves site with nothing left to upload or remember.</div>
+      </div>
+    </div>
+
+    <div style="background:#FFFFFF;border-radius:4px;padding:28px;display:flex;flex-direction:column;gap:20px;opacity:{{ pmOpacity }}">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-size:22px;font-weight:600">Sean Doyle</div><div style="font-size:13px;color:#5E5A52">Project manager</div></div>
+      <blockquote style="margin:0;font-size:17px;line-height:1.4;border-top:1px solid #DEDAD1;padding-top:16px">"A customer says we broke her gutter. The before photo is on someone's phone. Maybe."</blockquote>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#5E5A52">Context</div>
+        <div style="font-size:14px;line-height:1.55;color:#3D3A34">Runs several jobs at once. Days are calls, texts and site visits. Owns customer updates, change orders, closeout and disputes.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#5E5A52">Needs</div>
+        <div style="font-size:14px;line-height:1.55;color:#3D3A34">See what's missing before the crew leaves. Find a specific photo during a phone call. Send it to a customer.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#5E5A52">Success</div>
+        <div style="font-size:14px;line-height:1.55;color:#3D3A34">Answers "do we have proof of X?" in under a minute.</div>
+      </div>
+    </div>
+
+    <div style="background:#FFFFFF;border-radius:4px;padding:28px;display:flex;flex-direction:column;gap:20px;opacity:{{ claimsOpacity }}">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-size:22px;font-weight:600">Priya Shah</div><div style="font-size:13px;color:#5E5A52">Insurance claims</div></div>
+      <blockquote style="margin:0;font-size:17px;line-height:1.4;border-top:1px solid #DEDAD1;padding-top:16px">"The insurer rejected our photos. No date, no location, no proof."</blockquote>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#5E5A52">Context</div>
+        <div style="font-size:14px;line-height:1.55;color:#3D3A34">Assembles evidence for adjusters. Adjusters expect timestamps, wide and close-up shots, damage patterns, and soft-metal surfaces like gutters as corroboration.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#5E5A52">Needs</div>
+        <div style="font-size:14px;line-height:1.55;color:#3D3A34">Original capture time and location kept intact. An organized, labeled set instead of IMG_4837.jpg.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#5E5A52">Success</div>
+        <div style="font-size:14px;line-height:1.55;color:#3D3A34">A package an adjuster accepts the first time.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:48px;border-top:1px solid #DEDAD1;padding-top:40px">
+  <div id="assumptions" style="display:flex;flex-direction:column;gap:16px">
+    <h2 style="margin:0;font-size:20px;font-weight:600">Assumptions to validate</h2>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;line-height:1.5;color:#3D3A34">
+      <div>Crews use personal phones, so job photos mix with personal ones.</div>
+      <div>More than one person on site takes photos, including subcontractors.</div>
+      <div>The PM does the pre-job inspection, not a separate sales rep.</div>
+      <div>Insurance work is a large share of Halden's jobs.</div>
+      <div>Photos lose metadata because they're shared through messaging apps.</div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <h2 style="margin:0;font-size:20px;font-weight:600">Desk research sources</h2>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;line-height:1.5">
+      <a href="https://repairedroofs.com/resources/replacement-installation/roof-replacement-timeline/">Roof replacement timeline, day by day</a>
+      <a href="https://www.mightydogroofing.com/greater-chadds-ford-pa/resources/blog/categories/roof-materials-structure/how-to-prepare-your-home-for-roof-replacement-da/">Replacement-day hour-by-hour schedule</a>
+      <a href="https://weathershieldroofers.com/blog/documenting-roof-damage-insurance-claims/">Common claim documentation mistakes</a>
+      <a href="https://teagueroofingplus.com/how-to-document-roof-damage-for-insurance/">Soft-metal evidence and photo set sizes</a>
+      <a href="https://www.cotneyconsulting.com/post/roofing-project-managers-job-control">Roofing PM job control</a>
+      <a href="https://job-boards.greenhouse.io/3mgroofing/jobs/4005864009">Crew lead job posting: reporting duties</a>
+    </div>
+  </div>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;focus&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;All&quot;,&quot;Crew&quot;,&quot;PM&quot;,&quot;Claims&quot;],&quot;default&quot;:&quot;All&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showOpportunities&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const f = this.props.focus ?? 'All';
+    const o = k => (f === 'All' || f === k ? 1 : 0.28);
+    return {
+      crewOpacity: o('Crew'),
+      pmOpacity: o('PM'),
+      claimsOpacity: o('Claims'),
+      showOpps: this.props.showOpportunities ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

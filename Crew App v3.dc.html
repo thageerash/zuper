@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E9E6DF;color:#1B1A17;font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#1B1A17;text-decoration:underline;text-underline-offset:2px}
+a:hover{color:#A23B1E}
+button{font-family:inherit;cursor:pointer}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;gap:40px;justify-content:center;align-items:flex-start;padding:32px 24px;flex-wrap:wrap;box-sizing:border-box">
+
+<div style="width:410px;height:864px;flex-shrink:0;background:#1B1A17;border-radius:52px;padding:10px;box-sizing:border-box">
+<div style="width:390px;height:844px;border-radius:42px;overflow:hidden;position:relative;background:#F5F3EE;display:flex;flex-direction:column">
+
+  <div style="height:46px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center;padding:0 28px;font-size:14px;font-weight:600;background:{{ statusBg }};color:{{ statusFg }}">
+    <span>{{ time }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500">{{ signalText }}</span>
+  </div>
+
+  <sc-if value="{{ isJobs }}" hint-placeholder-val="{{ true }}">
+  <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+    <div style="padding:12px 20px 8px;display:flex;flex-direction:column;gap:2px"><span style="font-size:28px;font-weight:600;letter-spacing:-0.01em">Jobs</span><span style="font-size:14px;color:#5E5A52">Ravi Menon · Crew lead</span></div>
+    <div style="flex:1;overflow:auto;padding:8px 16px;display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52;padding:8px 4px 0">NOW</span>
+      <button onClick="{{ openJob }}" style="text-align:left;background:#FFFFFF;border:1.5px solid #1B1A17;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;color:#1B1A17">
+        <span style="display:flex;justify-content:space-between;width:100%;align-items:baseline"><span style="font-size:18px;font-weight:600">#421 · 18 Oak St</span><span style="font-size:20px">›</span></span>
+        <span style="font-size:14px;color:#5E5A52">8–10 am · Leak repair · 2 spots</span>
+        <span style="font-size:14px;color:#3D3A34">{{ jobStatus }}</span>
+        <sc-if value="{{ jobWarn }}" hint-placeholder-val="{{ false }}"><span style="align-self:flex-start;font-size:13px;padding:4px 8px;border-radius:4px;background:#F3E3DC;color:#A23B1E">{{ jobWarnText }}</span></sc-if>
+      </button>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52;padding:12px 4px 0">RECENT</span>
+      <div style="background:#FFFFFF;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px">
+        <span style="font-size:16px;font-weight:600">#418 · 7 Birch Ave</span>
+        <span style="font-size:14px;color:#5E5A52">Yesterday · Reroof</span>
+        <span style="align-self:flex-start;font-size:13px;padding:4px 8px;border-radius:4px;background:#E2EDE6;color:#2F6B4F">All 31 in office ✓</span>
+      </div>
+    </div>
+    <div style="display:flex;border-top:1px solid #DEDAD1;background:#FFFFFF;padding-bottom:18px">
+      <button style="flex:1;height:58px;background:none;border:none;font-size:14px;font-weight:600;color:#1B1A17">Jobs</button>
+      <button onClick="{{ openUploads }}" style="flex:1;height:58px;background:none;border:none;font-size:14px;color:#5E5A52">Uploads</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isOverview }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+    <div style="padding:4px 8px"><button onClick="{{ goJobs }}" style="height:44px;padding:0 12px;background:none;border:none;font-size:15px;color:#3D3A34">‹ Jobs</button></div>
+    <div style="flex:1;overflow:auto;padding:0 20px 16px;display:flex;flex-direction:column;gap:18px">
+      <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:26px;font-weight:600;letter-spacing:-0.01em">#421 · 18 Oak St</span><span style="font-size:15px;color:#5E5A52">8–10 am · Leak repair</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">CUSTOMER SAYS</span><span style="font-size:16px;line-height:1.45">Leak in the back bedroom ceiling after heavy rain.</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">SPOTS</span>
+        <div style="background:#FFFFFF;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600">A · Vent pipe leak</span><span style="font-size:14px;color:#5E5A52">Flashing repair</span></div>
+        <div style="background:#FFFFFF;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600">B · Soft decking</span><span style="font-size:14px;color:#5E5A52">Decking replacement</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">NOTE · SEAN DOYLE, OFFICE · YESTERDAY</span><span style="font-size:16px;line-height:1.45;background:#FFFFFF;border-radius:12px;padding:14px">Photograph the shingles and flashing around the vent pipe before starting the repair.</span></div>
+    </div>
+    <div style="padding:12px 20px 30px;display:flex;flex-direction:column;gap:8px">
+      <sc-if value="{{ overviewNote }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#5E5A52;text-align:center">{{ overviewNote }}</span></sc-if>
+      <button onClick="{{ overviewCta }}" style="min-height:58px;border:none;border-radius:14px;background:#1B1A17;color:#F5F3EE;font-size:17px;font-weight:600">{{ overviewCtaLabel }}</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isWork }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+    <div style="padding:4px 8px 4px 8px;display:flex;justify-content:space-between;align-items:center">
+      <button onClick="{{ goJobs }}" style="height:44px;padding:0 12px;background:none;border:none;font-size:15px;color:#3D3A34">‹ Jobs</button>
+      <button onClick="{{ openUploads }}" style="height:36px;padding:0 12px;margin-right:8px;border-radius:18px;border:1px solid {{ syncBorder }};background:{{ syncBg }};color:{{ syncFg }};font-family:'IBM Plex Mono',monospace;font-size:11px;white-space:nowrap">{{ syncLabel }}</button>
+    </div>
+    <div style="padding:0 20px 8px"><span style="font-size:24px;font-weight:600;letter-spacing:-0.01em">#421 · 18 Oak St</span></div>
+    <div style="flex:1;overflow:auto;padding:4px 16px 12px;display:flex;flex-direction:column;gap:6px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52;padding:6px 4px">BEFORE WORK</span>
+      <sc-for list="{{ beforeRows }}" as="r" hint-placeholder-count="2">
+        <button onClick="{{ r.onTap }}" style="min-height:56px;background:#FFFFFF;border:{{ r.border }};border-radius:12px;padding:0 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;color:#1B1A17;font-size:16px;text-align:left">
+          <span style="font-weight:{{ r.weight }}">{{ r.title }}</span>
+          <span style="display:flex;gap:8px;align-items:center;font-size:15px"><sc-if value="{{ r.isNext }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em">NEXT</span></sc-if><span style="color:{{ r.color }}">{{ r.status }}</span><span style="font-size:18px;color:#5E5A52">›</span></span>
+        </button>
+      </sc-for>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52;padding:12px 4px 6px">SPOTS</span>
+      <sc-for list="{{ spotRows }}" as="r" hint-placeholder-count="2">
+        <button onClick="{{ r.onTap }}" style="min-height:56px;background:#FFFFFF;border:{{ r.border }};border-radius:12px;padding:0 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;color:#1B1A17;font-size:16px;text-align:left">
+          <span style="font-weight:{{ r.weight }}">{{ r.title }}</span>
+          <span style="display:flex;gap:8px;align-items:center;font-size:15px"><sc-if value="{{ r.isNext }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em">NEXT</span></sc-if><span style="color:{{ r.color }}">{{ r.status }}</span><span style="font-size:18px;color:#5E5A52">›</span></span>
+        </button>
+      </sc-for>
+      <button onClick="{{ openAddSpot }}" style="min-height:48px;background:none;border:1px dashed #B8B2A6;border-radius:12px;color:#3D3A34;font-size:15px">+ Add a spot you found</button>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52;padding:12px 4px 6px">AFTER WORK</span>
+      <sc-for list="{{ afterRows }}" as="r" hint-placeholder-count="2">
+        <button onClick="{{ r.onTap }}" style="min-height:56px;background:#FFFFFF;border:{{ r.border }};border-radius:12px;padding:0 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;color:#1B1A17;font-size:16px;text-align:left">
+          <span style="font-weight:{{ r.weight }}">{{ r.title }}</span>
+          <span style="display:flex;gap:8px;align-items:center;font-size:15px"><sc-if value="{{ r.isNext }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em">NEXT</span></sc-if><span style="color:{{ r.color }}">{{ r.status }}</span><span style="font-size:18px;color:#5E5A52">›</span></span>
+        </button>
+      </sc-for>
+    </div>
+    <div style="padding:6px 16px 28px;display:flex;flex-direction:column;gap:6px;border-top:1px solid #DEDAD1;background:#F5F3EE">
+      <sc-if value="{{ workLink }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ workLinkTap }}" style="min-height:52px;background:none;border:none;padding:4px 4px;display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;color:#1B1A17"><span style="font-size:16px;font-weight:600">{{ workLinkAction }}</span><span style="font-size:20px;color:#5E5A52">›</span></button>
+      </sc-if>
+      <button onClick="{{ workMain }}" style="min-height:62px;border:none;border-radius:14px;background:#1B1A17;color:#F5F3EE;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px">
+        <span style="font-size:17px;font-weight:600">{{ workMainLabel }}</span>
+        <sc-if value="{{ workMainSub }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;color:#B8B2A6">{{ workMainSub }}</span></sc-if>
+      </button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isSpot }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+    <div style="padding:4px 8px;display:flex;justify-content:space-between;align-items:center">
+      <button onClick="{{ goWork }}" style="height:44px;padding:0 12px;background:none;border:none;font-size:15px;color:#3D3A34">‹ Workspace</button>
+      <button onClick="{{ openUploads }}" style="height:36px;padding:0 12px;margin-right:8px;border-radius:18px;border:1px solid {{ syncBorder }};background:{{ syncBg }};color:{{ syncFg }};font-family:'IBM Plex Mono',monospace;font-size:11px;white-space:nowrap">{{ syncLabel }}</button>
+    </div>
+    <div style="padding:0 20px 12px;display:flex;flex-direction:column;gap:2px"><span style="font-size:24px;font-weight:600;letter-spacing:-0.01em">{{ spotTitle }}</span><span style="font-size:15px;color:#5E5A52">{{ spotWork }}</span></div>
+    <div style="flex:1;overflow:auto;padding:4px 16px;display:flex;flex-direction:column;gap:6px">
+      <sc-for list="{{ spotItems }}" as="r" hint-placeholder-count="3">
+        <button onClick="{{ r.onTap }}" style="min-height:56px;background:#FFFFFF;border:1px solid transparent;border-radius:12px;padding:0 14px;display:flex;justify-content:space-between;align-items:center;color:#1B1A17;font-size:16px">
+          <span>{{ r.label }}</span>
+          <span style="display:flex;gap:8px;align-items:center"><span style="font-size:13px;padding:4px 8px;border-radius:4px;background:{{ r.bg }};color:{{ r.fg }}">{{ r.chip }}</span><span style="font-size:18px;color:#5E5A52">›</span></span>
+        </button>
+      </sc-for>
+      <sc-if value="{{ spotMsLine }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.04em;color:#5E5A52;padding:10px 4px">{{ spotMsLine }}</span></sc-if>
+    </div>
+    <div style="padding:6px 16px 28px;display:flex;flex-direction:column;gap:6px;border-top:1px solid #DEDAD1">
+      <sc-if value="{{ spotLink }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ spotLinkTap }}" style="min-height:52px;background:none;border:none;padding:4px 4px;display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;color:#1B1A17"><span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600">{{ spotLinkAction }}</span><span style="font-size:13px;color:#5E5A52">{{ spotLinkText }}</span></span><span style="font-size:20px;color:#5E5A52">›</span></button>
+      </sc-if>
+      <button onClick="{{ spotMain }}" style="min-height:62px;border:none;border-radius:14px;background:#1B1A17;color:#F5F3EE;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px">
+        <span style="font-size:17px;font-weight:600">{{ spotMainLabel }}</span>
+        <sc-if value="{{ spotMainSub }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;color:#B8B2A6">{{ spotMainSub }}</span></sc-if>
+      </button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isCamera }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1;display:flex;flex-direction:column;min-height:0;background:#1B1A17;color:#F5F3EE;position:relative">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 12px 8px;gap:8px">
+      <button onClick="{{ closeCamera }}" style="width:48px;height:48px;border-radius:24px;background:#2C2A26;border:none;color:#F5F3EE;font-size:20px">✕</button>
+      <button onClick="{{ openContext }}" style="min-height:44px;padding:0 14px;border-radius:22px;border:1px solid #5E5A52;background:#2C2A26;color:#F5F3EE;font-size:14px;max-width:290px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ camTitle }} ▾</button>
+    </div>
+    <div style="flex:1;margin:0 12px;border-radius:16px;background:#2C2A26;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center">
+      <span style="font-size:13px;color:#8D877C">Viewfinder</span>
+      <sc-if value="{{ camOverlay }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#B8B2A6;border:1px dashed #5E5A52;border-radius:8px;padding:10px 12px">Faint Roof before shot of this slope, to match the angle</span></sc-if>
+    </div>
+    <div style="padding:14px 20px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center">
+      <span style="font-size:17px;font-weight:600">{{ camGuide }}</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#B8B2A6">{{ camCount }}</span>
+    </div>
+    <div style="display:flex;justify-content:center;padding:14px 0 34px"><button onClick="{{ shutter }}" aria-label="Take photo" style="width:84px;height:84px;border-radius:42px;border:5px solid #F5F3EE;background:#F5F3EE;box-shadow:inset 0 0 0 4px #1B1A17"></button></div>
+    <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:50%;top:76px;transform:translateX(-50%);background:#E2EDE6;color:#1D4432;padding:10px 16px;border-radius:22px;font-size:14px;font-weight:600;white-space:nowrap">{{ toast }}</div></sc-if>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isCheck }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1;display:flex;flex-direction:column;min-height:0;padding:8px 16px 28px;gap:14px">
+    <div style="height:340px;border-radius:16px;background:#2C2A26;display:flex;align-items:center;justify-content:center;color:#5E5A52;font-size:14px">Photo</div>
+    <span style="font-size:20px;font-weight:600">{{ camTitle }}</span>
+    <div style="background:#F3E3DC;color:#A23B1E;border-radius:12px;padding:14px;font-size:16px;line-height:1.4">Too dark to show the decking. Retake while it's still open.</div>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">{{ checkMeta }}</span>
+    <div style="flex:1"></div>
+    <button onClick="{{ retake }}" style="min-height:62px;border:none;border-radius:14px;background:#1B1A17;color:#F5F3EE;font-size:17px;font-weight:600">Retake</button>
+    <button onClick="{{ keepAnyway }}" style="height:44px;background:none;border:none;font-size:15px;color:#5E5A52;text-decoration:underline;text-underline-offset:3px">Keep anyway</button>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isGaps }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+    <div style="padding:4px 8px"><button onClick="{{ goWork }}" style="height:44px;padding:0 12px;background:none;border:none;font-size:15px;color:#3D3A34">‹ Workspace</button></div>
+    <div style="padding:0 20px 12px;display:flex;flex-direction:column;gap:4px"><span style="font-size:24px;font-weight:600;letter-spacing:-0.01em">{{ gapTitle }}</span><span style="font-size:15px;color:#5E5A52">Take it while you're here, or say why you can't.</span></div>
+    <div style="flex:1;overflow:auto;padding:4px 16px 12px;display:flex;flex-direction:column;gap:8px">
+      <sc-for list="{{ gaps }}" as="g" hint-placeholder-count="2">
+        <div style="background:#FFFFFF;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600">{{ g.title }}</span><span style="font-size:14px;color:{{ g.subColor }}">{{ g.sub }}</span></div>
+          <div style="display:flex;gap:8px">
+            <button onClick="{{ g.onPrimary }}" style="flex:1;min-height:48px;border-radius:10px;border:none;background:#1B1A17;color:#F5F3EE;font-size:15px;font-weight:600">{{ g.primary }}</button>
+            <sc-if value="{{ g.secondary }}" hint-placeholder-val="{{ true }}"><button onClick="{{ g.onSecondary }}" style="flex:1;min-height:48px;border-radius:10px;border:1.5px solid #1B1A17;background:#FFFFFF;color:#1B1A17;font-size:15px">{{ g.secondary }}</button></sc-if>
+          </div>
+        </div>
+      </sc-for>
+      <sc-if value="{{ noGaps }}" hint-placeholder-val="{{ false }}"><div style="background:#E2EDE6;color:#1D4432;border-radius:12px;padding:16px;font-size:16px">Every photo is taken or has a reason.</div></sc-if>
+    </div>
+    <div style="padding:10px 16px 28px;border-top:1px solid #DEDAD1;display:flex">
+      <button onClick="{{ gapsContinue }}" style="flex:1;min-height:62px;border:none;border-radius:14px;background:{{ contBg }};color:{{ contFg }};font-size:17px;font-weight:600">{{ contLabel }}</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isSummary }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+    <div style="padding:4px 8px"><button onClick="{{ goGaps }}" style="height:44px;padding:0 12px;background:none;border:none;font-size:15px;color:#3D3A34">‹ Gap check</button></div>
+    <div style="padding:0 20px 12px"><span style="font-size:24px;font-weight:600;letter-spacing:-0.01em">Before you leave</span></div>
+    <div style="flex:1;overflow:auto;padding:0 16px 12px;display:flex;flex-direction:column;gap:8px">
+      <div style="background:#FFFFFF;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">SPOTS</span>
+        <sc-for list="{{ outcomes }}" as="o" hint-placeholder-count="2">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px">{{ o.name }}</span><sc-if value="{{ o.note }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#5E5A52">{{ o.note }}</span></sc-if></span><span style="font-size:13px;padding:4px 8px;border-radius:4px;background:{{ o.bg }};color:{{ o.fg }};white-space:nowrap">{{ o.status }}</span></div>
+        </sc-for>
+      </div>
+      <div style="background:#FFFFFF;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">PHOTOS · {{ total }} NEEDED</span>
+        <span style="font-size:16px">{{ photoLine }}</span>
+      </div>
+      <div style="background:#FFFFFF;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">UPLOADS</span>
+        <span style="font-size:16px">{{ uploadLine }}</span>
+        <span style="font-size:14px;color:#5E5A52">{{ gapReportLine }}</span>
+      </div>
+      <div style="background:#FFFFFF;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">VISIT</span>
+        <span style="font-size:16px">{{ visitLine }}</span>
+      </div>
+    </div>
+    <div style="padding:10px 16px 28px;border-top:1px solid #DEDAD1;display:flex;flex-direction:column;gap:8px">
+      <span style="font-size:14px;color:#3D3A34;text-align:center;line-height:1.4">{{ checkoutNote }}</span>
+      <button onClick="{{ checkOut }}" style="min-height:62px;border:none;border-radius:14px;background:#1B1A17;color:#F5F3EE;font-size:17px;font-weight:600">Check out of property</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isUploads }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+    <div style="padding:4px 8px"><button onClick="{{ uploadsBack }}" style="height:44px;padding:0 12px;background:none;border:none;font-size:15px;color:#3D3A34">‹ Back</button></div>
+    <div style="padding:0 20px 12px;display:flex;flex-direction:column;gap:4px"><span style="font-size:24px;font-weight:600;letter-spacing:-0.01em">Uploads · #421</span><span style="font-size:15px;color:#5E5A52">{{ uploadLine }}</span></div>
+    <div style="flex:1;overflow:auto;padding:0 16px 12px;display:flex;flex-direction:column;gap:6px">
+      <sc-if value="{{ showGapRow }}" hint-placeholder-val="{{ false }}">
+        <div style="min-height:52px;background:#FFFFFF;border-radius:12px;padding:0 14px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:15px;font-weight:600">Gap report</span><span style="font-size:13px;padding:4px 8px;border-radius:4px;background:{{ gapRowBg }};color:{{ gapRowFg }}">{{ gapRowText }}</span></div>
+      </sc-if>
+      <sc-for list="{{ uploadRows }}" as="u" hint-placeholder-count="4">
+        <div style="min-height:52px;background:#FFFFFF;border-radius:12px;padding:6px 6px 6px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px;border:{{ u.border }}">
+          <span style="display:flex;flex-direction:column;gap:1px;min-width:0"><span style="font-size:15px">{{ u.title }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5E5A52">{{ u.meta }}</span></span>
+          <sc-if value="{{ u.failed }}" hint-placeholder-val="{{ false }}"><button onClick="{{ u.retry }}" style="min-height:44px;padding:0 14px;border-radius:10px;border:none;background:#A23B1E;color:#FFFFFF;font-size:14px;font-weight:600">Retry</button></sc-if>
+          <sc-if value="{{ u.notFailed }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;padding:4px 8px;margin-right:8px;border-radius:4px;background:{{ u.bg }};color:{{ u.fg }};white-space:nowrap">{{ u.chip }}</span></sc-if>
+        </div>
+      </sc-for>
+      <sc-if value="{{ noUploads }}" hint-placeholder-val="{{ false }}"><span style="font-size:15px;color:#5E5A52;padding:8px 4px">No photos yet.</span></sc-if>
+      <sc-if value="{{ escalation }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#3D3A34;padding:10px 4px;line-height:1.4">{{ escalation }}</span></sc-if>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ toastLight }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:50%;bottom:132px;transform:translateX(-50%);background:#1B1A17;color:#F5F3EE;padding:10px 16px;border-radius:22px;font-size:14px;font-weight:600;white-space:nowrap">{{ toast }}</div></sc-if>
+
+  <sc-if value="{{ locked }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;inset:0;background:#1B1A17;color:#F5F3EE;display:flex;flex-direction:column;align-items:center;padding:70px 14px 40px;box-sizing:border-box;gap:6px;z-index:5">
+    <span style="font-size:15px;color:#B8B2A6">Saturday 25 October</span>
+    <span style="font-size:78px;font-weight:500;letter-spacing:-0.02em;line-height:1">{{ time }}</span>
+    <div style="flex:1;min-height:40px"></div>
+    <sc-if value="{{ hasNote }}" hint-placeholder-val="{{ true }}">
+    <button onClick="{{ noteTap }}" style="align-self:stretch;text-align:left;background:#F5F3EE;color:#1B1A17;border:none;border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:6px">
+      <span style="display:flex;justify-content:space-between;width:100%;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#5E5A52"><span>HALDEN CREW · JOB #421</span><span>NOW</span></span>
+      <span style="font-size:17px;font-weight:600;line-height:1.25">{{ noteTitle }}</span>
+      <span style="font-size:15px;line-height:1.35;color:#3D3A34">{{ noteBody }}</span>
+      <span style="align-self:flex-start;font-size:12px;padding:3px 8px;border-radius:4px;background:{{ noteChipBg }};color:{{ noteChipFg }}">{{ noteChip }}</span>
+    </button>
+    </sc-if>
+    <span style="font-size:13px;color:#8D877C;padding-top:14px">{{ lockHint }}</span>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ hasSheet }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;inset:0;background:rgba(27,26,23,0.5);display:flex;flex-direction:column;justify-content:flex-end">
+    <div onClick="{{ closeSheet }}" style="flex:1"></div>
+    <div style="background:#FFFFFF;border-radius:22px 22px 0 0;padding:22px 20px 32px;display:flex;flex-direction:column;gap:14px;max-height:72%;overflow:auto">
+
+      <sc-if value="{{ sheetMs }}" hint-placeholder-val="{{ false }}">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#A23B1E">{{ msKicker }}</span>
+        <span style="font-size:21px;font-weight:600;line-height:1.25">{{ msTitle }}</span>
+        <span style="font-size:16px;line-height:1.45;color:#3D3A34">{{ msBody }}</span>
+        <button onClick="{{ msShoot }}" style="min-height:58px;border:none;border-radius:14px;background:#1B1A17;color:#F5F3EE;font-size:17px;font-weight:600">Take photo now</button>
+        <button onClick="{{ msWhy }}" style="min-height:52px;border:1.5px solid #1B1A17;border-radius:14px;background:#FFFFFF;color:#1B1A17;font-size:16px">Record why not</button>
+        <button onClick="{{ closeSheet }}" style="height:44px;background:none;border:none;font-size:15px;color:#5E5A52;text-decoration:underline;text-underline-offset:3px">Not yet</button>
+      </sc-if>
+
+      <sc-if value="{{ sheetWhy }}" hint-placeholder-val="{{ false }}">
+        <span style="font-size:21px;font-weight:600;line-height:1.25">{{ whyTitle }}</span>
+        <span style="font-size:15px;color:#5E5A52">{{ whyItems }}</span>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ reasons }}" as="c" hint-placeholder-count="5">
+            <button onClick="{{ c.onTap }}" style="min-height:44px;padding:0 16px;border-radius:22px;border:1.5px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }};font-size:15px;white-space:nowrap">{{ c.label }}</button>
+          </sc-for>
+        </div>
+        <input value="{{ whyNote }}" onChange="{{ onWhyNote }}" placeholder="{{ notePlaceholder }}" style="min-height:48px;border:1px solid #DEDAD1;border-radius:10px;padding:0 12px;font-size:16px;background:#F5F3EE;color:#1B1A17">
+        <span style="font-size:14px;color:#5E5A52">{{ whyFoot }}</span>
+        <button onClick="{{ saveWhy }}" style="min-height:58px;border:none;border-radius:14px;background:{{ saveBg }};color:{{ saveFg }};font-size:17px;font-weight:600">{{ saveLabel }}</button>
+      </sc-if>
+
+      <sc-if value="{{ sheetAdd }}" hint-placeholder-val="{{ false }}">
+        <span style="font-size:21px;font-weight:600">New spot found</span>
+        <input value="{{ newSpotName }}" onChange="{{ onSpotName }}" placeholder="Name (optional)" style="min-height:48px;border:1px solid #DEDAD1;border-radius:10px;padding:0 12px;font-size:16px;background:#F5F3EE;color:#1B1A17">
+        <span style="font-size:15px;line-height:1.45;color:#3D3A34">Its first photo is labelled <b>As found</b>, because it wasn't seen before work began.</span>
+        <button onClick="{{ addSpot }}" style="min-height:58px;border:none;border-radius:14px;background:#1B1A17;color:#F5F3EE;font-size:17px;font-weight:600">Take As found photo</button>
+        <button onClick="{{ closeSheet }}" style="height:44px;background:none;border:none;font-size:15px;color:#5E5A52;text-decoration:underline;text-underline-offset:3px">Cancel</button>
+      </sc-if>
+
+      <sc-if value="{{ sheetCtx }}" hint-placeholder-val="{{ false }}">
+        <span style="font-size:21px;font-weight:600">What is this photo?</span>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <sc-for list="{{ ctxItems }}" as="c" hint-placeholder-count="6">
+            <button onClick="{{ c.onTap }}" style="min-height:50px;border-radius:10px;border:{{ c.border }};background:#F5F3EE;color:#1B1A17;font-size:15px;text-align:left;padding:0 14px">{{ c.title }}</button>
+          </sc-for>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+  </sc-if>
+
+</div>
+</div>
+
+<div style="width:280px;display:flex;flex-direction:column;gap:18px;padding-top:24px">
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#5E5A52">PROTOTYPE · FLOW D14</span>
+    <span style="font-size:22px;font-weight:600;line-height:1.2">Crew app v3</span>
+    <span style="font-size:14px;line-height:1.5;color:#3D3A34">Job #421, 17 photos. Shoot in any order. Record milestones when they happen.</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">SIGNAL ON SITE</span>
+    <div style="display:flex;background:#FFFFFF;border-radius:10px;padding:4px;gap:4px">
+      <button onClick="{{ signalOff }}" style="flex:1;height:40px;border:none;border-radius:8px;background:{{ offBg }};color:{{ offFg }};font-size:14px">No signal</button>
+      <button onClick="{{ signalOn }}" style="flex:1;height:40px;border:none;border-radius:8px;background:{{ onBg }};color:{{ onFg }};font-size:14px">Signal</button>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">PHONE</span>
+    <button onClick="{{ toggleLock }}" style="height:44px;border-radius:10px;border:1.5px solid #1B1A17;background:{{ lockBtnBg }};color:{{ lockBtnFg }};font-size:14px;font-weight:600">{{ lockBtnLabel }}</button>
+    <span style="font-size:13px;line-height:1.5;color:#3D3A34">Lock it to see the reminder Ravi gets with the phone in his pocket. It changes as the work moves on.</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;line-height:1.5;color:#3D3A34">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">SIMULATED</span>
+    <span>The first Soft decking · Opened up photo comes out too dark.</span>
+    <span>The third upload fails once.</span>
+  </div>
+  <button onClick="{{ reset }}" style="align-self:flex-start;height:40px;padding:0 14px;border-radius:10px;border:1px solid #1B1A17;background:none;font-size:14px;color:#1B1A17;white-space:nowrap">Reset job</button>
+  <a href="Crew Screen Flow.dc.html" style="font-size:14px">Screen flow</a>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;darkPhoto&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Simulation&quot;},&quot;failUpload&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Simulation&quot;}}">
+const GN={prop:'Property before',roofb:'Roof before',roofa:'Roof after',clean:'Clean up'};
+const GUIDE={Front:'Whole front, lawn and beds in frame',Back:'Whole back, yard in frame',Gutters:'Gutter line, end to end','Ground below':'Where debris will fall','North slope':'Whole slope, wide','South slope':'Whole slope, wide',Before:'The damage close up, then step back','As found':'The damage as you found it','Opened up':'Show the exposed decking clearly',Fixed:'Same angle as Opened up','Gutters after':'Gutter line, end to end','Ground below after':'Same spot as Ground below','Debris cleared':'Lawn and beds, clear'};
+const KEY='halden-crew-v3';
+function fmt(m){let h=Math.floor(m/60),mm=String(m%60).padStart(2,'0');const ap=h>=12?'pm':'am';h=h%12||12;return h+':'+mm+' '+ap;}
+function fresh(){
+  const it=(id,group,name,spot)=>({id,group,name,spot:spot||null,photo:null,reason:null});
+  return {screen:'jobs',spotId:null,origin:'work',camItem:null,sheet:null,checkedIn:null,checkedOut:null,clock:8*60+12,
+    ms:{setup:null,tearoff:null},
+    spots:[{id:'A',name:'Vent pipe leak',work:'Flashing repair',found:false,opening:null,covering:null,outcome:null,outcomeReason:null},
+           {id:'B',name:'Soft decking',work:'Decking replacement',found:false,opening:null,covering:null,outcome:null,outcomeReason:null}],
+    items:[it('p1','prop','Front'),it('p2','prop','Back'),it('p3','prop','Gutters'),it('p4','prop','Ground below'),
+      it('r1','roofb','North slope'),it('r2','roofb','South slope'),
+      it('A1','spot','Before','A'),it('A2','spot','Opened up','A'),it('A3','spot','Fixed','A'),
+      it('B1','spot','Before','B'),it('B2','spot','Opened up','B'),it('B3','spot','Fixed','B'),
+      it('a1','roofa','North slope'),it('a2','roofa','South slope'),
+      it('c1','clean','Gutters after'),it('c2','clean','Ground below after'),it('c3','clean','Debris cleared')],
+    toast:null,signal:false,gapSent:false,gapDone:false,darkUsed:false,failUsed:false,doneCount:0,
+    whyReason:null,whyNote:'',newSpotName:'',uploadsFrom:'jobs'};
+}
+class Component extends DCLogic {
+  state = (()=>{try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.items)return {...s,toast:null,sheet:null};}catch(e){}return fresh();})();
+  componentDidMount(){this.iv=setInterval(()=>this.tick(),800);}
+  componentWillUnmount(){clearInterval(this.iv);clearTimeout(this.tt);}
+  componentDidUpdate(){try{const {toast,sheet,...rest}=this.state;localStorage.setItem(KEY,JSON.stringify(rest));}catch(e){}}
+  say(t){clearTimeout(this.tt);this.setState({toast:t});this.tt=setTimeout(()=>this.setState({toast:null}),1800);}
+  sp(id,s=this.state){return s.spots.find(x=>x.id===id);}
+  title(it,s=this.state){return it.group==='spot'?this.sp(it.spot,s).name+' · '+it.name:GN[it.group]+' · '+it.name;}
+  names(ids){const s=this.state;const out=[];const seen={};s.items.filter(i=>ids.includes(i.id)).forEach(i=>{const k=i.group==='spot'?this.sp(i.spot).name:GN[i.group];if(!seen[k]){seen[k]=[];out.push(k);}seen[k].push(i.name);});return out.map(k=>k+': '+seen[k].join(', ')).join('. ');}
+  missing(it){return !it.photo&&!it.reason;}
+  flagged(it){return it.photo&&it.photo.dark&&!it.reason;}
+  closed(it,s=this.state){
+    if(it.group==='prop')return !!s.ms.setup;
+    if(it.group==='roofb')return !!s.ms.tearoff;
+    if(it.group==='spot'){const p=this.sp(it.spot,s);if(it.name==='Before')return !!s.ms.tearoff||!!p.opening;if(it.name==='Opened up'||it.name==='As found')return !!p.covering;}
+    return false;
+  }
+  needs(it,s=this.state){return (this.missing(it)||this.flagged(it))&&!this.closed(it,s);}
+  next(s=this.state){
+    const c=s.items.filter(i=>this.missing(i)&&!this.closed(i,s));
+    const f=(fn,why)=>{const i=c.find(fn);return i?{item:i,why}:null;};
+    return (!s.ms.setup&&f(i=>i.group==='prop','Closes when setup starts'))
+      ||(!s.ms.tearoff&&f(i=>i.group==='roofb'||(i.group==='spot'&&i.name==='Before'),'Closes at tear-off'))
+      ||f(i=>i.group==='spot'&&(i.name==='Opened up'||i.name==='As found')&&this.sp(i.spot,s).opening,'Closes when it\u2019s covered')
+      ||(c[0]?{item:c[0],why:c[0].name==='Fixed'?'When the repair is done':c[0].group==='roofa'?'Same angles as Roof before':c[0].name==='Opened up'?'Once it\u2019s opened up':''}:null);
+  }
+  windowItems(key,spotId){
+    const s=this.state;
+    if(key==='setup')return s.items.filter(i=>i.group==='prop');
+    if(key==='tearoff')return s.items.filter(i=>i.group==='roofb'||(i.group==='spot'&&i.name==='Before'));
+    if(key==='opening')return s.items.filter(i=>i.spot===spotId&&i.name==='Before');
+    return s.items.filter(i=>i.spot===spotId&&(i.name==='Opened up'||i.name==='As found'));
+  }
+  setMs(key,spotId){
+    const L={setup:'Setup',tearoff:'Tear-off',opening:'Opening up',covering:'Covering'};
+    this.setState(s=>key==='setup'||key==='tearoff'?{ms:{...s.ms,[key]:s.clock},sheet:null}:{spots:s.spots.map(p=>p.id===spotId?{...p,[key]:s.clock}:p),sheet:null});
+    this.say(L[key]+' recorded · '+fmt(this.state.clock));
+  }
+  milestone(key,spotId){
+    const ids=this.windowItems(key,spotId).filter(i=>this.needs(i)).map(i=>i.id);
+    if(!ids.length)return this.setMs(key,spotId);
+    this.setState({sheet:{type:'ms',key,spotId,ids}});
+  }
+  openCamera(id,origin){this.setState({screen:'camera',camItem:id,origin,sheet:null});}
+  groupOf(it){return this.state.items.filter(i=>it.group==='spot'?i.spot===it.spot:i.group===it.group);}
+  advance(itemId,items){
+    const s=this.state;const it=items.find(i=>i.id===itemId);
+    const st={...s,items};
+    const walk=i=>i.group==='roofb'||(i.group==='spot'&&i.name==='Before');
+    const same=i=>walk(it)?walk(i):(it.group!=='spot'&&i.group===it.group);
+    const nx=items.find(i=>i.id!==itemId&&same(i)&&this.missing(i)&&!this.closed(i,st));
+    if(nx&&s.origin!=='gaps')this.setState({items,camItem:nx.id,screen:'camera'});
+    else this.setState({items,screen:s.origin,camItem:null});
+    this.say('Saved · '+it.name);
+  }
+  shutter(){
+    const s=this.state;const it=s.items.find(i=>i.id===s.camItem);if(!it)return;
+    const clock=s.clock+2;
+    const dark=this.props.darkPhoto!==false&&!s.darkUsed&&it.id==='B2';
+    const items=s.items.map(i=>i.id===it.id?{...i,photo:{t:clock,status:'phone',dark},reason:null}:i);
+    let spots=s.spots;
+    if(it.group==='spot'&&(it.name==='Opened up'||it.name==='As found'))spots=spots.map(p=>p.id===it.spot&&!p.opening?{...p,opening:clock}:p);
+    if(dark){this.setState({items,spots,clock,darkUsed:true,screen:'check'});return;}
+    this.setState({spots,clock},()=>this.advance(it.id,items));
+  }
+  tick(){
+    const s=this.state;if(!s.signal)return;
+    if(s.gapDone&&!s.gapSent){this.setState({gapSent:true});return;}
+    const u=s.items.find(i=>i.photo&&i.photo.status==='uploading');
+    if(u){const fail=this.props.failUpload!==false&&!s.failUsed&&s.doneCount===2;
+      this.setState({items:s.items.map(i=>i.id===u.id?{...i,photo:{...i.photo,status:fail?'failed':'office',rt:s.clock}}:i),failUsed:s.failUsed||fail,doneCount:s.doneCount+1});return;}
+    const p=s.items.find(i=>i.photo&&i.photo.status==='phone');
+    if(p)this.setState({items:s.items.map(i=>i.id===p.id?{...i,photo:{...i.photo,status:'uploading'}}:i)});
+  }
+  why(ids,after,mode){this.setState({sheet:{type:'why',ids,after,mode:mode||'photo'},whyReason:null,whyNote:''});}
+  saveWhy(){
+    const s=this.state;const sh=s.sheet;if(!s.whyReason)return;
+    const r=s.whyReason+(s.whyNote?' · '+s.whyNote:'');
+    if(sh.mode==='defer'){
+      this.setState({spots:s.spots.map(p=>p.id===sh.spotId?{...p,outcome:'deferred',outcomeReason:r}:p),items:s.items.map(i=>i.spot===sh.spotId&&this.missing(i)?{...i,reason:'Deferred · '+r}:i),sheet:null});
+      return this.say('Deferred · '+this.sp(sh.spotId).name);
+    }
+    this.setState({items:s.items.map(i=>sh.ids.includes(i.id)?{...i,reason:r}:i),sheet:null},()=>{if(sh.after)this.setMs(sh.after.key,sh.after.spotId);else this.say('Reason saved');});
+  }
+  rowFor(title,list,isNext,onTap){
+    const done=list.filter(i=>i.photo||i.reason).length,missed=list.filter(i=>this.missing(i)&&this.closed(i)).length,n=list.length;
+    let status=done+' of '+n,color='#1B1A17';
+    if(missed){status=missed+' missed';color='#A23B1E';}else if(done===n){status=n+' of '+n+' ✓';color='#2F6B4F';}
+    return {title,status,color,isNext,border:isNext?'1.5px solid #1B1A17':'1.5px solid transparent',weight:isNext?'600':'400',onTap};
+  }
+  renderVals(){
+    const s=this.state;const total=s.items.length;
+    const withPhoto=s.items.filter(i=>i.photo);
+    const office=withPhoto.filter(i=>i.photo.status==='office').length,failed=withPhoto.filter(i=>i.photo.status==='failed').length,phone=withPhoto.length-office-failed;
+    const nx=this.next();const nxId=nx&&nx.item.id;
+    const go=(screen,extra)=>()=>this.setState({screen,sheet:null,...(extra||{})});
+    const groupTap=g=>()=>{const l=s.items.filter(i=>i.group===g);const t=l.find(i=>this.needs(i))||l.find(i=>!this.closed(i));if(t)this.openCamera(t.id,'work');else this.why(l.filter(i=>this.missing(i)).map(i=>i.id));};
+    const gRow=g=>{const l=s.items.filter(i=>i.group===g);const early=(g==='roofa'||g==='clean')&&!s.ms.tearoff&&!l.some(i=>i.photo);const row=this.rowFor(GN[g],l,!!l.find(i=>i.id===nxId),early?()=>this.say('Take this after the repair'):groupTap(g));if(early){row.status='After the repair';row.color='#5E5A52';}return row;};
+    const v={time:fmt(s.clock),signalText:s.signal?'SIGNAL':'NO SIGNAL',statusBg:s.screen==='camera'?'#1B1A17':'#F5F3EE',statusFg:s.screen==='camera'?'#F5F3EE':'#1B1A17',
+      isJobs:s.screen==='jobs',isOverview:s.screen==='overview',isWork:s.screen==='work',isSpot:s.screen==='spot',isCamera:s.screen==='camera',isCheck:s.screen==='check',isGaps:s.screen==='gaps',isSummary:s.screen==='summary',isUploads:s.screen==='uploads',
+      toast:s.toast,toastLight:!!s.toast&&s.screen!=='camera',
+      syncLabel:failed?failed+' failed · '+phone+' on phone':phone+' on phone · '+office+' in office',syncBg:failed?'#F3E3DC':'#FFFFFF',syncFg:failed?'#A23B1E':'#1B1A17',syncBorder:failed?'#A23B1E':'#DEDAD1',
+      goJobs:go('jobs'),goWork:go('work'),goGaps:go('gaps'),
+      openUploads:()=>this.setState({uploadsFrom:s.screen==='uploads'?s.uploadsFrom:s.screen,screen:'uploads',sheet:null}),
+      uploadsBack:go(s.uploadsFrom||'jobs'),
+      openJob:go(s.checkedIn&&!s.checkedOut?'work':'overview'),
+      jobStatus:!s.checkedIn?'Not checked in':s.checkedOut?'Checked out '+fmt(s.checkedOut):'On site since '+fmt(s.checkedIn),
+      jobWarn:!!s.checkedOut&&(phone+failed)>0,jobWarnText:(phone+failed)+' photos not in office yet',
+      overviewNote:s.checkedOut?'Checked out at '+fmt(s.checkedOut):null,
+      overviewCtaLabel:!s.checkedIn?'Check in & start':s.checkedOut?'See uploads':'Back to workspace',
+      overviewCta:()=>{if(!s.checkedIn){this.setState({checkedIn:s.clock,screen:'work'});this.say('Arrived '+fmt(s.clock)+' · location saved');}else if(s.checkedOut)this.setState({uploadsFrom:'overview',screen:'uploads'});else this.setState({screen:'work'});},
+      beforeRows:[gRow('prop'),gRow('roofb')],afterRows:[gRow('roofa'),gRow('clean')],
+      spotRows:s.spots.map(p=>{const l=s.items.filter(i=>i.spot===p.id);const r=this.rowFor(p.id+' · '+p.name,l,!!l.find(i=>i.id===nxId),()=>this.setState({screen:'spot',spotId:p.id}));if(p.outcome==='deferred'){r.status='Deferred';r.color='#A23B1E';}return r;}),
+      openAddSpot:()=>this.setState({sheet:{type:'add'},newSpotName:''}),
+      closeSheet:()=>this.setState({sheet:null}),
+    };
+    // workspace footer
+    const allOpenDone=!nx;
+    v.workMainLabel=nx?'Photo: '+(nx.item.group==='spot'?this.sp(nx.item.spot).name+' '+nx.item.name.toLowerCase():GN[nx.item.group].toLowerCase()):'Check gaps and finish';
+    v.workMainSub=null;
+    v.workMain=nx?()=>this.openCamera(nx.item.id,'work'):go('gaps');
+    if(!s.ms.setup){v.workLink=true;v.workLinkText='Tap first. The app checks nothing is missed.';v.workLinkAction='I\u2019m starting setup';v.workLinkTap=()=>this.milestone('setup');}
+    else if(!s.ms.tearoff){v.workLink=true;v.workLinkText='Tap first. The app checks nothing is missed.';v.workLinkAction='I\u2019m starting tear-off';v.workLinkTap=()=>this.milestone('tearoff');}
+    else if(!allOpenDone){v.workLink=true;v.workLinkText='See what\u2019s missing before you leave';v.workLinkAction='I\u2019m done on site';v.workLinkTap=go('gaps');}
+    else v.workLink=false;
+    // spot
+    const P=this.sp(s.spotId)||s.spots[0];
+    if(s.screen==='spot'&&P){
+      const l=s.items.filter(i=>i.spot===P.id);
+      v.spotTitle=P.id+' · '+P.name;v.spotWork=P.work+(P.outcome?' · Deferred: '+P.outcomeReason:'');
+      v.spotItems=l.map(i=>{let chip='Not yet',bg='#EFEBE3',fg='#5E5A52';
+        if(i.photo){if(this.flagged(i)){chip='Too dark';bg='#F3E3DC';fg='#A23B1E';}else if(i.photo.status==='office'){chip='In office ✓';bg='#E2EDE6';fg='#2F6B4F';}else if(i.photo.status==='failed'){chip='Upload failed';bg='#F3E3DC';fg='#A23B1E';}else{chip='On phone';bg='#EFEBE3';fg='#1B1A17';}}
+        else if(i.reason){chip='Reason given';}
+        else if(this.closed(i)){chip='Missed';bg='#F3E3DC';fg='#A23B1E';}
+        else if((i.name==='Opened up'||i.name==='As found')&&P.opening){chip='Take now';bg='#F3E3DC';fg='#A23B1E';}
+        return {label:i.name,chip,bg,fg,onTap:()=>this.closed(i)&&this.missing(i)?this.why([i.id]):this.openCamera(i.id,'spot')};});
+      const parts=[];if(P.opening)parts.push('OPENED UP '+fmt(P.opening).toUpperCase());if(P.covering)parts.push('COVERED '+fmt(P.covering).toUpperCase());
+      v.spotMsLine=parts.join(' · ')||null;
+      const snx=l.find(i=>this.missing(i)&&!this.closed(i));
+      v.spotMainLabel=snx?'Photo: '+snx.name.toLowerCase():'Back to workspace';
+      v.spotMainSub=null;
+      v.spotMain=snx?()=>this.openCamera(snx.id,'spot'):go('work');
+      if(P.outcome){v.spotLink=false;}
+      else if(!P.opening){v.spotLink=true;v.spotLinkAction='I\u2019m opening it up';v.spotLinkText='Tap first. The app checks nothing is missed.';v.spotLinkTap=()=>this.milestone('opening',P.id);}
+      else if(!P.covering){v.spotLink=true;v.spotLinkAction='I\u2019m covering it';v.spotLinkText='Tap first. The app checks nothing is missed.';v.spotLinkTap=()=>this.milestone('covering',P.id);}
+      else v.spotLink=false;
+    }
+    // camera
+    const C=s.items.find(i=>i.id===s.camItem);
+    if(C){const g=this.groupOf(C);v.camTitle=this.title(C);v.camGuide=GUIDE[C.name]||'';v.camOverlay=C.group==='roofa';
+      v.camCount=C.name+' · '+(g.indexOf(C)+1)+' of '+g.length+' · saves to this job only';
+      v.checkMeta=C.photo?fmt(C.photo.t).toUpperCase()+' · PHONE TIME · GPS 42.3601, −71.0589':'';}
+    v.closeCamera=go(s.origin);v.shutter=()=>this.shutter();
+    v.openContext=()=>this.setState({sheet:{type:'ctx'}});
+    v.retake=go('camera');
+    v.keepAnyway=()=>this.advance(s.camItem,s.items);
+    v.ctxItems=s.items.filter(i=>!this.closed(i)).map(i=>({title:this.title(i)+(i.photo?' · retake':''),border:i.id===s.camItem?'1.5px solid #1B1A17':'1.5px solid transparent',onTap:()=>this.setState({camItem:i.id,sheet:null})}));
+    // gaps
+    const gaps=[];
+    s.items.forEach(i=>{const t=this.title(i);
+      if(this.missing(i)){
+        const p=i.spot&&this.sp(i.spot);
+        if(i.name==='Fixed'&&p&&s.items.find(x=>x.spot===i.spot&&x.name==='Opened up'&&x.photo))gaps.push({title:p.name,sub:'Opened up, but no Fixed photo. What happened?',subColor:'#3D3A34',primary:'Take Fixed',onPrimary:()=>this.openCamera(i.id,'gaps'),secondary:'Deferred',onSecondary:()=>this.setState({sheet:{type:'why',mode:'defer',spotId:i.spot,ids:[]},whyReason:null,whyNote:''})});
+        else if(this.closed(i))gaps.push({title:t,sub:'Missed · too late to take',subColor:'#A23B1E',primary:'Record why',onPrimary:()=>this.why([i.id]),secondary:null});
+        else gaps.push({title:t,sub:'Not taken yet',subColor:'#3D3A34',primary:'Take it now',onPrimary:()=>this.openCamera(i.id,'gaps'),secondary:'Record why',onSecondary:()=>this.why([i.id])});
+      } else if(this.flagged(i)){
+        if(this.closed(i))gaps.push({title:t,sub:'Too dark · kept anyway',subColor:'#A23B1E',primary:'Record why',onPrimary:()=>this.why([i.id]),secondary:null});
+        else gaps.push({title:t,sub:'Too dark · kept anyway',subColor:'#A23B1E',primary:'Take again',onPrimary:()=>this.openCamera(i.id,'gaps'),secondary:'Record why',onSecondary:()=>this.why([i.id])});
+      }});
+    v.gaps=gaps;v.noGaps=!gaps.length;v.gapTitle=gaps.length?gaps.length+' to sort before you go':'Nothing missing';
+    v.contBg=gaps.length?'#DEDAD1':'#1B1A17';v.contFg=gaps.length?'#5E5A52':'#F5F3EE';v.contLabel=gaps.length?'Continue · '+gaps.length+' left':'Continue';
+    v.gapsContinue=()=>{if(!gaps.length)this.setState({screen:'summary',gapDone:true});};
+    // summary
+    v.total=total;
+    v.outcomes=s.spots.map(p=>{const fx=s.items.find(i=>i.spot===p.id&&i.name==='Fixed');
+      if(p.outcome==='deferred')return {name:p.id+' · '+p.name,note:p.outcomeReason+' · follow-up needed',status:'Deferred',bg:'#F3E3DC',fg:'#A23B1E'};
+      if(fx&&fx.photo)return {name:p.id+' · '+p.name,note:null,status:'Completed',bg:'#E2EDE6',fg:'#2F6B4F'};
+      return {name:p.id+' · '+p.name,note:null,status:'Still open',bg:'#EFEBE3',fg:'#1B1A17'};});
+    const reasoned=s.items.filter(i=>!i.photo&&i.reason).length,miss=s.items.filter(i=>this.missing(i)).length;
+    v.photoLine=withPhoto.length+' taken · '+reasoned+' with reason · '+miss+' missing';
+    v.uploadLine=office+' in office · '+phone+' on phone · '+failed+' failed';
+    v.gapReportLine=s.gapSent?'Gap report: Sean has it ✓':'Gap report: sends first when there\u2019s signal';
+    v.visitLine='Checked in '+fmt(s.checkedIn||s.clock)+' · on site';
+    v.checkoutNote=phone+failed?(phone+failed)+' photos are safe on this phone. They send by themselves when there\u2019s signal.':'Everything is in the office.';
+    v.checkOut=()=>{this.setState({checkedOut:s.clock,screen:'jobs',gapDone:true});this.say('Checked out · '+fmt(s.clock));};
+    // uploads
+    const SC={phone:['On phone','#EFEBE3','#1B1A17'],uploading:['Sending…','#EFEBE3','#1B1A17'],office:['In office ✓','#E2EDE6','#2F6B4F']};
+    v.uploadRows=withPhoto.slice().sort((a,b)=>(b.photo.status==='failed')-(a.photo.status==='failed')).map(i=>{const f=i.photo.status==='failed';const c=SC[i.photo.status]||['','',''];
+      return {title:this.title(i),meta:fmt(i.photo.t).toUpperCase()+' PHONE'+(i.photo.rt&&!f?' · '+fmt(i.photo.rt).toUpperCase()+' SERVER':'')+(f?' · NOT RECEIVED':''),failed:f,notFailed:!f,chip:c[0],bg:c[1],fg:c[2],border:f?'1.5px solid #A23B1E':'1.5px solid transparent',
+        retry:()=>this.setState({items:s.items.map(x=>x.id===i.id?{...x,photo:{...x.photo,status:'phone'}}:x)})};});
+    v.noUploads=!withPhoto.length;
+    v.showGapRow=s.gapDone;v.gapRowText=s.gapSent?'Sean has it ✓':'Sends first';v.gapRowBg=s.gapSent?'#E2EDE6':'#EFEBE3';v.gapRowFg=s.gapSent?'#2F6B4F':'#1B1A17';
+    v.escalation=s.checkedOut&&(phone+failed)?'Still not in the office at '+fmt(s.checkedOut+240)+' (4 h after check-out)? Sean is told, and the office flags the job.':null;
+    // sheets
+    const sh=s.sheet;v.hasSheet=!!sh;v.sheetMs=sh&&sh.type==='ms';v.sheetWhy=sh&&sh.type==='why';v.sheetAdd=sh&&sh.type==='add';v.sheetCtx=sh&&sh.type==='ctx';
+    if(v.sheetMs){const K={setup:['SETUP','Take these before setup','You can\u2019t get them once ladders and tarps are down.'],tearoff:['TEAR-OFF','Take these before tear-off','You can\u2019t get them once the roof is torn off.'],opening:['OPENING UP','Take it before you open it up','You can\u2019t get it later.'],covering:['COVERING','Take it before you cover it','You can\u2019t get it later.']}[sh.key];
+      v.msKicker=K[0]+' · '+sh.ids.length+' NOT TAKEN';v.msTitle=K[1];v.msBody=this.names(sh.ids)+'. '+K[2];
+      v.msShoot=()=>this.openCamera(sh.ids[0],s.screen);v.msWhy=()=>this.why(sh.ids,{key:sh.key,spotId:sh.spotId});}
+    if(v.sheetWhy){const defer=sh.mode==='defer';
+      const opts=defer?['Part missing','Weather','Needs more work','Other']:['Missed','Unsafe','Weather','No access','Other'];
+      v.whyTitle=defer?'Defer '+this.sp(sh.spotId).name+'?':'Why can\u2019t you take it?';
+      v.whyItems=defer?'The spot is left for another visit.':this.names(sh.ids);
+      v.reasons=opts.map(o=>{const on=s.whyReason===o;return {label:o,border:on?'#1B1A17':'#DEDAD1',bg:on?'#1B1A17':'#FFFFFF',fg:on?'#F5F3EE':'#1B1A17',onTap:()=>this.setState({whyReason:o})};});
+      v.notePlaceholder=defer?'Follow-up (e.g. part arrives Thursday)':'Note (optional)';
+      v.whyFoot=defer?'Sean sees which spot needs another visit.':'A reason explains the gap. It doesn\u2019t count as a photo. Sean gets it.';
+      v.saveLabel=defer?'Save · Deferred':'Save reason';v.saveBg=s.whyReason?'#1B1A17':'#DEDAD1';v.saveFg=s.whyReason?'#F5F3EE':'#5E5A52';}
+    v.whyNote=s.whyNote;v.onWhyNote=e=>this.setState({whyNote:e.target.value});v.saveWhy=()=>this.saveWhy();
+    v.newSpotName=s.newSpotName;v.onSpotName=e=>this.setState({newSpotName:e.target.value});
+    v.addSpot=()=>{const id=String.fromCharCode(65+s.spots.length);const nm=s.newSpotName.trim()||'Spot '+id;
+      const it=(n,k)=>({id:id+k,group:'spot',name:n,spot:id,photo:null,reason:null});
+      this.setState({spots:[...s.spots,{id,name:nm,work:'Found on site',found:true,opening:s.clock,covering:null,outcome:null,outcomeReason:null}],items:[...s.items,it('As found',1),it('Opened up',2),it('Fixed',3)],spotId:id,screen:'camera',camItem:id+'1',origin:'spot',sheet:null});};
+    // lock screen reminder: runs from check-in to check-out, one photo at a time
+    const onSite=!!s.checkedIn&&!s.checkedOut;
+    const missedIt=s.items.find(i=>this.missing(i)&&this.closed(i));
+    const urgent=nx&&/^Closes/.test(nx.why||'');
+    v.locked=!!s.locked;
+    v.hasNote=onSite&&(!!nx||!!missedIt);
+    v.lockHint=v.hasNote?'Capture when safe · tap the reminder to open':onSite?'Nothing needed right now':'No job in progress';
+    const unlockTo=(fn)=>()=>{this.setState({locked:false},fn);};
+    if(onSite&&missedIt&&!urgent){
+      v.noteTitle=this.title(missedIt);v.noteBody='Photo missed. Add a reason before you leave.';v.noteChip='Photo missed';v.noteChipBg='#F3E3DC';v.noteChipFg='#A23B1E';
+      v.noteTap=unlockTo(()=>this.setState({screen:'gaps'}));
+    } else if(onSite&&nx){
+      const it=nx.item;const isSpot=it.group==='spot';
+      const left=s.items.filter(i=>i.group===it.group&&(!isSpot||i.spot===it.spot)&&this.missing(i)&&!this.closed(i)).length;
+      v.noteTitle=isSpot?this.sp(it.spot).name+' · '+it.name:GN[it.group]+(left>1?' · '+left+' photos':'');
+      const B={'Closes when setup starts':'Take these before ladders and tarps go down.','Closes at tear-off':'Take these before tear-off starts.','Closes when it\u2019s covered':'Take the exposed decking before it\u2019s covered.','When the repair is done':'Photograph the finished repair.','Same angles as Roof before':'Same slopes and angles as Roof before.'};
+      v.noteBody=B[nx.why]||(isSpot?'Take it when you open this spot.':'Take these when you get to them.');
+      v.noteChip=urgent?'Time-sensitive':'Next photo';v.noteChipBg=urgent?'#F3E3DC':'#EFEBE3';v.noteChipFg=urgent?'#A23B1E':'#1B1A17';
+      v.noteTap=unlockTo(()=>this.setState(isSpot?{screen:'spot',spotId:it.spot}:{screen:'work'}));
+    }
+    v.toggleLock=()=>this.setState({locked:!s.locked,sheet:null});
+    v.lockBtnLabel=s.locked?'Unlock phone':'Lock phone (in pocket)';v.lockBtnBg=s.locked?'#1B1A17':'#FFFFFF';v.lockBtnFg=s.locked?'#F5F3EE':'#1B1A17';
+    // demo
+    v.signalOff=()=>this.setState({signal:false});v.signalOn=()=>this.setState({signal:true});
+    v.offBg=s.signal?'transparent':'#1B1A17';v.offFg=s.signal?'#1B1A17':'#F5F3EE';v.onBg=s.signal?'#1B1A17':'transparent';v.onFg=s.signal?'#F5F3EE':'#1B1A17';
+    v.reset=()=>{clearTimeout(this.tt);this.setState(fresh());};
+    return v;
+  }
+}
+</script>
+</body>
+</html>

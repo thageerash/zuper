@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Instrument+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#F5F3EE;color:#1B1A17;font-family:'Instrument Sans',sans-serif}a{color:#1B1A17}a:hover{color:#A23B1E}textarea,input{font-family:inherit}
+@keyframes camFlash{0%{opacity:0.9}100%{opacity:0}}
+@keyframes flyToAll{0%{left:0;top:108px;width:390px;height:576px;border-radius:0;opacity:1}85%{left:36px;top:690px;width:56px;height:56px;border-radius:14px;opacity:1}100%{left:36px;top:690px;width:56px;height:56px;border-radius:14px;opacity:0}}
+@keyframes nextIn{0%{transform:translateX(110%);opacity:0}100%{transform:translateX(0);opacity:1}}
+@keyframes nextRing{0%{box-shadow:0 0 0 0 rgba(255,214,10,0.9)}100%{box-shadow:0 0 0 14px rgba(255,214,10,0)}}
+@keyframes chipLife{0%{opacity:0;transform:translate(-50%,8px)}12%{opacity:1;transform:translate(-50%,0)}80%{opacity:1}100%{opacity:0}}
+@keyframes coachIn{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:translateY(0)}}</style>
+</helmet>
+<div style="min-height:100vh;display:flex;justify-content:center;align-items:flex-start;gap:56px;padding:48px 32px;flex-wrap:wrap;box-sizing:border-box">
+
+  <div style="width:300px;display:flex;flex-direction:column;gap:20px;padding-top:12px">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#5E5A52">CREW APP · WORKING PROTOTYPE</span>
+      <span style="font-size:28px;font-weight:600;letter-spacing:-0.02em;line-height:1.1">421 Oak St, one day on Ravi's phone</span>
+      <span style="font-size:14px;line-height:1.5;color:#3D3A34">Tap through the phone, or jump to a screen. Each jump fills in the photos the crew would have taken by then.</span>
+    </div>
+    <div style="display:flex;flex-direction:column;border-top:1px solid #DEDAD1">
+      <sc-for list="{{ jumps }}" as="j" hint-placeholder-count="8">
+        <div onClick="{{ j.go }}" style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;align-items:baseline;padding:11px 8px;border-bottom:1px solid #DEDAD1;cursor:pointer;background:{{ j.bg }}" style-hover="background:#EDEAE3">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:{{ j.numCol }}">{{ j.n }}</span>
+          <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600">{{ j.label }}</span><span style="font-size:14px;color:#5E5A52">{{ j.sub }}</span></div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;padding:14px 16px;background:#FFFFFF;border-radius:6px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">ON THIS SCREEN</span>
+      <span style="font-size:14px;line-height:1.5;color:#1B1A17;text-wrap:pretty">{{ note }}</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">AFTER THE LAST REPAIR PHOTO</span>
+      <div style="display:flex;flex-direction:column;font-size:14px;line-height:1.45">
+        <sc-for list="{{ afterFlow }}" as="z" hint-placeholder-count="6"><div style="display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;padding:8px 0;border-top:1px solid #DEDAD1"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A23B1E">{{ z.n }}</span><div style="display:flex;flex-direction:column;gap:1px"><span style="font-weight:600">{{ z.t }}</span><span style="color:#3D3A34">{{ z.d }}</span></div></div></sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">SIZED FOR THE ROOF</span>
+      <span style="font-size:14px;line-height:1.5;color:#3D3A34">Ravi works with gloves, one hand, in sun and wind. So every size is bigger than a normal app.</span>
+      <div style="display:flex;flex-direction:column;font-size:14px;line-height:1.45">
+        <sc-for list="{{ sizing }}" as="z" hint-placeholder-count="6"><div style="display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px;padding:8px 0;border-top:1px solid #DEDAD1"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A23B1E">{{ z.v }}</span><span style="color:#1B1A17">{{ z.t }}</span></div></sc-for>
+      </div>
+    </div>
+    <span onClick="{{ reset }}" style="align-self:flex-start;font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer">Start over</span>
+  </div>
+
+  <div style="width:390px;height:844px;flex-shrink:0;border-radius:52px;background:#F2F2F4;color:#000;font-family:'Manrope',sans-serif;box-shadow:0 0 0 11px #090D16,0 30px 60px rgba(9,13,22,0.18);overflow:hidden;display:flex;flex-direction:column;position:relative;margin:11px">
+    <div style="height:54px;display:flex;justify-content:space-between;align-items:center;padding:0 32px;font-size:17px;font-weight:600;flex-shrink:0"><span>{{ now }}</span><div style="width:120px;height:34px;border-radius:20px;background:#090D16"></div><span style="font-size:14px;font-weight:600">{{ signalLabel }}</span></div>
+
+    <sc-if value="{{ isJobs }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;overflow:auto;padding:8px 16px 124px;display:flex;flex-direction:column;gap:26px;min-height:0">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;padding:0 4px">
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:700;color:#6C6C70;letter-spacing:0.06em">THURSDAY 23 OCTOBER</span><span style="font-size:30px;font-weight:700;letter-spacing:-0.025em">Jobs</span></div>
+        <div style="width:40px;height:40px;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700">RM</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:13px;font-weight:700;color:#6C6C70;padding:0 4px;letter-spacing:0.06em">TODAY</span>
+        <div style="background:#FFFFFF;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-size:19px;font-weight:700;letter-spacing:-0.015em">421 Oak St</span><span style="font-size:14px;font-weight:600;color:{{ todayCol }}">{{ todayStatus }}</span></div>
+            <img src="https://images.pexels.com/photos/15505770/pexels-photo-15505770.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=400" alt="" style="width:64px;height:64px;border-radius:14px;object-fit:cover;flex-shrink:0;background:#DDD">
+          </div>
+          <div style="height:1px;background:#EFEFF1"></div>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;font-weight:500;color:#3C3C43">
+            <span>7:30 – 16:00 · 2.4 mi away</span>
+            <span>Miller Residence · Re-roof</span>
+            <span>{{ todayPhotos }}</span>
+            <span>Ravi, Jay, Kim</span>
+          </div>
+          <div onClick="{{ todayGo }}" style="height:60px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer">{{ todayCta }}</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:13px;font-weight:700;color:#6C6C70;padding:0 4px;letter-spacing:0.06em">UPCOMING</span>
+        <div style="background:#FFFFFF;border-radius:22px;overflow:hidden">
+          <div style="display:flex;gap:12px;align-items:center;padding:14px 16px"><img src="https://images.pexels.com/photos/32608171/pexels-photo-32608171.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=200" alt="" style="width:44px;height:44px;border-radius:10px;object-fit:cover"><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:600">118 Pine Ave</span><span style="font-size:14px;color:#6C6C70">Fri · 8:00 · Inspection</span></div><span style="color:#C7C7CC;font-size:18px">›</span></div>
+          <div style="height:1px;background:#EFEFF1;margin-left:72px"></div>
+          <div style="display:flex;gap:12px;align-items:center;padding:14px 16px"><img src="https://images.pexels.com/photos/39623734/pexels-photo-39623734.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=200" alt="" style="width:44px;height:44px;border-radius:10px;object-fit:cover"><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:600">7 Ash Rd</span><span style="font-size:14px;color:#6C6C70">Fri · 13:00 · Repair</span></div><span style="color:#C7C7CC;font-size:18px">›</span></div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isCheckin }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:4px 16px 16px;display:flex;flex-direction:column;gap:18px;min-height:0">
+      <div style="display:flex;justify-content:space-between"><span onClick="{{ goJobs }}" style="width:48px;height:48px;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></span></div>
+      <div style="display:flex;flex-direction:column;gap:4px;padding:0 4px"><span style="font-size:28px;font-weight:800;letter-spacing:-0.025em;line-height:1.1">Check in at 421 Oak St</span><span style="font-size:15px;color:#6C6C70;font-weight:500">Re-roof · Miller Residence</span></div>
+      <div style="background:#FFFFFF;border-radius:22px;overflow:hidden">
+        <div style="display:flex;gap:12px;align-items:center;padding:14px 16px"><span style="width:40px;height:40px;border-radius:12px;background:#F2F2F4;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 100 18 9 9 0 000-18z M12 7v5l3 2"></path></svg></span><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;color:#6C6C70">Time</span><span style="font-size:16px;font-weight:700">7:31 · Thu 23 Oct</span></div><span style="font-size:14px;color:#6C6C70">Automatic</span></div>
+        <div style="height:1px;background:#EFEFF1;margin-left:64px"></div>
+        <div style="display:flex;gap:12px;align-items:center;padding:14px 16px"><span style="width:40px;height:40px;border-radius:12px;background:#F2F2F4;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z M12 11.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path></svg></span><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;color:#6C6C70">Location</span><span style="font-size:16px;font-weight:700">At this address</span></div><span style="font-size:14px;color:#6C6C70">±6 m</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;padding:0 4px"><span style="font-size:13px;font-weight:700;color:#6C6C70;letter-spacing:0.06em">WHO'S ON SITE?</span><span style="font-size:13px;font-weight:700;color:#6C6C70">{{ crewCount }}</span></div>
+        <div style="background:#FFFFFF;border-radius:22px;overflow:hidden">
+          <sc-for list="{{ crewRows }}" as="c" hint-placeholder-count="3">
+            <div onClick="{{ c.tap }}" style="display:flex;gap:12px;align-items:center;padding:14px 16px;cursor:pointer;border-top:{{ c.line }}">
+              <span style="width:40px;height:40px;border-radius:50%;background:#F2F2F4;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700">{{ c.ini }}</span>
+              <div style="flex:1;display:flex;flex-direction:column;gap:1px"><span style="font-size:17px;font-weight:600">{{ c.name }}</span><span style="font-size:14px;color:#6C6C70">{{ c.role }}</span></div>
+              <span style="width:30px;height:30px;border-radius:50%;background:{{ c.bg }};box-shadow:{{ c.ring }};color:#FFFFFF;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ c.mark }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="flex:1"></div>
+      <span style="font-size:14px;color:#6C6C70;text-align:center">Saved on this phone. Works without signal.</span>
+      <div onClick="{{ confirmCheckin }}" style="height:60px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer;flex-shrink:0">Check in · start Arrival photos</div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:4px 16px 16px;display:flex;flex-direction:column;gap:18px;min-height:0">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span onClick="{{ goJobs }}" style="width:48px;height:48px;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></span><span style="height:34px;padding:0 14px;border-radius:999px;background:#FDF0DC;color:#9A5B00;font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#E08A00"></span>Offline · saving on phone</span></div>
+      <div style="display:flex;flex-direction:column;gap:4px;padding:0 4px"><span style="font-size:28px;font-weight:800;letter-spacing:-0.025em">421 Oak St</span><span style="font-size:15px;color:#6C6C70;font-weight:500">{{ listSub }}</span></div>
+      <div style="display:flex;gap:8px;padding:0 4px;font-size:14px;font-weight:600"><span>{{ capturedText }}</span><span style="color:#C7C7CC">·</span><span style="color:#9A5B00">{{ uploadedText }}</span></div>
+      <sc-if value="{{ repairView }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;padding:0 4px"><span style="font-size:13px;font-weight:700;color:#6C6C70;letter-spacing:0.06em">REPAIR · WORK STEPS</span><span style="font-size:13px;font-weight:700;color:#000">{{ stepsDoneText }}</span></div>
+        <div style="background:#FFFFFF;border-radius:22px;overflow:hidden">
+          <sc-for list="{{ workSteps }}" as="w" hint-placeholder-count="4">
+            <div style="display:flex;flex-direction:column;border-top:{{ w.line }};background:{{ w.bg }}">
+              <div style="display:flex;gap:12px;align-items:center;padding:16px">
+                <span style="width:30px;height:30px;border-radius:50%;flex-shrink:0;background:{{ w.dot }};box-shadow:{{ w.ring }};color:{{ w.numCol }};font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ w.mark }}</span>
+                <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:17px;font-weight:700">{{ w.label }}</span><span style="font-size:14px;color:{{ w.subCol }}">{{ w.sub }}</span></div>
+              </div>
+              <sc-if value="{{ w.isCur }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:6px;padding:0 16px 16px 58px">
+                <sc-for list="{{ w.photos }}" as="p" hint-placeholder-count="2">
+                  <div onClick="{{ p.tap }}" style="display:flex;gap:10px;align-items:center;min-height:52px;padding:0 12px;border-radius:14px;background:{{ p.bg }};cursor:pointer">
+                    <span style="width:24px;height:24px;border-radius:50%;flex-shrink:0;background:{{ p.dot }};box-shadow:{{ p.ring }};color:#FFFFFF;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ p.mark }}</span>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:1px;min-width:0"><span style="font-size:15px;font-weight:600">{{ p.name }}</span><span style="font-size:13px;color:#6C6C70">{{ p.sub }}</span></div>
+                    <span style="font-size:12px;font-weight:800;letter-spacing:0.06em;color:{{ p.tagCol }}">{{ p.tag }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+      <sc-if value="{{ notRepairView }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;padding:0 4px"><span style="font-size:13px;font-weight:700;color:#6C6C70;letter-spacing:0.06em">{{ openLabel }}</span><span style="font-size:12px;font-weight:700;color:#000">{{ openDone }}</span></div>
+        <div style="background:#FFFFFF;border-radius:22px;overflow:hidden">
+          <sc-for list="{{ openRows }}" as="r" hint-placeholder-count="4">
+            <div onClick="{{ r.tap }}" style="display:flex;gap:12px;align-items:center;padding:16px;background:{{ r.bg }};border-top:{{ r.line }};cursor:{{ r.cur }}">
+              <span style="width:30px;height:30px;border-radius:50%;flex-shrink:0;background:{{ r.dot }};box-shadow:{{ r.ring }};color:#FFFFFF;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ r.mark }}</span>
+              <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:17px;font-weight:600">{{ r.name }}</span><span style="font-size:14px;color:{{ r.subCol }}">{{ r.sub }}</span></div>
+              <span style="font-size:14px;font-weight:600;color:#6C6C70">{{ r.right }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:13px;font-weight:700;color:#6C6C70;padding:0 4px;letter-spacing:0.06em">OTHER STAGES</span>
+        <div style="background:#FFFFFF;border-radius:22px;overflow:hidden">
+          <sc-for list="{{ otherStages }}" as="g" hint-placeholder-count="2">
+            <div onClick="{{ g.tap }}" style="display:flex;gap:12px;align-items:center;padding:16px;cursor:pointer;border-top:{{ g.line }}">
+              <span style="width:30px;height:30px;border-radius:50%;background:{{ g.dot }};color:{{ g.numCol }};font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ g.mark }}</span>
+              <span style="flex:1;font-size:17px;font-weight:600">{{ g.label }}</span><span style="font-size:14px;color:#6C6C70">{{ g.count }}</span><span style="color:#C7C7CC;font-size:18px">›</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="flex:1"></div>
+      <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0">
+        <div onClick="{{ primary.go }}" style="height:60px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer">{{ primary.label }}</div>
+        <sc-if value="{{ hasSecondary }}" hint-placeholder-val="{{ false }}"><div onClick="{{ secondary.go }}" style="height:56px;border-radius:999px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:pointer">{{ secondary.label }}</div></sc-if>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isWork }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+    <div style="flex:1;overflow:auto;padding:4px 16px 16px;display:flex;flex-direction:column;gap:14px;min-height:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span onClick="{{ goSteps }}" style="height:48px;display:flex;align-items:center;gap:6px;padding:0 4px;font-size:16px;font-weight:700;cursor:pointer">421 Oak St<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></span><span style="height:34px;padding:0 14px;border-radius:999px;background:{{ netBg }};color:{{ netCol }};font-size:14px;font-weight:700;display:flex;align-items:center;white-space:nowrap">{{ netText }}</span></div>
+      <span style="font-size:30px;font-weight:800;letter-spacing:-0.025em;padding:0 4px">Today's job</span>
+      <div style="padding:4px 2px 0;display:flex;flex-direction:column">
+        <sc-for list="{{ phases }}" as="g" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:32px minmax(0,1fr);column-gap:14px">
+            <div style="display:flex;flex-direction:column;align-items:center;padding-top:14px">
+              <span style="width:30px;height:30px;border-radius:50%;flex-shrink:0;background:{{ g.dot }};box-shadow:{{ g.ring }};color:#FFFFFF;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ g.mark }}</span>
+              <sc-if value="{{ g.notLast }}" hint-placeholder-val="{{ true }}"><span style="flex:1;width:0;min-height:14px;border-left:3px {{ g.lineStyle }} {{ g.lineCol }};margin:4px 0"></span></sc-if>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:12px;min-width:0">
+              <div onClick="{{ g.toggle }}" style="display:flex;align-items:center;gap:10px;min-height:58px;cursor:pointer">
+                <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:{{ g.titleSize }};font-weight:800;letter-spacing:-0.015em;color:{{ g.labelCol }};line-height:1.15">{{ g.label }}</span><span style="font-size:14px;font-weight:600;color:{{ g.subCol }}">{{ g.sub }}</span></div>
+                <span style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#636366" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="{{ g.chev }}"></path></svg></span>
+              </div>
+              <sc-if value="{{ g.isOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:6px;padding:8px;border-radius:20px;background:{{ g.cardBg }};box-shadow:{{ g.cardSh }}">
+                  <sc-if value="{{ g.hasPhotos }}" hint-placeholder-val="{{ false }}">
+                    <sc-for list="{{ g.photos }}" as="p" hint-placeholder-count="3">
+                    <div onClick="{{ p.tap }}" style="display:flex;gap:12px;align-items:center;min-height:72px;padding:8px 10px;border-radius:16px;background:{{ p.rowBg }};box-shadow:{{ p.rowSh }};cursor:pointer;box-sizing:border-box">
+                      <div style="width:56px;height:56px;border-radius:12px;overflow:hidden;flex-shrink:0;background:{{ p.iconBg }};border:{{ p.slot }};box-sizing:border-box;display:flex;align-items:center;justify-content:center"><sc-if value="{{ p.img }}" hint-placeholder-val="{{ false }}"><img src="{{ p.img }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if><sc-if value="{{ p.empty }}" hint-placeholder-val="{{ true }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{ p.iconCol }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z M12 17a4 4 0 100-8 4 4 0 000 8z"></path></svg></sc-if></div>
+                      <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:17px;font-weight:700;color:{{ p.nameCol }}">{{ p.name }}</span><span style="font-size:14px;line-height:1.3;color:{{ p.subCol }};display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ p.sub }}</span></div>
+                      <sc-if value="{{ p.showTake }}" hint-placeholder-val="{{ false }}"><span aria-label="Take photo" style="width:44px;height:44px;border-radius:50%;background:#C0392B;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z M12 17a4 4 0 100-8 4 4 0 000 8z"></path></svg></span></sc-if><sc-if value="{{ p.isSaved }}" hint-placeholder-val="{{ false }}"><span style="height:28px;padding:0 10px;border-radius:999px;background:{{ p.upBg }};color:{{ p.upCol }};font-size:13px;font-weight:700;display:flex;align-items:center;white-space:nowrap;flex-shrink:0">{{ p.upTxt }}</span></sc-if>
+                    </div>
+                    </sc-for>
+                  </sc-if>
+                  <sc-if value="{{ g.isRepair }}" hint-placeholder-val="{{ false }}">
+                    <sc-for list="{{ g.steps }}" as="st" hint-placeholder-count="5">
+                      <div style="display:flex;flex-direction:column">
+                        <sc-if value="{{ st.hasKicker }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:6px;padding:12px 8px 6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#48484A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z M12 11.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path></svg><span style="font-size:12px;font-weight:800;letter-spacing:0.06em;color:#48484A">{{ st.kicker }}</span></div></sc-if>
+                        <div onClick="{{ st.tap }}" style="display:flex;gap:12px;align-items:center;min-height:64px;padding:0 8px;border-top:{{ st.line }};cursor:pointer">
+                          <span style="width:28px;height:28px;border-radius:50%;flex-shrink:0;background:{{ st.iconBg }};box-shadow:{{ st.iconRing }};display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ st.iconCol }}" stroke-width="{{ st.iconW }}" stroke-linecap="round" stroke-linejoin="round"><path d="{{ st.icon }}"></path></svg></span>
+                          <div style="flex:1;display:flex;flex-direction:column;gap:1px;min-width:0"><span style="font-size:17px;font-weight:{{ st.labelW }};color:{{ st.labelCol }}">{{ st.label }}</span><span style="font-size:14px;color:#48484A">{{ st.sub }}</span></div>
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#636366" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="{{ st.chev }}"></path></svg>
+                        </div>
+                        <sc-if value="{{ st.isOpenRow }}" hint-placeholder-val="{{ false }}">
+                          <div style="display:flex;flex-direction:column;gap:6px;padding:2px 0 10px 0">
+                            <sc-for list="{{ st.photos }}" as="p" hint-placeholder-count="2">
+                            <div onClick="{{ p.tap }}" style="display:flex;gap:12px;align-items:center;min-height:72px;padding:8px 10px;border-radius:16px;background:{{ p.rowBg }};box-shadow:{{ p.rowSh }};cursor:pointer;box-sizing:border-box">
+                      <div style="width:56px;height:56px;border-radius:12px;overflow:hidden;flex-shrink:0;background:{{ p.iconBg }};border:{{ p.slot }};box-sizing:border-box;display:flex;align-items:center;justify-content:center"><sc-if value="{{ p.img }}" hint-placeholder-val="{{ false }}"><img src="{{ p.img }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if><sc-if value="{{ p.empty }}" hint-placeholder-val="{{ true }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{ p.iconCol }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z M12 17a4 4 0 100-8 4 4 0 000 8z"></path></svg></sc-if></div>
+                      <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:17px;font-weight:700;color:{{ p.nameCol }}">{{ p.name }}</span><span style="font-size:14px;line-height:1.3;color:{{ p.subCol }};display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ p.sub }}</span></div>
+                      <sc-if value="{{ p.showTake }}" hint-placeholder-val="{{ false }}"><span aria-label="Take photo" style="width:44px;height:44px;border-radius:50%;background:#C0392B;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z M12 17a4 4 0 100-8 4 4 0 000 8z"></path></svg></span></sc-if><sc-if value="{{ p.isSaved }}" hint-placeholder-val="{{ false }}"><span style="height:28px;padding:0 10px;border-radius:999px;background:{{ p.upBg }};color:{{ p.upCol }};font-size:13px;font-weight:700;display:flex;align-items:center;white-space:nowrap;flex-shrink:0">{{ p.upTxt }}</span></sc-if>
+                    </div>
+                            </sc-for>
+                          </div>
+                        </sc-if>
+                      </div>
+                    </sc-for>
+                  </sc-if>
+                  <sc-if value="{{ g.hasLines }}" hint-placeholder-val="{{ false }}">
+                    <sc-for list="{{ g.lines }}" as="l" hint-placeholder-count="3"><div style="display:flex;gap:12px;align-items:flex-start;padding:10px 8px"><span style="width:40px;height:40px;border-radius:12px;flex-shrink:0;background:{{ l.iconBg }};display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{ l.iconCol }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ l.icon }}"></path></svg></span><div style="flex:1;display:flex;flex-direction:column;gap:3px;min-width:0;padding-top:1px"><span style="font-size:16px;font-weight:700">{{ l.t }}</span><span style="font-size:14px;line-height:1.4;color:#48484A">{{ l.d }}</span><sc-if value="{{ l.hasBar }}" hint-placeholder-val="{{ false }}"><div style="height:8px;border-radius:999px;background:#E5E5EA;overflow:hidden;margin-top:6px"><div style="height:100%;width:{{ l.pct }};background:{{ l.barCol }};border-radius:999px;transition:width 0.4s"></div></div></sc-if></div></div></sc-for>
+                  </sc-if>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ hasThen }}" hint-placeholder-val="{{ false }}"><div style="display:grid;grid-template-columns:32px minmax(0,1fr);column-gap:14px;align-items:center;min-height:44px"><span style="width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 2px #AEAEB2;justify-self:center"></span><span style="font-size:15px;font-weight:600;color:#6C6C70">Then: {{ thenText }}</span></div></sc-if>
+      </div>
+    </div>
+    <div style="flex-shrink:0;padding:12px 16px 24px;background:#F2F2F4;box-shadow:0 -1px 0 #E5E5EA;display:flex;flex-direction:column;gap:10px">
+      <span style="font-size:15px;font-weight:600;color:#3C3C43;text-align:center">{{ wHint }}</span>
+      <div style="display:flex;gap:10px">
+        <div onClick="{{ openMore }}" style="width:60px;height:60px;border-radius:50%;background:#FFFFFF;box-shadow:inset 0 0 0 1px #D1D1D6;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0"><svg width="24" height="24" viewBox="0 0 24 24" fill="#000"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg></div>
+        <div onClick="{{ wAction }}" style="flex:1;height:60px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;gap:10px;font-size:18px;font-weight:700;cursor:pointer" style-active="filter:brightness(0.92)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ wIcon }}"></path></svg>{{ wMain }}</div>
+      </div>
+    </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isStepDone }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+    <div style="flex:1;overflow:auto;padding:28px 16px 16px;display:flex;flex-direction:column;gap:20px;min-height:0">
+      <div style="display:flex;flex-direction:column;gap:8px;padding:0 4px">
+        <span style="width:52px;height:52px;border-radius:50%;background:#000;color:#FFFFFF;display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span>
+        <span style="font-size:13px;font-weight:700;color:#6C6C70;letter-spacing:0.06em;padding-top:8px">{{ sdNo }}</span>
+        <span style="font-size:30px;font-weight:800;letter-spacing:-0.025em;line-height:1.1">{{ sdTitle }}</span>
+        <span style="font-size:16px;color:#3C3C43">{{ sdSub }}</span>
+      </div>
+      <div style="display:flex;gap:8px;padding:0 4px">
+        <sc-for list="{{ sdThumbs }}" as="p" hint-placeholder-count="2"><img src="{{ p.img }}" alt="" style="width:88px;height:66px;border-radius:12px;object-fit:cover;display:block"></sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:13px;font-weight:700;color:#C0392B;padding:0 4px;letter-spacing:0.06em">{{ sdNextNo }}</span>
+        <div style="background:#FFFFFF;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:8px;box-shadow:inset 0 0 0 2px #C0392B">
+          <span style="font-size:24px;font-weight:800;letter-spacing:-0.02em">{{ sdNextTitle }}</span>
+          <span style="font-size:16px;line-height:1.45;color:#3C3C43">{{ sdNextSub }}</span>
+          <span style="font-size:14px;font-weight:700;color:#6C6C70">{{ sdNextPhotos }}</span>
+        </div>
+      </div>
+    </div>
+    <div style="flex-shrink:0;padding:12px 16px 24px;display:flex;gap:10px">
+      <div onClick="{{ goLock }}" style="width:60px;height:60px;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10a1 1 0 011 1v16a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z M11 18h2"></path></svg></div>
+      <div onClick="{{ sdGo }}" style="flex:1;height:60px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer">{{ sdCta }}</div>
+    </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isWaiver }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:4px 16px 16px;display:flex;flex-direction:column;gap:18px;min-height:0">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span onClick="{{ waiverBack }}" style="width:48px;height:48px;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></span><span style="height:34px;padding:0 14px;border-radius:999px;background:#FDF0DC;color:#9A5B00;font-size:14px;font-weight:700;display:flex;align-items:center">Offline · saving on phone</span></div>
+      <span style="font-size:28px;font-weight:800;letter-spacing:-0.025em;padding:0 4px">Waiver request</span>
+      <div style="background:#FFFFFF;border-radius:22px;overflow:hidden">
+        <sc-for list="{{ waiverRows }}" as="w" hint-placeholder-count="1">
+          <div style="display:flex;gap:12px;align-items:center;padding:16px;border-top:{{ w.line }}"><span style="width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 2px #C0392B"></span><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:600">{{ w.name }}</span><span style="font-size:14px;color:#C0392B">{{ w.sub }}</span></div></div>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:13px;font-weight:700;color:#6C6C70;padding:0 4px;letter-spacing:0.06em">WHY CAN'T YOU TAKE IT?</span>
+        <div style="background:#FFFFFF;border-radius:22px;overflow:hidden">
+          <sc-for list="{{ waiverReasons }}" as="o" hint-placeholder-count="4">
+            <div onClick="{{ o.pick }}" style="display:flex;gap:12px;align-items:center;padding:16px;cursor:pointer;border-top:{{ o.line }}"><span style="width:26px;height:26px;border-radius:50%;box-shadow:inset 0 0 0 {{ o.ring }} #000"></span><span style="font-size:15px;font-weight:{{ o.fw }}">{{ o.label }}</span></div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:13px;font-weight:700;color:#6C6C70;padding:0 4px;letter-spacing:0.06em">NOTE · OPTIONAL</span>
+        <textarea value="{{ waiverNote }}" onChange="{{ onWaiverNote }}" style="min-height:72px;border:none;outline:none;border-radius:18px;padding:14px 16px;background:#FFFFFF;font-size:15px;line-height:1.45;resize:none;color:#000"></textarea>
+      </div>
+      <span style="font-size:14px;line-height:1.45;color:#6C6C70;padding:0 4px">Sean approves or asks for another photo. It stays Missing until then.</span>
+      <div style="flex:1"></div>
+      <div onClick="{{ sendWaiver }}" style="height:60px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer;flex-shrink:0">{{ waiverCta }}</div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isPhase }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:4px 16px 16px;display:flex;flex-direction:column;gap:18px;min-height:0">
+      <div style="height:40px"></div>
+      <div style="display:flex;flex-direction:column;gap:6px;padding:0 4px"><span style="width:44px;height:44px;border-radius:50%;background:#000;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800">✓</span><span style="font-size:28px;font-weight:800;letter-spacing:-0.025em;padding-top:8px">{{ phaseTitle }}</span><span style="font-size:15px;line-height:1.45;color:#6C6C70;font-weight:500">{{ phaseSub }}</span></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+        <sc-for list="{{ phaseThumbs }}" as="p" hint-placeholder-count="6"><img src="{{ p.img }}" alt="" style="width:100%;height:84px;object-fit:cover;border-radius:10px;display:block;background:#DDD"></sc-for>
+      </div>
+      <div style="background:#FFFFFF;border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:4px"><span style="font-size:16px;font-weight:700">{{ phaseNext }}</span><span style="font-size:14px;color:#6C6C70">{{ phaseNextSub }}</span></div>
+      <div style="flex:1"></div>
+      <div onClick="{{ toList }}" style="height:60px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer;flex-shrink:0">Back to job</div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isFinish }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:4px 16px 16px;display:flex;flex-direction:column;gap:18px;min-height:0">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span onClick="{{ toList }}" style="width:48px;height:48px;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></span><span style="height:34px;padding:0 14px;border-radius:999px;background:#FDF0DC;color:#9A5B00;font-size:14px;font-weight:700;display:flex;align-items:center">No signal · saving on phone</span></div>
+      <sc-if value="{{ finishMissing }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:4px;padding:0 4px"><span style="font-size:28px;font-weight:800;letter-spacing:-0.025em;color:#C0392B">{{ missingTitle }}</span><span style="font-size:15px;line-height:1.45;color:#6C6C70;font-weight:500">The job can't be marked done without them, or Sean's OK.</span></div>
+        <div style="background:#FFFFFF;border-radius:22px;overflow:hidden">
+          <sc-for list="{{ missingRows }}" as="m" hint-placeholder-count="2">
+            <div style="display:flex;gap:12px;align-items:center;padding:16px;background:#FDF3F1;border-top:{{ m.line }}"><span style="width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 2px #C0392B;flex-shrink:0"></span><div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:17px;font-weight:600">{{ m.name }}</span><span style="font-size:14px;color:#6C6C70">{{ m.hint }}</span></div><span onClick="{{ m.take }}" style="height:44px;padding:0 20px;border-radius:999px;background:#000;color:#FFFFFF;font-size:15px;font-weight:700;display:flex;align-items:center;cursor:pointer">Take</span></div>
+          </sc-for>
+        </div>
+        <div style="flex:1"></div>
+        <div onClick="{{ takeMissing }}" style="height:60px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer;flex-shrink:0">Take missing photos</div>
+        <span onClick="{{ waiveMissing }}" style="min-height:56px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:pointer">Can't take them? Request waiver</span>
+      </sc-if>
+      <sc-if value="{{ finishReady }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:4px;padding:0 4px"><span style="font-size:28px;font-weight:800;letter-spacing:-0.025em">Finish 421 Oak St</span><span style="font-size:15px;color:#6C6C70;font-weight:500">Re-roof · on site since 7:31 · 3 crew</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;padding:0 4px"><span style="font-size:13px;font-weight:700;color:#6C6C70;letter-spacing:0.06em">PHOTOS</span><span style="font-size:12px;font-weight:700">{{ capturedText }}</span></div>
+          <div style="background:#FFFFFF;border-radius:22px;overflow:hidden">
+            <sc-for list="{{ stageSummary }}" as="g" hint-placeholder-count="3">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-top:{{ g.line }}"><span style="font-size:16px;font-weight:600">{{ g.label }}</span><span style="font-size:14px;font-weight:600">✓ {{ g.count }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="background:#FFFFFF;border-radius:22px;overflow:hidden">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600">Uploaded to office</span><span style="font-size:14px;color:#6C6C70">Safe on this phone · sends on its own</span></div><span style="font-size:15px;font-weight:700;color:#9A5B00">0 of {{ capturedN }}</span></div>
+          <sc-if value="{{ hasAiNote }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px;border-top:1px solid #EFEFF1"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600;color:#4F46E5">{{ aiNoteTitle }}</span><span style="font-size:14px;color:#6C6C70">{{ aiNoteSub }}</span></div><span style="font-size:14px;font-weight:600">1 photo</span></div></sc-if>
+          <sc-if value="{{ hasWaivers }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px;border-top:1px solid #EFEFF1"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600">Waiting for Sean</span><span style="font-size:14px;color:#6C6C70">{{ waiverSummary }}</span></div><span style="font-size:14px;font-weight:600">Waiver</span></div></sc-if>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px;border-top:1px solid #EFEFF1"><span style="font-size:16px;font-weight:600">Check-out</span><span style="font-size:14px;color:#6C6C70">15:48 · at address</span></div>
+        </div>
+        <span style="font-size:14px;font-weight:600;text-align:center;padding:0 12px">You can leave. Uploads don't need you here.</span>
+        <div style="flex:1"></div>
+        <div onClick="{{ checkout }}" style="height:60px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer;flex-shrink:0">Finish job · check out</div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:4px 16px 16px;display:flex;flex-direction:column;gap:18px;min-height:0">
+      <div style="height:40px"></div>
+      <div style="display:flex;flex-direction:column;gap:6px;padding:0 4px"><span style="width:44px;height:44px;border-radius:50%;background:#000;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800">✓</span><span style="font-size:28px;font-weight:800;letter-spacing:-0.025em;padding-top:8px">421 Oak St finished</span><span style="font-size:15px;color:#6C6C70;font-weight:500">Checked out 15:49 · on site 8 h 18 min</span></div>
+      <div style="background:#FFFFFF;border-radius:22px;overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600">Work</span><span style="font-size:14px;color:#6C6C70">{{ capturedText }}</span></div><span style="font-size:14px;font-weight:700">✓ Complete</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px;border-top:1px solid #EFEFF1"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600">Upload</span><span style="font-size:14px;color:#6C6C70">On this phone · sends when there's signal</span></div><span style="font-size:14px;font-weight:700;color:#9A5B00">0 of {{ capturedN }}</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px;border-top:1px solid #EFEFF1"><span style="font-size:16px;font-weight:600">Office review</span><span style="font-size:14px;color:#6C6C70">Sean, after upload</span></div>
+      </div>
+      <span style="font-size:14px;line-height:1.45;color:#9A5B00;font-weight:600;padding:0 4px">Don't sign out or delete the app until Uploads shows 0.</span>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:13px;font-weight:700;color:#6C6C70;padding:0 4px;letter-spacing:0.06em">TOMORROW</span>
+        <div style="background:#FFFFFF;border-radius:22px;display:flex;gap:12px;align-items:center;padding:14px 16px"><img src="https://images.pexels.com/photos/32608171/pexels-photo-32608171.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=200" alt="" style="width:44px;height:44px;border-radius:10px;object-fit:cover"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:600">118 Pine Ave</span><span style="font-size:14px;color:#6C6C70">Fri 24 Oct · 8:00 · Inspection</span></div></div>
+      </div>
+      <div style="flex:1"></div>
+      <div onClick="{{ leave }}" style="height:60px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer;flex-shrink:0">Back to jobs</div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isUploads }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:8px 16px 124px;display:flex;flex-direction:column;gap:20px;min-height:0">
+      <div style="display:flex;flex-direction:column;gap:2px;padding:0 4px"><span style="font-size:12px;font-weight:600;color:{{ upEyebrowCol }};letter-spacing:0.06em">{{ upEyebrow }}</span><span style="font-size:30px;font-weight:700;letter-spacing:-0.025em">Uploads</span></div>
+      <sc-if value="{{ upSending }}" hint-placeholder-val="{{ true }}">
+        <div style="background:#FFFFFF;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:16px;font-weight:600">In the office</span><span style="font-size:14px;font-weight:600;color:#9A5B00">{{ upSendingText }}</span></div>
+          <div style="display:flex;align-items:baseline;gap:6px"><span style="font-size:40px;font-weight:800;letter-spacing:-0.03em">{{ sent }}</span><span style="font-size:17px;color:#6C6C70;font-weight:600">of {{ capturedN }}</span></div>
+          <div style="height:8px;border-radius:999px;background:#EFEFF1;overflow:hidden"><div style="height:100%;width:{{ upPct }};background:#2F9E62;border-radius:999px;transition:width 0.4s"></div></div>
+          <span style="font-size:14px;color:#6C6C70">Photos send on their own. You can keep working or leave.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:13px;font-weight:700;color:#6C6C70;padding:0 4px;letter-spacing:0.06em">ON THIS PHONE · {{ onPhoneN }}</span>
+          <div style="background:#FFFFFF;border-radius:22px;overflow:hidden">
+            <sc-for list="{{ onPhone }}" as="u" hint-placeholder-count="3">
+              <div style="display:flex;gap:12px;align-items:center;padding:14px 16px;border-top:{{ u.line }}"><img src="{{ u.img }}" alt="" style="width:40px;height:40px;border-radius:8px;object-fit:cover"><div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:16px;font-weight:600">{{ u.name }}</span><span style="font-size:14px;color:{{ u.col }}">{{ u.status }}</span></div><sc-if value="{{ u.canRetry }}" hint-placeholder-val="{{ false }}"><span onClick="{{ retry }}" style="height:44px;padding:0 20px;border-radius:999px;background:#FDF0DC;color:#9A5B00;font-size:15px;font-weight:700;display:flex;align-items:center;cursor:pointer">Retry</span></sc-if></div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;padding:0 4px"><span style="font-size:13px;font-weight:700;color:#6C6C70;letter-spacing:0.06em">IN THE OFFICE · {{ sent }}</span><span style="font-size:14px;color:#6C6C70">{{ lastIn }}</span></div>
+          <div style="background:#FFFFFF;border-radius:22px;display:flex;justify-content:space-between;align-items:center;padding:14px 16px"><span style="font-size:16px;font-weight:600">{{ sent }} photos</span><span style="font-size:14px;font-weight:700;color:#2F9E62">✓ Confirmed received</span></div>
+        </div>
+      </sc-if>
+      <div onClick="{{ goTimeline }}" style="min-height:60px;border-radius:22px;background:#FFFFFF;display:flex;align-items:center;gap:12px;padding:0 16px;cursor:pointer"><span style="flex:1;font-size:16px;font-weight:700">Open job timeline</span><span style="font-size:14px;color:#48484A">Phases turn green as photos arrive</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#636366" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></div>
+      <sc-if value="{{ upAll }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#FFFFFF;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
+          <span style="font-size:15px;font-weight:700;color:#2F9E62">✓ All uploaded</span>
+          <div style="display:flex;align-items:baseline;gap:6px"><span style="font-size:40px;font-weight:800;letter-spacing:-0.03em">{{ capturedN }}</span><span style="font-size:17px;color:#6C6C70;font-weight:600">/ {{ capturedN }}</span></div>
+          <div style="height:8px;border-radius:999px;background:#2F9E62"></div>
+          <span style="font-size:14px;color:#6C6C70">The office confirmed every photo. Nothing is only on this phone.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:13px;font-weight:700;color:#6C6C70;padding:0 4px;letter-spacing:0.06em">TODAY</span>
+          <div style="background:#FFFFFF;border-radius:22px;display:flex;justify-content:space-between;align-items:center;padding:14px 16px"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:600">421 Oak St</span><span style="font-size:14px;color:#6C6C70">{{ capturedN }} of {{ capturedN }} in the office</span></div><span style="font-size:14px;color:#6C6C70">Sean reviews</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:13px;font-weight:700;color:#6C6C70;padding:0 4px;letter-spacing:0.06em">EARLIER</span>
+          <div style="background:#FFFFFF;border-radius:22px;overflow:hidden">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:16px"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:600">61 Birch Lane</span><span style="font-size:14px;color:#6C6C70">Mon 20 Oct · 12 of 12 in the office</span></div><span style="color:#2F9E62;font-weight:800">✓</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:16px;border-top:1px solid #EFEFF1"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:600">14 Maple Dr</span><span style="font-size:14px;color:#6C6C70">Mon 20 Oct · 18 of 18 in the office</span></div><span style="color:#2F9E62;font-weight:800">✓</span></div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ showTabs }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;left:16px;right:16px;bottom:22px;height:76px;border-radius:999px;background:rgba(255,255,255,0.96);box-shadow:0 8px 24px rgba(0,0,0,0.10);display:flex;align-items:center;justify-content:space-around">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+        <div onClick="{{ t.go }}" style="position:relative;min-width:88px;height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;color:{{ t.col }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="{{ t.col }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ t.d }}"></path></svg><span style="font-size:12px;font-weight:700">{{ t.label }}</span><sc-if value="{{ t.badge }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:4px;right:18px;min-width:22px;height:22px;padding:0 6px;box-sizing:border-box;border-radius:999px;background:#E08A00;color:#FFFFFF;font-size:12px;box-shadow:0 0 0 2px #FFFFFF;font-weight:800;display:flex;align-items:center;justify-content:center">{{ t.badge }}</span></sc-if></div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isCam }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:#000;color:#FFFFFF;display:flex;flex-direction:column">
+      <div style="height:54px;display:flex;justify-content:space-between;align-items:center;padding:0 32px;font-size:17px;font-weight:600;flex-shrink:0"><span>{{ now }}</span><div style="width:120px;height:34px;border-radius:20px;background:#090D16"></div><span style="font-size:14px">{{ signalLabel }}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 16px 10px"><span onClick="{{ toList }}" style="width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.16);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></span><div style="display:flex;flex-direction:column;align-items:center;gap:7px"><span style="font-size:16px;font-weight:700">{{ camStage }}</span><div style="display:flex;gap:5px;align-items:center"><sc-for list="{{ camDots }}" as="d" hint-placeholder-count="4"><span style="height:8px;border-radius:4px;width:{{ d.w }};background:{{ d.bg }};transition:all 0.4s"></span></sc-for></div></div><span style="width:48px"></span></div>
+      <div onClick="{{ shutter }}" style="flex:1;position:relative;margin:0 0;overflow:hidden;min-height:0;cursor:pointer">
+        <img src="{{ camImg }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.9">
+        {{ camCard }}
+        <sc-if value="{{ showCoach }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:16px;right:16px;top:150px;z-index:6;background:#FFFFFF;color:#000;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:0 16px 40px rgba(0,0,0,0.35);animation:coachIn 0.35s ease-out 0.9s both">
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:19px;font-weight:800;letter-spacing:-0.01em">Saved. On to the next shot.</span><span style="font-size:15px;line-height:1.45;color:#3C3C43">After each photo the camera moves down the list by itself. No review screen.</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:14px;background:#F2F2F4">
+            <img src="{{ coachPrevImg }}" alt="" style="width:44px;height:44px;border-radius:10px;object-fit:cover">
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px"><span style="font-size:12px;font-weight:800;letter-spacing:0.06em;color:#6C6C70">SAVED ✓</span><span style="font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ coachPrev }}</span></div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px"><span style="font-size:12px;font-weight:800;letter-spacing:0.06em;color:#C0392B">NOW</span><span style="font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ camName }}</span></div>
+          </div>
+          <span style="font-size:14px;line-height:1.45;color:#3C3C43">Wrong shot? Tap <b style="font-weight:700">All {{ camTotal }}</b> at the bottom left to pick another.</span>
+          <div onClick="{{ dismissCoach }}" style="height:56px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:pointer">Got it</div>
+        </div>
+        </sc-if>
+        <div style="position:absolute;left:0;right:0;bottom:12px;display:flex;flex-direction:column;align-items:center;gap:10px">
+          <div style="display:flex;gap:6px;padding:4px;border-radius:999px;background:rgba(0,0,0,0.5);font-size:12px;font-weight:700"><span style="width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center">.5</span><span style="width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.22);color:#FFD60A">1×</span><span style="width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center">2</span></div>
+          <span style="height:30px;padding:0 12px;border-radius:999px;background:rgba(224,138,0,0.92);font-size:14px;font-weight:700;display:flex;align-items:center">{{ camStamp }}</span><span style="font-size:13px;font-weight:700;color:#F2F2F7;text-shadow:0 1px 3px rgba(0,0,0,0.6)">Tap anywhere or press volume to shoot</span>
+        </div>
+      </div>
+      {{ camFx }}
+      <div style="height:160px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center;padding:0 28px 22px">
+        <div onClick="{{ openAllShots }}" style="width:72px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="position:relative;width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;box-shadow:0 0 0 2px rgba(255,255,255,0.85)"><sc-if value="{{ camLastImg }}" hint-placeholder-val="{{ false }}"><img src="{{ camLastImg }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:14px"></sc-if><span style="position:absolute;right:-6px;top:-6px;min-width:22px;height:22px;padding:0 5px;box-sizing:border-box;border-radius:999px;background:#FFFFFF;color:#000;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ camTaken }}</span></span><span style="font-size:13px;font-weight:700">All {{ camTotal }}</span></div>
+        <div onClick="{{ shutter }}" style="width:88px;height:88px;border-radius:50%;box-shadow:inset 0 0 0 5px #FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="width:72px;height:72px;border-radius:50%;background:#FFFFFF" style-active="transform:scale(0.92)"></span></div>
+        <div onClick="{{ extraPhoto }}" style="width:72px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></span><span style="font-size:13px;font-weight:700">Extra</span></div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isAi }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:#000;color:#FFFFFF;display:flex;flex-direction:column">
+      <div style="height:54px;display:flex;justify-content:space-between;align-items:center;padding:0 32px;font-size:17px;font-weight:600;flex-shrink:0"><span>{{ now }}</span><div style="width:120px;height:34px;border-radius:20px;background:#090D16"></div><span style="font-size:14px">{{ signalLabel }}</span></div>
+      <div style="display:flex;justify-content:center;padding:4px 16px 10px"><span style="font-size:14px;font-weight:700">Repair · 2 of 6</span></div>
+      <div style="flex:1;position:relative;overflow:hidden;min-height:0">
+        <img src="https://images.pexels.com/photos/17274402/pexels-photo-17274402.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=900" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(2.2);opacity:0.55">
+        <span style="position:absolute;left:50%;top:16px;transform:translateX(-50%);height:30px;padding:0 12px;border-radius:999px;background:rgba(0,0,0,0.6);font-size:12px;font-weight:700;display:flex;align-items:center;white-space:nowrap">✓ Old boot removed · saved on phone</span>
+      </div>
+      <div style="background:#FFFFFF;color:#000;border-radius:28px 28px 0 0;padding:20px 20px 34px;display:flex;flex-direction:column;gap:14px;flex-shrink:0">
+        <span style="font-size:11px;font-weight:800;letter-spacing:0.08em;color:#4F46E5">✦ AI CHECK · ON THIS PHONE</span>
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:21px;font-weight:800;letter-spacing:-0.015em">Too close to show where this is</span><span style="font-size:14px;line-height:1.45;color:#3C3C43">The vent pipe isn't in frame, so it can't be matched to the leak source photo.</span></div>
+        <div style="display:flex;gap:10px;align-items:center;padding:10px;border-radius:14px;background:#EEF0FF"><img src="https://images.pexels.com/photos/17274402/pexels-photo-17274402.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=200" alt="" style="width:48px;height:48px;border-radius:8px;object-fit:cover"><span style="font-size:14px;font-weight:600;color:#3730A3">Match this angle: Leak source, 07:52</span></div>
+        <div style="display:flex;gap:10px">
+          <div onClick="{{ aiKeep }}" style="flex:1;height:60px;border-radius:999px;background:#F2F2F4;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer">Keep it</div>
+          <div onClick="{{ aiRetake }}" style="flex:1;height:60px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer">Retake</div>
+        </div>
+        <span style="font-size:14px;color:#6C6C70;text-align:center">This photo is already saved. Retake adds a new one.</span>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isLock }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;color:#FFFFFF;display:flex;flex-direction:column;background:#1C232B">
+      <img src="https://images.pexels.com/photos/15505770/pexels-photo-15505770.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=900" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.45">
+      <div style="position:relative;height:54px;display:flex;justify-content:space-between;align-items:center;padding:0 32px;font-size:16px;font-weight:600;flex-shrink:0"><span></span><div style="width:120px;height:34px;border-radius:20px;background:#090D16"></div><span style="font-size:14px">{{ signalLabel }}</span></div>
+      <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding-top:18px"><span style="font-size:18px;font-weight:600">Thursday 23 October</span><span style="font-size:84px;font-weight:700;letter-spacing:-0.04em;line-height:1">{{ now }}</span></div>
+      <div style="position:relative;flex:1"></div>
+      <div style="position:relative;display:flex;flex-direction:column;gap:10px;padding:0 12px 14px">
+        <sc-if value="{{ lockNudge }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;gap:12px;align-items:center;padding:14px;border-radius:22px;background:rgba(245,245,247,0.92);color:#000">
+          <span style="width:38px;height:38px;border-radius:10px;background:#C0392B;color:#FFFFFF;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">H</span>
+          <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:15px;font-weight:700">{{ lockNudgeTitle }}</span><span style="font-size:14px;line-height:1.35;color:#3C3C43">{{ lockNudge }}</span></div>
+        </div>
+        </sc-if>
+        <div style="display:flex;flex-direction:column;gap:14px;padding:18px;border-radius:26px;background:rgba(20,20,22,0.82)">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#E5E5EA"><span style="width:22px;height:22px;border-radius:6px;background:#C0392B;color:#FFFFFF;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">H</span>421 Oak St</span><span style="font-size:14px;font-weight:700;color:#E5E5EA">{{ wStepNo }}</span></div>
+          <div style="display:flex;gap:6px"><sc-for list="{{ stepBarsDark }}" as="b" hint-placeholder-count="4"><span style="flex:1;height:5px;border-radius:3px;background:{{ b.bg }}"></span></sc-for></div>
+          <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:24px;font-weight:800;letter-spacing:-0.02em">{{ wTitle }}</span><span style="font-size:15px;color:#D1D1D6">{{ wHint }}</span></div>
+          <div onClick="{{ wAction }}" style="height:60px;border-radius:999px;background:#C0392B;display:flex;align-items:center;justify-content:center;gap:8px;font-size:18px;font-weight:800;cursor:pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ wIcon }}"></path></svg>{{ wMain }}</div>
+        </div>
+        <div onClick="{{ unlock }}" style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 0 6px;cursor:pointer"><span style="font-size:14px;font-weight:600;color:#E5E5EA">Swipe up to open</span><span style="width:134px;height:5px;border-radius:3px;background:#FFFFFF"></span></div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ hasSheet }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.38)"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;background:#FFFFFF;border-radius:28px 28px 0 0;padding:10px 20px 34px;display:flex;flex-direction:column;gap:14px;max-height:78%;overflow:auto;color:#000">
+      <span style="align-self:center;width:36px;height:5px;border-radius:3px;background:#D1D1D6"></span>
+
+      <sc-if value="{{ sheetStart }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:22px;font-weight:800;letter-spacing:-0.015em">Start repair?</span><span style="font-size:14px;line-height:1.45;color:#3C3C43">Arrival photos are locked as "before work". Anything taken after this can't count as before.</span></div>
+        <div style="background:#F2F2F4;border-radius:18px;overflow:hidden;font-size:15px">
+          <div style="display:flex;justify-content:space-between;padding:15px 14px"><span style="font-weight:600">Arrival photos</span><span>{{ arrivalCount }}</span></div>
+          <div style="display:flex;justify-content:space-between;padding:15px 14px;border-top:1px solid #E5E5EA"><span style="font-weight:600">Work started</span><span>7:46</span></div>
+          <div style="display:flex;justify-content:space-between;padding:15px 14px;border-top:1px solid #E5E5EA"><span style="font-weight:600">Location</span><span>421 Oak St</span></div>
+        </div>
+        <div onClick="{{ startRepair }}" style="height:60px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer">Start repair</div>
+        <div onClick="{{ closeSheet }}" style="height:56px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:pointer">Not yet</div>
+      </sc-if>
+
+      <sc-if value="{{ sheetMissing }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:22px;font-weight:800;letter-spacing:-0.015em">{{ beforeMissingTitle }}</span><span style="font-size:14px;line-height:1.45;color:#3C3C43">Once repair starts, this can't be taken as a before photo.</span></div>
+        <div style="background:#FDF3F1;border-radius:18px;overflow:hidden">
+          <sc-for list="{{ arrivalMissing }}" as="m" hint-placeholder-count="1">
+            <div style="display:flex;gap:12px;align-items:center;padding:15px 14px;border-top:{{ m.line }}"><span style="width:26px;height:26px;border-radius:50%;box-shadow:inset 0 0 0 2px #C0392B"></span><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600">{{ m.name }}</span><span style="font-size:14px;color:#C0392B">Arrival · Missing</span></div></div>
+          </sc-for>
+        </div>
+        <div onClick="{{ takeBeforeNow }}" style="height:60px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer">Take it now</div>
+        <div onClick="{{ cantTake }}" style="height:56px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:pointer">I can't take it</div>
+        <span style="font-size:14px;color:#6C6C70;text-align:center">"Can't take it" asks Sean for a waiver. Repair can still start.</span>
+      </sc-if>
+
+      <sc-if value="{{ sheetShots }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:20px;font-weight:800">{{ shotsTitle }}</span><span style="font-size:14px;font-weight:600;color:#6C6C70">{{ shotsCount }}</span></div>
+        <span style="font-size:14px;color:#6C6C70">Tap any shot to take it next.</span>
+        <div style="background:#F2F2F4;border-radius:18px;overflow:hidden">
+          <sc-for list="{{ shotRows }}" as="r" hint-placeholder-count="6">
+            <div onClick="{{ r.tap }}" style="display:flex;justify-content:space-between;align-items:center;padding:15px 14px;border-top:{{ r.line }};cursor:pointer;background:{{ r.bg }}"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600">{{ r.name }}</span><span style="font-size:14px;color:#6C6C70">{{ r.hint }}</span></div><span style="font-size:12px;font-weight:800;color:{{ r.col }}">{{ r.state }}</span></div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ sheetFit }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:22px;font-weight:800;letter-spacing:-0.015em">“{{ wTitle }}” doesn't fit?</span><span style="font-size:15px;line-height:1.45;color:#3C3C43">Every roof is different. Pick what happened. Sean sees it on the job.</span></div>
+        <div style="background:#F2F2F4;border-radius:18px;overflow:hidden">
+          <sc-for list="{{ fitOptions }}" as="o" hint-placeholder-count="3">
+            <div onClick="{{ o.go }}" style="display:flex;gap:12px;align-items:center;min-height:72px;padding:10px 14px;border-top:{{ o.line }};cursor:pointer"><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:700">{{ o.label }}</span><span style="font-size:14px;line-height:1.35;color:#6C6C70">{{ o.sub }}</span></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C7CC" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ fitPicking }}" hint-placeholder-val="{{ false }}">
+          <span style="font-size:13px;font-weight:700;color:#6C6C70;letter-spacing:0.06em">DO THIS STEP FIRST</span>
+          <div style="background:#F2F2F4;border-radius:18px;overflow:hidden">
+            <sc-for list="{{ fitSteps }}" as="o" hint-placeholder-count="3"><div onClick="{{ o.go }}" style="display:flex;align-items:center;min-height:56px;padding:0 14px;border-top:{{ o.line }};font-size:16px;font-weight:600;cursor:pointer">{{ o.label }}</div></sc-for>
+          </div>
+        </sc-if>
+        <div onClick="{{ closeSheet }}" style="height:56px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:pointer">Cancel</div>
+      </sc-if>
+
+      <sc-if value="{{ sheetCheckout }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:22px;font-weight:800;letter-spacing:-0.015em">Check out of 421 Oak St?</span><span style="font-size:15px;line-height:1.45;color:#3C3C43">This is saved on the job record. It answers "were you there, and when did you leave?"</span></div>
+        <div style="background:#F2F2F4;border-radius:18px;overflow:hidden">
+          <sc-for list="{{ coRows }}" as="r" hint-placeholder-count="4"><div style="display:flex;justify-content:space-between;gap:12px;min-height:52px;align-items:center;padding:0 14px;border-top:{{ r.line }};font-size:15px"><span style="color:#48484A">{{ r.k }}</span><span style="font-weight:700;text-align:right">{{ r.v }}</span></div></sc-for>
+        </div>
+        <span style="font-size:14px;line-height:1.45;color:#48484A">Photos keep sending after you leave. You don't need signal to check out.</span>
+        <div onClick="{{ doCheckout }}" style="height:60px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer">Check out · 15:48</div>
+        <div onClick="{{ closeSheet }}" style="height:56px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:pointer">Not yet</div>
+      </sc-if>
+
+      <sc-if value="{{ sheetMore }}" hint-placeholder-val="{{ false }}">
+        <span style="font-size:20px;font-weight:800">{{ wTitle }}</span>
+        <div style="background:#F2F2F4;border-radius:18px;overflow:hidden">
+          <sc-for list="{{ moreItems }}" as="o" hint-placeholder-count="4">
+            <div onClick="{{ o.go }}" style="display:flex;gap:14px;align-items:center;min-height:68px;padding:8px 14px;border-top:{{ o.line }};cursor:pointer">
+              <span style="width:40px;height:40px;border-radius:12px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ o.d }}"></path></svg></span>
+              <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:700">{{ o.label }}</span><span style="font-size:14px;line-height:1.35;color:#48484A">{{ o.sub }}</span></div>
+            </div>
+          </sc-for>
+        </div>
+        <div onClick="{{ closeSheet }}" style="height:56px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:pointer">Close</div>
+      </sc-if>
+
+      <sc-if value="{{ sheetPhoto }}" hint-placeholder-val="{{ false }}">
+        <img src="{{ pvImg }}" alt="" style="width:100%;height:220px;object-fit:cover;border-radius:18px;display:block;background:#DDD">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span style="font-size:22px;font-weight:800;letter-spacing:-0.015em">{{ pvName }}</span><span style="font-size:14px;font-weight:700;color:{{ pvStatusCol }}">{{ pvStatus }}</span></div>
+        <div style="background:#F2F2F4;border-radius:18px;overflow:hidden">
+          <sc-for list="{{ pvRows }}" as="r" hint-placeholder-count="4"><div style="display:flex;justify-content:space-between;gap:12px;min-height:48px;align-items:center;padding:0 14px;border-top:{{ r.line }};font-size:15px"><span style="color:#6C6C70">{{ r.k }}</span><span style="font-weight:600;text-align:right">{{ r.v }}</span></div></sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div onClick="{{ pvRetake }}" style="height:56px;border-radius:999px;background:#000;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:pointer">Retake</div>
+          <div onClick="{{ pvMistake }}" style="height:56px;border-radius:999px;background:#F2F2F4;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:pointer">Mark as mistake</div>
+        </div>
+        <span style="font-size:14px;line-height:1.45;color:#6C6C70">Photos can't be deleted, so every one stays valid as proof. Retake adds a new photo; the first one stays in the job's history. A mistake is hidden from reports but Sean can still see it.</span>
+      </sc-if>
+
+      <sc-if value="{{ sheetKeep }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:22px;font-weight:800;letter-spacing:-0.015em">Why keep this one?</span><span style="font-size:14px;color:#4F46E5;font-weight:600">Old boot removed · AI: too close</span></div>
+        <div style="background:#F2F2F4;border-radius:18px;overflow:hidden">
+          <sc-for list="{{ keepReasons }}" as="o" hint-placeholder-count="4">
+            <div onClick="{{ o.pick }}" style="display:flex;gap:12px;align-items:center;padding:15px 14px;cursor:pointer;border-top:{{ o.line }}"><span style="width:26px;height:26px;border-radius:50%;box-shadow:inset 0 0 0 {{ o.ring }} #000;background:#FFFFFF"></span><span style="font-size:15px;font-weight:{{ o.fw }}">{{ o.label }}</span></div>
+          </sc-for>
+        </div>
+        <span style="font-size:14px;line-height:1.45;color:#6C6C70">Saved with the photo. Sean sees "AI flagged · Ravi kept it · {{ keepLower }}".</span>
+        <div onClick="{{ keepConfirm }}" style="height:60px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;cursor:pointer">Keep · next shot</div>
+        <div onClick="{{ aiRetake }}" style="height:56px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:pointer">Retake instead</div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:50%;bottom:104px;transform:translateX(-50%);max-width:320px;padding:10px 16px;border-radius:999px;background:#1C1C1E;color:#FFFFFF;font-size:14px;font-weight:600;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,0.2)">{{ toast }}</div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  IMG = (id, w) => 'https://images.pexels.com/photos/' + id + '/pexels-photo-' + id + '.jpeg?auto=compress&cs=tinysrgb&w=' + (w || 600);
+  STAGES = [
+    { k:'arrival', label:'Arrival', n:1, shots:[['a1','Front elevation','Whole house from the street','15505770','7:36'],['a2','Rear elevation','Step back to fit the roofline','15505770','7:38'],['a3','Gutters, before','Close enough to see dents','32608171','7:43'],['a4','Ground below','Beds and lawn under the eaves','39623734','7:45']] },
+    { k:'repair', label:'Repair', n:2, shots:[['r1','Leak source','Before you touch it. Close enough to see the crack, with the vent pipe in frame.','17274402','7:52'],['r2','Old boot removed','Same angle as the leak source.','17274402','8:04'],['r4','New boot fitted','Same angle, boot fully seated.','17274402','8:20'],['r5','Flashing sealed','Close enough to see the sealant line.','9431615','8:26'],['r3','Decking checked','Press the boards. Show any soft spots.','39623734','8:40'],['r6','Shingles replaced','Whole patch, edges in frame.','17274402','9:05']] },
+    { k:'cleanup', label:'Cleanup', n:3, shots:[['c1','Gutters, after','Whole run, both ends in frame','32608171','15:40'],['c2','Ground below, after','Driveway and beds, same angle as before','39623734','15:44'],['c3','Debris cleared','Driveway and lawn, wide','39623734','15:46']] }
+  ].map(g => ({ ...g, shots: g.shots.map(([id, name, hint, img, t]) => ({ id, name, hint, img, t, stage: g.k })) }));
+  WORK = [
+    { id:'w1', spot:'A', label:'Before you fix', short:'Before', plain:'Show the problem before you touch it.', before:['r1'], after:[], done:'Done', t:'7:52' },
+    { id:'w2', spot:'A', label:'Opened up', short:'Opened', plain:'Show what you find once it is open.', before:['r2'], after:[], done:'Done', t:'8:04' },
+    { id:'w3', spot:'A', label:'Fixed', short:'Fixed', plain:'Show the finished repair.', before:['r4','r5'], after:[], done:'Done', t:'8:26' },
+    { id:'w4', spot:'B', label:'Opened up', short:'Opened', plain:'Show the boards while they are exposed.', before:['r3'], after:[], done:'Done', t:'8:40' },
+    { id:'w5', spot:'B', label:'Fixed', short:'Fixed', plain:'Show the new shingles over the patch.', before:['r6'], after:[], done:'Done', t:'9:05' }
+  ];
+  SPOTS = [{ id:'A', label:'Vent pipe leak', where:'Front slope, by the vent' }, { id:'B', label:'Soft decking', where:'North slope, 3 boards' }];
+  stepOf(id) { return this.WORK.find(w => w.before.includes(id) || w.after.includes(id)); }
+  curStep(s) { const open = w => [...w.before, ...w.after].some(id => this.open(s, id)); if (s.activeStep) { const a = this.WORK.find(w => w.id === s.activeStep); if (a && open(a)) return a; } return this.WORK.find(w => [...w.before, ...w.after].some(id => this.open(s, id))); }
+  markStep = w => { this.setState(st => ({ stepDone: { ...st.stepDone, [w.id]: w.t }, now: w.t, scr: 'cam', camShot: w.after.find(id => this.open(st, id)), sheet: null, justSaved: false, seq: 0 })); };
+  SH_X = { id:'x1', name:'Extra work · found on the roof', hint:'Show the problem and where it is. Sean gets it as extra work.', img:'39623734', t:'8:20', stage:'repair' };
+  SH = Object.fromEntries(this.STAGES.flatMap(g => g.shots).map(s => [s.id, s]));
+  ALL = this.STAGES.flatMap(g => g.shots);
+  base() { return { scr:'jobs', now:'7:22', checkedIn:false, crew:{ RM:true, JT:true, KD:true }, shots:{}, waived:{}, repairAt:null, sheet:null, camShot:null, pill:null, pillAi:false, keepPick:'Only safe angle', waiverIds:[], waiverFrom:'start', waiverReason:'Blocked by vehicle or materials', waiverNote:'Dumpster delivered on the driveway at 7:40.', checkout:null, stepDone:{}, signal:false, sent:0, failed:false, openStage:null, toast:null }; }
+  state = this.base();
+  T = [];
+  later(fn, ms) { this.T.push(setTimeout(fn, ms)); }
+  clearTimers() { this.T.forEach(clearTimeout); this.T = []; clearInterval(this.iv); }
+  componentDidMount() { this.onKey = e => { if ((e.key === ' ' || e.key === 'AudioVolumeUp' || e.key === 'AudioVolumeDown') && this.state.scr === 'cam') { e.preventDefault(); this.shutter(); } }; window.addEventListener('keydown', this.onKey); }
+  componentWillUnmount() { this.clearTimers(); window.removeEventListener('keydown', this.onKey); }
+  toast(msg) { clearTimeout(this.tt); this.setState({ toast: msg }); this.tt = setTimeout(() => this.setState({ toast: null }), 2400); }
+
+  open(s, id) { return (!s.shots[id] || !!s.shots[id].mistake) && !s.waived[id]; }
+  remaining(s, k) { return this.STAGES.find(g => g.k === k).shots.filter(x => this.open(s, x.id)); }
+  stageNow(s) { if (!s.repairAt) return 'arrival'; return this.remaining(s, 'repair').length ? 'repair' : 'cleanup'; }
+  allShotsFilled(stageK) { const o = {}; this.STAGES.filter(g => stageK.includes(g.k)).forEach(g => g.shots.forEach(x => o[x.id] = { t: x.t })); return o; }
+
+  shutter = () => {
+    const s = this.state; if (s.camShot === 'x1') { this.setState(st => ({ extras: [...(st.extras || []), { t: st.now }], scr: 'work', camShot: null })); this.toast('Sent to Sean as extra work · keep working'); return; }
+    const sh = this.SH[s.camShot]; if (!sh) return; if (s.seq >= 1 && !s.coachSeen) { this.setState({ coachSeen: true }); return; }
+    const shots = { ...s.shots, [sh.id]: { t: sh.t, late: !!(sh.stage === 'arrival' && s.repairAt), retaken: !!s.shots[sh.id] } };
+    if (sh.id === 'r2' && !s.shots.r2) { this.setState({ shots, now: sh.t, scr: 'ai', pill: null, coachSeen: true }); return; }
+    this.afterSave(shots, sh.name + ' saved', sh.t, false);
+  };
+  afterSave(shots, pill, now, ai) {
+    const sh = this.SH[this.state.camShot]; const ns = { ...this.state, shots }; let nx = this.remaining(ns, sh.stage)[0];
+    if (sh.stage === 'repair') { const w = this.stepOf(sh.id); const ok = [...w.before, ...(ns.stepDone[w.id] ? w.after : [])].filter(id => this.open(ns, id));
+      if (ok.length) nx = this.SH[ok[0]];
+      else if (nx) { const nw = this.curStep(ns); const stepClosed = !w.after.some(id => this.open(ns, id));
+        if (stepClosed) { this.setState({ shots, now, scr: 'work', openPhase: null, activeStep: null, camShot: null, sheet: null, pill: null }); { const sp = x => (this.SPOTS.find(k => k.id === x.spot) || {}).label; this.toast('✓ ' + sp(w) + ' · ' + w.label + (nw ? ' · next: ' + (nw.spot !== w.spot ? sp(nw) + ' · ' : '') + nw.label : '')); } return; }
+        this.setState({ shots, now, scr: 'work', camShot: null, sheet: null, pill: null, openStage: null });
+        this.toast(sh.name + ' saved · mark the step done when ready'); return; } }
+    if (!nx) { const g = this.STAGES.find(k => k.k === sh.stage); this.setState({ shots, now, scr: 'work', camShot: null, sheet: null, pill: null, openPhase: null, justDone: sh.stage }); this.toast('✓ ' + g.label + ' photos done · ' + g.shots.length + ' saved on phone'); return; }
+    this.setState(st => ({ shots, now, scr: 'cam', camShot: nx.id, pill, pillAi: ai, sheet: null, seq: (st.seq || 0) + 1, justSaved: true, lastId: sh.id, coachSeen: st.coachSeen || (st.seq || 0) >= 1 }));
+    clearTimeout(this.pt); this.pt = setTimeout(() => this.setState({ pill: null }), 1700);
+  }
+  retake = () => { const shots = { ...this.state.shots, r2: { t: '8:05', retaken: true } }; this.setState({ camShot: 'r2' }); this.afterSave(shots, 'AI check passed · vent pipe in frame', '8:05', true); };
+  startUploads() {
+    clearInterval(this.iv);
+    this.later(() => { this.setState({ signal: true, now: '16:20' }); this.toast('Signal back · photos sending');
+      this.iv = setInterval(() => { const s = this.state; const total = Object.keys(s.shots).length;
+        if (s.failed) return; if (s.sent >= total - 1) { clearInterval(this.iv); this.setState({ failed: true }); return; }
+        this.setState({ sent: s.sent + 1 }); }, 650); }, 1200);
+  }
+  preset(n) {
+    this.clearTimers(); const b = this.base();
+    const arr = this.allShotsFilled(['arrival']), all = this.allShotsFilled(['arrival','repair','cleanup']);
+    const P = {
+      '01': {},
+      '02': { scr:'checkin', now:'7:31' },
+      '03': { scr:'work', checkedIn:true, now:'7:32' },
+      '03b': { scr:'work', checkedIn:true, now:'7:46', shots: arr },
+      '04': { scr:'cam', checkedIn:true, now:'7:52', shots: arr, repairAt:'7:46', camShot:'r1' },
+      '03c': { scr:'work', checkedIn:true, now:'7:53', shots: { ...arr, r1:{ t:'7:52' } }, repairAt:'7:46' },
+      '03d': { scr:'lock', checkedIn:true, now:'8:32', shots: { ...arr, r1:{ t:'7:52' }, r2:{ t:'8:05', retaken:true }, r4:{ t:'8:20' }, r5:{ t:'8:26' } }, repairAt:'7:46' },
+      '05': { scr:'ai', stepDone:{ w1:'8:03' }, checkedIn:true, now:'8:04', shots: { ...arr, r1:{ t:'7:52' }, r2:{ t:'8:04' } }, repairAt:'7:46', camShot:'r2' },
+      '06': { scr:'work', stepDone:{ w1:'8:03', w2:'8:39', w3:'8:57', w4:'9:04' }, checkedIn:true, now:'15:48', shots: { ...all, r2:{ t:'8:04', kept:'Only safe angle' } }, repairAt:'7:46' },
+      '07': { scr:'work', stepDone:{ w1:'8:03', w2:'8:39', w3:'8:57', w4:'9:04' }, checkedIn:true, now:'15:58', shots: { ...all, r2:{ t:'8:04', kept:'Only safe angle' } }, repairAt:'7:46', checkout:'15:48' }
+    }[n];
+    this.setState({ ...b, ...P }, () => { if (n === '07') this.startUploads(); });
+  }
+
+  renderVals() {
+    const s0 = this.state; const mist = Object.fromEntries(Object.entries(s0.shots).filter(([k, v]) => v.mistake)); const s = { ...s0, shots: Object.fromEntries(Object.entries(s0.shots).filter(([k, v]) => !v.mistake)) }; const cur = this.stageNow(s);
+    const capturedN = Object.keys(s.shots).length;
+    const waivedIds = Object.keys(s.waived);
+    const line = i => i ? '1px solid #EFEFF1' : 'none';
+    const go = (scr, extra) => () => this.setState({ scr, sheet: null, ...(extra || {}) });
+    const camTo = id => () => this.setState({ scr: 'cam', camShot: id, sheet: null, pill: null, justSaved: false, seq: 0 });
+    const scrMap = { jobs: s.checkout ? '07' : '01', checkin:'02', work: s.checkout ? '07' : (!this.remaining(s, 'cleanup').length && s.repairAt && !this.remaining(s, 'repair').length) ? '06' : s.repairAt ? '03c' : (this.remaining(s, 'arrival').length ? '03' : '03b'), stepdone:'03c', lock:'03d', list: s.repairAt ? '03c' : (this.remaining(s, 'arrival').length ? '03' : '03b'), waiver:'03b', cam:'04', phase:'04', ai:'05', finish:'06', done:'06', uploads:'07' };
+    const curJump = scrMap[s.scr];
+    const J = [['01',"Today's jobs",'07:22 · in the van'],['02','Check in','07:31 · on the driveway'],['03','Job checklist','07:32 · no signal'],['03b','Starting repair','07:46 · Arrival 4 of 4'],['03c','Job timeline','07:53 · one line, top to bottom'],['03d','Phone away','08:12 · lock screen'],['04','Camera','07:52 · on the roof'],['05','AI: too close','08:04 · AI flags'],['06','Finish and check out','15:48 · cleanup done'],['07','After you leave','16:20 · photos sending']];
+    const NOTES = {
+      '01': 'Pick the job. Check in is the only red button.',
+      '02': "Time and location fill in by themselves. Tap anyone who isn't on site to untick them.",
+      '03': 'Which photos the job needs and which are done. Tap a row to shoot that one, or the red button for the next one.',
+      '03b': 'One tap marks when work begins. Arrival photos taken before it count as "before work". If one is missing, Ravi can take it now or ask Sean for a waiver.',
+      '03d': 'Phone in the pocket. The lock screen keeps the current step and one Take button, so Ravi never hunts for the app. At the decking step it buzzes once: the photo window is short.',
+      '03': 'From check-in the whole job is one timeline. Each photo is a slot: dashed and empty until taken, a black Take button on the next one, then the real thumbnail with its upload state (On phone / In office).',
+      '03b': 'All before photos taken: the main button becomes Start repair. Missing one? "Can\'t take this one?" asks Sean for a waiver.',
+      '03c': 'Ticks: black = taken and safe on this phone; green = the office has every photo in that phase. Green never means only "done here", so the crew can trust it before signing out. Five phases, one open at a time (accordion): Before work, Repair, Clean up, Finish, After you leave. Tap any phase to look inside; the current one opens by itself. Inside Repair, spots and their moments are a small checklist; only the current moment shows its photos. Finishing a phase returns straight here, no extra screen. One moment per line, one at a time: the spot name sits above each moment, so many spots just make the line longer, never a box inside a box. Tap a saved photo to see its time, place and history. Photos can be retaken or marked as a mistake, never deleted. Repair can have many spots. Each spot is one card with the same three moments: Before, Opened, Fixed. Only the current spot opens; done spots shrink to a tick. The line continues past check-out (dashed) so the crew sees what happens after they leave. Once work starts, every job looks the same: a timeline from Checked in to Check out. Repair is always three moments any roofer understands: before you fix, opened up, fixed. The job only changes which photos sit under each moment. Photos move the line forward; there is nothing else to tick. Earlier note: once work starts the phone is glanced at, not used. One step, one huge button in thumb reach, photos for this step only. "All steps" opens the full list. During repair the list shows work steps, not just photos. A "before" photo comes first; when Ravi taps that the step is done, the camera opens for its "after" photo. The decking photo can only be taken while the decking is exposed, so it is tied to that step.',
+      '04': 'Frame, shutter, next shot. On each save the screen flashes, the photo shrinks into "All", and the next shot slides in with a yellow NEXT SHOT label. The first time, a card explains it.',
+      '05': 'AI flags; Ravi decides. Retake adds a new photo, Keep asks for a one-tap reason. Nothing is blocked or deleted.',
+      '06': 'Finish is a short check, not a new screen. Missing photos block check-out (Problem 01: gaps found before the crew leaves). Waivers and AI-kept photos are listed so nothing is a surprise. "0 in the office" is shown in amber but never blocks leaving (Problem 02). Check out stamps time and place (Problem 03).',
+      '07': 'After check-out the same timeline tracks custody: a bar fills as the office confirms each photo, sign-out stays locked until all are in, then every phase turns green. One upload fails on purpose: Retry it on the Uploads screen.'
+    };
+    const jumps = J.map(([n, label, sub]) => ({ n, label, sub, bg: n === curJump ? '#FFFFFF' : 'transparent', numCol: n === curJump ? '#A23B1E' : '#5E5A52', go: () => this.preset(n) }));
+
+    // checklist
+    const viewK = s.openStage || cur; const vg = this.STAGES.find(g => g.k === viewK);
+    const nextId = (this.remaining(s, viewK)[0] || {}).id;
+    const canShoot = viewK === cur || (viewK === 'arrival');
+    const openRows = vg.shots.map((x, i) => { const d = s.shots[x.id], w = s.waived[x.id]; const now = !d && !w && x.id === nextId && viewK === cur;
+      return { name: x.name, line: line(i), right: d ? d.t : '',
+        sub: mist[x.id] ? 'Marked as mistake · take it again' : d ? (d.kept ? 'AI flagged · kept · ' + d.kept.toLowerCase() : d.retaken ? 'Retaken · first try kept in history' : d.late ? 'Taken after work started' : 'Saved on phone') : w ? 'Waiver asked · ' + w : (now ? 'Next · ' + x.hint : x.hint),
+        subCol: w ? '#9A5B00' : '#6C6C70', bg: now ? '#FDF3F1' : '#FFFFFF', dot: d ? '#000' : '#FFFFFF', mark: d ? '✓' : '',
+        ring: d ? 'none' : w ? 'inset 0 0 0 2px #E08A00' : now ? 'inset 0 0 0 2.5px #C0392B' : 'inset 0 0 0 2px #D1D1D6',
+        cur: 'pointer', tap: d ? () => this.setState({ sheet: 'photo', photoId: x.id }) : !w && canShoot ? camTo(x.id) : () => {} }; });
+    const cnt = g => g.shots.filter(x => s.shots[x.id]).length;
+    const otherStages = this.STAGES.filter(g => g.k !== viewK).map((g, i) => { const done = !this.remaining(s, g.k).length;
+      return { label: g.label, count: cnt(g) + ' of ' + g.shots.length, line: line(i), dot: done ? '#000' : '#F2F2F4', numCol: done ? '#FFFFFF' : '#6C6C70', mark: done ? '✓' : g.n, tap: () => this.setState({ openStage: g.k === cur ? null : g.k }) }; });
+    let primary, secondary = null;
+    const rem = this.remaining(s, cur);
+    if (cur === 'arrival') {
+      if (!rem.length) primary = { label: 'Start repair', go: () => this.setState({ sheet: 'start' }) };
+      else { primary = { label: 'Take: ' + rem[0].name, go: camTo(rem[0].id) }; if (rem.length < 4) secondary = { label: 'Start repair', go: () => this.setState({ sheet: 'missing' }) }; }
+    } else if (cur === 'repair') { const w = this.curStep(s); const b = w.before.find(id => this.open(s, id));
+      if (b) primary = { label: 'Take: ' + this.SH[b].name, go: camTo(b) };
+      else if (!s.stepDone[w.id]) primary = { label: 'Done: ' + w.done, go: () => this.markStep(w) };
+      else { const a = w.after.find(id => this.open(s, id)); primary = { label: 'Take: ' + this.SH[a].name, go: camTo(a) }; } }
+    else if (rem.length) { primary = { label: 'Take: ' + rem[0].name, go: camTo(rem[0].id) }; secondary = { label: 'Finish job', go: go('finish') }; }
+    else primary = { label: 'Finish job', go: go('finish') };
+    const arrivalMissing = this.remaining(s, 'arrival').map((x, i) => ({ ...x, line: line(i) }));
+
+    // camera
+    const cs = s.camShot === 'x1' ? this.SH_X : (this.SH[s.camShot] || this.SH.r1); const cg = this.STAGES.find(g => g.k === cs.stage);
+    const camIdx = cg.shots.findIndex(x => x.id === cs.id);
+    const shotRows = cg.shots.map((x, i) => { const d = s.shots[x.id]; const isNow = x.id === cs.id;
+      return { name: x.name, hint: x.hint, line: line(i), bg: isNow ? '#FFFFFF' : 'transparent', state: d ? 'SAVED' : isNow ? 'NOW' : s.waived[x.id] ? 'WAIVER' : 'NOT TAKEN', col: d ? '#000' : isNow ? '#C0392B' : '#6C6C70', tap: d ? () => {} : () => this.setState({ camShot: x.id, sheet: null, justSaved: false, coachSeen: true }) }; });
+
+    // finish
+    const missing = this.ALL.filter(x => this.open(s, x.id));
+    const r2 = s.shots.r2 || {};
+    const keepReasons = ['Only safe angle','Detail shot on purpose','Wide shot already taken','Something else'].map((label, i) => ({ label, line: line(i), ring: s.keepPick === label ? '6px' : '1.5px', fw: s.keepPick === label ? 700 : 500, pick: () => this.setState({ keepPick: label }) }));
+    const waiverReasons = ['No safe access','Blocked by vehicle or materials','Not part of this house','Other'].map((label, i) => ({ label, line: line(i), ring: s.waiverReason === label ? '6px' : '1.5px', fw: s.waiverReason === label ? 700 : 500, pick: () => this.setState({ waiverReason: label }) }));
+
+    // uploads
+    const order = this.ALL.filter(x => s.shots[x.id]);
+    const total = order.length;
+    const left = order.slice(s.sent);
+    const onPhone = left.map((x, i) => { const isLast = i === left.length - 1; const fail = s.failed && isLast;
+      const status = !s.signal ? 'Waiting for signal' : fail ? "Didn't send · still on phone" : i === 0 ? 'Uploading 62%' : i === 1 ? 'Waiting · next' : 'Waiting';
+      return { name: x.name, img: this.IMG(x.img, 120), line: line(i), status, col: fail ? '#C0392B' : i === 0 && s.signal ? '#9A5B00' : '#6C6C70', canRetry: fail }; });
+    const badge = s.checkedIn ? total - s.sent : 0;
+    const tabs = [{ label:'Jobs', id:'jobs', d:'M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z' }, { label:'Uploads', id:'uploads', d:'M12 15V4 M7.5 8.5L12 4l4.5 4.5 M4 15v4a2 2 0 002 2h12a2 2 0 002-2v-4' }, { label:'Profile', id:'profile', d:'M12 12a4 4 0 100-8 4 4 0 000 8z M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5' }].map(t => ({ ...t, col: s.scr === t.id ? '#C0392B' : '#48484A', badge: t.id === 'uploads' && badge > 0 ? String(badge) : '', go: t.id === 'profile' ? () => this.toast(badge ? "Sign-out is blocked until Uploads shows 0" : 'Ravi Menon · Crew lead') : go(t.id) }));
+    const PH = { arrival: ['Arrival photos done', 'Next: Start repair.', 'Tap it on the job when work begins.'], repair: ['Repair photos done', 'Next: Cleanup.', '3 photos once the roof is finished.'], cleanup: ['Cleanup photos done', 'Next: Finish job.', 'Check out when the crew leaves.'] }[s.phaseK || 'repair'];
+    const pg = this.STAGES.find(g => g.k === (s.phaseK || 'repair'));
+
+    return {
+      afterFlow: [
+        { n:'1', t:'Repair photos done', d:'Short confirmation, then back to the timeline.' },
+        { n:'2', t:'Clean up · 3 photos', d:'Camera runs through them in a row.' },
+        { n:'3', t:'Finish job', d:'Checks nothing is missing. Missing → take it or ask Sean.' },
+        { n:'4', t:'Check out 15:48', d:'Time and place stamped. Photos still on the phone is fine.' },
+        { n:'5', t:'Photos send', d:'On their own once there is signal. One retry if needed.' },
+        { n:'6', t:'Sean reviews', d:'Crew only hears back if a photo is needed.' }
+      ],
+      sizing: [
+        { v:'60 px', t:'Main button. Full width at the bottom, one per screen, red. Thumb reach and gloves.' },
+        { v:'64 px+', t:'Every list row. A row is one tap target, not a small icon inside it.' },
+        { v:'88 px', t:'Shutter, alone in the middle. Side controls 56 px and well clear of it.' },
+        { v:'48 px', t:'Back, close, Take and Retry. Nothing tappable is smaller.' },
+        { v:'17–22', t:'Shot names and the camera prompt. Read at arm\'s length.' },
+        { v:'14 px', t:'Smallest text, in dark grey (#6C6C70), not light grey. Readable in direct sun.' }
+      ],
+      jumps, note: NOTES[curJump], reset: () => this.preset('01'),
+      now: s.now, signalLabel: s.signal ? '5G' : (s.checkedIn && !s.checkout) || s.checkout ? 'No signal' : 'LTE',
+      isWork: s.scr === 'work', isStepDone: s.scr === 'stepdone', sheetFit: s.sheet === 'fit', isLock: s.scr === 'lock', isJobs: s.scr === 'jobs', isCheckin: s.scr === 'checkin', isList: s.scr === 'list', isWaiver: s.scr === 'waiver', isPhase: s.scr === 'phase', isFinish: s.scr === 'finish', isDone: s.scr === 'done', isUploads: s.scr === 'uploads', isCam: s.scr === 'cam', isAi: s.scr === 'ai',
+      showTabs: s.scr === 'jobs' || s.scr === 'uploads', tabs,
+      todayStatus: s.checkout ? 'Finished 15:49' : s.checkedIn ? 'On site since 7:31' : 'Starts in 8 min', todayCol: s.checkout ? '#000' : '#C0392B',
+      todayPhotos: s.checkedIn ? capturedN + ' of 13 photos captured' : '13 photos in 3 stages',
+      todayCta: s.checkout ? 'Open job timeline' : s.checkedIn ? 'Open job' : 'Check in',
+      todayGo: s.checkout ? go('work') : s.checkedIn ? go('work') : go('checkin', { now: '7:31' }),
+      goJobs: go('jobs'), toList: go('work', { openStage: null, pill: null }),
+      crewCount: Object.values(s.crew).filter(Boolean).length + ' of 3',
+      crewRows: [['RM','Ravi Menon','Crew lead · you'],['JT','Jay Torres','Roofer'],['KD','Kim Diaz','Roofer']].map(([ini, name, role], i) => { const on = s.crew[ini]; return { ini, name, role, line: line(i), bg: on ? '#000' : '#FFFFFF', ring: on ? 'none' : 'inset 0 0 0 2px #D1D1D6', mark: on ? '✓' : '', tap: () => this.setState(st => ({ crew: { ...st.crew, [ini]: !st.crew[ini] } })) }; }),
+      confirmCheckin: () => this.setState({ checkedIn: true, scr: 'work', now: '7:32' }),
+      listSub: s.repairAt ? 'Re-roof · work started ' + s.repairAt : 'Re-roof · on site since 7:31',
+      capturedText: capturedN + ' of 13 captured' + (waivedIds.length ? ' · ' + waivedIds.length + ' waiver' : ''), uploadedText: s.sent + ' uploaded', capturedN,
+      openLabel: vg.label.toUpperCase() + ' · ' + cnt(vg) + ' OF ' + vg.shots.length, openDone: this.remaining(s, viewK).length ? '' : 'Done',
+      ...(() => { const w = this.curStep(s) || this.WORK[this.WORK.length - 1]; const wi = this.WORK.indexOf(w);
+        const b = w.before.find(id => this.open(s, id)); const a = w.after.find(id => this.open(s, id)); const marked = !!s.stepDone[w.id];
+        const cam = 'M4 8h3l2-3h6l2 3h3v11H4z M12 17a4 4 0 100-8 4 4 0 000 8z', tick = 'M5 12l5 5 9-10';
+        const nb = b ? this.SH[b] : null, na = a ? this.SH[a] : null;
+        const act = nb ? { main: 'Take before photo', hint: 'Next photo: ' + nb.name, icon: cam, go: camTo(b) }
+          : !marked ? { main: 'Mark step done', hint: 'When ' + w.done.toLowerCase().replace(/^the /, 'the ') + ' · then ' + w.after.length + ' after photo' + (w.after.length === 1 ? '' : 's'), icon: tick, go: () => this.markStep(w) }
+          : na ? { main: 'Take after photo', hint: 'Next photo: ' + na.name, icon: cam, go: camTo(a) }
+          : { main: 'Back to job', hint: 'All repair steps are done', icon: tick, go: go('list') };
+        var SUB = { w1: 'Take the leak source first, then lift the old boot.', w2: 'Press the boards while they are exposed. Soft spots get photographed before new boards go on.', w3: 'Fit the boot and seal the flashing.', w4: 'Lay the new shingles over the patch.' };
+        const bars = dark => this.WORK.map(x => { const done = ![...x.before, ...x.after].some(id => this.open(s, id)); return { bg: done ? (dark ? '#FFFFFF' : '#000') : x.id === w.id ? '#C0392B' : (dark ? 'rgba(255,255,255,0.25)' : '#D1D1D6') }; });
+        return { wTitle: w.label, wSub: SUB[w.id], wStepNo: 'STEP ' + (wi + 1) + ' OF ' + this.WORK.length, stepBars: bars(false), stepBarsDark: bars(true),
+          wMain: act.main, wHint: act.hint, wIcon: act.icon, wAction: act.go,
+          wPhotos: [...w.before, ...w.after].map(id => { const x = this.SH[id], d = s.shots[id]; const isB = w.before.includes(id); const locked = !isB && !marked; const isNext = (nb && nb.id === id) || (!nb && marked && na && na.id === id);
+            return { name: x.name, img: d ? this.IMG(x.img, 300) : '', empty: !d, iconCol: isNext ? '#C0392B' : '#AEAEB2',
+              sub: d ? 'Saved ' + d.t + (d.kept ? ' · AI flagged, kept' : d.retaken ? ' · retaken' : '') : s.waived[id] ? 'Skipped · ' + s.waived[id] : isNext ? 'Next · ' + x.hint : locked ? 'After you mark the step done' : x.hint,
+              subCol: isNext ? '#C0392B' : '#6C6C70', tag: d ? '✓ SAVED' : isB ? 'BEFORE' : 'AFTER', tagBg: d ? '#F2F2F4' : isNext ? '#FDF3F1' : '#F2F2F4', tagCol: d ? '#000' : isNext ? '#C0392B' : '#6C6C70',
+              ring: d ? 'none' : isNext ? 'inset 0 0 0 2.5px #C0392B' : 'none', tap: d ? () => {} : locked ? () => this.markStep(w) : camTo(id) }; }),
+          upNext: this.WORK.filter(x => x.id !== w.id && [...x.before, ...x.after].some(id => this.open(s, id))).map((x, i) => ({ n: String(this.WORK.indexOf(x) + 1), label: x.label, count: (x.before.length + x.after.length) + ' photo' + (x.before.length + x.after.length === 1 ? '' : 's'), line: line(i) })),
+          hasUpNext: this.WORK.some(x => x.id !== w.id && [...x.before, ...x.after].some(id => this.open(s, id))),
+          openFit: () => this.setState({ sheet: 'fit', fitPicking: false }), fitPicking: !!s.fitPicking,
+          fitOptions: [
+            { label: 'Not needed on this job', sub: 'Skip the step and its photos. Sean sees it was skipped.', go: () => { const wv = { ...s.waived }; [...w.before, ...w.after].filter(id => this.open(s, id)).forEach(id => wv[id] = 'step not needed'); this.setState({ waived: wv, sheet: null, scr: 'stepdone', doneStep: w.id, activeStep: null, skippedStep: w.id }); } },
+            { label: 'Found something extra', sub: 'Rot, damage, anything not planned. Take a photo and Sean gets it as extra work.', go: () => this.setState({ sheet: null, scr: 'cam', camShot: 'x1', justSaved: false, seq: 0 }) },
+            { label: 'Doing another step first', sub: 'Pick the step you are on. This one waits.', go: () => this.setState({ fitPicking: true }) }
+          ].map((o, i) => ({ ...o, line: line(i) })),
+          fitSteps: this.WORK.filter(x => x.id !== w.id && [...x.before, ...x.after].some(id => this.open(s, id))).map((x, i) => ({ label: (this.WORK.indexOf(x) + 1) + ' · ' + x.label, line: line(i), go: () => { this.setState({ activeStep: x.id, sheet: null, fitPicking: false }); this.toast('Now on: ' + x.label); } })),
+          ...(() => { const dw = this.WORK.find(x => x.id === s.doneStep) || this.WORK[0]; const di = this.WORK.indexOf(dw); const skipped = s.skippedStep === dw.id; const ids = [...dw.before, ...dw.after].filter(id => s.shots[id]);
+            const nw = this.curStep({ ...s, activeStep: null }); const ni = nw ? this.WORK.indexOf(nw) : -1; const np = nw ? nw.before.length + nw.after.length : 0;
+            return { sdNo: 'STEP ' + (di + 1) + ' OF ' + this.WORK.length + (skipped ? ' · SKIPPED' : ' · DONE'), sdTitle: dw.label, sdSub: skipped ? 'Marked not needed on this job. Sean sees why.' : ids.length + ' photo' + (ids.length === 1 ? '' : 's') + ' saved on this phone · ' + (s.stepDone[dw.id] || s.now),
+              sdThumbs: ids.map(id => ({ img: this.IMG(this.SH[id].img, 300) })),
+              sdNextNo: nw ? 'UP NEXT · STEP ' + (ni + 1) + ' OF ' + this.WORK.length : 'UP NEXT', sdNextTitle: nw ? nw.label : 'Cleanup', sdNextSub: nw ? SUB[nw.id] : 'Repair is done. 3 cleanup photos once the roof is finished.',
+              sdNextPhotos: nw ? (nw.before.length ? nw.before.length + ' before photo first, then ' : '') + nw.after.length + ' after photo' + (nw.after.length === 1 ? '' : 's') + ' when it is done' : '',
+              sdCta: nw ? 'Start step ' + (ni + 1) : 'Go to cleanup', sdGo: () => this.setState({ scr: nw ? 'work' : 'list', skippedStep: null }) }; })(),
+          goLock: () => { this.setState({ scr: 'lock' }); }, goSteps: () => this.setState({ scr: 'list' }), unlock: () => this.setState({ scr: 'work' }),
+          lockNudge: w.id === 'w2' && !marked ? 'Decking exposed? Photograph soft spots before new boards go on.' : '', lockNudgeTitle: 'Halden · photo window' }; })(),
+      ...(() => {
+        const cl = this.STAGES[2].shots.map(x => x.id); const rp = this.STAGES[1].shots.map(x => x.id);
+        const cw = cur === 'repair' ? this.curStep(s) : null;
+        const curId = cur === 'arrival' ? 'arr' : cur === 'repair' ? (cw ? cw.id : this.WORK[this.WORK.length - 1].id) : (this.remaining(s, 'cleanup').length ? 'cl' : 'out');
+        const order = ['in', 'arr', ...this.WORK.map(w => w.id), 'cl', 'out', 'send', 'review'];
+        const ci = order.indexOf(curId);
+        const cnt = ids => ids.filter(id => s.shots[id]).length; const ph = n => n + ' photo' + (n === 1 ? '' : 's');
+        const lastT = ids => { const d = [...ids].reverse().map(id => s.shots[id]).find(Boolean); return d ? ' · ' + d.t : ''; };
+        const capOrder = this.ALL.filter(k => s.shots[k.id]).map(k => k.id);
+        const photoRows = (ids, live = true, lockMsg = '') => { const nextId = ids.find(k => this.open(s, k)); return ids.map(id => { const ci2 = capOrder.indexOf(id); const inOff = ci2 > -1 && ci2 < s.sent; const x = this.SH[id], d = s.shots[id], wv = s.waived[id], isNext = id === nextId;
+          return { name: x.name, img: d ? this.IMG(x.img, 300) : '', empty: !d, sub: mist[id] ? 'Marked as mistake · take it again' : d ? 'Taken ' + d.t + (d.kept ? ' · AI flagged, kept' : d.retaken ? ' · retaken' : '') : wv ? 'Skipped · ' + wv : !live ? lockMsg : isNext ? 'Next photo · ' + (ids.indexOf(id) + 1) + ' of ' + ids.length : 'After the photo above',
+            subCol: '#48484A', tag: d ? '✓' : '', tagCol: '#000', showTake: false, isSaved: !!d, upTxt: inOff ? '✓ In office' : 'On phone', upCol: inOff ? '#2F9E62' : '#9A5B00', upBg: inOff ? '#E9F6EF' : '#FDF0DC', slot: d ? 'none' : isNext && live ? '1.5px dashed #C0392B' : '1.5px dashed #C7C7CC', iconBg: isNext && live ? '#FDF3F1' : d ? '#F2F2F4' : '#FFFFFF', iconCol: isNext && live ? 'transparent' : '#AEAEB2', rowBg: isNext && live ? '#FFFFFF' : 'transparent', rowSh: isNext && live ? 'inset 0 0 0 1px #E5E5EA, 0 2px 8px rgba(0,0,0,0.06)' : 'none', ring: 'none', nameCol: d || (isNext && live) ? '#000' : '#6C6C70', tap: d && !d.mistake ? () => this.setState({ sheet: 'photo', photoId: id }) : (d && d.mistake) || (live && isNext && !wv) ? camTo(id) : () => {} }; }); };
+        const curSpot = cw ? cw.spot : null;
+        const spots = this.SPOTS.map((sp, si) => { const ms = this.WORK.filter(w => w.spot === sp.id); const ids = ms.flatMap(w => w.before); const done = !ids.some(id => this.open(s, id)); const isCur = sp.id === curSpot;
+          return { title: (si + 1) + ' · ' + sp.label, where: sp.where, isCur, notCur: !isCur,
+            status: done ? '✓ ' + ph(cnt(ids)) : isCur ? 'Now' : 'Next', statusCol: done ? '#000' : isCur ? '#000' : '#6C6C70',
+            box: isCur ? '0 0 0 1px #E5E5EA, 0 2px 8px rgba(0,0,0,0.06)' : 'none', bg: isCur ? '#FFFFFF' : '#F7F7F8',
+            chips: ms.map(w => { const wd = !w.before.some(id => this.open(s, id)); const wc = cw && cw.id === w.id; return { label: (wd ? '✓ ' : '') + w.short, bg: wc ? '#000' : wd ? '#F2F2F4' : 'transparent', col: wc ? '#FFFFFF' : wd ? '#000' : '#8E8E93', ring: wc || wd ? 'none' : 'inset 0 0 0 1px #E5E5EA' }; }),
+            mStep: isCur && cw ? 'STEP ' + (ms.indexOf(cw) + 1) + ' OF ' + ms.length : '',
+            mTitle: isCur && cw ? cw.label : '', mPlain: isCur && cw ? cw.plain : '', photos: isCur && cw ? photoRows(cw.before) : [] }; });
+        const defs = {
+          in: { label: 'Checked in', subDone: '7:31 · at 421 Oak St' },
+          arr: { label: 'Before work', ids: this.STAGES[0].shots.map(x => x.id), plain: 'The house as you found it.' },
+          ...Object.fromEntries(this.WORK.map(w => { const sp = this.SPOTS.find(x => x.id === w.spot); const si = this.SPOTS.indexOf(sp); return [w.id, { label: w.label, kicker: 'SPOT ' + (si + 1) + ' · ' + sp.label.toUpperCase(), ids: w.before, plain: w.plain, repair: true }]; })),
+          cl: { label: 'Clean up', ids: cl, plain: 'Show the site as you leave it.' },
+          out: { label: 'Finish and check out', plain: 'Checks nothing is missing, then stamps the time.', later: 'After clean up' },
+          send: { label: 'Photos send', plain: '', later: 'On their own, once there is signal. You can drive away.' },
+          review: { label: 'Sean reviews', plain: '', later: 'The office checks the job. You get a message only if a photo is needed.' }
+        };
+        const timeline = order.map((id, i) => { const d = defs[id]; const isCur = i === ci; const done = i < ci; const ids = d.ids || [];
+          const skipped = ids.filter(k => s.waived[k]).length;
+          let sub = '';
+          if (id === 'in') sub = d.subDone;
+          else if (id === '__none') sub = done ? this.SPOTS.length + ' spots · ' + cnt(ids) + ' photos' + lastT(ids) : isCur ? 'Spot ' + (this.SPOTS.findIndex(x => x.id === curSpot) + 1) + ' of ' + this.SPOTS.length + ' · ' + cnt(ids) + ' of ' + ids.length + ' photos' : this.SPOTS.length + ' spots · ' + ids.length + ' photos';
+          else if (ids.length) sub = done ? ph(cnt(ids)) + (skipped ? ' · ' + skipped + ' skipped' : '') + lastT(ids) + (cnt(ids) ? (s.expandNode === id ? ' · hide' : ' · tap to see') : '') : isCur ? cnt(ids) + ' of ' + ph(ids.length) : ph(ids.length);
+          else sub = isCur ? 'Ready' : d.later || '';
+          const after = i > order.indexOf('out');
+          const exp = done && s.expandNode === id && cnt(ids) > 0; const prevSpot = i > 0 && defs[order[i - 1]] && defs[order[i - 1]].kicker; const showKicker = !!d.kicker && d.kicker !== prevSpot;
+          return { label: d.label, kicker: d.kicker || '', hasKicker: showKicker, cardBg: isCur ? '#FFFFFF' : 'transparent', cardPad: isCur ? '16px' : '3px 0 0', cardSh: isCur ? '0 1px 2px rgba(0,0,0,0.06), 0 6px 20px rgba(0,0,0,0.07)' : 'none', cardMt: isCur ? '-6px' : '0', sub, isCur, isExp: exp, hdrCur: done && cnt(ids) ? 'pointer' : 'default', toggle: done && cnt(ids) ? () => this.setState(st => ({ expandNode: st.expandNode === id ? null : id })) : () => {}, isRepairCur: false, isPlainCur: isCur, isRepairMoment: isCur && !!d.repair, plain: d.plain || '', notLast: i < order.length - 1,
+            dot: done || isCur ? '#000' : '#F2F2F4', ring: done ? 'none' : isCur ? 'inset 0 0 0 3px #000, inset 0 0 0 8px #F2F2F4' : after ? 'inset 0 0 0 2px #AEAEB2' : 'inset 0 0 0 2px #8E8E93', mark: done ? '✓' : '',
+            lineCol: i < ci ? '#000' : '#AEAEB2', lineStyle: after ? 'dashed' : 'solid', labelCol: done || isCur ? '#000' : '#3C3C43', titleSize: isCur ? '22px' : '17px', subCol: '#48484A',
+            photos: isCur || exp ? photoRows(ids) : [], spots: [] }; });
+        const curIds = defs[curId].ids || [];
+        const nextOpen = curIds.find(k => this.open(s, k)); const np = nextOpen ? this.SH[nextOpen] : null;
+        const spotName = curSpot ? this.SPOTS.find(x => x.id === curSpot).label : '';
+        const cam = 'M4 8h3l2-3h6l2 3h3v11H4z M12 17a4 4 0 100-8 4 4 0 000 8z', tick = 'M5 12l5 5 9-10';
+        const act = np ? { main: 'Take photo', hint: 'Next: ' + np.name + (spotName ? ' · ' + spotName : ''), icon: cam, go: camTo(np.id) }
+          : s.checkout ? (s.sent >= Object.keys(s.shots).length && s.signal ? { main: 'Back to jobs', hint: 'Every photo is in the office. Safe to sign out.', icon: tick, go: go('jobs') } : { main: 'See uploads', hint: s.signal ? s.sent + ' of ' + Object.keys(s.shots).length + ' in the office · keep driving' : 'Photos send when there is signal', icon: 'M12 15V4 M7.5 8.5L12 4l4.5 4.5 M4 15v4a2 2 0 002 2h12a2 2 0 002-2v-4', go: go('uploads') })
+          : curId === 'arr' ? { main: 'Start repair', hint: 'Locks these as "before work" photos', icon: tick, go: () => this.setState({ sheet: 'start' }) }
+          : curId === 'out' ? { main: 'Check out', hint: 'Stamps time and place. Uploads keep going after you leave.', icon: 'M15 3h4a1 1 0 011 1v16a1 1 0 01-1 1h-4 M10 17l5-5-5-5 M15 12H3', go: () => this.setState({ sheet: 'checkout' }) }
+          : { main: 'Open checklist', hint: '', icon: tick, go: go('list') };
+        const curTitle = defs[curId].repair ? spotName + ' · ' + defs[curId].label : defs[curId].label;
+        const P = [
+          { id:'arr', label:'Before work', ids: defs.arr.ids },
+          { id:'rep', label:'Repair', ids: rp, repair: true },
+          { id:'cl', label:'Clean up', ids: cl },
+          { id:'fin', label:'Finish and check out' },
+          { id:'aft', label:'After you leave', after: true }
+        ];
+        const curPh = s.checkout ? 'aft' : curId === 'arr' ? 'arr' : curId === 'cl' ? 'cl' : curId === 'out' ? 'fin' : 'rep';
+        const totalN = Object.keys(s.shots).length; const allIn = !!s.checkout && s.signal && s.sent >= totalN;
+        const pi = allIn ? P.length : P.findIndex(x => x.id === curPh);
+        const inOff = ids => ids.length > 0 && ids.filter(k => s.shots[k]).every(k => { const j = capOrder.indexOf(k); return j > -1 && j < s.sent; }) && cnt(ids) > 0;
+        const phases = P.map((x, i) => { const done = i < pi, isCur = i === pi; const open = s.openPhase ? s.openPhase === x.id : isCur; const ids = x.ids || [];
+          const spotN = this.SPOTS.length; const curSpotI = this.SPOTS.findIndex(k => k.id === curSpot);
+          const sub = x.id === 'arr' ? (done ? ph(cnt(ids)) + lastT(ids) + ' · checked in 7:31' : isCur ? cnt(ids) + ' of ' + ph(ids.length) + ' · checked in 7:31' : ph(ids.length))
+            : x.id === 'rep' ? (done ? spotN + ' spots · ' + ph(cnt(ids)) + lastT(ids) : isCur ? 'Spot ' + (curSpotI + 1) + ' of ' + spotN + ' · ' + cnt(ids) + ' of ' + ph(ids.length) : spotN + ' spots · ' + ph(ids.length))
+            : x.id === 'cl' ? (done ? ph(cnt(ids)) + lastT(ids) : isCur ? cnt(ids) + ' of ' + ph(ids.length) : ph(ids.length))
+            : x.id === 'fin' ? (done ? 'Checked out ' + (s.checkout || '15:48') : isCur ? 'Check, then check out' : 'After clean up') : (allIn ? 'All ' + totalN + ' in the office · safe to sign out' : isCur ? (s.signal ? s.sent + ' of ' + totalN + ' in the office' : 'Waiting for signal') : 'Photos send · Sean reviews');
+          let prevK = null;
+          const steps = x.repair ? this.WORK.map(w => { const sp = this.SPOTS.find(k => k.id === w.spot); const k = 'SPOT ' + (this.SPOTS.indexOf(sp) + 1) + ' · ' + sp.label.toUpperCase(); const showK = k !== prevK; prevK = k;
+            const wDone = !w.before.some(id => this.open(s, id)); const wCur = cw && cw.id === w.id; const wOff = wDone && inOff(w.before);
+            const ICON = { Before: 'M11 4a7 7 0 100 14 7 7 0 000-14z M20 20l-4-4', Opened: 'M12 3l9 5-9 5-9-5z M3 13l9 5 9-5', Fixed: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z M8.5 12l2.5 2.5 4.5-5' };
+            const rowOpen = wCur || s.openMoment === w.id;
+            return { kicker: k, hasKicker: showK, line: showK ? 'none' : '1px solid #EFEFF1', label: w.label, isCur: wCur, isOpenRow: rowOpen, sub: wDone ? ph(cnt(w.before)) + lastT(w.before) + (wOff ? ' · in office' : '') : wCur ? cnt(w.before) + ' of ' + ph(w.before.length) : ph(w.before.length) + ' · comes next',
+              icon: wDone ? 'M5 12l5 5 9-10' : wCur ? 'M12 12h.01' : '', iconW: wCur ? 9 : 2.6, iconBg: wOff ? '#E2EDE6' : wDone ? '#F2F2F4' : '#FFFFFF', iconRing: wDone ? 'none' : wCur ? 'inset 0 0 0 2px #C0392B' : 'inset 0 0 0 1.5px #C7C7CC', iconCol: wOff ? '#2F6B4F' : wDone ? '#1D1D1F' : '#C0392B',
+              chev: rowOpen ? 'M6 15l6-6 6 6' : 'M6 9l6 6 6-6', tap: wCur ? () => {} : () => this.setState(st => ({ openMoment: st.openMoment === w.id ? null : w.id })),
+              dot: wOff ? '#2F9E62' : wDone ? '#000' : wCur ? '#000' : 'transparent', ring: wDone || wCur ? 'none' : 'inset 0 0 0 2px #8E8E93', mark: wDone ? '✓' : '', labelCol: wCur ? '#000' : wDone ? '#1D1D1F' : '#6C6C70', labelW: wCur ? 700 : wDone ? 600 : 500,
+              photos: rowOpen ? photoRows(w.before, wCur || wDone, 'Unlocks after the step above') : [] }; }) : [];
+          let steps2 = steps;
+          if (x.repair && isCur) { const out = []; this.SPOTS.forEach((sp, si) => { const ws = this.WORK.map((w, j) => [w, steps[j]]).filter(([w]) => w.spot === sp.id); const sids = ws.flatMap(([w]) => w.before); const spDone = !sids.some(id => this.open(s, id));
+            if (sp.id === curSpot) ws.forEach(([w, st], k) => { const fut = !st.isCur && w.before.some(id => this.open(s, id)); out.push(fut ? { ...st, chev: '', tap: () => {}, sub: 'Comes next', isOpenRow: false, photos: [], hasKicker: k === 0 } : { ...st, hasKicker: k === 0 }); });
+            else out.push({ kicker: '', hasKicker: false, line: out.length ? '1px solid #EFEFF1' : 'none', label: 'Spot ' + (si + 1) + ' · ' + sp.label, sub: spDone ? 'Done · ' + ph(cnt(sids)) : 'After this spot', icon: spDone ? 'M5 12l5 5 9-10' : '', iconW: 2.6, iconBg: spDone ? '#F2F2F4' : '#FFFFFF', iconRing: spDone ? 'none' : 'inset 0 0 0 1.5px #C7C7CC', iconCol: '#1D1D1F', chev: '', tap: () => {}, isOpenRow: false, photos: [], labelCol: spDone ? '#1D1D1F' : '#6C6C70', labelW: spDone ? 600 : 500 }); });
+            steps2 = out; }
+          const OK = 'M5 12l5 5 9-10', INFO = 'M12 3a9 9 0 100 18 9 9 0 000-18z M12 8h.01 M12 11v5', CLOCK = 'M12 3a9 9 0 100 18 9 9 0 000-18z M12 7v5l3 2', UP = 'M12 15V4 M7.5 8.5L12 4l4.5 4.5 M4 15v4a2 2 0 002 2h12a2 2 0 002-2v-4', PIN = 'M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z M12 11.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z', EYE = 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z M12 15a3 3 0 100-6 3 3 0 000 6z';
+          const Lk = (t, d, icon, tone, extra) => ({ t, d, icon, iconBg: tone === 'ok' ? '#000' : tone === 'green' ? '#2F9E62' : tone === 'warn' ? '#FDF0DC' : '#F2F2F4', iconCol: tone === 'ok' || tone === 'green' ? '#FFFFFF' : tone === 'warn' ? '#9A5B00' : '#48484A', hasBar: false, pct: '0%', ...(extra || {}) });
+          const missN = this.ALL.filter(k => this.open(s, k.id)).length; const waivN = Object.keys(s.waived).length; const r2 = s.shots.r2 || {};
+          const lines = x.id === 'fin' ? (s.checkout ? [Lk('Checked out ' + s.checkout, 'At 421 Oak St · on site 8 h 18 min', PIN, 'ok')] : [
+              missN ? Lk(missN + ' photo' + (missN === 1 ? '' : 's') + ' missing', 'Take it, or ask Sean to skip it. The job can\'t be done without one of these.', INFO, 'warn') : Lk('All ' + totalN + ' photos taken', 'Before work, repair and clean up', OK, 'ok'),
+              ...(waivN ? [Lk(waivN + ' waiting for Sean', 'Skipped with a reason. Doesn\'t stop you leaving.', CLOCK, 'info')] : []),
+              ...(r2.kept ? [Lk('1 photo kept after an AI flag', 'Old boot removed · ' + r2.kept.toLowerCase() + '. Sean will see why.', EYE, 'info')] : []),
+              Lk('0 of ' + totalN + ' in the office', 'Safe on this phone. They send on their own once there is signal.', UP, 'warn')
+            ])
+            : x.id === 'aft' ? [
+              Lk(allIn ? 'All ' + totalN + ' photos in the office' : s.signal ? 'Sending · ' + s.sent + ' of ' + totalN + ' in the office' : 'Waiting for signal', allIn ? 'Confirmed by the office. Nothing is only on this phone.' : s.failed ? 'One photo didn\'t send. Open uploads to retry.' : 'You can drive away. Keep the app installed.', UP, allIn ? 'green' : 'warn', { hasBar: !!s.checkout, pct: totalN ? Math.round(s.sent / totalN * 100) + '%' : '0%', barCol: allIn ? '#2F9E62' : '#E08A00' }),
+              Lk(allIn ? 'Safe to sign out' : 'Don\'t sign out yet', allIn ? 'You can close the app.' : 'Sign-out unlocks when every photo is in the office.', allIn ? OK : INFO, allIn ? 'green' : 'info'),
+              Lk('Sean reviews', 'You only hear back if a photo is needed.', EYE, 'info')
+            ] : [];
+          const off = (done && inOff(ids)) || (x.id === 'aft' && allIn); const sub2 = done && ids.length ? sub + (off ? ' · in office' : ' · on phone') : sub;
+          return { label: x.label, sub: sub2, isOpen: open, isClosed: !open, toggle: () => this.setState({ openPhase: open ? '__none' : x.id }),
+            chev: open ? 'M6 15l6-6 6 6' : 'M6 9l6 6 6-6', notLast: i < P.length - 1,
+            dot: off ? '#2F9E62' : done ? '#000' : isCur ? '#000' : '#F2F2F4', ring: done ? 'none' : isCur ? 'inset 0 0 0 3px #000, inset 0 0 0 8px #F2F2F4' : x.after ? 'inset 0 0 0 2px #AEAEB2' : 'inset 0 0 0 2px #8E8E93', mark: done ? '✓' : '',
+            lineCol: off ? '#2F9E62' : done ? '#000' : '#AEAEB2', lineStyle: i >= P.length - 2 ? 'dashed' : 'solid', labelCol: done || isCur ? '#000' : '#3C3C43', titleSize: isCur ? '22px' : '18px', subCol: isCur ? '#000' : '#48484A',
+            cardBg: isCur ? '#FFFFFF' : '#FAFAFA', cardSh: isCur ? '0 1px 2px rgba(0,0,0,0.06), 0 6px 20px rgba(0,0,0,0.07)' : 'inset 0 0 0 1px #E5E5EA',
+            hasPhotos: !x.repair && ids.length > 0, photos: !x.repair && open ? photoRows(ids, isCur || done, x.id === 'cl' ? 'Unlocks when every repair step is done' : 'Unlocks after the step before') : [], isRepair: !!x.repair, steps: steps2, hasLines: lines.length > 0, lines }; });
+        return { phases: phases.filter((x, i) => i <= pi), hasThen: pi < P.length - 1, thenText: P.slice(pi + 1).map(x => x.label).join(' · '), timeline, wTitle: curTitle, wSub: defs[curId].plain || '', wStepNo: 'STEP ' + ci + ' OF ' + (order.length - 1),
+          wMain: act.main, wHint: act.hint, wIcon: act.icon, wAction: act.go,
+          stepBarsDark: order.slice(1, 5).map((x, i) => ({ bg: i + 1 < ci ? '#FFFFFF' : i + 1 === ci ? '#C0392B' : 'rgba(255,255,255,0.25)' })),
+          cantTakeWork: nextOpen ? () => this.setState({ scr: 'waiver', waiverIds: [nextOpen], waiverFrom: 'work' }) : () => {}, hasNextOpen: !!nextOpen,
+          foundExtra: () => this.setState({ scr: 'cam', camShot: 'x1', justSaved: false, seq: 0 }),
+          openMore: () => this.setState({ sheet: 'more' }), sheetMore: s.sheet === 'more',
+          moreItems: [
+            ...(nextOpen ? [{ label: "Can't take this photo", sub: np.name + ' · ask Sean to skip it, with a reason', d: 'M12 3a9 9 0 100 18 9 9 0 000-18z M5.6 5.6l12.8 12.8', go: () => this.setState({ sheet: null, scr: 'waiver', waiverIds: [nextOpen], waiverFrom: 'work' }) }] : []),
+            ...(cur === 'repair' ? [{ label: 'Found another problem', sub: 'Rot or damage nobody planned for. Photo goes to Sean.', d: 'M12 5v14M5 12h14', go: () => this.setState({ sheet: null, scr: 'cam', camShot: 'x1', justSaved: false, seq: 0 }) }] : []),
+            { label: 'Put phone away', sub: 'Lock screen keeps the next photo one tap away', d: 'M7 3h10a1 1 0 011 1v16a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z M11 18h2', go: () => this.setState({ sheet: null, scr: 'lock' }) },
+            { label: 'All photos for this job', sub: 'The full checklist by stage', d: 'M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01', go: () => this.setState({ sheet: null, scr: 'list' }) }
+          ].map((o, i) => ({ ...o, line: i ? '1px solid #E5E5EA' : 'none' })),
+          lockNudge: cw && cw.id === 'w4' ? 'Decking exposed? Photograph it before new boards go on.' : '' }; })(),
+      repairView: cur === 'repair' && !s.openStage, notRepairView: !(cur === 'repair' && !s.openStage),
+      stepsDoneText: this.WORK.filter(w => ![...w.before, ...w.after].some(id => this.open(s, id))).length + ' of ' + this.WORK.length + ' done',
+      workSteps: (() => { const cw = this.curStep(s); return this.WORK.map((w, i) => { const ids = [...w.before, ...w.after]; const done = !ids.some(id => this.open(s, id)); const isCur = cw && cw.id === w.id;
+        const nTaken = ids.filter(id => s.shots[id]).length;
+        const nextB = w.before.find(id => this.open(s, id)); const nextA = w.after.find(id => this.open(s, id));
+        return { label: w.label, line: line(i), isCur, bg: isCur ? '#FDF3F1' : '#FFFFFF',
+          sub: done ? 'Done ' + (s.stepDone[w.id] || '') + ' · ' + nTaken + ' photo' + (nTaken === 1 ? '' : 's') : isCur ? (nextB ? 'Before you start: ' + this.SH[nextB].name : !s.stepDone[w.id] ? 'Working · tap “' + w.done + '” when finished' : 'Step done · take ' + this.SH[nextA].name) : ids.length + ' photo' + (ids.length === 1 ? '' : 's') + ' when done',
+          subCol: isCur ? '#C0392B' : '#6C6C70', dot: done ? '#000' : '#FFFFFF', ring: done ? 'none' : isCur ? 'inset 0 0 0 2.5px #C0392B' : 'inset 0 0 0 2px #D1D1D6', mark: done ? '✓' : String(i + 1), numCol: done ? '#FFFFFF' : isCur ? '#C0392B' : '#6C6C70',
+          photos: ids.map(id => { const x = this.SH[id], d = s.shots[id]; const isB = w.before.includes(id); const locked = !isB && !s.stepDone[w.id];
+            return { name: x.name, sub: d ? 'Saved ' + d.t + (d.kept ? ' · AI flagged, kept' : d.retaken ? ' · retaken' : '') : locked ? 'After “' + w.done + '”' : x.hint, tag: isB ? 'BEFORE' : 'AFTER', tagCol: isB ? '#6C6C70' : '#000',
+              bg: d ? '#FFFFFF' : locked ? 'rgba(255,255,255,0.55)' : '#FFFFFF', dot: d ? '#000' : '#FFFFFF', ring: d ? 'none' : locked ? 'inset 0 0 0 2px #D1D1D6' : 'inset 0 0 0 2.5px #C0392B', mark: d ? '✓' : '',
+              tap: d ? () => {} : locked ? () => this.markStep(w) : camTo(id) }; }) }; }); })(),
+      openRows, otherStages, primary, secondary, hasSecondary: !!secondary,
+      hasSheet: !!s.sheet, closeSheet: () => this.setState({ sheet: null }), sheetStart: s.sheet === 'start', sheetMissing: s.sheet === 'missing', sheetShots: s.sheet === 'shots', sheetKeep: s.sheet === 'keep',
+      arrivalCount: cnt(this.STAGES[0]) + ' of 4', startRepair: () => { this.setState({ repairAt: '7:46', now: '7:46', sheet: null, openStage: null, openPhase: null, scr: 'work' }); this.toast('Work started 7:46 · saved on the job'); },
+      beforeMissingTitle: arrivalMissing.length + ' before photo' + (arrivalMissing.length === 1 ? '' : 's') + ' missing', arrivalMissing,
+      takeBeforeNow: () => arrivalMissing[0] && camTo(arrivalMissing[0].id)(),
+      cantTake: () => this.setState({ sheet: null, scr: 'waiver', waiverIds: arrivalMissing.map(x => x.id), waiverFrom: 'start' }),
+      waiverRows: s.waiverIds.map((id, i) => ({ name: this.SH[id].name, sub: this.STAGES.find(g => g.k === this.SH[id].stage).label + ' · Missing', line: line(i) })),
+      waiverReasons, waiverNote: s.waiverNote, onWaiverNote: e => this.setState({ waiverNote: e.target.value }),
+      waiverCta: s.waiverFrom === 'start' ? 'Send to Sean · start repair' : s.waiverFrom === 'work' ? 'Send to Sean · keep working' : 'Send to Sean',
+      waiverBack: go(s.waiverFrom === 'start' ? 'list' : s.waiverFrom === 'work' ? 'work' : 'finish'),
+      sendWaiver: () => { const w = { ...s.waived }; s.waiverIds.forEach(id => w[id] = s.waiverReason); const st = s.waiverFrom === 'start';
+        this.setState({ waived: w, scr: st || s.waiverFrom === 'work' ? 'work' : 'finish', ...(st ? { repairAt: '7:47', now: '7:47' } : {}) }); this.toast(st ? 'Waiver sent to Sean · work started 7:47' : 'Waiver sent to Sean'); },
+      camStage: cg.label + ' · ' + (camIdx + 1) + ' of ' + cg.shots.length, camName: cs.name, camHint: cs.hint, camImg: this.IMG(cs.img, 900),
+      camStamp: (s.signal ? '' : 'Offline · ') + s.now + ' · at address ±5 m', camTaken: String(cnt(cg)), camTotal: cg.shots.length,
+      ...(() => { const h = React.createElement; const n = cg.shots.length; const js = !!s.justSaved && s.seq > 0;
+        const last = s.lastId ? this.SH[s.lastId] : null;
+        const camCard = h('div', { key: cs.id + ':' + (s.seq || 0), style: { position: 'absolute', left: 12, right: 12, top: 12, padding: '15px 16px', borderRadius: 16, background: 'rgba(0,0,0,0.68)', display: 'flex', flexDirection: 'column', gap: 4, animation: js ? 'nextIn 0.45s cubic-bezier(.2,.8,.2,1) 0.45s both, nextRing 1.2s ease-out 0.95s 1' : 'none' } },
+          h('span', { key: 'e', style: { fontSize: 12, fontWeight: 800, letterSpacing: '0.08em', color: js ? '#FFD60A' : '#E5E5EA' } }, (js ? 'NEXT SHOT · ' : 'SHOT ') + (camIdx + 1) + ' OF ' + n),
+          h('span', { key: 'n', style: { fontSize: 22, fontWeight: 800, letterSpacing: '-0.015em' } }, cs.name),
+          h('span', { key: 'h', style: { fontSize: 15, lineHeight: 1.4, color: '#F2F2F7' } }, cs.hint));
+        const camFx = js && last ? h('div', { key: 'fx' + s.seq, style: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 5 } },
+          h('div', { key: 'f', style: { position: 'absolute', left: 0, right: 0, top: 108, height: 576, background: '#FFFFFF', animation: 'camFlash 0.35s ease-out both' } }),
+          h('img', { key: 't', src: this.IMG(last.img, 600), alt: '', style: { position: 'absolute', objectFit: 'cover', boxShadow: '0 0 0 2px #FFFFFF', animation: 'flyToAll 0.7s cubic-bezier(.4,0,.2,1) 0.12s both' } }),
+          h('div', { key: 'c', style: { position: 'absolute', left: '50%', top: 548, height: 40, padding: '0 16px', borderRadius: 999, background: s.pillAi ? '#4F46E5' : 'rgba(0,0,0,0.78)', color: '#FFFFFF', fontSize: 15, fontWeight: 700, display: 'flex', alignItems: 'center', whiteSpace: 'nowrap', animation: 'chipLife 2s ease both' } }, '✓ ' + (s.pill || last.name + ' saved'))) : null;
+        const lastInStage = [...cg.shots].reverse().find(x => s.shots[x.id]);
+        return { camCard, camFx, camLastImg: lastInStage ? this.IMG(lastInStage.img, 200) : '',
+          camDots: cg.shots.map(x => ({ w: x.id === cs.id ? '22px' : '8px', bg: x.id === cs.id ? '#FFD60A' : s.shots[x.id] ? '#FFFFFF' : 'rgba(255,255,255,0.3)' })),
+          showCoach: s.scr === 'cam' && js && !s.coachSeen, coachPrev: last ? last.name : '', coachPrevImg: last ? this.IMG(last.img, 200) : '',
+          dismissCoach: () => this.setState({ coachSeen: true }) }; })(),
+      pill: s.pill, pillBg: s.pillAi ? '#4F46E5' : 'rgba(0,0,0,0.72)', shutter: this.shutter,
+      openAllShots: () => this.setState({ sheet: 'shots' }), extraPhoto: () => this.toast('Extra photo saved · name it later in Review'),
+      shotsTitle: cg.label + ' photos', shotsCount: cnt(cg) + ' of ' + cg.shots.length, shotRows,
+      ...(() => { const tot = Object.keys(s.shots).length; const all = s.signal && tot > 0 && s.sent >= tot;
+        return { netText: !s.signal ? 'Offline · saving' : all ? '✓ All in office' : 'Sending · ' + s.sent + ' of ' + tot, netBg: all ? '#E9F6EF' : '#FDF0DC', netCol: all ? '#2F9E62' : '#9A5B00' }; })(),
+      sheetCheckout: s.sheet === 'checkout',
+      coRows: [['Time', '15:48 · Thu 23 Oct'], ['Place', 'At 421 Oak St · ±6 m'], ['Crew', 'Ravi, Jay, Kim'], ['Photos', capturedN + ' taken · ' + s.sent + ' in the office']].map(([k, v], i) => ({ k, v, line: i ? '1px solid #E5E5EA' : 'none' })),
+      doCheckout: () => { this.setState({ checkout: '15:48', now: '15:48', sheet: null, openPhase: null, scr: 'work' }); this.toast('Checked out 15:48 · photos will send on their own'); this.startUploads(); },
+      sheetPhoto: s.sheet === 'photo', goTimeline: go('work', { openPhase: null }),
+      ...(() => { const x = this.SH[s.photoId] || this.ALL[0]; const d = s.shots[x.id] || {}; const idx = this.ALL.filter(k => s.shots[k.id]).findIndex(k => k.id === x.id); const inOffice = idx > -1 && idx < s.sent;
+        return { pvImg: this.IMG(x.img, 700), pvName: x.name, pvStatus: inOffice ? '✓ In the office' : 'On this phone', pvStatusCol: inOffice ? '#2F9E62' : '#9A5B00',
+          pvRows: [['Taken', (d.t || '') + ' · Thu 23 Oct'], ['Place', 'At 421 Oak St · ±5 m'], ['By', 'Ravi Menon'], ['History', d.retaken ? '2 photos · first kept' : d.kept ? 'AI flagged · kept: ' + d.kept.toLowerCase() : '1 photo']].map(([k, v], i) => ({ k, v, line: i ? '1px solid #E5E5EA' : 'none' })),
+          pvRetake: () => this.setState({ sheet: null, scr: 'cam', camShot: x.id, justSaved: false, seq: 0 }),
+          pvMistake: () => { this.setState(st => ({ sheet: null, shots: { ...st.shots, [x.id]: { ...st.shots[x.id], mistake: true } } })); this.toast(x.name + ' marked as mistake · take it again'); } }; })(),
+      aiKeep: () => this.setState({ sheet: 'keep' }), aiRetake: this.retake, keepReasons, keepLower: s.keepPick.toLowerCase(),
+      keepConfirm: () => { const shots = { ...s.shots, r2: { t: '8:04', kept: s.keepPick } }; this.afterSave(shots, 'Old boot removed kept', '8:04', false); },
+      phaseTitle: PH[0], phaseSub: cnt(pg) + ' of ' + pg.shots.length + " saved on this phone · they'll upload when there's signal", phaseNext: PH[1], phaseNextSub: PH[2],
+      phaseThumbs: pg.shots.filter(x => s.shots[x.id]).map(x => ({ img: this.IMG(x.img, 300) })),
+      finishMissing: missing.length > 0, finishReady: missing.length === 0,
+      missingTitle: missing.length + ' photo' + (missing.length === 1 ? '' : 's') + ' missing',
+      missingRows: missing.map((x, i) => ({ ...x, line: line(i), take: camTo(x.id) })),
+      takeMissing: () => missing[0] && camTo(missing[0].id)(),
+      waiveMissing: () => this.setState({ scr: 'waiver', waiverIds: missing.map(x => x.id), waiverFrom: 'finish' }),
+      stageSummary: this.STAGES.map((g, i) => { const w = g.shots.filter(x => s.waived[x.id]).length; return { label: g.label, count: cnt(g) + ' of ' + g.shots.length + (w ? ' · ' + w + ' waiver' : ''), line: line(i) }; }),
+      hasAiNote: !!(r2.kept || r2.retaken), aiNoteTitle: r2.kept ? 'AI flagged, Ravi kept' : 'AI flagged, Ravi retook', aiNoteSub: r2.kept ? 'Old boot removed · ' + r2.kept.toLowerCase() : 'Old boot removed · first try in history',
+      hasWaivers: waivedIds.length > 0, waiverSummary: waivedIds.map(id => this.SH[id].name).join(', '),
+      checkout: () => this.setState({ checkout: '15:49', now: '15:49', scr: 'done' }),
+      leave: () => { this.setState({ scr: 'jobs', now: '15:58' }); this.startUploads(); },
+      upSending: s.sent < total, upAll: total > 0 && s.sent >= total,
+      upEyebrow: s.signal ? (s.sent >= total ? 'ALL SENT · SAFE TO SIGN OUT' : '421 OAK ST · BACK ONLINE') : 'NO SIGNAL · SAVING ON PHONE', upEyebrowCol: s.signal ? (s.sent >= total ? '#2F9E62' : '#6C6C70') : '#9A5B00',
+      upSendingText: s.signal ? 'Sending ' + (total - s.sent) : 'Waiting for signal', sent: s.sent, upPct: total ? Math.round(s.sent / total * 100) + '%' : '0%',
+      onPhone, onPhoneN: left.length, lastIn: s.sent ? 'Last 16:18' : '',
+      retry: () => { this.setState({ failed: false }); this.later(() => { this.setState({ sent: total }); this.toast('All photos in the office'); }, 900); },
+      toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

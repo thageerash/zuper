@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>body{margin:0;background:#F5F3EE;color:#1B1A17;font-family:'Instrument Sans',sans-serif;-webkit-font-smoothing:antialiased}a{color:#1B1A17;text-underline-offset:2px}a:hover{color:#A23B1E}button,input,select{font-family:inherit}button{cursor:pointer}</style></helmet>
+<div style="min-height:100vh;display:flex;gap:24px;padding:24px;box-sizing:border-box">
+
+<aside style="width:260px;flex-shrink:0;display:flex;flex-direction:column;gap:22px;padding-top:4px">
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#5E5A52">PROTOTYPE · PRIYA · OFFICE WEB</span>
+    <span style="font-size:22px;font-weight:600;line-height:1.2">Send the adjuster a set they accept the first time</span>
+    <div style="display:flex;gap:14px;font-size:13px"><a href="Priya Flow.dc.html" style="color:#5E5A52">Flow</a><a href="Sean Prototype.dc.html" style="color:#5E5A52">Sean prototype</a></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+      <div style="display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;padding:8px 10px;border-radius:8px;background:{{ s.bg }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:{{ s.numFg }}">{{ s.n }}</span><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600;color:{{ s.fg }}">{{ s.title }}</span><span style="font-size:13px;line-height:1.4;color:#5E5A52">{{ s.sub }}</span></div></div>
+    </sc-for>
+    <span style="font-size:13px;line-height:1.5;color:#3D3A34;padding:4px 2px 0">Done when the package is sent. The adjuster’s answer is recorded later and feeds the accepted-claims metric.</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;line-height:1.5;color:#3D3A34"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">SAME JOB AS SEAN</span><span>#421 after the “spot already covered” path: Opened up on the soft decking is missing with Ravi’s reason.</span></div>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+    <button onClick="{{ restart }}" style="height:40px;border-radius:10px;border:1px solid #CFC9BD;background:transparent;color:#3D3A34;font-size:14px" style-hover="background:#EFEBE3">Restart</button>
+    <span style="font-size:12px;line-height:1.5;color:#5E5A52">Share link and PDF are prototype concepts.</span>
+  </div>
+</aside>
+
+<main style="flex:1;min-width:0;position:relative;background:#FFFFFF;border-radius:12px;box-shadow:0 0 0 1px #E3DFD6;display:flex;flex-direction:column;overflow:hidden">
+  <div style="height:60px;flex-shrink:0;border-bottom:1px solid #EEEBE4;display:flex;align-items:center;gap:16px;padding:0 20px">
+    <button onClick="{{ goList }}" style="height:40px;padding:0 12px;border:none;border-radius:8px;background:{{ listNavBg }};color:#1B1A17;font-size:15px;font-weight:600">Claims</button>
+    <div style="flex:1;max-width:520px;height:40px;border:1.5px solid #CFC9BD;border-radius:10px;display:flex;align-items:center;gap:8px;padding:0 12px;box-sizing:border-box">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5E5A52" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      <input value="{{ q }}" onChange="{{ onQ }}" placeholder="Search customer, address or job #" style="flex:1;min-width:0;border:none;outline:none;font-size:15px;background:transparent;color:#1B1A17">
+    </div>
+    <span style="margin-left:auto;font-size:14px;color:#5E5A52">Priya Shah</span>
+  </div>
+
+  <div style="flex:1;overflow:auto">
+  <sc-if value="{{ isList }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:32px 32px 48px;display:flex;flex-direction:column;gap:28px;max-width:880px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span style="font-size:30px;font-weight:600;letter-spacing:-0.01em">Ready for claims</span>
+        <sc-if value="{{ show421 }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ open421 }}" style="text-align:left;background:#FFFFFF;border:1.5px solid #1B1A17;border-radius:10px;padding:16px 18px;display:grid;grid-template-columns:minmax(0,1fr) auto 20px;gap:16px;align-items:center;color:#1B1A17" style-hover="background:#FAF9F6">
+            <span style="display:flex;flex-direction:column;gap:4px"><span style="font-size:17px;font-weight:600">#421 · 18 Oak St</span><span style="font-size:14px;color:#5E5A52">Leak repair · Ravi · finished today 10:02</span></span>
+            <span style="font-size:14px;color:#3D3A34">16 of 17 photos · 1 missing with reason</span>
+            <span style="font-size:20px;color:#5E5A52">›</span>
+          </button>
+        </sc-if>
+        <sc-if value="{{ show424 }}" hint-placeholder-val="{{ true }}">
+          <div style="background:#FFFFFF;border:1px solid #E3DFD6;border-radius:10px;padding:16px 18px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center">
+            <span style="display:flex;flex-direction:column;gap:4px"><span style="font-size:17px;font-weight:600;color:#5E5A52">#424 · 31 Cedar Rd</span><span style="font-size:14px;color:#5E5A52">Re-roof · Dana · finished today 11:40</span></span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 8px;border-radius:3px;background:#EFEBE3;color:#1B1A17">WAITING ON 3 PHOTOS FROM DANA’S PHONE</span>
+          </div>
+        </sc-if>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span style="font-size:19px;font-weight:600">Sent</span>
+        <sc-for list="{{ sentRows }}" as="r" hint-placeholder-count="2">
+          <div style="border-top:1px solid #EEEBE4;padding:14px 2px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center">
+            <span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:600">{{ r.title }}</span><span style="font-size:14px;color:#5E5A52">{{ r.sub }}</span></span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 8px;border-radius:3px;background:{{ r.bg }};color:{{ r.fg }}">{{ r.chip }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isSet }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:20px 32px 48px;display:flex;flex-direction:column;gap:20px">
+      <button onClick="{{ goList }}" style="align-self:flex-start;height:36px;padding:0 10px 0 4px;border:none;background:none;color:#3D3A34;font-size:14px">‹ Claims</button>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:30px;font-weight:600;letter-spacing:-0.01em">#421 · 18 Oak St</span><span style="font-size:15px;color:#5E5A52">Leak repair · 2 spots · Ravi · 25 Oct, 8:04–10:02</span></div>
+        <button onClick="{{ goSend }}" style="height:48px;padding:0 22px;border:none;border-radius:10px;background:#1B1A17;color:#F5F3EE;font-size:16px;font-weight:600" style-hover="background:#33312C">Preview package</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;background:#F5F3EE;border-radius:10px;padding:16px 18px">
+        <span style="font-size:15px;font-weight:600">16 of 17 photos · an adjuster will ask about 2 things</span>
+        <button onClick="{{ selMissing }}" style="text-align:left;border:none;background:none;padding:4px 0;font-size:15px;color:#1B1A17;display:flex;gap:10px;align-items:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 6px;border-radius:3px;background:#EFEBE3;border:1px solid #CFC9BD">MISSING · REASON</span><span style="text-decoration:underline;text-underline-offset:2px">B · Soft decking · Opened up</span></button>
+        <button onClick="{{ selNoGps }}" style="text-align:left;border:none;background:none;padding:4px 0;font-size:15px;color:#1B1A17;display:flex;gap:10px;align-items:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 6px;border-radius:3px;background:#F3E3DC;color:#A23B1E">NO GPS</span><span style="text-decoration:underline;text-underline-offset:2px">A · Vent pipe leak · Fixed</span></button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap-reverse;gap:24px;align-items:flex-end">
+        <div style="flex:999 1 420px;display:flex;flex-direction:column;gap:20px;min-width:0">
+          <sc-for list="{{ groups }}" as="g" hint-placeholder-count="6">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">{{ g.label }}</span>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ g.tiles }}" as="t" hint-placeholder-count="3">
+                  <button onClick="{{ t.pick }}" style="width:124px;padding:0;text-align:left;border-radius:8px;border:{{ t.border }};overflow:hidden;display:flex;flex-direction:column;background:#FFFFFF;color:#1B1A17">
+                    <span style="height:76px;width:100%;background:{{ t.bg }};display:flex;align-items:center;justify-content:center;font-size:12px;color:#5E5A52">{{ t.empty }}</span>
+                    <span style="padding:7px 9px;display:flex;flex-direction:column;gap:3px"><span style="font-size:13px;font-weight:600;line-height:1.25">{{ t.name }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:{{ t.metaFg }}">{{ t.meta }}</span></span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="flex:1 1 280px;max-width:520px;position:sticky;top:20px;background:#F5F3EE;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px">
+          <sc-if value="{{ noSel }}" hint-placeholder-val="{{ true }}"><span style="font-size:15px;line-height:1.5;color:#5E5A52">Select a photo to see its time, location and label history.</span></sc-if>
+          <sc-if value="{{ selPhoto }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="aspect-ratio:4/3;border-radius:8px;background:{{ dBg }}"></div>
+              <span style="font-size:18px;font-weight:600;line-height:1.25">{{ dTitle }}</span>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">TAKEN (PHONE TIME)</span><span style="font-size:15px">{{ dTaken }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">RECEIVED (OFFICE TIME)</span><span style="font-size:15px">{{ dRecv }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">LOCATION</span><span style="font-size:15px;color:{{ dLocFg }}">{{ dLoc }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">LABEL</span><span style="font-size:15px">{{ dLabel }}</span><sc-if value="{{ dHist }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#5E5A52">{{ dHist }}</span></sc-if></div>
+              </div>
+              <sc-if value="{{ fixOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;gap:8px;align-items:center"><select onChange="{{ onFix }}" value="{{ dName }}" style="flex:1;height:40px;border:1.5px solid #CFC9BD;border-radius:8px;padding:0 10px;font-size:14px;background:#FFFFFF;color:#1B1A17"><sc-for list="{{ fixOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o }}">{{ o }}</option></sc-for></select></div>
+              </sc-if>
+              <button onClick="{{ toggleFix }}" style="align-self:flex-start;height:36px;padding:0;border:none;background:none;color:#3D3A34;font-size:14px;text-decoration:underline;text-underline-offset:2px">{{ fixLabel }}</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ selMissingPanel }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <span style="align-self:flex-start;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;border-radius:3px;background:#EFEBE3;border:1px solid #CFC9BD">MISSING · REASON</span>
+              <span style="font-size:18px;font-weight:600;line-height:1.25">B · Soft decking · Opened up</span>
+              <span style="font-size:15px;line-height:1.5;color:#3D3A34">Covered before the photo. The roof is closed, so it can’t be retaken. It goes in the package as missing, with this reason:</span>
+              <span style="font-size:15px;line-height:1.5;background:#FFFFFF;border-radius:8px;padding:12px 14px">“Rain started, boards went on fast. Soft area was about 1 m², replaced 4 sheets.” Ravi, 9:33</span>
+              <span style="font-size:13px;color:#5E5A52">Before and Fixed for this spot are in the set.</span>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isSend }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:20px 32px 48px;display:flex;flex-direction:column;gap:20px">
+      <button onClick="{{ backSet }}" style="align-self:flex-start;height:36px;padding:0 10px 0 4px;border:none;background:none;color:#3D3A34;font-size:14px">‹ Claim set</button>
+      <div style="display:flex;flex-wrap:wrap-reverse;gap:24px;align-items:flex-end">
+        <div style="flex:999 1 440px;min-width:0;border:1px solid #E3DFD6;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:18px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">WHAT THE ADJUSTER SEES</span>
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:24px;font-weight:600;letter-spacing:-0.01em">Claim photos · 18 Oak St</span><span style="font-size:14px;color:#5E5A52">Job #421 · leak repair · 25 Oct 2026 · 17 required, 16 included · prepared by Priya Shah</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px;background:#F5F3EE;border-radius:8px;padding:14px 16px;font-size:14px;line-height:1.5">
+            <span style="font-weight:600">Disclosed</span>
+            <span><b>Missing:</b> B · Soft decking · Opened up. Crew’s reason: “Rain started, boards went on fast. Soft area was about 1 m², replaced 4 sheets.”</span>
+            <span><b>No GPS:</b> A · Vent pipe leak · Fixed. Phone and office times shown.</span>
+          </div>
+          <sc-for list="{{ pkg }}" as="g" hint-placeholder-count="6">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">{{ g.label }}</span>
+              <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">
+                <sc-for list="{{ g.tiles }}" as="t" hint-placeholder-count="3">
+                  <div style="display:flex;flex-direction:column;gap:4px">
+                    <span style="height:92px;border-radius:6px;background:{{ t.bg }};border:{{ t.pkgBorder }};display:flex;align-items:center;justify-content:center;font-size:12px;color:#5E5A52">{{ t.empty }}</span>
+                    <span style="font-size:13px;font-weight:600">{{ t.name }}</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.4;color:{{ t.metaFg }}">{{ t.pkgMeta }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="flex:1 1 280px;max-width:420px;position:sticky;top:20px;display:flex;flex-direction:column;gap:16px">
+          <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#F5F3EE;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:16px">
+              <span style="font-size:19px;font-weight:600">Send to adjuster</span>
+              <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;color:#3D3A34">Adjuster’s email</span><input value="{{ email }}" onChange="{{ onEmail }}" style="height:44px;border:1.5px solid {{ emailBorder }};border-radius:8px;padding:0 12px;font-size:15px;outline:none;background:#FFFFFF;color:#1B1A17"><sc-if value="{{ emailBad }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#A23B1E">Enter a valid email.</span></sc-if></div>
+              <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;color:#3D3A34">Format</span>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#E9E5DC;padding:4px;border-radius:10px">
+                  <button onClick="{{ pickLink }}" style="height:40px;border:none;border-radius:7px;background:{{ linkBg }};color:#1B1A17;font-size:14px;font-weight:600">Link + PDF</button>
+                  <button onClick="{{ pickPdf }}" style="height:40px;border:none;border-radius:7px;background:{{ pdfBg }};color:#1B1A17;font-size:14px;font-weight:600">PDF only</button>
+                </div>
+                <span style="font-size:13px;line-height:1.5;color:#5E5A52">{{ fmtNote }}</span>
+              </div>
+              <sc-if value="{{ failed }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#A23B1E">Not sent. Check the connection and try again.</span></sc-if>
+              <button onClick="{{ send }}" style="height:48px;border:none;border-radius:10px;background:#1B1A17;color:#F5F3EE;font-size:16px;font-weight:600" style-hover="background:#33312C">{{ sendLabel }}</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isSent }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="background:#E2EDE6;color:#2F6B4F;border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:4px"><span style="font-size:17px;font-weight:600">{{ sentTitle }}</span><span style="font-size:14px;line-height:1.5">{{ sentSub }}</span></div>
+              <div style="background:#F5F3EE;border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">LATER · WHEN THE ADJUSTER REPLIES</span>
+                <sc-if value="{{ noAnswer }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <span style="font-size:15px;line-height:1.5;color:#3D3A34">Record their answer.</span>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                      <button onClick="{{ ansAccepted }}" style="height:44px;border-radius:10px;border:1.5px solid #1B1A17;background:#FFFFFF;color:#1B1A17;font-size:14px;font-weight:600" style-hover="background:#EFEBE3">Accepted</button>
+                      <button onClick="{{ ansMore }}" style="height:44px;border-radius:10px;border:1.5px solid #1B1A17;background:#FFFFFF;color:#1B1A17;font-size:14px;font-weight:600" style-hover="background:#EFEBE3">Asked for more</button>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ hasAnswer }}" hint-placeholder-val="{{ false }}"><span style="font-size:15px;line-height:1.5">{{ answerText }}</span></sc-if>
+              </div>
+              <button onClick="{{ goList }}" style="align-self:flex-start;height:40px;padding:0;border:none;background:none;color:#3D3A34;font-size:14px;text-decoration:underline;text-underline-offset:2px">Back to claims</button>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+  </div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const IMG = n => "url('assets/est-" + n + ".png') center/cover #EDEAE3";
+const STAGES = ['Before', 'Opened up', 'Fixed'];
+const P = (id, name, t, r, loc, img) => ({ id, name, t, r, loc, img });
+const GROUPS = [
+  { label: 'PROPERTY BEFORE', items: [P('p1', 'Front', '8:06', '8:07', 14), P('p2', 'Back', '8:08', '8:09', 16), P('p3', 'Gutters', '8:09', '8:10', 12, 'gutter'), P('p4', 'Ground below', '8:10', '8:11', 13)] },
+  { label: 'ROOF BEFORE', items: [P('r1', 'North slope', '8:20', '8:21', 22, 'north'), P('r2', 'South slope', '8:22', '8:23', 24)] },
+  { label: 'A · VENT PIPE LEAK', spot: true, items: [P('A1', 'Before', '8:35', '8:36', 21, 'pipe-boot'), P('A2', 'Opened up', '8:50', '8:51', 20, 'flashing'), P('A3', 'Fixed', '9:20', '9:41', null)] },
+  { label: 'B · SOFT DECKING', spot: true, items: [P('B1', 'Before', '8:40', '8:41', 26, 'ceiling'), { id: 'B2', name: 'Opened up', missing: true }, P('B3', 'Fixed', '9:48', '9:49', 25, 'attic')] },
+  { label: 'ROOF AFTER', items: [P('a1', 'North slope', '9:52', '9:53', 22, 'north'), P('a2', 'South slope', '9:53', '9:54', 23)] },
+  { label: 'CLEAN UP', items: [P('c1', 'Gutters after', '9:56', '9:57', 12, 'gutter'), P('c2', 'Ground below after', '9:57', '9:58', 13), P('c3', 'Debris cleared', '9:58', '9:59', 15)] }
+];
+const INIT = { scr: 'list', q: '', sel: null, fixOpen: false, labels: {}, fmt: 'link', email: 'm.chen@harborins.com', sending: false, failed: false, failOnce: true, sent: null, answer: null };
+
+class Component extends DCLogic {
+  state = { ...INIT };
+  componentWillUnmount() { clearTimeout(this.t); }
+  find(id) { for (const g of GROUPS) for (const it of g.items) if (it.id === id) return { g, it }; return null; }
+  renderVals() {
+    const s = this.state;
+    const nameOf = it => (s.labels[it.id] && s.labels[it.id].to) || it.name;
+    const tile = (g, it) => {
+      const sel = s.sel === it.id;
+      if (it.missing) return { name: nameOf(it), bg: '#F5F3EE', empty: 'Not taken', meta: 'Missing · reason', metaFg: '#1B1A17', pkgMeta: 'Missing · crew’s reason above', pkgBorder: '1.5px dashed #CFC9BD',
+        border: sel ? '2px solid #1B1A17' : '1.5px dashed #CFC9BD', pick: () => this.setState({ sel: it.id, fixOpen: false }) };
+      const loc = it.loc == null ? 'No GPS' : it.loc + ' m';
+      return { name: nameOf(it), bg: it.img ? IMG(it.img) : '#E4E0D7', empty: '', meta: it.t + ' · ' + loc, metaFg: it.loc == null ? '#A23B1E' : '#5E5A52',
+        pkgMeta: 'Taken ' + it.t + ' · received ' + it.r + ' · ' + (it.loc == null ? 'No GPS' : it.loc + ' m from 18 Oak St'), pkgBorder: 'none',
+        border: sel ? '2px solid #1B1A17' : it.loc == null ? '1.5px solid #A23B1E' : '1px solid #E3DFD6', pick: () => this.setState({ sel: it.id, fixOpen: false }) };
+    };
+    const groups = GROUPS.map(g => ({ label: g.label, tiles: g.items.map(it => tile(g, it)) }));
+
+    const f = s.sel ? this.find(s.sel) : null;
+    const it = f && f.it, isMissing = !!(it && it.missing);
+    const lab = it && s.labels[it.id];
+    const det = it && !isMissing ? {
+      dBg: it.img ? IMG(it.img) : '#E4E0D7', dTitle: f.g.label.charAt(0) + f.g.label.slice(1).toLowerCase().replace(/^(.)/, c => c.toUpperCase()) + ' · ' + nameOf(it),
+      dTaken: '25 Oct · ' + it.t, dRecv: '25 Oct · ' + it.r + (it.r !== it.t && it.id === 'A3' ? ' · uploaded after check-out' : ''),
+      dLoc: it.loc == null ? 'No GPS on this photo' : it.loc + ' m from 18 Oak St', dLocFg: it.loc == null ? '#A23B1E' : '#1B1A17',
+      dLabel: lab ? 'Office corrected · Priya ' + lab.at : 'AI suggested · Ravi confirmed ' + it.t,
+      dHist: lab ? 'Was “' + it.name + '”, set by Ravi ' + it.t + '. Changed to “' + lab.to + '” by Priya ' + lab.at + '.' : '',
+      dName: nameOf(it), fixOpts: f.g.spot ? STAGES : f.g.items.filter(x => !x.missing).map(x => x.name)
+    } : {};
+    const titleCase = l => l.toLowerCase().replace(/(^|· )([a-z])/g, (m, a, b) => a + b.toUpperCase()).replace(/\b(a|b)\b/g, c => c.toUpperCase());
+    if (det.dTitle) det.dTitle = titleCase(f.g.label) + ' · ' + nameOf(it);
+
+    const curStep = s.scr === 'list' ? 0 : s.scr === 'set' ? 1 : s.sent ? 3 : 2;
+    const SD = [['Pick the job', 'Ready for claims, or search'], ['Check the set', 'Crew’s order; exceptions on top'], ['Send', 'Adjuster sees exactly this'], ['Later · record answer', 'Accepted or asked for more']];
+    const steps = SD.map((x, i) => {
+      const done = i < curStep || (i === 3 && s.answer);
+      const on = i === curStep && !done;
+      return { n: done ? '✓' : String(i + 1), title: x[0], sub: x[1], bg: on ? '#FFFFFF' : 'transparent', fg: on || done ? '#1B1A17' : '#77726A', numFg: done ? '#2F6B4F' : on ? '#1B1A17' : '#77726A' };
+    });
+
+    const q = s.q.trim().toLowerCase();
+    const match = str => !q || str.toLowerCase().includes(q);
+    const sent = [];
+    if (s.sent) sent.push({ title: '#421 · 18 Oak St', sub: 'Sent to ' + s.sent.to + ' · today ' + s.sent.at + ' · 16 photos, 2 disclosed', chip: s.answer === 'acc' ? 'ACCEPTED' : s.answer === 'more' ? 'ASKED FOR MORE' : 'WAITING FOR ANSWER',
+      bg: s.answer === 'acc' ? '#E2EDE6' : '#EFEBE3', fg: s.answer === 'acc' ? '#2F6B4F' : '#1B1A17', key: '421 18 oak st' });
+    sent.push({ title: '#388 · Lena Marsh · 14 Maple Dr', sub: 'Sent to j.ortega@harborins.com · 6 Oct · 17 photos, 2 disclosed', chip: 'ACCEPTED', bg: '#E2EDE6', fg: '#2F6B4F', key: '388 lena marsh 14 maple dr' });
+    sent.push({ title: '#362 · Lena Ortiz · 9 Elm Ct', sub: 'Sent to m.chen@harborins.com · 15 Sep · 9 photos', chip: 'ACCEPTED', bg: '#E2EDE6', fg: '#2F6B4F', key: '362 lena ortiz 9 elm ct' });
+
+    const emailOk = /.+@.+\..+/.test(s.email);
+    return {
+      steps,
+      restart: () => { clearTimeout(this.t); this.setState({ ...INIT, labels: {} }); },
+      goList: () => this.setState({ scr: 'list' }), listNavBg: s.scr === 'list' ? '#EFEBE3' : 'transparent',
+      q: s.q, onQ: e => this.setState({ q: e.target.value, scr: 'list' }),
+      isList: s.scr === 'list', isSet: s.scr === 'set', isSend: s.scr === 'send',
+      show421: !s.sent && match('421 18 oak st leak repair ravi'), show424: match('424 31 cedar rd dana'),
+      sentRows: sent.filter(r => match(r.key + ' ' + r.title)),
+      open421: () => this.setState({ scr: 'set', sel: null }),
+      goSend: () => this.setState({ scr: 'send' }), backSet: () => this.setState({ scr: 'set' }),
+      selMissing: () => this.setState({ sel: 'B2', fixOpen: false }), selNoGps: () => this.setState({ sel: 'A3', fixOpen: false }),
+      groups, pkg: groups,
+      noSel: !it, selPhoto: !!it && !isMissing, selMissingPanel: isMissing,
+      ...det, fixOpts: det.fixOpts || [], dHist: det.dHist || '',
+      fixOpen: s.fixOpen, fixLabel: s.fixOpen ? 'Done' : 'Fix label',
+      toggleFix: () => this.setState({ fixOpen: !s.fixOpen }),
+      onFix: e => { const v = e.target.value; this.setState(st => { const L = { ...st.labels }; if (v === it.name) delete L[it.id]; else L[it.id] = { to: v, at: '14:20' }; return { labels: L }; }); },
+      email: s.email, onEmail: e => this.setState({ email: e.target.value, failed: false }),
+      emailBad: !emailOk, emailBorder: emailOk ? '#CFC9BD' : '#A23B1E',
+      pickLink: () => this.setState({ fmt: 'link' }), pickPdf: () => this.setState({ fmt: 'pdf' }),
+      linkBg: s.fmt === 'link' ? '#FFFFFF' : 'transparent', pdfBg: s.fmt === 'pdf' ? '#FFFFFF' : 'transparent',
+      fmtNote: s.fmt === 'link' ? 'Email with a link to this page (expires in 30 days) and the PDF attached.' : 'Email with the PDF attached. Same photos, times and disclosures.',
+      failed: s.failed, notSent: !s.sent, isSent: !!s.sent,
+      sendLabel: s.sending ? 'Sending…' : s.failed ? 'Try again' : 'Send to adjuster',
+      send: () => {
+        if (s.sending || !emailOk) return;
+        this.setState({ sending: true, failed: false });
+        this.t = setTimeout(() => {
+          if (this.state.failOnce) this.setState({ sending: false, failed: true, failOnce: false });
+          else this.setState({ sending: false, sent: { to: this.state.email, at: '14:32' } });
+        }, 1200);
+      },
+      sentTitle: s.sent ? 'Sent to ' + s.sent.to : '',
+      sentSub: s.sent ? 'Today 14:32 · 16 photos, 1 missing and 1 no GPS disclosed. ' + (s.fmt === 'link' ? 'Link expires 24 Nov.' : 'PDF attached.') + ' This exact version is saved on the job.' : '',
+      noAnswer: !s.answer, hasAnswer: !!s.answer,
+      answerText: s.answer === 'acc' ? 'Accepted on first send. Counts toward accepted claims.' : 'Adjuster asked for more. Logged; the job reopens in Claims.',
+      ansAccepted: () => this.setState({ answer: 'acc' }), ansMore: () => this.setState({ answer: 'more' })
+    };
+  }
+}
+</script>
+</body>
+</html>

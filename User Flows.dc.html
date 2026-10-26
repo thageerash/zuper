@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F3EE;color:#1B1A17;font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#1B1A17;text-decoration:underline;text-underline-offset:2px}
+a:hover{color:#A23B1E}
+</style>
+</helmet>
+<div style="max-width:1480px;margin:0 auto;padding:56px 32px 96px;display:flex;flex-direction:column;gap:64px">
+
+<header style="display:flex;flex-direction:column;gap:20px">
+  <div style="display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#5E5A52">
+    <div>Halden Roofing · Photo documentation · User flows v1</div>
+    <div style="display:flex;gap:20px"><a href="Journey Map.dc.html" style="color:#5E5A52">Journey map</a><a href="Problem Statement.dc.html" style="color:#5E5A52">Problem statement</a></div>
+  </div>
+  <h1 style="margin:0;font-size:52px;line-height:1.04;font-weight:600;letter-spacing:-0.02em;text-wrap:balance;max-width:1000px">Crew app and office app: main paths, branches, and where they meet.</h1>
+  <div style="display:flex;gap:24px;flex-wrap:wrap;font-size:13px;color:#3D3A34;padding-top:8px">
+    <div style="display:flex;gap:8px;align-items:center"><span style="width:28px;height:18px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:3px"></span>Screen</div>
+    <div style="display:flex;gap:8px;align-items:center"><span style="width:28px;height:18px;border:1px dashed #1B1A17;border-radius:3px"></span>Decision</div>
+    <div style="display:flex;gap:8px;align-items:center"><span style="width:28px;height:18px;background:#F3E3DC;border-radius:3px"></span>Error or risk</div>
+    <div style="display:flex;gap:8px;align-items:center"><span style="width:28px;height:18px;background:#1B1A17;border-radius:3px"></span>Handoff to other app</div>
+    <div style="display:flex;gap:8px;align-items:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 6px;background:#E2EDE6;color:#1D4432;border-radius:3px">AI</span>AI suggests</div>
+    <div style="display:flex;gap:8px;align-items:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 6px;border:1px solid #1B1A17;border-radius:3px">CHECK</span>Person confirms</div>
+    <div style="display:flex;gap:8px;align-items:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 6px;background:#1B1A17;color:#F5F3EE;border-radius:3px">OFFLINE</span>Works with no signal</div>
+  </div>
+</header>
+
+<section style="display:flex;flex-direction:column;gap:20px">
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <h2 style="margin:0;font-size:24px;font-weight:600;letter-spacing:-0.01em">Shared photo states</h2>
+    <div style="font-size:14px;color:#5E5A52">Both apps use the same words. The office only sees a photo once it reaches "Uploaded".</div>
+  </div>
+  <div style="overflow-x:auto">
+    <div style="display:flex;align-items:stretch;gap:0;min-width:1100px">
+      <div style="flex:1;padding:16px;background:#FFFFFF;border-radius:4px 0 0 4px;display:flex;flex-direction:column;gap:4px;border-right:1px solid #DEDAD1"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">1</div><div style="font-size:15px;font-weight:600">Captured</div><div style="font-size:12px;color:#5E5A52">Time, GPS, user, job stamped</div></div>
+      <div style="flex:1;padding:16px;background:#FFFFFF;display:flex;flex-direction:column;gap:4px;border-right:1px solid #DEDAD1"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">2</div><div style="font-size:15px;font-weight:600">Saved on device</div><div style="font-size:12px;color:#5E5A52">Safe if app closes</div></div>
+      <div style="flex:1;padding:16px;background:#FFFFFF;display:flex;flex-direction:column;gap:4px;border-right:1px solid #DEDAD1"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">3</div><div style="font-size:15px;font-weight:600">Waiting to upload</div><div style="font-size:12px;color:#5E5A52">Queued, no signal</div></div>
+      <div style="flex:1;padding:16px;background:#FFFFFF;display:flex;flex-direction:column;gap:4px;border-right:1px solid #DEDAD1"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">4</div><div style="font-size:15px;font-weight:600">Uploading</div><div style="font-size:12px;color:#5E5A52">Transfer in progress</div></div>
+      <div style="flex:1;padding:16px;background:#1B1A17;color:#F5F3EE;display:flex;flex-direction:column;gap:4px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#B8B2A6">5</div><div style="font-size:15px;font-weight:600">Uploaded</div><div style="font-size:12px;color:#B8B2A6">Server confirmed. Office can see it.</div></div>
+      <div style="flex:1;padding:16px;background:#FFFFFF;display:flex;flex-direction:column;gap:4px;border-left:1px solid #DEDAD1;border-right:1px solid #DEDAD1"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">6</div><div style="font-size:15px;font-weight:600">Confirmed</div><div style="font-size:12px;color:#5E5A52">Person approved category</div></div>
+      <div style="flex:1;padding:16px;background:#FFFFFF;border-radius:0 4px 4px 0;display:flex;flex-direction:column;gap:4px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">7</div><div style="font-size:15px;font-weight:600">In a package</div><div style="font-size:12px;color:#5E5A52">Shared externally</div></div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#A23B1E">Failed: any upload can fail. It returns to "Waiting to upload" with a retry, never disappears.</div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:24px">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;border-top:2px solid #1B1A17;padding-top:20px">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">A · Mobile · Ravi, crew lead</div>
+      <h2 style="margin:0;font-size:32px;font-weight:600;letter-spacing:-0.01em">Crew app</h2>
+    </div>
+    <div style="font-size:14px;color:#5E5A52;max-width:460px">Goal: capture every required photo in its window and leave site with nothing left to upload.</div>
+  </div>
+
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#5E5A52">Main path</div>
+  <div style="overflow-x:auto;padding-bottom:6px">
+    <div style="display:flex;align-items:stretch;gap:10px;min-width:max-content">
+      <div style="width:160px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">C1</div><div style="font-size:14px;font-weight:600">Today's jobs</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Assigned job HR-2048, 24 Oak St</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:160px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">C2</div><div style="font-size:14px;font-weight:600">Job overview</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Progress by phase, upload status, Continue</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:160px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">C3</div><div style="font-size:14px;font-weight:600">Shot list</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Current phase first. Next missing shot highlighted.</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:160px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">C4</div><div style="font-size:14px;font-weight:600">Guided capture</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Requirement + framing tip over camera</div><div style="display:flex;gap:4px;flex-wrap:wrap"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 6px;background:#1B1A17;color:#F5F3EE;border-radius:3px">OFFLINE</span></div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:160px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">C5</div><div style="font-size:14px;font-weight:600">Photo review</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Quality check, suggested category, Retake or Use</div><div style="display:flex;gap:4px;flex-wrap:wrap"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 6px;background:#E2EDE6;color:#1D4432;border-radius:3px">AI</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 6px;border:1px solid #1B1A17;border-radius:3px">CHECK</span></div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:160px;padding:14px;border:1px dashed #1B1A17;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">C6</div><div style="font-size:14px;font-weight:600">Phase complete?</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">No → back to C3. Yes → next phase.</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:160px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">C7</div><div style="font-size:14px;font-weight:600">Job summary</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Captured vs required, uploaded vs on device</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:160px;padding:14px;background:#1B1A17;color:#F5F3EE;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#B8B2A6">C8</div><div style="font-size:14px;font-weight:600">Close job</div><div style="font-size:12px;line-height:1.4;color:#B8B2A6">Office notified. Record handed over.</div></div>
+    </div>
+  </div>
+
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#5E5A52;padding-top:8px">Branches</div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+
+    <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">From C4 → C5</div><div style="font-size:15px;font-weight:600">No signal</div></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px">
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Saved on device</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Waiting to upload (queue count on C2)</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Signal returns: auto-upload</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#1B1A17;color:#F5F3EE;border-radius:3px">Uploaded, office can see it</div>
+      </div>
+    </div>
+
+    <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">From C2 · Upload queue</div><div style="font-size:15px;font-weight:600">Upload fails</div></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px">
+        <div style="padding:8px 12px;background:#F3E3DC;color:#5C2010;border-radius:3px">Failed (reason shown)</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Auto-retry, or tap Retry</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Still failing: "Stays on device. Connect to Wi-Fi."</div>
+      </div>
+    </div>
+
+    <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">From C5</div><div style="font-size:15px;font-weight:600">AI category is wrong</div></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px">
+        <div style="padding:8px 12px;background:#E2EDE6;color:#1D4432;border-radius:3px">Suggests "Gutter · Before"</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Tap Change → pick from shot list</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Saved as person-confirmed; AI guess kept in history</div>
+      </div>
+    </div>
+
+    <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">From C5</div><div style="font-size:15px;font-weight:600">Bad photo or AI unavailable</div></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px">
+        <div style="padding:8px 12px;background:#F3E3DC;color:#5C2010;border-radius:3px">Blurry, dark, or obstructed</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Retake prompt (can override)</div>
+        <div style="padding:8px 12px;color:#5E5A52">·</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">No AI: category pre-filled from the shot the crew chose in C3</div>
+      </div>
+    </div>
+
+    <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#A23B1E">From C6 · Before → Tear-off</div><div style="font-size:15px;font-weight:600">Point of no return</div></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px">
+        <div style="padding:8px 12px;border:1px dashed #1B1A17;border-radius:3px">Before set incomplete?</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F3E3DC;color:#5C2010;border-radius:3px">"These can't be retaken after tear-off"</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Capture now, or continue with a reason</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#1B1A17;color:#F5F3EE;border-radius:3px">Gap + reason logged for PM</div>
+      </div>
+    </div>
+
+    <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#A23B1E">From C3 · Deck inspection</div><div style="font-size:15px;font-weight:600">Unexpected damage found</div></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px">
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Add "Issue found" photo</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Mark urgent + short note</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Jumps to front of upload queue</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#1B1A17;color:#F5F3EE;border-radius:3px">PM alerted for change order</div>
+      </div>
+    </div>
+
+    <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">From C7</div><div style="font-size:15px;font-weight:600">Required shot missing</div></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px">
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Capture now → C4</div>
+        <div style="padding:8px 12px;color:#5E5A52">or</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Request waiver with reason</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#1B1A17;color:#F5F3EE;border-radius:3px">PM approves or rejects</div>
+      </div>
+    </div>
+
+    <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">From C4</div><div style="font-size:15px;font-weight:600">Camera or storage problem</div></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px">
+        <div style="padding:8px 12px;background:#F3E3DC;color:#5C2010;border-radius:3px">Camera access denied</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">One-tap link to settings</div>
+        <div style="padding:8px 12px;color:#5E5A52">·</div>
+        <div style="padding:8px 12px;background:#F3E3DC;color:#5C2010;border-radius:3px">Storage low</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Warn before capture, not after</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:20px;background:#1B1A17;color:#F5F3EE;border-radius:4px;padding:36px">
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#B8B2A6">A ↔ B</div>
+    <h2 style="margin:0;font-size:24px;font-weight:600">Where the two apps meet</h2>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:1px;background:#3D3A34;border-radius:4px;overflow:hidden">
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#B8B2A6">
+      <div style="padding:12px 16px;background:#1B1A17">Crew does</div><div style="padding:12px 16px;background:#1B1A17">System</div><div style="padding:12px 16px;background:#1B1A17">Office sees</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;font-size:14px;line-height:1.45">
+      <div style="padding:14px 16px;background:#24231F">Takes a photo offline</div><div style="padding:14px 16px;background:#24231F">Queues it on the device</div><div style="padding:14px 16px;background:#24231F">"3 photos on Ravi's phone, not uploaded." Count only, no image.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;font-size:14px;line-height:1.45">
+      <div style="padding:14px 16px;background:#24231F">Gets signal</div><div style="padding:14px 16px;background:#24231F">Uploads, server confirms</div><div style="padding:14px 16px;background:#24231F">Photo appears in the job with its capture time</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;font-size:14px;line-height:1.45">
+      <div style="padding:14px 16px;background:#24231F">Flags decking as urgent</div><div style="padding:14px 16px;background:#24231F">Uploads first</div><div style="padding:14px 16px;background:#24231F">Alert on the job; change order can start</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;font-size:14px;line-height:1.45">
+      <div style="padding:14px 16px;background:#24231F">Skips a shot with a reason</div><div style="padding:14px 16px;background:#24231F">Logs the gap</div><div style="padding:14px 16px;background:#24231F">Waiver request to approve or reject</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;font-size:14px;line-height:1.45">
+      <div style="padding:14px 16px;background:#24231F">Sees the result</div><div style="padding:14px 16px;background:#24231F">Syncs the decision back</div><div style="padding:14px 16px;background:#24231F">PM rejects waiver → crew gets "Capture needed"</div>
+    </div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:24px">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;border-top:2px solid #1B1A17;padding-top:20px">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">B · Web · Sean (PM) and Priya (claims)</div>
+      <h2 style="margin:0;font-size:32px;font-weight:600;letter-spacing:-0.01em">Office app</h2>
+    </div>
+    <div style="font-size:14px;color:#5E5A52;max-width:460px">Goal: know what's missing, find any photo fast, and share it as proof.</div>
+  </div>
+
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#5E5A52">B1 · Monitor a live job (Sean)</div>
+  <div style="overflow-x:auto;padding-bottom:6px">
+    <div style="display:flex;align-items:stretch;gap:10px;min-width:max-content">
+      <div style="width:170px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">O1</div><div style="font-size:14px;font-weight:600">Jobs list</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Sorted by needs attention: urgent, gaps, waivers</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:170px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">O2</div><div style="font-size:14px;font-weight:600">Job workspace</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Photos by phase and area. Missing and on-device shown separately.</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:170px;padding:14px;border:1px dashed #1B1A17;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">O3</div><div style="font-size:14px;font-weight:600">Action needed?</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Urgent issue · waiver · gap</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:170px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">O4</div><div style="font-size:14px;font-weight:600">Resolve</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Approve waiver, request a shot, or start change order</div><div style="display:flex;gap:4px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 6px;border:1px solid #1B1A17;border-radius:3px">CHECK</span></div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:170px;padding:14px;background:#1B1A17;color:#F5F3EE;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#B8B2A6">O5</div><div style="font-size:14px;font-weight:600">Crew notified</div><div style="font-size:12px;line-height:1.4;color:#B8B2A6">Shows up on C3 as a new required shot</div></div>
+    </div>
+  </div>
+
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#5E5A52;padding-top:8px">B2 · Answer a dispute (Sean)</div>
+  <div style="overflow-x:auto;padding-bottom:6px">
+    <div style="display:flex;align-items:stretch;gap:10px;min-width:max-content">
+      <div style="width:170px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">O6</div><div style="font-size:14px;font-weight:600">Search</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">"Miller gutter before" or filters: job, phase, area</div><div style="display:flex;gap:4px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 6px;background:#E2EDE6;color:#1D4432;border-radius:3px">AI</span></div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:170px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">O7</div><div style="font-size:14px;font-weight:600">Results</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Uploaded photos only, each with why it matched</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:170px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">O8</div><div style="font-size:14px;font-weight:600">Photo detail</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Capture time, location, author, category history</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:170px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">O9</div><div style="font-size:14px;font-weight:600">Before / after</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Same area, side by side, both timestamps</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:170px;padding:14px;background:#1B1A17;color:#F5F3EE;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#B8B2A6">O10</div><div style="font-size:14px;font-weight:600">Share with customer</div><div style="font-size:12px;line-height:1.4;color:#B8B2A6">Link to the pair, no internal notes</div></div>
+    </div>
+  </div>
+
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#5E5A52;padding-top:8px">B3 · Build a claim package (Priya)</div>
+  <div style="overflow-x:auto;padding-bottom:6px">
+    <div style="display:flex;align-items:stretch;gap:10px;min-width:max-content">
+      <div style="width:170px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">O11</div><div style="font-size:14px;font-weight:600">New package</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">From job HR-2048, purpose: insurer</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:170px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">O12</div><div style="font-size:14px;font-weight:600">Draft set</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Grouped as adjusters expect: elevations, slopes, soft metals</div><div style="display:flex;gap:4px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 6px;background:#E2EDE6;color:#1D4432;border-radius:3px">AI</span></div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:170px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">O13</div><div style="font-size:14px;font-weight:600">Review</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Unconfirmed categories and gaps flagged first</div><div style="display:flex;gap:4px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 6px;border:1px solid #1B1A17;border-radius:3px">CHECK</span></div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:170px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">O14</div><div style="font-size:14px;font-weight:600">Preview</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Exactly what the recipient sees</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:170px;padding:14px;background:#1B1A17;color:#F5F3EE;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#B8B2A6">O15</div><div style="font-size:14px;font-weight:600">Share link or PDF</div><div style="font-size:12px;line-height:1.4;color:#B8B2A6">Views are logged</div></div>
+    </div>
+  </div>
+
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#5E5A52;padding-top:8px">Branches</div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">From O7 / O9</div><div style="font-size:15px;font-weight:600">Photo still on a phone</div></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px">
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">"Captured 7:42 by Ravi, not uploaded yet"</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Ask crew to upload</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#1B1A17;color:#F5F3EE;border-radius:3px">Crew sees upload request</div>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">From O9</div><div style="font-size:15px;font-weight:600">No before photo exists</div></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px">
+        <div style="padding:8px 12px;background:#F3E3DC;color:#5C2010;border-radius:3px">Show the gap, don't fake a pair</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Show waiver reason if one was logged</div>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">From O6</div><div style="font-size:15px;font-weight:600">Search finds nothing useful</div></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px">
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Fall back to filters</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Browse job by phase and area</div>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">From O8 / O13</div><div style="font-size:15px;font-weight:600">Category is wrong</div></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px">
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Change category</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Original photo untouched; change logged with name and time</div>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">From O13</div><div style="font-size:15px;font-weight:600">Photo missing location</div></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px">
+        <div style="padding:8px 12px;background:#F3E3DC;color:#5C2010;border-radius:3px">"Location not recorded" shown plainly</div><div style="color:#8C877D">→</div>
+        <div style="padding:8px 12px;background:#F5F3EE;border-radius:3px">Include anyway or swap for another photo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:20px;border-top:2px solid #1B1A17;padding-top:20px">
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">C · Web, no login · Customer or adjuster</div>
+    <h2 style="margin:0;font-size:32px;font-weight:600;letter-spacing:-0.01em">Shared proof view</h2>
+  </div>
+  <div style="overflow-x:auto;padding-bottom:6px">
+    <div style="display:flex;align-items:stretch;gap:10px;min-width:max-content">
+      <div style="width:190px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">S1</div><div style="font-size:14px;font-weight:600">Open link</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">From email or text, no account</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:190px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">S2</div><div style="font-size:14px;font-weight:600">Package overview</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Job, address, dates, photo groups</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:190px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">S3</div><div style="font-size:14px;font-weight:600">Photo + provenance</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Capture time, location, unaltered original</div></div>
+      <div style="display:flex;align-items:center;color:#8C877D">→</div>
+      <div style="width:190px;padding:14px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:4px;display:flex;flex-direction:column;gap:6px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">S4</div><div style="font-size:14px;font-weight:600">Download</div><div style="font-size:12px;line-height:1.4;color:#5E5A52">Originals + PDF summary</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;border-top:1px solid #DEDAD1;padding-top:40px">
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <h2 style="margin:0;font-size:20px;font-weight:600">Prototype path for the submission</h2>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;line-height:1.5;color:#3D3A34">
+      <div>Crew: C2 → C3 → C4 → C5 (wrong AI category, corrected) → no-signal queue → upload.</div>
+      <div>Office: B2 dispute path, O6 → O10, ending on the shared view S2 → S3.</div>
+      <div>B1 and B3 stay as flows only unless time allows.</div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <h2 style="margin:0;font-size:20px;font-weight:600">Open questions</h2>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;line-height:1.5;color:#3D3A34">
+      <div>Should the point-of-no-return gate block tear-off, or only warn? Currently it warns and logs.</div>
+      <div>Who can approve waivers: PM only, or crew lead too?</div>
+      <div>Does a customer see the same view as an adjuster, or a lighter version?</div>
+    </div>
+  </div>
+</section>
+
+</div>
+</x-dc>
+</body>
+</html>

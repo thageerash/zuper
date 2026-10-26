@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F3EE;color:#1B1A17;font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#1B1A17;text-decoration:underline;text-underline-offset:2px}
+a:hover{color:#A23B1E}
+</style>
+</helmet>
+
+<section style="padding:56px 48px 80px;display:flex;flex-direction:column;gap:40px">
+  <div style="display:flex;flex-direction:column;gap:12px;max-width:980px">
+    <div style="display:flex;gap:20px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#5E5A52"><span>Turn 1 · A1 Company</span><a href="Crew App Flow v2.dc.html" style="color:#5E5A52">Crew app flow v2</a><a href="Process Log.dc.html" style="color:#5E5A52">Process log</a></div>
+    <h1 style="margin:0;font-size:44px;line-height:1.05;font-weight:600;letter-spacing:-0.02em;text-wrap:balance">First screen: how a crew member finds their company.</h1>
+    <p style="margin:0;font-size:16px;line-height:1.55;color:#3D3A34;text-wrap:pretty">Three ways to do the same step. <a href="#1a">1a</a> follows the brief exactly. <a href="#1b">1b</a> and <a href="#1c">1c</a> trade the company-name field for something harder to get wrong. Each shows the empty state and the moment the company is found. "Siteproof" is a working app name.</p>
+  </div>
+
+  <div style="display:flex;gap:56px;flex-wrap:wrap;align-items:flex-start">
+
+    <div id="1a" style="display:flex;flex-direction:column;gap:20px;width:868px">
+      <div style="display:flex;gap:12px;align-items:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;padding:4px 10px;background:#1B1A17;color:#F5F3EE;border-radius:3px">1a</span><span style="font-size:20px;font-weight:600">Type the company name</span></div>
+      <div style="display:flex;gap:24px">
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;background:#F5F3EE;padding:72px 24px 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:32px;font-family:'Instrument Sans',system-ui,sans-serif;color:#1B1A17">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:0.06em;text-transform:uppercase">Siteproof</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="font-size:32px;line-height:1.1;font-weight:600;letter-spacing:-0.02em">What company do you work for?</div>
+              <div style="font-size:16px;line-height:1.45;color:#5E5A52">You only do this once on this phone.</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:14px;font-weight:600">Company name</div>
+              <div style="height:58px;background:#FFFFFF;border:1.5px solid #1B1A17;border-radius:6px;display:flex;align-items:center;padding:0 16px;font-size:18px;color:#8C877D">e.g. Halden Roofing</div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="height:58px;background:#DEDAD1;color:#8C877D;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600">Continue</div>
+            <div style="font-size:14px;text-align:center;color:#5E5A52">Not sure? Ask your office manager.</div>
+          </div>
+        </x-import>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" keyboard="{{ true }}" hint-size="402px,874px">
+          <div style="height:100%;background:#F5F3EE;padding:72px 24px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:24px;font-family:'Instrument Sans',system-ui,sans-serif;color:#1B1A17">
+            <div style="font-size:24px;line-height:1.15;font-weight:600;letter-spacing:-0.01em">What company do you work for?</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="height:58px;background:#FFFFFF;border:2px solid #1B1A17;border-radius:6px;display:flex;align-items:center;padding:0 16px;font-size:18px">hald<span style="width:2px;height:24px;background:#1B1A17;margin-left:1px"></span></div>
+              <div style="background:#FFFFFF;border-radius:6px;display:flex;flex-direction:column;overflow:hidden;border:1px solid #DEDAD1">
+                <div style="display:flex;gap:14px;align-items:center;padding:14px 16px;background:#E2EDE6;min-height:44px">
+                  <div style="width:40px;height:40px;border-radius:6px;background:#1B1A17;color:#F5F3EE;display:flex;align-items:center;justify-content:center;font-weight:600">HR</div>
+                  <div style="display:flex;flex-direction:column;gap:2px;flex:1"><div style="font-size:17px;font-weight:600">Halden Roofing</div><div style="font-size:14px;color:#3D3A34">Portland, OR · 42 people</div></div>
+                  <div style="font-size:20px;color:#2F6B4F">✓</div>
+                </div>
+                <div style="display:flex;gap:14px;align-items:center;padding:14px 16px;border-top:1px solid #EEEBE4;min-height:44px">
+                  <div style="width:40px;height:40px;border-radius:6px;background:#EEEBE4;display:flex;align-items:center;justify-content:center;font-weight:600;color:#5E5A52">HG</div>
+                  <div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:17px;font-weight:500">Halden Gutters &amp; Siding</div><div style="font-size:14px;color:#5E5A52">Salem, OR</div></div>
+                </div>
+              </div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="height:58px;background:#1B1A17;color:#F5F3EE;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600">Continue as Halden Roofing</div>
+          </div>
+        </x-import>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;font-size:14px;line-height:1.5;color:#3D3A34">
+        <div><b style="font-weight:600;color:#1B1A17">For:</b> matches the brief. Familiar from workspace-first sign-ins. City and team size tell look-alike names apart.</div>
+        <div><b style="font-weight:600;color:#1B1A17">Against:</b> typing on a phone outdoors. Lists every company publicly, which some customers may not want.</div>
+      </div>
+    </div>
+
+    <div id="1b" style="display:flex;flex-direction:column;gap:20px;width:868px">
+      <div style="display:flex;gap:12px;align-items:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;padding:4px 10px;background:#1B1A17;color:#F5F3EE;border-radius:3px">1b</span><span style="font-size:20px;font-weight:600">Company code from the office</span></div>
+      <div style="display:flex;gap:24px">
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;background:#F5F3EE;padding:72px 24px 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:32px;font-family:'Instrument Sans',system-ui,sans-serif;color:#1B1A17">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:0.06em;text-transform:uppercase">Siteproof</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="font-size:32px;line-height:1.1;font-weight:600;letter-spacing:-0.02em">Enter your company code</div>
+              <div style="font-size:16px;line-height:1.45;color:#5E5A52">Your office texted it to you when you joined. 6 characters.</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px">
+              <div style="height:64px;background:#FFFFFF;border:2px solid #1B1A17;border-radius:6px"></div>
+              <div style="height:64px;background:#FFFFFF;border:1.5px solid #DEDAD1;border-radius:6px"></div>
+              <div style="height:64px;background:#FFFFFF;border:1.5px solid #DEDAD1;border-radius:6px"></div>
+              <div style="height:64px;background:#FFFFFF;border:1.5px solid #DEDAD1;border-radius:6px"></div>
+              <div style="height:64px;background:#FFFFFF;border:1.5px solid #DEDAD1;border-radius:6px"></div>
+              <div style="height:64px;background:#FFFFFF;border:1.5px solid #DEDAD1;border-radius:6px"></div>
+            </div>
+            <div style="height:58px;border:1.5px solid #1B1A17;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">Scan QR code instead</div>
+            <div style="flex:1"></div>
+            <div style="font-size:14px;text-align:center;color:#5E5A52">No code? Ask your office manager.</div>
+          </div>
+        </x-import>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;background:#F5F3EE;padding:72px 24px 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:32px;font-family:'Instrument Sans',system-ui,sans-serif;color:#1B1A17">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:0.06em;text-transform:uppercase">Siteproof</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="font-size:32px;line-height:1.1;font-weight:600;letter-spacing:-0.02em">Enter your company code</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:500">
+              <div style="height:64px;background:#FFFFFF;border:1.5px solid #2F6B4F;border-radius:6px;display:flex;align-items:center;justify-content:center">H</div>
+              <div style="height:64px;background:#FFFFFF;border:1.5px solid #2F6B4F;border-radius:6px;display:flex;align-items:center;justify-content:center">L</div>
+              <div style="height:64px;background:#FFFFFF;border:1.5px solid #2F6B4F;border-radius:6px;display:flex;align-items:center;justify-content:center">D</div>
+              <div style="height:64px;background:#FFFFFF;border:1.5px solid #2F6B4F;border-radius:6px;display:flex;align-items:center;justify-content:center">4</div>
+              <div style="height:64px;background:#FFFFFF;border:1.5px solid #2F6B4F;border-radius:6px;display:flex;align-items:center;justify-content:center">8</div>
+              <div style="height:64px;background:#FFFFFF;border:1.5px solid #2F6B4F;border-radius:6px;display:flex;align-items:center;justify-content:center">2</div>
+            </div>
+            <div style="background:#FFFFFF;border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:16px;border:1px solid #DEDAD1">
+              <div style="font-size:14px;color:#5E5A52">Is this your company?</div>
+              <div style="display:flex;gap:14px;align-items:center">
+                <div style="width:48px;height:48px;border-radius:6px;background:#1B1A17;color:#F5F3EE;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:18px">HR</div>
+                <div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:20px;font-weight:600">Halden Roofing</div><div style="font-size:14px;color:#3D3A34">Portland, OR</div></div>
+              </div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="height:58px;background:#1B1A17;color:#F5F3EE;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600">Yes, continue</div>
+              <div style="height:48px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;text-decoration:underline;text-underline-offset:3px">Not my company</div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;font-size:14px;line-height:1.5;color:#3D3A34">
+        <div><b style="font-weight:600;color:#1B1A17">For:</b> no spelling, big boxes, QR from a poster in the depot. Only invited people get in, so no public company list.</div>
+        <div><b style="font-weight:600;color:#1B1A17">Against:</b> one more thing the office has to send. Lost codes mean a phone call.</div>
+      </div>
+    </div>
+
+    <div id="1c" style="display:flex;flex-direction:column;gap:20px;width:868px">
+      <div style="display:flex;gap:12px;align-items:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;padding:4px 10px;background:#1B1A17;color:#F5F3EE;border-radius:3px">1c</span><span style="font-size:20px;font-weight:600">Email first, company found for you</span></div>
+      <div style="display:flex;gap:24px">
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;background:#F5F3EE;padding:72px 24px 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:32px;font-family:'Instrument Sans',system-ui,sans-serif;color:#1B1A17">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:0.06em;text-transform:uppercase">Siteproof</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="font-size:32px;line-height:1.1;font-weight:600;letter-spacing:-0.02em">Sign in</div>
+              <div style="font-size:16px;line-height:1.45;color:#5E5A52">Use the email your office added you with.</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:14px;font-weight:600">Email</div>
+              <div style="height:58px;background:#FFFFFF;border:1.5px solid #1B1A17;border-radius:6px;display:flex;align-items:center;padding:0 16px;font-size:18px;color:#8C877D">name@company.com</div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="height:58px;background:#DEDAD1;color:#8C877D;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600">Continue</div>
+          </div>
+        </x-import>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;background:#F5F3EE;padding:72px 24px 48px;box-sizing:border-box;display:flex;flex-direction:column;gap:32px;font-family:'Instrument Sans',system-ui,sans-serif;color:#1B1A17">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:0.06em;text-transform:uppercase">Siteproof</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="font-size:32px;line-height:1.1;font-weight:600;letter-spacing:-0.02em">Sign in</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:14px;font-weight:600">Email</div>
+              <div style="height:58px;background:#FFFFFF;border:1.5px solid #1B1A17;border-radius:6px;display:flex;align-items:center;padding:0 16px;font-size:18px">ravi@haldenroofing.com</div>
+              <div style="display:flex;gap:10px;align-items:center;padding:12px 14px;background:#E2EDE6;border-radius:6px;color:#1D4432">
+                <div style="width:32px;height:32px;border-radius:5px;background:#1B1A17;color:#F5F3EE;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px">HR</div>
+                <div style="font-size:15px;line-height:1.35"><b style="font-weight:600">Halden Roofing</b> · Portland, OR</div>
+              </div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="height:58px;background:#1B1A17;color:#F5F3EE;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600">Continue</div>
+              <div style="height:48px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#3D3A34;text-align:center">Personal email? <span style="text-decoration:underline;text-underline-offset:3px;margin-left:4px;color:#1B1A17;font-weight:500">Pick your company</span></div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;font-size:14px;line-height:1.5;color:#3D3A34">
+        <div><b style="font-weight:600;color:#1B1A17">For:</b> one fewer screen. Company is found from the email domain or the office's invite list.</div>
+        <div><b style="font-weight:600;color:#1B1A17">Against:</b> changes the order you set (company first). Crews on personal Gmail fall back to 1a anyway.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:10px;max-width:980px;border-top:1px solid #DEDAD1;padding-top:24px">
+    <div style="font-size:16px;font-weight:600">Shared rules for every sign-in screen</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px 32px;font-size:14px;line-height:1.5;color:#3D3A34">
+      <div>Inputs and buttons 58px tall for gloves. Text 16px minimum.</div>
+      <div>Black on warm off-white for glare. Green only to confirm a match.</div>
+      <div>No signal: "Connect to Wi-Fi or data to sign in the first time."</div>
+    </div>
+  </div>
+</section>
+</x-dc>
+</body>
+</html>

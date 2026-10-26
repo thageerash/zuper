@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>body{margin:0;background:#F5F3EE;color:#1B1A17;font-family:'Instrument Sans',sans-serif;-webkit-font-smoothing:antialiased}a{color:#1B1A17;text-underline-offset:2px}a:hover{color:#A23B1E}button{font-family:inherit;cursor:pointer}input{font-family:inherit}</style></helmet>
+<div style="min-height:100vh;display:flex;gap:24px;padding:24px;box-sizing:border-box">
+
+<aside style="width:260px;flex-shrink:0;display:flex;flex-direction:column;gap:22px;padding-top:4px">
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#5E5A52">PROTOTYPE · SEAN · OFFICE WEB</span>
+    <span style="font-size:22px;font-weight:600;line-height:1.2">Sean’s two flows</span>
+    <a href="Sean Flow Simple.dc.html" style="font-size:13px;color:#5E5A52">Simple flow</a>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#E9E5DC;padding:4px;border-radius:10px">
+    <button onClick="{{ goA }}" style="height:40px;border:none;border-radius:7px;background:{{ tabABg }};color:#1B1A17;font-size:14px;font-weight:600">A · Live job</button>
+    <button onClick="{{ goB }}" style="height:40px;border:none;border-radius:7px;background:{{ tabBBg }};color:#1B1A17;font-size:14px;font-weight:600">B · Dispute</button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <span style="font-size:15px;font-weight:600">{{ flowTitle }}</span>
+    <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+      <div style="display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;padding:8px 10px;border-radius:8px;background:{{ s.bg }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:{{ s.numFg }}">{{ s.n }}</span><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600;color:{{ s.fg }}">{{ s.title }}</span><span style="font-size:13px;line-height:1.4;color:#5E5A52">{{ s.sub }}</span></div></div>
+    </sc-for>
+    <span style="font-size:13px;line-height:1.5;color:#3D3A34;padding:4px 2px 0">{{ doneWhen }}</span>
+  </div>
+  <sc-if value="{{ showSim }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">ON THE ROOF</span>
+      <button onClick="{{ simTake }}" style="height:44px;border-radius:10px;border:1.5px solid #1B1A17;background:#FFFFFF;color:#1B1A17;font-size:14px;font-weight:600" style-hover="background:#EFEBE3">Ravi takes the photo</button>
+      <button onClick="{{ simCover }}" style="height:44px;border-radius:10px;border:1px solid #CFC9BD;background:transparent;color:#3D3A34;font-size:14px" style-hover="background:#EFEBE3">Spot already covered</button>
+    </div>
+  </sc-if>
+  <sc-if value="{{ showSearchHint }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;line-height:1.5;color:#3D3A34"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">THE CALL</span><span>Lena Marsh says the gutter seam fixed on 3 Oct is leaking again. Search “Lena”, “Maple” or “388”.</span></div>
+  </sc-if>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+    <button onClick="{{ restart }}" style="height:40px;border-radius:10px;border:1px solid #CFC9BD;background:transparent;color:#3D3A34;font-size:14px" style-hover="background:#EFEBE3">Restart this flow</button>
+    <span style="font-size:12px;line-height:1.5;color:#5E5A52">Alerts and share links are prototype concepts.</span>
+  </div>
+</aside>
+
+<main style="flex:1;min-width:0;position:relative;background:#FFFFFF;border-radius:12px;box-shadow:0 0 0 1px #E3DFD6;display:flex;flex-direction:column;overflow:hidden">
+  <div style="height:60px;flex-shrink:0;border-bottom:1px solid #EEEBE4;display:flex;align-items:center;gap:16px;padding:0 20px">
+    <button onClick="{{ goToday }}" style="height:40px;padding:0 12px;border:none;border-radius:8px;background:{{ todayNavBg }};color:#1B1A17;font-size:15px;font-weight:600">Today</button>
+    <div style="flex:1;max-width:520px;height:40px;border:1.5px solid {{ searchBorder }};border-radius:10px;display:flex;align-items:center;gap:8px;padding:0 12px;box-sizing:border-box;background:#FFFFFF">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5E5A52" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      <input value="{{ q }}" onChange="{{ onQ }}" onKeyDown="{{ onKey }}" placeholder="Search customer, address or job #" style="flex:1;min-width:0;border:none;outline:none;font-size:15px;background:transparent;color:#1B1A17">
+    </div>
+    <span style="margin-left:auto;font-size:14px;color:#5E5A52">Sean Doyle</span>
+  </div>
+
+  <sc-if value="{{ notif }}" hint-placeholder-val="{{ false }}">
+    <button onClick="{{ notifTap }}" style="position:absolute;top:72px;right:20px;z-index:5;width:360px;text-align:left;background:#1B1A17;color:#F5F3EE;border:none;border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;box-shadow:0 12px 32px rgba(27,26,23,0.25)">
+      <span style="display:flex;justify-content:space-between;width:100%;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#B8B2A6"><span>{{ notifKicker }}</span><span>{{ notifTime }}</span></span>
+      <span style="font-size:16px;font-weight:600;line-height:1.3">{{ notifTitle }}</span>
+      <span style="font-size:14px;line-height:1.4;color:#D9D4CA">{{ notifBody }}</span>
+    </button>
+  </sc-if>
+
+  <div style="flex:1;overflow:auto">
+  <sc-if value="{{ isToday }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:32px 32px 48px;display:flex;flex-direction:column;gap:20px;max-width:880px">
+      <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:30px;font-weight:600;letter-spacing:-0.01em">Today</span><span style="font-size:15px;color:#5E5A52">3 active jobs · {{ nowTime }}</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button onClick="{{ openJob }}" style="text-align:left;background:#FFFFFF;border:1.5px solid {{ row421Border }};border-radius:10px;padding:16px 18px;display:grid;grid-template-columns:minmax(0,1fr) auto 20px;gap:16px;align-items:center;color:#1B1A17" style-hover="background:#FAF9F6">
+          <span style="display:flex;flex-direction:column;gap:4px"><span style="font-size:17px;font-weight:600">#421 · 18 Oak St</span><span style="font-size:14px;color:#5E5A52">Leak repair · Ravi · last heard {{ lastHeard }}</span></span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 8px;border-radius:3px;background:{{ row421ChipBg }};color:{{ row421ChipFg }}">{{ row421Chip }}</span>
+          <span style="font-size:20px;color:#5E5A52">›</span>
+        </button>
+        <div style="background:#FFFFFF;border:1px solid #E3DFD6;border-radius:10px;padding:16px 18px;display:grid;grid-template-columns:minmax(0,1fr) auto 20px;gap:16px;align-items:center">
+          <span style="display:flex;flex-direction:column;gap:4px"><span style="font-size:17px;font-weight:600">#423 · 7 Birch Ln</span><span style="font-size:14px;color:#5E5A52">Gutter repair · Marco · last heard 9:26</span></span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 8px;border-radius:3px;background:#E2EDE6;color:#2F6B4F">NOTHING MISSING</span>
+          <span></span>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E3DFD6;border-radius:10px;padding:16px 18px;display:grid;grid-template-columns:minmax(0,1fr) auto 20px;gap:16px;align-items:center">
+          <span style="display:flex;flex-direction:column;gap:4px"><span style="font-size:17px;font-weight:600">#424 · 31 Cedar Rd</span><span style="font-size:14px;color:#5E5A52">Re-roof · Dana · last heard 9:18</span></span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 8px;border-radius:3px;background:#EFEBE3;color:#1B1A17">3 ON PHONE</span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isJob }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:20px 32px 48px;display:flex;flex-direction:column;gap:20px">
+      <button onClick="{{ goToday }}" style="align-self:flex-start;height:36px;padding:0 10px 0 4px;border:none;background:none;color:#3D3A34;font-size:14px">‹ Today</button>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="font-size:30px;font-weight:600;letter-spacing:-0.01em">#421 · 18 Oak St</span>
+        <span style="font-size:15px;color:#5E5A52">Leak repair · 2 spots · Ravi · on site since 8:04 · last heard {{ lastHeard }}</span>
+        <span style="font-size:15px;color:#1B1A17">{{ counts }}</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap-reverse;gap:24px;align-items:flex-end">
+        <div style="flex:999 1 420px;display:flex;flex-direction:column;gap:20px;min-width:0">
+          <sc-for list="{{ groups }}" as="g" hint-placeholder-count="5">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">{{ g.label }}</span>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ g.tiles }}" as="t" hint-placeholder-count="3">
+                  <div style="width:124px;border-radius:8px;border:{{ t.border }};overflow:hidden;display:flex;flex-direction:column;background:#FFFFFF">
+                    <div style="height:84px;background:{{ t.bg }};display:flex;align-items:center;justify-content:center;font-size:13px;color:#5E5A52">{{ t.empty }}</div>
+                    <div style="padding:8px 10px;display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;line-height:1.25">{{ t.name }}</span><span style="align-self:flex-start;font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 6px;border-radius:3px;background:{{ t.chipBg }};color:{{ t.chipFg }}">{{ t.chip }}</span></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="flex:1 1 280px;max-width:520px;position:sticky;top:20px;background:#F5F3EE;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px">
+          <span style="align-self:flex-start;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;border-radius:3px;background:{{ pnChipBg }};color:{{ pnChipFg }}">{{ pnChip }}</span>
+          <span style="font-size:19px;font-weight:600;line-height:1.25">B · Soft decking · Opened up</span>
+          <span style="font-size:15px;line-height:1.5;color:#3D3A34">{{ pnBody }}</span>
+          <sc-if value="{{ pnQuote }}" hint-placeholder-val="{{ false }}"><span style="font-size:15px;line-height:1.5;color:#1B1A17;background:#FFFFFF;border-radius:8px;padding:12px 14px">{{ pnQuote }}</span></sc-if>
+          <span style="font-size:13px;color:#5E5A52">{{ pnMeta }}</span>
+          <sc-if value="{{ pnOpen }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ call }}" style="height:48px;border:none;border-radius:10px;background:#1B1A17;color:#F5F3EE;font-size:16px;font-weight:600" style-hover="background:#33312C">{{ callLabel }}</button>
+          </sc-if>
+          <button onClick="{{ toggleNote }}" style="align-self:flex-start;height:36px;padding:0;border:none;background:none;color:#3D3A34;font-size:14px;text-decoration:underline;text-underline-offset:2px">{{ noteLabel }}</button>
+          <sc-if value="{{ noteOpen }}" hint-placeholder-val="{{ false }}"><textarea placeholder="Internal note, office only" style="min-height:72px;border:1px solid #CFC9BD;border-radius:8px;padding:10px;font-family:inherit;font-size:14px;resize:vertical;background:#FFFFFF"></textarea></sc-if>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isResults }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:32px 32px 48px;display:flex;flex-direction:column;gap:20px;max-width:960px">
+      <span style="font-size:15px;color:#5E5A52">{{ resultsTitle }}</span>
+      <sc-for list="{{ results }}" as="j" hint-placeholder-count="2">
+        <div style="border:1px solid #E3DFD6;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:19px;font-weight:600">{{ j.cust }} · {{ j.addr }}</span><span style="font-size:14px;color:#5E5A52">#{{ j.id }} · {{ j.date }} · {{ j.crew }}</span></div>
+          <sc-for list="{{ j.spots }}" as="sp" hint-placeholder-count="2">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:15px;font-weight:600">{{ sp.name }}</span>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ sp.ph }}" as="p" hint-placeholder-count="3">
+                  <sc-if value="{{ p.missing }}" hint-placeholder-val="{{ false }}">
+                    <div style="width:160px;height:150px;border-radius:8px;border:1.5px dashed #CFC9BD;padding:12px;box-sizing:border-box;display:flex;flex-direction:column;gap:6px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">{{ p.st }}</span><span style="font-size:13px;font-weight:600">No photo</span><span style="font-size:12px;line-height:1.4;color:#5E5A52">{{ p.reason }}</span></div>
+                  </sc-if>
+                  <sc-if value="{{ p.has }}" hint-placeholder-val="{{ true }}">
+                    <button onClick="{{ p.open }}" style="width:160px;padding:0;border:1px solid #E3DFD6;border-radius:8px;overflow:hidden;background:#FFFFFF;text-align:left;display:flex;flex-direction:column" style-hover="border-color:#1B1A17">
+                      <span style="height:110px;width:100%;background:{{ p.bg }}"></span>
+                      <span style="padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#1B1A17">{{ p.st }} · {{ p.t }}</span>
+                    </button>
+                  </sc-if>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+      <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}"><span style="font-size:15px;color:#3D3A34">No jobs match. Try a customer name, street or job number.</span></sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isPhoto }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:20px 32px 48px;display:flex;flex-direction:column;gap:16px">
+      <button onClick="{{ backResults }}" style="align-self:flex-start;height:36px;padding:0 10px 0 4px;border:none;background:none;color:#3D3A34;font-size:14px">‹ Results</button>
+      <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:26px;font-weight:600;letter-spacing:-0.01em">{{ pSpot }} · {{ pStage }}</span><span style="font-size:15px;color:#5E5A52">{{ pJob }}</span></div>
+      <sc-if value="{{ sentMsg }}" hint-placeholder-val="{{ false }}"><div style="background:#E2EDE6;color:#2F6B4F;border-radius:8px;padding:12px 16px;font-size:15px;font-weight:600">{{ sentMsg }}</div></sc-if>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+          <div style="aspect-ratio:4/3;max-height:520px;border-radius:10px;background:{{ pBg }}"></div>
+          <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">THIS SPOT</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <sc-for list="{{ strip }}" as="s" hint-placeholder-count="3">
+                <button onClick="{{ s.open }}" style="width:120px;padding:0;border:{{ s.border }};border-radius:8px;overflow:hidden;background:#FFFFFF;text-align:left;display:flex;flex-direction:column">
+                  <span style="height:72px;width:100%;background:{{ s.bg }};display:flex;align-items:center;justify-content:center;font-size:12px;color:#5E5A52">{{ s.empty }}</span>
+                  <span style="padding:6px 8px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#1B1A17">{{ s.st }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:12px;font-size:14px;line-height:1.4">
+            <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">TAKEN (PHONE TIME)</span><span style="font-size:15px">{{ pTaken }}</span></div>
+            <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">RECEIVED (OFFICE TIME)</span><span style="font-size:15px">{{ pRecv }}</span></div>
+            <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">LOCATION</span><span style="font-size:15px;color:{{ pLocFg }}">{{ pLoc }}</span></div>
+            <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">LABEL</span><span style="font-size:15px">{{ pLabel }}</span></div>
+          </div>
+          <button onClick="{{ openShare }}" style="height:48px;border:none;border-radius:10px;background:#1B1A17;color:#F5F3EE;font-size:16px;font-weight:600" style-hover="background:#33312C">Share</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+  </div>
+
+  <sc-if value="{{ shareOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;z-index:10;background:rgba(27,26,23,0.35);display:flex;align-items:center;justify-content:center;padding:24px">
+      <div style="width:100%;max-width:480px;background:#FFFFFF;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:18px;box-shadow:0 24px 60px rgba(27,26,23,0.25)">
+        <span style="font-size:21px;font-weight:600">Share a link</span>
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;color:#3D3A34">To</span><input value="{{ email }}" onChange="{{ onEmail }}" style="height:44px;border:1.5px solid #CFC9BD;border-radius:8px;padding:0 12px;font-size:15px;outline:none;color:#1B1A17"></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;color:#3D3A34">What</span>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <button onClick="{{ pickOne }}" style="min-height:52px;border-radius:8px;border:{{ oneBorder }};background:#FFFFFF;color:#1B1A17;font-size:14px;font-weight:600;text-align:left;padding:8px 12px;display:flex;flex-direction:column;gap:2px"><span>This photo</span><span style="font-size:12px;font-weight:400;color:#5E5A52">{{ pStage }}</span></button>
+            <button onClick="{{ pickSet }}" style="min-height:52px;border-radius:8px;border:{{ setBorder }};background:#FFFFFF;color:#1B1A17;font-size:14px;font-weight:600;text-align:left;padding:8px 12px;display:flex;flex-direction:column;gap:2px"><span>Whole spot</span><span style="font-size:12px;font-weight:400;color:#5E5A52">Before · Opened up · Fixed</span></button>
+          </div>
+        </div>
+        <span style="font-size:14px;line-height:1.5;color:#3D3A34;background:#F5F3EE;border-radius:8px;padding:12px 14px">{{ previewText }}</span>
+        <div style="display:flex;justify-content:flex-end;align-items:center;gap:12px">
+          <button onClick="{{ closeShare }}" style="height:44px;padding:0 14px;border:none;background:none;color:#3D3A34;font-size:15px">Cancel</button>
+          <button onClick="{{ send }}" style="height:44px;padding:0 20px;border:none;border-radius:10px;background:#1B1A17;color:#F5F3EE;font-size:15px;font-weight:600" style-hover="background:#33312C">{{ sendLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const IMG = n => "url('assets/est-" + n + ".png') center/cover #EDEAE3";
+const CHIP = {
+  office: ['IN OFFICE', '#E2EDE6', '#2F6B4F', '1px solid #E3DFD6'],
+  phone: ['ON PHONE', '#EFEBE3', '#1B1A17', '1px solid #E3DFD6'],
+  missing: ['MISSING · SPOT OPEN', '#F3E3DC', '#A23B1E', '2px solid #A23B1E'],
+  reason: ['MISSING · REASON', '#EFEBE3', '#1B1A17', '1px solid #CFC9BD'],
+  later: ['LATER', 'transparent', '#77726A', '1px dashed #CFC9BD']
+};
+const PAST = [
+  { id: '388', cust: 'Lena Marsh', addr: '14 Maple Dr', date: '3 Oct', crew: 'Ravi', spots: [
+    { name: 'A · Gutter seam', ph: [
+      { st: 'Before', img: 'gutter', t: '10:12', r: '10:14', loc: '18 m from 14 Maple Dr' },
+      { st: 'Opened up', img: 'flashing', t: '10:41', r: '10:44', loc: '21 m from 14 Maple Dr' },
+      { st: 'Fixed', img: 'gutter', t: '11:20', r: '11:23', loc: '19 m from 14 Maple Dr' }] },
+    { name: 'B · Pipe boot', ph: [
+      { st: 'Before', img: 'pipe-boot', t: '10:15', r: '10:17', loc: '24 m from 14 Maple Dr' },
+      { st: 'Opened up', missing: true, reason: 'Boot swapped from above; deck not opened. Ravi, 10:52' },
+      { st: 'Fixed', img: 'pipe-boot', t: '11:02', r: '13:40', loc: null }] }] },
+  { id: '362', cust: 'Lena Ortiz', addr: '9 Elm Ct', date: '12 Sep', crew: 'Marco', spots: [
+    { name: 'A · North slope', ph: [
+      { st: 'Before', img: 'north', t: '8:40', r: '8:41', loc: '12 m from 9 Elm Ct' },
+      { st: 'Opened up', img: 'attic', t: '9:30', r: '9:32', loc: '15 m from 9 Elm Ct' },
+      { st: 'Fixed', img: 'north', t: '12:05', r: '12:06', loc: '11 m from 9 Elm Ct' }] }] }
+];
+
+class Component extends DCLogic {
+  state = this.initial('A');
+  initial(flow) {
+    return flow === 'A'
+      ? { flow: 'A', scr: 'today', notif: 'gap', b2: 'missing', calling: false, noteOpen: false, q: '', searched: '', sel: null, shareOpen: false, shareWhat: 'set', email: 'lena.marsh@mail.com', sending: false, sent: null }
+      : { flow: 'B', scr: 'today', notif: null, b2: 'office', calling: false, noteOpen: false, q: '', searched: '', sel: null, shareOpen: false, shareWhat: 'set', email: 'lena.marsh@mail.com', sending: false, sent: null };
+  }
+  componentWillUnmount() { clearTimeout(this.t1); clearTimeout(this.t2); clearTimeout(this.t3); }
+  set(s) { this.setState(s); }
+  take() {
+    clearTimeout(this.t1); clearTimeout(this.t3);
+    this.setState({ b2: 'phone', calling: false, notif: 'taken' });
+    this.t1 = setTimeout(() => this.setState({ b2: 'office' }), 2500);
+    this.t3 = setTimeout(() => this.setState(s => s.notif === 'taken' ? { notif: null } : null), 5000);
+  }
+  cover() {
+    clearTimeout(this.t3);
+    this.setState({ b2: 'reason', calling: false, notif: 'covered' });
+    this.t3 = setTimeout(() => this.setState(s => s.notif === 'covered' ? { notif: null } : null), 5000);
+  }
+  search() {
+    const q = this.state.q.trim();
+    if (!q) return;
+    this.setState({ searched: q, scr: 'results', notif: null });
+  }
+  tiles(b2) {
+    const T = (name, st, img) => ({ name, st, img });
+    return [
+      { label: 'PROPERTY BEFORE', tiles: [T('Front', 'office'), T('Back', 'office'), T('Gutters', 'office', 'gutter'), T('Ground below', 'office')] },
+      { label: 'ROOF BEFORE', tiles: [T('North slope', 'office', 'north'), T('South slope', 'office')] },
+      { label: 'A · VENT PIPE LEAK', tiles: [T('Before', 'office', 'pipe-boot'), T('Opened up', 'office', 'flashing'), T('Fixed', 'phone')] },
+      { label: 'B · SOFT DECKING', tiles: [T('Before', 'office', 'ceiling'), T('Opened up', b2, b2 === 'office' || b2 === 'phone' ? 'attic' : null), T('Fixed', 'later')] },
+      { label: 'ROOF AFTER', tiles: [T('North slope', 'later'), T('South slope', 'later')] },
+      { label: 'CLEAN UP', tiles: [T('Gutters after', 'later'), T('Ground below after', 'later'), T('Debris cleared', 'later')] }
+    ];
+  }
+  renderVals() {
+    const s = this.state, A = s.flow === 'A';
+    const raw = this.tiles(s.b2);
+    const n = { office: 0, phone: 0, missing: 0, reason: 0, later: 0 };
+    const groups = raw.map(g => ({ label: g.label, tiles: g.tiles.map(t => {
+      n[t.st]++;
+      const c = CHIP[t.st];
+      const hasPhoto = t.st === 'office' || t.st === 'phone';
+      return { name: t.name, chip: c[0], chipBg: c[1], chipFg: c[2], border: c[3],
+        bg: hasPhoto ? (t.img ? IMG(t.img) : '#E4E0D7') : (t.st === 'missing' ? '#F3E3DC' : '#F5F3EE'),
+        empty: t.st === 'missing' || t.st === 'reason' ? 'Not taken' : t.st === 'later' ? 'Not yet' : '' };
+    }) }));
+    const parts = [n.office + ' in office'];
+    if (n.phone) parts.push(n.phone + ' on phone');
+    if (n.missing) parts.push(n.missing + ' missing, spot open');
+    if (n.reason) parts.push(n.reason + ' missing with reason');
+    parts.push(n.later + ' later');
+    const counts = parts.join(' · ') + ' · 17 required';
+
+    const pn = {
+      missing: { chip: 'MISSING · SPOT OPEN', bg: '#F3E3DC', fg: '#A23B1E', body: 'Ravi opened the decking at 9:12. Once new boards go on, this photo can’t be taken.', meta: 'Last heard from Ravi’s phone 9:29', open: true },
+      phone: { chip: 'ON PHONE', bg: '#EFEBE3', fg: '#1B1A17', body: 'Ravi took it at 9:31. It’s uploading from his phone.', meta: 'Last heard 9:31', open: false },
+      office: { chip: 'IN OFFICE', bg: '#E2EDE6', fg: '#2F6B4F', body: 'Taken 9:31 on Ravi’s phone. Received by the office 9:33.', meta: 'Nothing missing on this job so far.', open: false },
+      reason: { chip: 'MISSING · REASON', bg: '#EFEBE3', fg: '#1B1A17', body: 'The spot was covered before the photo. Ravi gave a reason:', quote: '“Rain started, boards went on fast. Soft area was about 1 m², replaced 4 sheets.” Ravi, 9:33', meta: 'Goes to Priya’s claim as a missing photo with this reason.', open: false }
+    }[s.b2];
+
+    const NOTIF = {
+      gap: ['ALERT · #421', '9:30', 'Soft decking · Opened up photo missing', 'Spot still open. Tap to see the job.'],
+      taken: ['UPDATE · #421', '9:31', 'Soft decking · Opened up taken 9:31', 'Ravi took it. Status updates on the job.'],
+      covered: ['UPDATE · #421', '9:33', 'Soft decking covered without the photo', 'Ravi gave a reason. Tap to read it.']
+    }[s.notif];
+
+    const stepState = i => {
+      let cur;
+      if (A) cur = s.b2 !== 'missing' ? 2 : s.scr === 'job' ? 1 : 0;
+      else cur = s.scr === 'photo' ? 2 : s.scr === 'results' ? 1 : 0;
+      const doneAll = A ? s.b2 === 'office' || s.b2 === 'reason' : !!s.sent;
+      const done = i < cur || (doneAll && i === cur);
+      const on = i === cur && !doneAll;
+      return { bg: on ? '#FFFFFF' : 'transparent', fg: on || done ? '#1B1A17' : '#77726A', numFg: done ? '#2F6B4F' : on ? '#1B1A17' : '#77726A' };
+    };
+    const SA = [['Alert', 'Gap reaches Sean on the road'], ['Job · Call Ravi', 'Missing photo highlighted'], ['Photo arrives', 'Or Ravi’s reason shows']];
+    const SB = [['Search', 'Customer, address or job #'], ['Pick the photo', 'Spots with Before · Opened up · Fixed'], ['Share', 'Send a link with time and place']];
+    const steps = (A ? SA : SB).map((x, i) => ({ n: done(i) ? '✓' : String(i + 1), title: x[0], sub: x[1], ...stepState(i) }));
+    function done(i) { const st = stepState(i); return st.numFg === '#2F6B4F'; }
+
+    // search
+    const q = s.searched.toLowerCase();
+    const matches = q ? PAST.filter(j => [j.id, j.cust, j.addr].join(' ').toLowerCase().includes(q)) : [];
+    const results = matches.map((j, ji) => ({ ...j, spots: j.spots.map((sp, si) => ({ name: sp.name, ph: sp.ph.map((p, pi) => ({
+      st: p.st, t: p.t, missing: !!p.missing, has: !p.missing, reason: p.reason, bg: p.img ? IMG(p.img) : '',
+      open: () => this.setState({ scr: 'photo', sel: { j: PAST.indexOf(j), s: si, p: pi }, sent: null })
+    })) })) }));
+
+    // photo
+    let pv = {};
+    if (s.sel) {
+      const j = PAST[s.sel.j], sp = j.spots[s.sel.s], p = sp.ph[s.sel.p];
+      pv = {
+        pJob: j.cust + ' · ' + j.addr + ' · #' + j.id + ' · ' + j.date, pSpot: sp.name, pStage: p.st, pBg: IMG(p.img),
+        pTaken: j.date + ' · ' + p.t, pRecv: j.date + ' · ' + p.r + (p.r !== p.t ? '' : ''),
+        pLoc: p.loc || 'No GPS on this photo', pLocFg: p.loc ? '#1B1A17' : '#A23B1E',
+        pLabel: 'AI suggested · ' + j.crew + ' confirmed ' + p.t,
+        strip: sp.ph.map((x, xi) => ({ st: x.st, bg: x.img ? IMG(x.img) : '#F5F3EE', empty: x.missing ? 'No photo' : '',
+          border: xi === s.sel.p ? '2px solid #1B1A17' : x.missing ? '1.5px dashed #CFC9BD' : '1px solid #E3DFD6',
+          open: () => { if (!x.missing) this.setState({ sel: { ...s.sel, p: xi }, sent: null }); } })),
+        missingInSet: sp.ph.filter(x => x.missing).map(x => x.st)
+      };
+    }
+    const setNote = pv.missingInSet && pv.missingInSet.length ? ' ' + pv.missingInSet.join(', ') + ' has no photo; the link says so and shows Ravi’s reason.' : '';
+    const previewText = s.shareWhat === 'set'
+      ? 'Lena gets a link to ' + (pv.pSpot || '') + ': Before, Opened up and Fixed side by side. Each photo shows when it was taken, when the office received it, and where.' + setNote + ' Link expires in 30 days.'
+      : 'Lena gets a link to this photo with when it was taken, when the office received it, and where. Link expires in 30 days.';
+
+    return {
+      tabABg: A ? '#FFFFFF' : 'transparent', tabBBg: A ? 'transparent' : '#FFFFFF',
+      flowTitle: A ? 'See gaps before the crew leaves' : 'Find one photo during a dispute call',
+      doneWhen: A ? 'Done when every required photo is in the office or has a reason.' : 'Done when the link is sent.',
+      steps,
+      showSim: A && s.scr === 'job' && s.b2 === 'missing',
+      showSearchHint: !A && !s.sent,
+      goA: () => { clearTimeout(this.t1); clearTimeout(this.t3); this.setState(this.initial('A')); },
+      goB: () => { clearTimeout(this.t1); clearTimeout(this.t3); this.setState(this.initial('B')); },
+      restart: () => { clearTimeout(this.t1); clearTimeout(this.t3); this.setState(this.initial(s.flow)); },
+      simTake: () => this.take(), simCover: () => this.cover(),
+      goToday: () => this.setState({ scr: 'today' }),
+      todayNavBg: s.scr === 'today' ? '#EFEBE3' : 'transparent',
+      searchBorder: s.scr === 'results' ? '#1B1A17' : '#CFC9BD',
+      q: s.q, onQ: e => this.setState({ q: e.target.value }), onKey: e => { if (e.key === 'Enter') this.search(); },
+      notif: !!NOTIF, notifKicker: NOTIF && NOTIF[0], notifTime: NOTIF && NOTIF[1], notifTitle: NOTIF && NOTIF[2], notifBody: NOTIF && NOTIF[3],
+      notifTap: () => this.setState({ scr: 'job', notif: null }),
+      isToday: s.scr === 'today', isJob: s.scr === 'job', isResults: s.scr === 'results', isPhoto: s.scr === 'photo',
+      nowTime: A ? '9:30' : '14:05',
+      lastHeard: s.b2 === 'missing' ? '9:29' : '9:33',
+      openJob: () => this.setState({ scr: 'job', notif: s.notif === 'gap' ? null : s.notif }),
+      row421Border: s.b2 === 'missing' ? '#A23B1E' : '#E3DFD6',
+      row421Chip: s.b2 === 'missing' ? '1 MISSING · SPOT OPEN' : s.b2 === 'phone' ? '1 ON PHONE' : s.b2 === 'reason' ? '1 MISSING · REASON' : 'NOTHING MISSING',
+      row421ChipBg: s.b2 === 'missing' ? '#F3E3DC' : s.b2 === 'office' ? '#E2EDE6' : '#EFEBE3',
+      row421ChipFg: s.b2 === 'missing' ? '#A23B1E' : s.b2 === 'office' ? '#2F6B4F' : '#1B1A17',
+      counts, groups,
+      pnChip: pn.chip, pnChipBg: pn.bg, pnChipFg: pn.fg, pnBody: pn.body, pnQuote: pn.quote || '', pnMeta: pn.meta, pnOpen: pn.open,
+      call: () => this.setState({ calling: true }), callLabel: s.calling ? 'Calling Ravi…' : 'Call Ravi',
+      noteOpen: s.noteOpen, toggleNote: () => this.setState({ noteOpen: !s.noteOpen }), noteLabel: s.noteOpen ? 'Hide note' : 'Add internal note',
+      results, noResults: !!q && !matches.length,
+      resultsTitle: matches.length ? matches.length + (matches.length === 1 ? ' job' : ' jobs') + ' for “' + s.searched + '”' : 'Results for “' + s.searched + '”',
+      backResults: () => this.setState({ scr: 'results' }),
+      ...pv, strip: pv.strip || [],
+      sentMsg: s.sent || '',
+      openShare: () => this.setState({ shareOpen: true, sending: false }),
+      shareOpen: s.shareOpen, closeShare: () => this.setState({ shareOpen: false }),
+      email: s.email, onEmail: e => this.setState({ email: e.target.value }),
+      pickOne: () => this.setState({ shareWhat: 'one' }), pickSet: () => this.setState({ shareWhat: 'set' }),
+      oneBorder: s.shareWhat === 'one' ? '2px solid #1B1A17' : '1px solid #CFC9BD',
+      setBorder: s.shareWhat === 'set' ? '2px solid #1B1A17' : '1px solid #CFC9BD',
+      previewText,
+      sendLabel: s.sending ? 'Sending…' : 'Send link',
+      send: () => {
+        if (s.sending || !/.+@.+\..+/.test(s.email)) return;
+        this.setState({ sending: true });
+        this.t2 = setTimeout(() => this.setState({ sending: false, shareOpen: false, sent: 'Link sent to ' + this.state.email + ' · 14:05 · expires 24 Nov' }), 1200);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>@keyframes aurora{from{transform:translateX(-30px)}to{transform:translateX(30px)}} body{margin:0;background:#121110;color:#1B1A17;font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased} a{color:#1B1A17} a:hover{color:#A23B1E}</style>
+</helmet>
+<div style="min-height:100vh;position:relative;background:#121110;padding:32px 40px 48px;isolation:isolate;overflow:hidden;box-sizing:border-box"><div style="position:fixed;inset:-20%;z-index:-1;pointer-events:none;background:radial-gradient(40% 50% at 20% 30%,rgba(192,57,43,0.45),transparent 70%),radial-gradient(35% 45% at 80% 70%,rgba(232,120,60,0.30),transparent 70%),radial-gradient(30% 40% at 60% 20%,rgba(90,70,160,0.28),transparent 70%);filter:blur(40px);animation:aurora 9s ease-in-out infinite alternate"></div>
+<div style="max-width:1200px;margin:0 auto;box-sizing:border-box;padding:56px;background:#FFFFFF;border-radius:28px;box-shadow:0 40px 100px -30px rgba(0,0,0,0.6);display:flex;flex-direction:column;gap:48px">
+
+  <section style="display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <span style="font-size:14px;font-weight:700;color:#5E5A52">Process log</span>
+      <h1 style="margin:0;font-size:clamp(34px,4vw,48px);line-height:1.08;font-weight:800;letter-spacing:-0.035em;max-width:720px;text-wrap:balance">How I worked with AI on this assignment</h1>
+      <p style="margin:0;font-size:17px;line-height:1.6;color:#5E5A52;max-width:660px;text-wrap:pretty">I led the research and made every design decision. Claude helped me explore options, draft flows and build the prototypes, and I checked each answer against the problem statement: capture, custody and proof.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:1px;background:#E6E3DC;border-radius:20px;box-shadow:0 0 0 1px #E6E3DC;overflow:hidden"><div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px"><div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:24px;background:#FFFFFF"><span style="width:24px;height:24px;color:#1B1A17;display:flex;flex-shrink:0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H8l-4 4z"></path><path d="M8 9h8M8 12h5"></path></svg></span><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span style="font-size:28px;font-weight:800;letter-spacing:-0.03em;line-height:1">{{ nKey }}</span><span style="font-size:14px;line-height:1.45;color:#5E5A52">key prompts, picked from the full log</span></div></div><div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:24px;background:#FFFFFF"><span style="width:24px;height:24px;color:#1B1A17;display:flex;flex-shrink:0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"></circle><circle cx="18" cy="18" r="2.5"></circle><path d="M6 8.5V12a4 4 0 0 0 4 4h5.5"></path><path d="M13 13l2.5 3-2.5 3"></path></svg></span><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span style="font-size:28px;font-weight:800;letter-spacing:-0.03em;line-height:1">20</span><span style="font-size:14px;line-height:1.45;color:#5E5A52">turning points where I changed the AI</span></div></div></div><div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px"><div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:24px;background:#FFFFFF"><span style="width:24px;height:24px;color:#1B1A17;display:flex;flex-shrink:0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="13" height="10" rx="1.5"></rect><path d="M6 18h6"></path><rect x="17" y="8" width="4.5" height="12" rx="1.2"></rect></svg></span><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span style="font-size:28px;font-weight:800;letter-spacing:-0.03em;line-height:1">3</span><span style="font-size:14px;line-height:1.45;color:#5E5A52">prototypes for Sean, Priya and Ravi</span></div></div><div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:24px;background:#FFFFFF"><span style="width:24px;height:24px;color:#1B1A17;display:flex;flex-shrink:0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"></path><path d="M18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"></path></svg></span><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span style="font-size:28px;font-weight:800;letter-spacing:-0.03em;line-height:1">2</span><span style="font-size:14px;line-height:1.45;color:#5E5A52">AI tools: Claude and ChatGPT</span></div></div></div></div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:20px;padding:32px;border-radius:24px;background:#F7F6F3">
+    <div style="display:flex;flex-direction:column;gap:4px"><h2 style="margin:0;font-size:22px;font-weight:800;letter-spacing:-0.02em">The arc</h2><span style="font-size:15px;color:#5E5A52">Six steps, from the brief to the crew app.</span></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(max(calc((100% - 32px) / 3),240px),1fr));gap:16px">
+      <sc-for list="{{ arc }}" as="a" hint-placeholder-count="6">
+        <div style="display:flex;flex-direction:column;gap:8px;padding:18px 20px;border-radius:16px;background:#FFFFFF;box-shadow:0 1px 2px rgba(27,26,23,0.06)">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:6px"><span style="width:40px;height:40px;border-radius:12px;background:#F5F3EE;color:#1B1A17;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="{{ a.ic }}"></path></svg></span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:#5E5A52;font-variant-numeric:tabular-nums">{{ a.n }}</span></div>
+          <span style="font-size:16px;font-weight:700;letter-spacing:-0.01em">{{ a.t }}</span>
+          <span style="font-size:14px;line-height:1.55;color:#5E5A52;text-wrap:pretty">{{ a.d }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:20px;padding:32px;border-radius:24px;background:#F7F6F3">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:4px"><h2 style="margin:0;font-size:22px;font-weight:800;letter-spacing:-0.02em">Turning points</h2><span style="font-size:15px;color:#5E5A52">Twenty times I changed what the AI proposed, and why.</span></div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6"><button onClick="{{ t.go }}" style="height:36px;padding:0 16px;border:none;border-radius:18px;background:{{ t.bg }};box-shadow:{{ t.sh }};color:{{ t.fg }};font-family:inherit;font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap">{{ t.label }}</button></sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;border-radius:20px;background:#FFFFFF;box-shadow:0 0 0 1px #E6E3DC;overflow:hidden">
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}"><div style="display:grid;grid-template-columns:minmax(180px,0.9fr) minmax(0,1fr) 28px minmax(0,1fr);gap:16px;padding:14px 24px;border-bottom:1px solid #E6E3DC;font-size:12px;font-weight:700;color:#5E5A52"><span>Moment</span><span>AI proposed</span><span></span><span style="color:#2F6B4F">I changed it to</span></div></sc-if>
+      <sc-for list="{{ moments }}" as="m" hint-placeholder-count="5">
+        <div style="display:grid;grid-template-columns:{{ tpCols }};gap:{{ tpGap }};align-items:start;padding:{{ tpPad }};border-top:{{ m.line }}">
+          <div style="display:flex;flex-direction:column;gap:6px;min-width:0"><span style="font-size:15px;font-weight:700;line-height:1.35;letter-spacing:-0.01em;color:#1B1A17;text-wrap:pretty">{{ m.t }}</span><span style="align-self:flex-start;font-size:12px;font-weight:600;color:#5E5A52;padding:3px 8px;border-radius:6px;background:#F5F3EE">{{ m.ph }}</span></div>
+          <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:700;color:#5E5A52">AI proposed</span></sc-if><span style="font-size:14px;line-height:1.5;color:#5E5A52;text-wrap:pretty">{{ m.ai }}</span></div>
+          <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2F6B4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></sc-if>
+          <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:700;color:#2F6B4F">I changed it to</span></sc-if><span style="font-size:14px;line-height:1.5;color:#1B1A17;font-weight:600;text-wrap:pretty">{{ m.me }}</span></div>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ moreBtn }}" hint-placeholder-val="{{ true }}"><button onClick="{{ toggleMore }}" style="align-self:center;height:44px;padding:0 22px;border:none;border-radius:22px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #1B1A17;color:#1B1A17;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer" style-hover="background:#F0EEE9">{{ moreLbl }}</button></sc-if>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:20px;padding:32px;border-radius:24px;background:#F7F6F3">
+    <div style="display:flex;flex-direction:column;gap:4px"><h2 style="margin:0;font-size:22px;font-weight:800;letter-spacing:-0.02em">Key decisions</h2><span style="font-size:15px;color:#5E5A52">The rules every screen follows.</span></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:12px">
+      <sc-for list="{{ dec }}" as="d" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:10px;padding:24px;border-radius:16px;background:#FFFFFF;box-shadow:0 1px 2px rgba(27,26,23,0.06)">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:6px"><span style="width:40px;height:40px;border-radius:12px;background:#F5F3EE;color:#1B1A17;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="{{ d.ic }}"></path></svg></span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:#5E5A52">{{ d.n }}</span></div>
+          <span style="font-size:16px;font-weight:700;line-height:1.4;letter-spacing:-0.01em;color:#1B1A17;text-wrap:pretty">{{ d.t }}</span>
+          <span style="font-size:14.5px;line-height:1.55;color:#5E5A52;text-wrap:pretty">{{ d.why }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:18px 24px;border-radius:16px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #E6E3DC">
+      <div style="display:flex;flex-direction:column;gap:2px;margin-right:8px"><span style="font-size:14px;font-weight:700;color:#1B1A17">Left out on purpose</span><span style="font-size:13px;color:#5E5A52">Kept the focus on getting photos from the roof to the claim.</span></div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ outs }}" as="o" hint-placeholder-count="5"><span style="height:30px;padding:0 12px;border-radius:15px;background:#F5F3EE;font-size:13px;font-weight:600;color:#3D3A34;display:flex;align-items:center;text-decoration:line-through;text-decoration-color:#A9A398">{{ o }}</span></sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding:32px;border-radius:24px;background:#16150F;color:#FFFFFF">
+    <div style="display:flex;flex-direction:column;gap:6px;max-width:560px"><span style="font-size:22px;font-weight:800;letter-spacing:-0.02em">{{ nKey }} key prompts</span><span style="font-size:15px;line-height:1.5;color:#CFCBC2">The prompts where I changed or rejected what the AI proposed.</span></div>
+    <button onClick="{{ openLog }}" style="height:48px;padding:0 24px;border-radius:24px;background:#FFFFFF;color:#16150F;font-size:15px;font-weight:700;display:flex;align-items:center;gap:10px;border:none;cursor:pointer;font-family:inherit" style-hover="background:#F0EEE9">Open the log<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+  </section>
+
+<sc-if value="{{ logOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeLog }}" style="position:fixed;inset:0;z-index:50;background:rgba(22,21,15,0.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:32px">
+      <div onClick="{{ stop }}" style="width:1240px;max-width:100%;height:100%;max-height:900px;background:#FFFFFF;border-radius:24px;box-shadow:0 32px 80px -20px rgba(16,15,12,0.5);display:flex;flex-direction:column;overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:28px 32px 18px">
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:24px;font-weight:800;letter-spacing:-0.02em">{{ nKey }} key prompts</span><span style="font-size:14px;color:#5E5A52">The process as key decisions, from research to the cover. Written up from the full log.</span></div>
+          <button onClick="{{ closeLog }}" aria-label="Close" style="width:40px;height:40px;border-radius:50%;border:none;background:#F0EEE9;color:#1B1A17;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">×</button>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;padding:0 32px 18px">
+          <sc-for list="{{ ltabs }}" as="t" hint-placeholder-count="4"><button onClick="{{ t.go }}" style="height:36px;padding:0 16px;border:none;border-radius:18px;background:{{ t.bg }};box-shadow:{{ t.sh }};color:{{ t.fg }};font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit">{{ t.label }}</button></sc-for>
+        </div>
+        <div style="flex:1;min-height:0;overflow:auto;border-top:1px solid #E6E3DC">
+          <div style="position:sticky;top:0;z-index:1;display:grid;grid-template-columns:44px minmax(0,1.5fr) minmax(0,1.3fr) 110px minmax(0,1fr);gap:20px;padding:12px 32px;background:#FAF9F6;border-bottom:1px solid #E6E3DC;font-size:12px;font-weight:700;color:#5E5A52"><span>No.</span><span>Prompt</span><span>What the AI did</span><span>Type</span><span>My judgment</span></div>
+          <sc-for list="{{ logRows }}" as="r" hint-placeholder-count="10">
+            <div style="display:grid;grid-template-columns:44px minmax(0,1.5fr) minmax(0,1.3fr) 110px minmax(0,1fr);gap:20px;padding:18px 32px;border-bottom:1px solid #F0EEE9;align-items:start" style-hover="background:#FAF9F6">
+              <span style="font-size:13px;font-weight:600;color:#5E5A52;font-variant-numeric:tabular-nums">{{ r.n }}</span>
+              <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:14px;line-height:1.5;color:#1B1A17;font-weight:600;text-wrap:pretty">{{ r.pr }}</span><span style="font-size:12.5px;color:#5E5A52">{{ r.ph }}</span></div>
+              <span style="font-size:13.5px;line-height:1.5;color:#3D3A34;text-wrap:pretty">{{ r.ai }}</span>
+              <span><span style="display:inline-flex;height:24px;padding:0 10px;border-radius:12px;align-items:center;font-size:11.5px;font-weight:700;letter-spacing:0.02em;background:{{ r.tyBg }};color:{{ r.tyFg }}">{{ r.ty }}</span></span>
+              <span style="font-size:13.5px;line-height:1.5;color:#1B1A17;text-wrap:pretty">{{ r.me }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { f: 'All' };
+  componentWillUnmount() { window.removeEventListener('resize', this._rs); }
+  componentDidMount() { this._rs = () => this.setState({ vw: window.innerWidth }); window.addEventListener('resize', this._rs); this._rs(); fetch('prompts100.json').then(r => r.json()).then(log => this.setState({ log })).catch(() => {}); }
+  renderVals() {
+    const arc = [
+      ['1','Framing','Audited the brief and reframed it as capture, custody and proof.'],
+      ['2','Research','Desk research on the job day and the three personas, turned into a journey map.'],
+      ['3','Flows','One set of photo states shared by crew and office, one path per person.'],
+      ['4','Wireframes','Low-fi crew screens, critiqued with outside reviews.'],
+      ['5','Office web','Sean and Priya on one dashboard style, each screen refined by hand.'],
+      ['6','Crew app','Ravi’s app on the same job #421, with offline-first uploads.']
+    ].map(([n,t,d], i) => ({ n: '0' + n, t, d, ic: [
+      'M4 9V4h5M15 4h5v5M4 15v5h5M15 20h5v-5M9 12h6',
+      'M10.5 4a6.5 6.5 0 1 1 0 13a6.5 6.5 0 1 1 0-13zM15.3 15.3L20 20',
+      'M6 3.5a2.5 2.5 0 1 1 0 5a2.5 2.5 0 1 1 0-5zM18 15.5a2.5 2.5 0 1 1 0 5a2.5 2.5 0 1 1 0-5zM6 8.5V12a4 4 0 0 0 4 4h5.5M13 13l2.5 3-2.5 3',
+      'M4 4h16v16H4zM4 9h16M9 9v11',
+      'M3 5h18v11H3zM8 20h8M12 16v4',
+      'M7 2.5h10v19H7zM11 18.5h2'
+    ][i] }));
+    const dec = [
+      ['Every photo belongs to a job, a spot and a stage','So Sean and Priya can find a photo and see what is missing.'],
+      ['“In office” only when the office has the photo','A photo on Ravi’s phone is not safe yet. The app never says “sent” too early.'],
+      ['Ravi can check out with photos still on his phone','Roofs often have no signal. Photos send on their own once he has it.'],
+      ['AI helps, a person decides','AI checks photos and drafts replies. Sean or Priya always reviews and sends.'],
+    ].map(([t, why], i) => ({ t, why, n: '0' + (i + 1), ic: [
+      'M3 6h18v12H3zM8 6V4h8v2M7 12h4',
+      'M5 12a7 7 0 1 1 14 0a7 7 0 1 1-14 0M9 12l2 2 4-4',
+      'M7 18a4 4 0 0 1-.6-7.95A6 6 0 0 1 18 11.5 3.5 3.5 0 0 1 17.5 18M12 12.5V20M9 15l3-3 3 3',
+      'M8 8a4 4 0 1 1 8 0a4 4 0 1 1-8 0M4 21c0-4 3.6-7 8-7s8 3 8 7'
+    ][i] }));
+    const outs = ['Invoicing', 'Payroll and hours', 'Quoting', 'Video', 'AI judging damage'];
+    const M = [
+      ['05','Research','Two kinds of “before” photo','Merged the PM’s inspection photos with day-of photos.','Arrival photos became their own required phase.'],
+      ['12','Flows','Offline in the main story','One unlabeled progress bar for everything.','Split “taken” from “in office”; offline shown on the main path.'],
+      ['33','Visual design','Contrast','Three near-identical greys; muted text below 4.5:1.','Darker base and readable secondary text.'],
+      ['35','Visual design','Check-in is evidence, not payroll','Proposed clock-in and an hours dashboard.','Kept check-in only as time-and-place proof on the job.'],
+      ['44','Visual design','Numbers that add up','Tiles said 31/52 while the jobs added to 19/44.','Reconciled every count across screens.'],
+      ['55','Visual design','Shot list that scales','A 2×2 grid of photo slots.','A list, since real jobs need more than 4 shots.'],
+      ['66','Visual design','The missing middle of the job','Jumped from arrival to uploads, skipping the repair.','Added the repair photos as the core of the flow.'],
+      ['67','Visual design','One colour, one meaning','Green for captured, AI-checked and uploaded alike.','Green only once a photo reaches the office.'],
+      ['99','Prototype','Keep the log out of the product','Put “AI wrote X, Sean removed it” notes inside the UI.','Removed them; the screen shows only what Sean needs.'],
+      ['188','Crew app','Red only for real risk','Highlighted the current step in red.','Current step in black; red kept for the main button.'],
+      ['196','Crew app','One step at a time','Clean-up photos could be taken during the repair.','Later steps unlock only when the current one is done.'],
+      ['200','Crew app','Let the crew shoot freely','Forced a fixed stage order in the camera.','Free capture during repair; AI files each photo to its spot.'],
+      ['228','Crew app','One main action per screen','Three actions competing on one screen.','One main button with its reason; the rest ranked below.'],
+      ['246','Flows','Keep it simple','Detailed rules for alerts, timers and edge cases.','Two simple flows matched to the problem statement.'],
+      ['264','Office web','The customer request leads','Two separate flows for disputes and photo gaps.','The gutter dispute is the main flow; gaps are an alert section.'],
+      ['265','Office web','A dashboard that scales','One large card per customer issue.','A queue that still works with 20 open requests.'],
+      ['305','Office web','AI drafts only when asked','The AI wrote the reply as soon as the panel opened.','A Draft reply button, same pattern as Priya.'],
+      ['315','Office web','No signal means no message','Added chat and calls to reach Ravi on the roof.','Kept the reminder on his phone, which works offline.'],
+      ['360','Crew app','Details before check-in','Check-in button directly on the home card.','Ravi opens the job details first, then checks in.'],
+      ['428','Crew app','No phone rotation','Asked Ravi to turn the phone for landscape photos.','Portrait screen with a fixed 4:3 landscape frame.']
+    ];
+    const s = this.state, f = s.f || 'All';
+    const pill = on => ({ bg: on ? '#1B1A17' : '#FFFFFF', fg: on ? '#FFFFFF' : '#1B1A17', sh: on ? 'none' : 'inset 0 0 0 1px #DAD6CE' });
+    const tabs = ['All','Research','Flows','Visual design','Crew app','Office web'].map(label => ({ label, go: () => this.setState({ f: label, more: false }), ...pill(label === f) }));
+    const allM = M.filter(m => f === 'All' || m[1] === f).map(([n, ph, t, ai, me]) => ({ ph, t, ai, me }));
+    const moments = (s.more ? allM : allM.slice(0, 5)).map((m, i) => ({ ...m, line: i ? '1px solid #EFEDE8' : 'none' }));
+    const lf = s.lf || 'All', all = s.log || [];
+    const TY = { Steered: ['#1B1A17', '#F5F3EE'], Overruled: ['#F3E3DC', '#7A2A14'], Kept: ['#E2EDE6', '#1D4432'], Discarded: ['#ECEAE4', '#5E5A52'] };
+    const logRows = all.filter(r => lf === 'All' || r.ty === lf).map(r => { const c = TY[r.ty] || TY.Steered; return { ...r, n: String(r.n), tyBg: c[0], tyFg: c[1] }; });
+    const ltabs = ['All', 'Steered', 'Overruled', 'Discarded'].map(label => ({ label: label + ' · ' + (label === 'All' ? all.length : all.filter(r => r.ty === label).length), go: () => this.setState({ lf: label }), ...pill(label === lf) }));
+    const wide = (this.state.vw ?? (typeof window !== 'undefined' ? window.innerWidth : 1200)) >= 720;
+    return { outs, wide, narrow: !wide, tpCols: wide ? 'minmax(180px,0.9fr) minmax(0,1fr) 28px minmax(0,1fr)' : 'minmax(0,1fr)', tpGap: wide ? '16px' : '10px', tpPad: wide ? '20px 24px' : '18px 20px', moreBtn: allM.length > 5, moreLbl: s.more ? 'Show fewer' : 'Show all ' + allM.length, toggleMore: () => this.setState({ more: !s.more }), nKey: String(all.length || 100), arc, dec, tabs, moments,
+      logOpen: !!s.logOpen, openLog: () => this.setState({ logOpen: true }), closeLog: () => this.setState({ logOpen: false }), stop: e => e.stopPropagation(), logRows, ltabs };
+  }
+}
+</script>
+</body>
+</html>

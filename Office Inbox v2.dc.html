@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#ECEAE5;color:#16150F;font-family:'Manrope',sans-serif}a{color:#16150F}a:hover{color:#B8341F}input,textarea{font-family:'Manrope',sans-serif}</style>
+</helmet>
+<div style="min-height:100vh;width:max-content;min-width:100%;background:#ECEAE5;display:flex;align-items:safe center;justify-content:safe center;padding:40px;box-sizing:border-box">
+<div style="position:relative;width:1280px;height:800px;flex-shrink:0;border-radius:14px;background:#16150F;box-shadow:0 0 0 1px #2A2925,0 30px 60px -20px rgba(16,15,12,0.35);overflow:hidden;display:flex;font-family:'Manrope',sans-serif;color:#16150F">
+
+  <div style="width:228px;flex-shrink:0;padding:14px 12px;display:flex;flex-direction:column;gap:2px">
+    <div style="display:flex;align-items:center;gap:10px;height:40px;padding:0 8px;margin-bottom:10px"><div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(180deg,#D24636,#B3321F);color:#FFFFFF;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center">H</div><div style="flex:1;display:flex;flex-direction:column;line-height:1.15"><span style="font-size:13.5px;font-weight:700;color:#FFFFFF">Halden Roofing</span><span style="font-size:11.5px;color:#8A877F">Office</span></div></div>
+    <div style="height:6px"></div>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+      <div onClick="{{ n.go }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 10px;border-radius:8px;font-size:13.5px;cursor:pointer;background:{{ n.bg }};box-shadow:{{ n.sh }};font-weight:{{ n.fw }};color:{{ n.col }}" style-hover="background:rgba(255,255,255,0.08)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ n.ic }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ n.d }}"></path></svg><span style="flex:1">{{ n.label }}</span><sc-if value="{{ n.hasBadge }}" hint-placeholder-val="{{ false }}"><span style="font-size:11.5px;font-weight:700;min-width:20px;height:18px;padding:0 6px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;box-sizing:border-box">{{ n.badge }}</span></sc-if></div>
+    </sc-for>
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.06em;color:#6F6C64;padding:20px 10px 6px">TODAY'S JOBS</div>
+    <sc-for list="{{ todayJobs }}" as="j" hint-placeholder-count="3">
+      <div onClick="{{ j.open }}" style="display:flex;align-items:center;gap:10px;height:30px;padding:0 10px;border-radius:8px;font-size:13px;color:#CFCBC2;cursor:pointer" style-hover="background:rgba(255,255,255,0.08)"><span style="width:7px;height:7px;border-radius:50%;background:{{ j.dot }}"></span>{{ j.addr }}</div>
+    </sc-for>
+    <div style="flex:1"></div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px"><div style="width:30px;height:30px;border-radius:50%;background:#2E2C27;color:#FFFFFF;font-size:11.5px;font-weight:700;display:flex;align-items:center;justify-content:center">SD</div><div style="display:flex;flex-direction:column;gap:1px"><span style="font-size:13px;font-weight:600;color:#FFFFFF">Sean Doyle</span><span style="font-size:11.5px;color:#8A877F">Project manager</span></div></div>
+  </div>
+
+  <div style="flex:1;margin:8px 8px 8px 0;background:#FFFFFF;border-radius:12px;box-shadow:0 0 0 1px #E4E6EA,0 1px 3px rgba(16,15,12,0.05);display:flex;flex-direction:column;min-width:0;overflow:hidden">
+    <div style="height:56px;flex-shrink:0;display:grid;grid-template-columns:minmax(0,1fr) 440px minmax(0,1fr);align-items:center;gap:16px;padding:0 20px;border-bottom:1px solid #F1EFEB">
+      <div style="display:flex;align-items:center;gap:12px;min-width:0">
+      <sc-if value="{{ hasBack }}" hint-placeholder-val="{{ false }}"><span onClick="{{ goBack }}" style="height:28px;padding:0 10px 0 6px;border-radius:7px;box-shadow:inset 0 0 0 1px #E7E5E1;display:flex;align-items:center;gap:4px;font-size:12.5px;font-weight:600;color:#4A4842;cursor:pointer" style-hover="background:#F7F6F3"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4A4842" stroke-width="1.8" stroke-linecap="round"><path d="M15 6l-6 6 6 6"></path></svg>{{ backLabel }}</span></sc-if>
+      <span style="font-size:14px;font-weight:600">{{ pageTitle }}</span>
+      <sc-if value="{{ isInbox }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;padding:2px;border-radius:8px;background:#F5F6F8;box-shadow:inset 0 0 0 1px #E4E6EA;font-size:12.5px;font-weight:600">
+          <span onClick="{{ setToday }}" style="padding:4px 10px;border-radius:6px;cursor:pointer;background:{{ todayBg }};box-shadow:{{ todaySh }};color:{{ todayCol }}">Today</span>
+          <span onClick="{{ setWeek }}" style="padding:4px 10px;border-radius:6px;cursor:pointer;background:{{ weekBg }};box-shadow:{{ weekSh }};color:{{ weekCol }}">This week</span>
+        </div>
+      </sc-if>
+      </div>
+      <div onClick="{{ openSearch }}" style="display:flex;align-items:center;gap:10px;height:36px;padding:0 12px;border-radius:10px;background:#F5F6F8;box-shadow:inset 0 0 0 1px #E4E6EA;font-size:13px;color:#8A877F;cursor:pointer" style-hover="box-shadow:inset 0 0 0 1px #D5D8DE;background:#F0F2F5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B6860" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg><span style="flex:1">Ask or search jobs, photos, crew</span><span style="display:inline-flex;align-items:center;gap:4px;height:20px;padding:0 7px;border-radius:6px;background:#EEF0FF;color:#4338CA;font-size:11px;font-weight:600">✦ AI</span><span style="font-size:11px;font-weight:600;padding:1px 6px;border-radius:4px;background:#FFFFFF;color:#6B6860;box-shadow:0 0 0 1px #E2E0DB">⌘K</span></div>
+      <div style="display:flex;align-items:center;justify-content:flex-end;gap:12px">
+        <span style="font-size:12.5px;color:#8A877F;white-space:nowrap">Synced 16:32</span>
+        <span style="position:relative;width:32px;height:32px;border-radius:8px;box-shadow:inset 0 0 0 1px #E7E5E1;display:flex;align-items:center;justify-content:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4A4842" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0112 0c0 7 3 8 3 8H3s3-1 3-8"></path><path d="M10 20a2 2 0 004 0"></path></svg><span style="position:absolute;top:7px;right:8px;width:6px;height:6px;border-radius:50%;background:#C0392B"></span></span>
+      </div>
+    </div>
+
+    <sc-if value="{{ isInbox }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;display:flex;flex-direction:column;gap:32px;padding:36px 44px 44px;min-height:0;overflow:auto;background:#F5F6F8">
+    <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:24px;font-weight:700;letter-spacing:-0.02em">Good afternoon, Sean</span><span style="font-size:13.5px;color:#6B6860">Thursday 23 October · <b style="font-weight:600;color:#16150F">{{ needText }}</b></span></div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:40px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+
+        <sc-if value="{{ showTop }}" hint-placeholder-val="{{ true }}">
+        <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #DCD9F5,0 1px 2px rgba(16,15,12,0.04),0 8px 24px -12px rgba(67,56,202,0.16);display:flex;flex-direction:column;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 16px 10px 18px;background:#F7F6FE;border-bottom:1px solid #ECEAFB">
+            <span style="height:24px;padding:0 10px 0 8px;border-radius:999px;background:#FDECEA;box-shadow:inset 0 0 0 1px #F6C9C2;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#B42318;white-space:nowrap"><span style="width:7px;height:7px;border-radius:50%;background:#D92D20;box-shadow:0 0 0 3px rgba(217,45,32,0.18)"></span>Needs attention</span><span style="display:flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;color:#4338CA;white-space:nowrap"><svg width="11" height="11" viewBox="0 0 24 24" fill="#4F46E5"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z"></path></svg>AI picked</span>
+            <span style="font-size:12.5px;color:#4A4842;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1">Waiting 2 h · all 13 photos in · ready to answer</span>
+            <span onClick="{{ replyLater }}" style="height:24px;padding:0 10px;border-radius:7px;display:flex;align-items:center;font-size:12px;font-weight:600;color:#4338CA;cursor:pointer;white-space:nowrap" style-hover="background:#EEECFC">Not now</span>
+          </div>
+          <div style="display:grid;grid-template-columns:150px minmax(0,1fr)">
+          <div style="position:relative"><img src="https://images.pexels.com/photos/15505770/pexels-photo-15505770.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=400" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+          <div style="padding:20px 24px;display:flex;flex-direction:column;gap:12px;min-width:0">
+            <div style="display:flex;align-items:center;gap:8px"><span style="height:22px;padding:0 8px;border-radius:999px;background:#FDECEA;color:#B42318;font-size:12px;font-weight:600;display:flex;align-items:center">Customer claim</span><span style="height:22px;padding:0 8px;border-radius:999px;background:#FEF4E6;color:#B54708;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#F0A43A"></span>Waiting 2 h</span><span style="flex:1"></span><span onClick="{{ openOak }}" style="font-size:12.5px;color:#8A877F;cursor:pointer;text-decoration:underline">421 Oak St · Re-roof</span></div>
+            <span style="font-size:18px;font-weight:700;letter-spacing:-0.01em">Sarah Miller says the gutter was damaged</span>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;background:#FAF9F7;box-shadow:inset 0 0 0 1px #F1EFEB"><span style="font-size:13px;line-height:1.45;color:#3D3A34">"The front gutter has a dent that wasn't there before your crew came. Can you explain?" · <span style="color:#8A877F">14:20</span></span></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:#6B6860;white-space:nowrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2F9E62" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5 9-10"></path></svg><span>13 of 13 photos received</span><span style="color:#D4D1CA">·</span><span>1 voice note</span></div>
+            <div style="display:flex;justify-content:flex-end;gap:8px">
+              <span onClick="{{ openClaim }}" style="height:34px;padding:0 14px;border-radius:9px;background:linear-gradient(180deg,#CF4433,#B8341F);color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap" style-hover="filter:brightness(1.06)">Find photos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"><path d="M9 6l6 6-6 6"></path></svg></span>
+            </div>
+          </div>
+          </div>
+        </div>
+        </sc-if>
+        <sc-if value="{{ claimDone }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,15,12,0.04);display:flex;align-items:center;gap:14px;padding:14px 18px"><span style="width:36px;height:36px;border-radius:10px;background:#F1EFEB;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16150F" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5 9-10"></path></svg></span><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">Gutter claim at 421 Oak St closed</span><span style="font-size:12.5px;color:#6B6860">{{ claimOutcomeText }}</span></div><span onClick="{{ goReports }}" style="height:30px;padding:0 12px;border-radius:8px;box-shadow:inset 0 0 0 1px #E2E0DB;font-size:13px;font-weight:600;display:flex;align-items:center;cursor:pointer">See report</span></div>
+        </sc-if>
+
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Needs your decision</span><span style="font-size:12px;font-weight:700;color:#FFFFFF;padding:1px 8px;border-radius:999px;background:#16150F">{{ openCount }}</span><span style="flex:1"></span><span style="font-size:12.5px;color:#6B6860">Most urgent first</span></div>
+          <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;gap:0;background:#FFFFFF;border-radius:14px;box-shadow:{{ g.cardRing }};overflow:hidden">
+              <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid {{ g.headLine }};background:{{ g.headBg }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ g.dot }}"></span><span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:{{ g.labelCol }}">{{ g.label }}</span><span style="font-size:12px;color:#8A877F">· {{ g.hint }}</span></div>
+              <div style="display:flex;flex-direction:column">
+                <sc-for list="{{ g.shown }}" as="it" hint-placeholder-count="1">
+                  <div onClick="{{ it.open }}" style="background:{{ it.rowBg }};transition:background 1.2s ease;display:grid;grid-template-columns:minmax(0,1fr) auto 16px;gap:14px;align-items:center;padding:14px 16px;border-bottom:1px solid #ECEEF1;cursor:pointer" style-hover="background:#F9FAFB">
+                    <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:14px;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.title }}</span><span style="font-size:12.5px;color:#8A877F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.job }} · {{ it.kindLow }} · {{ it.age }} ago</span></div>
+                    <span style="display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:999px;background:{{ it.impBg }};color:{{ it.impCol }};font-size:11.5px;font-weight:600;white-space:nowrap">{{ it.impact }}</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A19E96" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"></path></svg>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ g.hasMore }}" hint-placeholder-val="{{ false }}"><div onClick="{{ g.viewAll }}" style="display:flex;align-items:center;justify-content:space-between;padding:11px 16px;cursor:pointer;font-size:13px;font-weight:600;color:#16150F" style-hover="background:#F9FAFB"><span>View all {{ g.total }}</span><span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:#8A877F">{{ g.moreText }}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A19E96" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"></path></svg></span></div></sc-if>
+              </div>
+            </div>
+          </sc-for>
+          <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;z-index:60;display:flex;justify-content:flex-end">
+              <div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(16,15,12,0.28)"></div>
+              <div style="position:relative;width:440px;max-width:92vw;height:100%;background:#FFFFFF;box-shadow:-12px 0 40px rgba(16,15,12,0.16);display:flex;flex-direction:column">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px 16px;border-bottom:1px solid #ECEEF1">
+                  <div style="display:flex;flex-direction:column;gap:4px"><div style="display:flex;align-items:center;gap:8px"><span style="width:8px;height:8px;border-radius:50%;background:{{ sheet.dot }}"></span><span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:{{ sheet.labelCol }}">{{ sheet.label }}</span></div><span style="font-size:18px;font-weight:700;letter-spacing:-0.01em">{{ sheet.total }} waiting on you</span><span style="font-size:12.5px;color:#8A877F">{{ sheet.hintCap }} · oldest first</span></div>
+                  <div onClick="{{ closeSheet }}" style="width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0" style-hover="background:#F1F2F4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A4842" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></div>
+                </div>
+                <div style="flex:1;overflow:auto;display:flex;flex-direction:column">
+                  <sc-for list="{{ sheet.items }}" as="it" hint-placeholder-count="0">
+                    <div onClick="{{ it.open }}" style="display:grid;grid-template-columns:minmax(0,1fr) auto 16px;gap:14px;align-items:center;padding:14px 22px;border-bottom:1px solid #ECEEF1;cursor:pointer" style-hover="background:#F9FAFB">
+                      <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:14px;font-weight:600;line-height:1.3">{{ it.title }}</span><span style="font-size:12.5px;color:#8A877F">{{ it.job }} · {{ it.kindLow }} · {{ it.age }} ago</span></div>
+                      <span style="display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:999px;background:{{ it.impBg }};color:{{ it.impCol }};font-size:11.5px;font-weight:600;white-space:nowrap">{{ it.impact }}</span>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A19E96" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"></path></svg>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ noOpen }}" hint-placeholder-val="{{ false }}"><div style="padding:12px 4px;border-top:1px solid #E4E6EA;font-size:13px;color:#6B6860;display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2F9E62" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5 9-10"></path></svg>Nothing else is waiting on you.</div></sc-if>
+        </div>
+
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+        <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,24,40,0.04);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:8px;padding:14px 18px 10px"><span style="font-size:14.5px;font-weight:700">Ready for your review</span><span style="font-size:12px;font-weight:700;color:#4A4842;padding:1px 7px;border-radius:999px;background:#EEF0F3">{{ reviewCount }}</span></div>
+          <sc-for list="{{ reviewJobs }}" as="r" hint-placeholder-count="1">
+            <div onClick="{{ r.open }}" style="display:grid;grid-template-columns:40px minmax(0,1fr) 14px;gap:12px;align-items:center;padding:10px 18px;border-top:1px solid #F0F1F4;cursor:pointer" style-hover="background:#F8F9FB">
+              <img src="{{ r.thumb }}" loading="lazy" alt="" style="width:40px;height:40px;border-radius:9px;object-fit:cover">
+              <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.addr }} · {{ r.cust }}</span><span style="font-size:12px;color:#6B6860;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.type }} · {{ r.flag }}</span></div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A19E96" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"></path></svg>
+            </div>
+          </sc-for>
+          <div style="padding:10px 18px 14px;border-top:1px solid #F0F1F4;font-size:12px;line-height:1.45;color:#6B6860">7 Ash Rd joins when Jay's last 2 photos arrive.</div>
+        </div>
+        <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,15,12,0.04),0 8px 24px -12px rgba(16,15,12,0.08);padding:16px 18px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:14.5px;font-weight:700">{{ photosTitle }}</span><span onClick="{{ goPhotos }}" style="font-size:12.5px;font-weight:600;color:#4A4842;cursor:pointer" style-hover="color:#B8341F">View all ›</span></div>
+          <div style="display:flex;align-items:center;gap:18px">
+            <div style="position:relative;width:104px;height:104px;flex-shrink:0">
+              <svg width="104" height="104" viewBox="0 0 104 104" style="transform:rotate(-90deg)"><circle cx="52" cy="52" r="42" fill="none" stroke="#F1EFEB" stroke-width="11"></circle><circle cx="52" cy="52" r="42" fill="none" stroke="#2F9E62" stroke-width="11" stroke-linecap="round" stroke-dasharray="{{ gDash }}"></circle><circle cx="52" cy="52" r="42" fill="none" stroke="#F0A43A" stroke-width="11" stroke-linecap="round" stroke-dasharray="{{ aDash }}" stroke-dashoffset="{{ aOff }}"></circle></svg>
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1"><span style="font-size:24px;font-weight:700;letter-spacing:-0.03em">{{ recv }}</span><span style="font-size:11.5px;color:#6B6860">of {{ total }}</span></div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:10px;font-size:12.5px">
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="display:flex;align-items:center;gap:6px;color:#6B6860"><span style="width:8px;height:8px;border-radius:2px;background:#2F9E62"></span>Received</span><span style="font-size:16px;font-weight:700;padding-left:14px">{{ recv }} <span style="font-size:12px;font-weight:600;color:#6B6860">{{ recvPctLabel }}</span></span></div>
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="display:flex;align-items:center;gap:6px;color:#6B6860"><span style="width:8px;height:8px;border-radius:2px;background:#F0A43A"></span>On phones</span><span style="font-size:16px;font-weight:700;padding-left:14px">2 <span style="font-size:12px;font-weight:600;color:#6B6860">safe, not sent</span></span></div>
+            </div>
+          </div>
+          <div style="border-top:1px solid #F1EFEB;padding-top:12px;display:flex;align-items:center;gap:12px">
+            <div style="display:flex">
+              <sc-for list="{{ crewHover }}" as="c" hint-placeholder-count="3">
+                <span onMouseEnter="{{ c.enter }}" onMouseLeave="{{ c.leave }}" style="position:relative;width:30px;height:30px;margin-right:-6px;border-radius:50%;background:#F1EFEB;box-shadow:0 0 0 2px #FFFFFF;color:#3D3A34;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:default">{{ c.ini }}
+                  <sc-if value="{{ c.show }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;bottom:38px;left:50%;transform:translateX(-50%);width:max-content;padding:8px 10px;border-radius:8px;background:#16150F;color:#FFFFFF;font-size:12px;font-weight:500;line-height:1.4;text-align:left;box-shadow:0 8px 20px -6px rgba(16,15,12,0.4);z-index:5;display:flex;flex-direction:column"><b style="font-weight:700">{{ c.name }}</b><span style="color:#CFCBC2">{{ c.sub }}</span><span>{{ c.pill }}</span></span></sc-if>
+                </span>
+              </sc-for>
+            </div>
+            <span style="flex:1;font-size:12.5px;line-height:1.4;color:#4A4842;padding-left:6px">2 still on Jay's phone, safe until he has signal.</span>
+          </div>
+        </div>
+        <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,15,12,0.04),0 8px 24px -12px rgba(16,15,12,0.08);padding:14px 18px 6px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:4px"><span style="font-size:14.5px;font-weight:700">Today</span><span onClick="{{ goJobs }}" style="font-size:12.5px;font-weight:600;color:#4A4842;cursor:pointer" style-hover="color:#B8341F">All jobs ›</span></div>
+          <sc-for list="{{ todayJobs }}" as="j" hint-placeholder-count="3">
+            <div onClick="{{ j.open }}" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F1EFEB;cursor:pointer" style-hover="opacity:0.8">
+              <img src="{{ j.thumb }}" loading="lazy" alt="" style="width:36px;height:36px;border-radius:9px;object-fit:cover;flex-shrink:0">
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+                <div style="display:flex;justify-content:space-between;gap:8px"><span style="font-size:13.5px;font-weight:600">{{ j.addr }}</span><span style="font-size:12px;color:#6B6860;white-space:nowrap">{{ j.status }}</span></div>
+                <div style="height:5px;border-radius:999px;background:#F1EFEB;display:flex;overflow:hidden"><span style="width:{{ j.g }};background:#2F9E62"></span><span style="width:{{ j.a }};background:#F0A43A"></span></div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isClaim }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:18px 28px 28px;display:flex;flex-direction:column;gap:16px">
+
+      <sc-if value="{{ step1 }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#6B6860"><span style="font-weight:600;color:#16150F">Gutter claim</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid #ECEAE6">
+          <div style="display:flex;flex-direction:column;gap:5px;min-width:0;flex:1">
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#B42318">CUSTOMER CLAIM · WAITING 2 H</span>
+            <span style="font-size:22px;font-weight:700;letter-spacing:-0.02em">Sarah Miller says the crew dented her gutter</span>
+            <span style="font-size:13px;color:#6B6860">421 Oak St · Re-roof on 23 Oct · Ravi, Jay, Kim · HR-2048</span>
+          </div>
+          <div style="display:flex;gap:8px"><span onClick="{{ callSarah }}" style="height:36px;padding:0 14px;border-radius:9px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #DEDBD4;font-size:13px;font-weight:600;display:flex;align-items:center;cursor:pointer;white-space:nowrap" style-hover="background:#F7F6F3">Call Sarah</span><span onClick="{{ toStep2 }}" style="height:36px;padding:0 16px;border-radius:9px;background:{{ nextBg }};color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;cursor:pointer;white-space:nowrap">Send proof to Sarah</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+            <div style="min-height:34px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+              <span style="font-size:14px;color:#4A4842">AI found <b style="color:#16150F;font-weight:700">2 photos</b> and <b style="color:#16150F;font-weight:700">1 voice note</b> from Sarah's email · <span onClick="{{ toggleAll }}" style="white-space:nowrap;color:#16150F;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer">{{ allLabel }}</span></span>
+              <div style="display:flex;height:34px;box-sizing:border-box;padding:3px;border-radius:9px;background:#ECEAE6">
+                <sc-for list="{{ phaseTabs }}" as="t" hint-placeholder-count="4"><span onClick="{{ t.pick }}" style="height:28px;display:inline-flex;align-items:center;padding:0 12px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;background:{{ t.bg }};color:{{ t.col }};box-shadow:{{ t.sh }}">{{ t.label }}</span></sc-for>
+              </div>
+            </div>
+            <sc-if value="{{ showPair }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;min-width:0">
+              <sc-for list="{{ pairPhotos }}" as="p" hint-placeholder-count="2">
+                <div style="border-radius:12px;background:#FFFFFF;overflow:hidden;box-shadow:{{ p.ring }}">
+                  <div onClick="{{ p.open }}" style="height:224px;position:relative;cursor:zoom-in;background:#D9D6D0"><img src="{{ p.img }}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;left:12px;top:12px;font-size:11px;font-weight:800;letter-spacing:0.08em;padding:5px 9px;border-radius:6px;background:rgba(22,21,15,0.8);color:#FFFFFF">{{ p.tag }}</span><span onClick="{{ p.toggle }}" style="position:absolute;right:12px;top:12px;width:24px;height:24px;border-radius:6px;background:{{ p.chkBg }};box-shadow:0 0 0 1.5px #FFFFFF;color:#FFFFFF;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;cursor:pointer">{{ p.chk }}</span></div>
+                  <div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span style="font-size:15px;font-weight:700">{{ p.name }}</span><span style="font-size:24px;font-weight:700;letter-spacing:-0.02em">{{ p.t }}</span></div>
+                    <div style="display:flex;flex-direction:column;gap:5px;font-size:13px;line-height:1.4">
+                      <div style="display:grid;grid-template-columns:68px minmax(0,1fr);gap:8px"><span style="color:#6B6860">Stage</span><span style="font-weight:500">{{ p.stage }}</span></div>
+                      <div style="display:grid;grid-template-columns:68px minmax(0,1fr);gap:8px"><span style="color:#6B6860">Taken</span><span style="font-weight:500">23 Oct · at 421 Oak St (±6 m)</span></div>
+                      <div style="display:grid;grid-template-columns:68px minmax(0,1fr);gap:8px"><span style="color:#6B6860">By</span><span style="font-weight:500">{{ p.byFull }}</span></div>
+                      <div style="display:grid;grid-template-columns:68px minmax(0,1fr);gap:8px"><span style="color:#6B6860">Received</span><span style="font-weight:500">{{ p.recv }} · unchanged</span></div>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            </sc-if>
+            <sc-if value="{{ showAll }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:10px;height:42px;padding:0 12px;border-radius:10px;box-shadow:inset 0 0 0 1.5px #16150F"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16150F" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg><input value="{{ cq }}" onChange="{{ onCq }}" style="flex:1;border:none;outline:none;font-size:14px;font-weight:600;background:transparent;color:#16150F"><span style="height:20px;padding:0 7px;border-radius:999px;background:#EEF0FF;color:#4338CA;font-size:11px;font-weight:700;display:flex;align-items:center">✦ AI</span></div>
+        <sc-if value="{{ noAnswer }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#4A4842;padding:2px 2px">{{ matchText }}</div></sc-if>
+        <sc-for list="{{ claimGroupsF }}" as="g" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.06em;color:#8A877F">{{ g.label }}</span>
+            <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px">
+              <sc-for list="{{ g.photos }}" as="p" hint-placeholder-count="4">
+                <div onClick="{{ p.toggle }}" style="position:relative;display:flex;flex-direction:column;gap:5px;cursor:pointer;opacity:{{ p.op }}">
+                  <div style="position:relative;height:92px;border-radius:10px;overflow:hidden;box-shadow:{{ p.ring }}"><img src="{{ p.img }}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;right:6px;top:6px;width:20px;height:20px;border-radius:50%;background:{{ p.chkBg }};box-shadow:0 0 0 1.5px #FFFFFF;color:#FFFFFF;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ p.chk }}</span></div>
+                  <span style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</span><span style="font-size:11px;color:#6B6860">{{ p.t }} · {{ p.by }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+            </sc-if>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;position:sticky;top:0">
+            <div style="border-radius:12px;background:#FFFFFF;overflow:hidden;box-shadow:0 0 0 1px #DADCF7">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#F7F7FF;border-bottom:1px solid #E3E4FA"><span style="font-size:11px;font-weight:800;letter-spacing:0.08em;color:#4338CA">✦ AI SEARCH · THIS JOB ONLY</span><span style="font-size:11px;color:#4338CA">4 sources</span></div>
+              <div style="padding:12px 16px;font-size:13px;line-height:1.5;border-bottom:1px solid #ECEAE6;text-wrap:pretty">The before photo is <span style="display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 3px;border-radius:4px;background:#E0E3FF;color:#3730A3;font-size:10px;font-weight:800;vertical-align:1px">1</span> <b style="font-weight:700">Gutters, before at 07:43</b>, taken before work started. The dent is already there, and Ravi mentions it in his voice note a minute later <span style="display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 3px;border-radius:4px;background:#E0E3FF;color:#3730A3;font-size:10px;font-weight:800;vertical-align:1px">3</span>. The after photo at 15:40 looks the same <span style="display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 3px;border-radius:4px;background:#E0E3FF;color:#3730A3;font-size:10px;font-weight:800;vertical-align:1px">2</span>.</div>
+              <div style="padding:8px 10px 10px;display:flex;flex-direction:column;gap:2px">
+                <span style="font-size:12px;font-weight:700;padding:4px 6px 2px">Sources</span>
+                <sc-for list="{{ sources }}" as="src" hint-placeholder-count="4">
+                  <div onClick="{{ src.open }}" style="display:flex;gap:10px;align-items:center;padding:5px 6px;border-radius:7px;cursor:pointer" style-hover="background:#F7F7FF"><span style="display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 3px;border-radius:4px;background:#E0E3FF;color:#3730A3;font-size:10px;font-weight:800;vertical-align:1px">{{ src.n }}</span><span style="width:28px;height:22px;border-radius:4px;background:#ECEAE6;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#6B6860"><sc-if value="{{ src.thumb }}" hint-placeholder-val="{{ false }}"><img src="{{ src.thumb }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if><sc-if value="{{ src.glyph }}" hint-placeholder-val="{{ false }}">{{ src.glyph }}</sc-if></span><div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:12px;font-weight:600">{{ src.label }}</span><span style="font-size:11px;color:#6B6860;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ src.meta }}</span></div></div>
+                </sc-for>
+              </div>
+            </div>
+            <span style="font-size:12px;line-height:1.45;color:#4A4842;padding:0 4px">AI can't tell who caused the dent. Open each source to check.</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ step2 }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#6B6860"><span onClick="{{ toStep1 }}" style="cursor:pointer;font-weight:500" style-hover="color:#16150F">Gutter claim</span><span style="color:#B5B2AA">/</span><span style="font-weight:600;color:#16150F">Send proof</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid #ECEAE6">
+          <div style="display:flex;flex-direction:column;gap:5px;min-width:0;flex:1">
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#B42318">CUSTOMER CLAIM · WAITING 2 H</span>
+            <span style="font-size:22px;font-weight:700;letter-spacing:-0.02em">Send proof to Sarah</span>
+            <span style="font-size:13px;color:#6B6860">Sent as an email from you, with a link to the full report. No login, no app.</span>
+          </div>
+          <div style="display:flex;gap:8px"><span onClick="{{ toStep1 }}" style="height:36px;padding:0 14px;border-radius:9px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #DEDBD4;font-size:13px;font-weight:600;display:flex;align-items:center;cursor:pointer;white-space:nowrap" style-hover="background:#F7F6F3">Back to photos</span><span onClick="{{ sendReport }}" style="height:36px;padding:0 16px;border-radius:9px;background:linear-gradient(180deg,#CF4433,#B8341F);color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;cursor:pointer;white-space:nowrap">Send to Sarah</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6B6860">PREVIEW · WHAT SARAH GETS</span>
+            <div style="border-radius:12px;background:#FFFFFF;overflow:hidden;box-shadow:0 0 0 1px #E4E6EA">
+              <div style="padding:6px 22px 4px;background:#FAFAF8;border-bottom:1px solid #ECEAE6;font-size:13px">
+                <div style="display:grid;grid-template-columns:64px minmax(0,1fr);gap:8px;padding:6px 0;border-bottom:1px solid #ECEAE6"><span style="color:#6B6860">From</span><span>Sean Doyle, Halden Roofing &lt;sean@haldenroofing.com&gt;</span></div>
+                <div style="display:grid;grid-template-columns:64px minmax(0,1fr);gap:8px;padding:6px 0;border-bottom:1px solid #ECEAE6"><span style="color:#6B6860">To</span><span>Sarah Miller &lt;sarah.miller@email.com&gt;</span></div>
+                <div style="display:grid;grid-template-columns:64px minmax(0,1fr);gap:8px;padding:7px 0"><span style="color:#6B6860">Subject</span><span style="font-weight:700">Photos of your gutter at 421 Oak St</span></div>
+              </div>
+              <div style="padding:14px 22px 18px;display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;align-items:center;gap:8px"><div style="width:22px;height:22px;border-radius:6px;background:#C0392B;color:#FFFFFF;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center">H</div><span style="font-size:13px;font-weight:700">Halden Roofing</span></div>
+                <div style="display:flex;flex-direction:column;gap:4px;font-size:14px;line-height:1.55;color:#2B2A26"><span>Hi Sarah,</span><span style="white-space:pre-wrap">{{ summary }}</span></div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
+                  <sc-for list="{{ selPhotos }}" as="p" hint-placeholder-count="2">
+                    <div style="display:flex;flex-direction:column;gap:6px"><div style="height:118px;border-radius:8px;overflow:hidden;position:relative;background:#D9D6D0"><img src="{{ p.img }}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;left:8px;top:8px;font-size:10px;font-weight:800;letter-spacing:0.08em;padding:3px 7px;border-radius:4px;background:rgba(22,21,15,0.8);color:#FFFFFF">{{ p.tag }}</span></div><span style="font-size:12px;color:#6B6860"><b style="color:#16150F;font-weight:700">{{ p.t }}</b> · 23 Oct · 421 Oak St</span></div>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ voiceOn }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:#F7F6F3;font-size:13px"><span style="font-weight:600">Voice note · 07:44 · 0:09</span><span style="color:#6B6860">“Front gutter already has a dent on the left…”</span></div></sc-if>
+                <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;height:38px;padding:0 18px;border-radius:8px;background:#16150F;color:#FFFFFF;font-size:13px;font-weight:700">View full photo report</span><span style="font-size:12px;color:#6B6860">{{ reportHint }}</span></div>
+                <span style="font-size:13px;line-height:1.5;color:#2B2A26;border-top:1px solid #ECEAE6;padding-top:12px">Sean Doyle · Project manager · (512) 555-0142 <span style="color:#6B6860">· link works 30 days</span></span>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;padding-top:24px">
+            <div style="border-radius:12px;background:#FFFFFF;padding:14px 16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 0 0 1px #E4E6EA">
+              <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600">To</span><div style="height:36px;border-radius:8px;box-shadow:inset 0 0 0 1px #E4E6EA;display:flex;align-items:center;padding:0 10px;font-size:13px">sarah.miller@email.com</div></div>
+              <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600">Subject</span><div style="height:36px;border-radius:8px;box-shadow:inset 0 0 0 1px #E4E6EA;display:flex;align-items:center;padding:0 10px;font-size:13px">Photos of your gutter at 421 Oak St</div></div>
+              <div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:600">Message</span><span style="font-size:11px;font-weight:800;letter-spacing:0.06em;color:#4338CA">✦ AI DRAFT</span></div><textarea value="{{ summary }}" onChange="{{ onSummary }}" style="min-height:120px;resize:vertical;border:none;outline:none;border-radius:8px;box-shadow:inset 0 0 0 1.5px #16150F;padding:10px;font-family:inherit;font-size:13px;line-height:1.5;color:#16150F;background:#FFFFFF"></textarea><span style="font-size:12px;color:#6B6860">Read it before sending. It goes out under your name.</span></div>
+            </div>
+            <div style="border-radius:12px;background:#FFFFFF;padding:4px 16px;box-shadow:0 0 0 1px #E4E6EA">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #ECEAE6"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:600">Before and after photos</span><span style="font-size:12px;color:#6B6860">{{ selText }} with time and place</span></div><span onClick="{{ toStep1 }}" style="font-size:12px;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer">Change</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #ECEAE6"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:600">Ravi's voice note</span><span style="font-size:12px;color:#6B6860">Internal. Off for customers</span></div><span onClick="{{ toggleVoice }}" style="width:34px;height:20px;border-radius:10px;background:{{ voiceBg }};display:inline-flex;align-items:center;padding:2px;box-sizing:border-box;justify-content:{{ voiceJc }};cursor:pointer;flex-shrink:0"><span style="width:16px;height:16px;border-radius:50%;background:#FFFFFF"></span></span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:600">Original files</span><span style="font-size:12px;color:#6B6860">On for insurers, off for customers</span></div><span onClick="{{ toggleOriginals }}" style="width:34px;height:20px;border-radius:10px;background:{{ origBg }};display:inline-flex;align-items:center;padding:2px;box-sizing:border-box;justify-content:{{ origJc }};cursor:pointer;flex-shrink:0"><span style="width:16px;height:16px;border-radius:50%;background:#FFFFFF"></span></span></div>
+            </div>
+            <span style="font-size:12px;color:#6B6860;padding:0 4px">Link expires in 30 days. You'll see when she opens it.</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ step3 }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#6B6860"><span style="font-weight:500">Gutter claim</span><span style="color:#B5B2AA">/</span><span style="font-weight:600;color:#16150F">Close</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid #ECEAE6">
+          <div style="display:flex;flex-direction:column;gap:5px;min-width:0;flex:1">
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#B42318">CUSTOMER CLAIM · PROOF SENT</span>
+            <span style="font-size:22px;font-weight:700;letter-spacing:-0.02em">Close Sarah’s claim</span>
+            <span style="font-size:13px;color:#6B6860">Record what the photos show. The claim leaves your inbox and is saved on the job.</span>
+          </div>
+          <div style="display:flex;gap:8px"><span onClick="{{ goInbox }}" style="height:36px;padding:0 14px;border-radius:9px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #DEDBD4;font-size:13px;font-weight:600;display:flex;align-items:center;cursor:pointer;white-space:nowrap" style-hover="background:#F7F6F3">Keep open</span><span onClick="{{ closeDispute }}" style="height:36px;padding:0 16px;border-radius:9px;background:{{ closeBg }};color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;cursor:pointer;white-space:nowrap">Close claim</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-size:15px;font-weight:700">What do the photos show?</span><span style="font-size:12px;color:#6B6860">Only the office sees this</span></div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+                <sc-for list="{{ outcomes }}" as="o" hint-placeholder-count="3">
+                  <div onClick="{{ o.pick }}" style="display:flex;align-items:center;gap:10px;padding:14px;border-radius:10px;background:#FFFFFF;cursor:pointer;box-shadow:{{ o.box }}" style-hover="background:#FBFAF8"><span style="width:16px;height:16px;border-radius:50%;flex-shrink:0;box-shadow:inset 0 0 0 {{ o.ring }} #16150F"></span><span style="font-size:13.5px;font-weight:{{ o.fw }}">{{ o.label }}</span></div>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600">Reason</span><input value="{{ reason }}" onChange="{{ onReason }}" placeholder="e.g. Dent visible at 07:43 before work" style="height:40px;border:none;outline:none;border-radius:8px;box-shadow:inset 0 0 0 1.5px #16150F;padding:0 12px;font-family:inherit;font-size:14px;background:#FFFFFF;color:#16150F"><span style="font-size:12px;color:#6B6860">{{ closeHint }}</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="border-radius:12px;background:#FFFFFF;padding:14px 16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 0 0 1px #E4E6EA">
+              <div style="display:flex;align-items:center;gap:10px"><span style="width:26px;height:26px;border-radius:50%;background:#2F9E62;color:#FFFFFF;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center">✓</span><div style="display:flex;flex-direction:column;gap:1px"><span style="font-size:14px;font-weight:700">Sent to Sarah · 16:40</span><span style="font-size:12px;color:#6B6860">Not opened yet</span></div></div>
+              <span style="font-size:13px;line-height:1.5;color:#4A4842">{{ sentText }}</span>
+              <div style="display:flex;gap:8px">
+                <sc-for list="{{ selPhotos }}" as="p" hint-placeholder-count="2"><div style="width:72px;height:54px;border-radius:6px;overflow:hidden;background:#D9D6D0"><img src="{{ p.img }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div></sc-for>
+              </div>
+            </div>
+            <span style="font-size:12px;line-height:1.45;color:#4A4842;padding:0 4px">Closing saves the outcome, your reason and the sent report on 421 Oak St. If Sarah replies, the claim reopens.</span>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isWaiver }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;background:#F5F6F8;padding:32px 40px 44px">
+      <div style="max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:999px;background:#FEF4E6;color:#B54708;font-size:12px;font-weight:600"><span style="width:6px;height:6px;border-radius:50%;background:#F0A43A"></span>Waiver request</span><span style="display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:999px;background:#ECEAE6;color:#4A4842;font-size:12px;font-weight:600">Doesn't block work</span><span style="font-size:12.5px;color:#8A877F">Asked 50 min ago</span></div>
+          <span style="font-size:24px;font-weight:700;letter-spacing:-0.02em;line-height:1.2">Skip “Ground below, before” at 7 Ash Rd?</span>
+          <span style="font-size:13.5px;color:#6B6860">Dan Wells · Repair · requested by Jay Torres at 9:40</span>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,24,40,0.04);overflow:hidden">
+              <div style="padding:14px 18px;border-bottom:1px solid #ECEEF1;background:#FAFBFC;font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6B6860">WHAT'S MISSING</div>
+              <div style="display:flex;gap:16px;align-items:flex-start;padding:18px">
+                <div style="width:88px;height:88px;border-radius:12px;border:1.5px dashed #E0A39A;background:#FFF8F6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;flex-shrink:0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B42318" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg><span style="font-size:10px;font-weight:700;letter-spacing:0.06em;color:#B42318">MISSING</span></div>
+                <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+                  <span style="font-size:15px;font-weight:700">Ground below, before</span>
+                  <span style="font-size:13px;line-height:1.5;color:#4A4842">Arrival shot. Shows the ground and plants under the gutter before work, so damage from falling debris can be disputed later.</span>
+                </div>
+              </div>
+              <div style="display:flex;gap:12px;align-items:flex-start;padding:16px 18px;border-top:1px solid #ECEEF1">
+                <span style="width:32px;height:32px;border-radius:50%;background:#E8E4DC;color:#4A4842;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">JT</span>
+                <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+                  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="font-size:13.5px;font-weight:600">Jay Torres</span><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:999px;background:#F1F2F4;color:#4A4842;font-size:11.5px;font-weight:600">Blocked</span><span style="font-size:12px;color:#8A877F">9:40 · sent offline, received 9:52</span></div>
+                  <span style="font-size:13.5px;line-height:1.5;color:#16150F">“Dumpster on the driveway, can't see the ground below the gutter.”</span>
+                </div>
+              </div>
+            </div>
+            <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,24,40,0.04);overflow:hidden">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #ECEEF1;background:#FAFBFC"><span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6B6860">CLOSEST PHOTOS JAY DID TAKE</span><span style="font-size:12px;color:#8A877F">Both received</span></div>
+              <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;padding:18px">
+                <sc-for list="{{ ashClose }}" as="p" hint-placeholder-count="2">
+                  <div onClick="{{ p.open }}" style="display:flex;flex-direction:column;gap:6px;cursor:pointer" style-hover="opacity:0.88"><div style="height:180px;border-radius:10px;overflow:hidden;background:#F1EFEB"><img src="{{ p.img }}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div><span style="font-size:13px;font-weight:600">{{ p.name }}</span><span style="font-size:12px;color:#6B6860">{{ p.t }} · {{ p.by }} · at 7 Ash Rd</span></div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:16px;position:sticky;top:0">
+            <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,24,40,0.04);padding:18px;display:flex;flex-direction:column;gap:12px">
+              <span style="font-size:16px;font-weight:700">Your decision</span>
+              <div onClick="{{ wvA.pick }}" style="display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:12px;cursor:pointer;box-shadow:{{ wvA.ring }};background:{{ wvA.bg }}"><span style="width:18px;height:18px;border-radius:50%;flex-shrink:0;margin-top:1px;box-shadow:{{ wvA.dotRing }};display:flex;align-items:center;justify-content:center"><span style="width:8px;height:8px;border-radius:50%;background:{{ wvA.dot }}"></span></span><div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:14px;font-weight:600">Approve waiver</span><span style="font-size:12.5px;line-height:1.45;color:#6B6860">The shot shows as “Waived by Sean · Blocked” on the job and in any report. It never counts as taken.</span></div></div>
+              <div onClick="{{ wvK.pick }}" style="display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:12px;cursor:pointer;box-shadow:{{ wvK.ring }};background:{{ wvK.bg }}"><span style="width:18px;height:18px;border-radius:50%;flex-shrink:0;margin-top:1px;box-shadow:{{ wvK.dotRing }};display:flex;align-items:center;justify-content:center"><span style="width:8px;height:8px;border-radius:50%;background:{{ wvK.dot }}"></span></span><div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:14px;font-weight:600">Ask for another angle</span><span style="font-size:12.5px;line-height:1.45;color:#6B6860">Jay gets a request on his phone. The shot stays Missing until he sends it.</span></div></div>
+              <div style="display:flex;flex-direction:column;gap:6px;padding-top:2px"><span style="font-size:12px;font-weight:700;color:#4A4842">Note on the record</span><input value="{{ waiverNote }}" onChange="{{ onWaiverNote }}" placeholder="Optional, e.g. dumpster moved Friday" style="height:40px;padding:0 12px;border-radius:10px;border:none;box-shadow:inset 0 0 0 1px #E2E0DB;font-size:13px;outline:none;background:#FFFFFF"></div>
+              <span onClick="{{ wvGo }}" style="height:42px;border-radius:10px;background:linear-gradient(180deg,#CF4433,#B8341F);color:#FFFFFF;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer">{{ wvBtn }}</span>
+              <span style="font-size:12px;line-height:1.45;color:#6B6860">Only a PM can approve. Until you decide, the shot stays Missing · waiver requested.</span>
+            </div>
+            <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,24,40,0.04);padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6B6860">ON THE RECORD</span>
+              <div style="display:flex;gap:10px;font-size:13px"><span style="width:44px;color:#8A877F;flex-shrink:0">9:40</span><span>Jay asked to skip · no signal</span></div>
+              <div style="display:flex;gap:10px;font-size:13px"><span style="width:44px;color:#8A877F;flex-shrink:0">9:52</span><span>Request received by office</span></div>
+              <div style="display:flex;gap:10px;font-size:13px"><span style="width:44px;color:#8A877F;flex-shrink:0">Now</span><span style="font-weight:600">Waiting on you</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isInsurer }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:22px 28px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:28px">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;gap:8px"><span style="height:22px;padding:0 8px;border-radius:999px;background:#F1EFEB;color:#4A4842;font-size:12px;font-weight:600;display:flex;align-items:center">Insurer request</span><span style="height:22px;padding:0 8px;border-radius:999px;background:#F4F3F0;color:#4A4842;font-size:12px;font-weight:600;display:flex;align-items:center">Due Fri</span></div>
+        <span style="font-size:20px;font-weight:700;letter-spacing:-0.02em">Wider decking photo · 61 Birch Lane</span>
+        <div style="padding:12px 14px;border-radius:10px;background:#FAF9F7;box-shadow:inset 0 0 0 1px #F1EFEB;font-size:13px;line-height:1.5;color:#3D3A34">Priya Shah · State Farm claim #SF-20418 · "The adjuster needs a wider shot of the north slope decking that shows all 3 replaced boards."</div>
+        <span style="font-size:11px;font-weight:700;letter-spacing:0.06em;color:#8A877F">PICK ONE FROM THE JOB · 18 PHOTOS</span>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
+          <sc-for list="{{ birchPick }}" as="p" hint-placeholder-count="3">
+            <div onClick="{{ p.pick }}" style="display:flex;flex-direction:column;gap:5px;cursor:pointer"><div style="position:relative;height:130px;border-radius:10px;overflow:hidden;box-shadow:{{ p.ring }}"><img src="{{ p.img }}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;right:6px;top:6px;width:20px;height:20px;border-radius:50%;background:{{ p.chkBg }};box-shadow:0 0 0 1.5px #FFFFFF;color:#FFFFFF;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ p.chk }}</span></div><span style="font-size:12.5px;font-weight:600">{{ p.name }}</span><span style="font-size:11.5px;color:#6B6860">{{ p.t }} · {{ p.by }}</span></div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span style="font-size:15px;font-weight:700">Send to Priya</span>
+        <div style="display:flex;flex-direction:column;gap:8px;padding:12px 14px;border-radius:10px;box-shadow:0 0 0 1px #E4E6EA;font-size:13px"><div style="display:flex;justify-content:space-between"><span style="color:#6B6860">Original file</span><span style="font-weight:600">Included · unaltered</span></div><div style="display:flex;justify-content:space-between"><span style="color:#6B6860">Capture data</span><span style="font-weight:600">Time · location ±5 m · author</span></div><div style="display:flex;justify-content:space-between"><span style="color:#6B6860">Selected</span><span style="font-weight:600">{{ birchSelName }}</span></div></div>
+        <span onClick="{{ sendInsurer }}" style="height:38px;border-radius:9px;background:{{ insBg }};color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer">Send to State Farm</span>
+        <span style="font-size:12px;color:#6B6860">Insurers always get the original file with its capture data.</span>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isRetake }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:22px 28px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:28px">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;gap:8px"><span style="height:22px;padding:0 8px;border-radius:999px;background:#EEF0FF;color:#4338CA;font-size:12px;font-weight:600;display:flex;align-items:center">✦ AI flag · Jay kept it</span><span style="height:22px;padding:0 8px;border-radius:999px;background:#F4F3F0;color:#4A4842;font-size:12px;font-weight:600;display:flex;align-items:center">1 d</span></div>
+        <span style="font-size:20px;font-weight:700;letter-spacing:-0.02em">Pipe boot · 7 Ash Rd</span>
+        <div style="height:330px;border-radius:12px;overflow:hidden"><img src="https://images.pexels.com/photos/38781381/pexels-photo-38781381.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=900" alt="" style="width:100%;height:100%;object-fit:cover;display:block;filter:blur(2.5px)"></div>
+        <span style="font-size:12px;color:#6B6860">22 Oct 10:02 · at 7 Ash Rd ±7 m · Jay Torres · received 10:20</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="padding:12px 14px;border-radius:10px;background:#F7F7FF;box-shadow:inset 0 0 0 1px #DCDDFB;display:flex;flex-direction:column;gap:4px"><span style="font-size:11px;font-weight:700;letter-spacing:0.06em;color:#4338CA">✦ AI CHECK</span><span style="font-size:13px;line-height:1.5">Photo is blurred. The crack around the boot may not be readable.</span></div>
+        <div style="padding:12px 14px;border-radius:10px;background:#FAF9F7;font-size:13px;line-height:1.5;color:#3D3A34"><b style="font-weight:700">Jay's reason:</b> "Wind on the ridge, this was the only safe angle."</div>
+        <span style="font-size:15px;font-weight:700;padding-top:4px">Your decision</span>
+        <div style="display:flex;gap:8px"><span onClick="{{ retakeKeep }}" style="flex:1;height:38px;border-radius:9px;box-shadow:inset 0 0 0 1px #E2E0DB;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#F7F6F3">Keep photo</span><span onClick="{{ retakeAsk }}" style="flex:1;height:38px;border-radius:9px;background:linear-gradient(180deg,#CF4433,#B8341F);color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer">Ask Jay to retake</span></div>
+        <span style="font-size:12px;color:#6B6860">A retake never replaces the first photo. Both stay in the shot's history.</span>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isJobs }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:22px 28px;display:flex;flex-direction:column;gap:12px">
+      <span style="font-size:20px;font-weight:700;letter-spacing:-0.02em">Jobs</span>
+      <sc-for list="{{ allJobs }}" as="j" hint-placeholder-count="4">
+        <div onClick="{{ j.open }}" style="display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:12px;box-shadow:0 0 0 1px #E4E6EA;cursor:pointer" style-hover="background:#FBFAF8"><img src="{{ j.thumb }}" loading="lazy" alt="" style="width:52px;height:52px;border-radius:10px;object-fit:cover"><div style="flex:1;display:flex;flex-direction:column;gap:3px"><span style="font-size:14.5px;font-weight:700">{{ j.addr }}</span><span style="font-size:12.5px;color:#6B6860">{{ j.cust }} · {{ j.type }} · {{ j.crew }}</span></div><span style="font-size:12.5px;font-weight:600;color:#3D3A34">{{ j.status }}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A877F" stroke-width="1.8" stroke-linecap="round"><path d="M9 6l6 6-6 6"></path></svg></div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isJob }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:22px 28px;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:flex-end;gap:12px"><div style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-size:20px;font-weight:700;letter-spacing:-0.02em">{{ job.addr }}</span><span style="font-size:13px;color:#6B6860">{{ job.cust }} · {{ job.type }} · {{ job.crew }}</span></div><span style="height:24px;padding:0 9px;border-radius:999px;background:#F1EFEB;font-size:12px;font-weight:600;display:flex;align-items:center">{{ job.status }}</span></div>
+      <sc-for list="{{ jobGroups }}" as="g" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:11px;font-weight:700;letter-spacing:0.06em;color:#8A877F">{{ g.label }}</span>
+          <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px">
+            <sc-for list="{{ g.photos }}" as="p" hint-placeholder-count="4">
+              <div onClick="{{ p.open }}" style="display:flex;flex-direction:column;gap:5px;cursor:pointer" style-hover="opacity:0.85"><div style="height:92px;border-radius:10px;overflow:hidden"><img src="{{ p.img }}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div><span style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</span><span style="font-size:11px;color:#6B6860">{{ p.t }} · {{ p.by }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+      <sc-if value="{{ jobEmpty }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#6B6860">No photos yet. The job starts at 17:00.</div></sc-if>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isPhotos }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:22px 28px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:center;gap:12px"><span style="font-size:20px;font-weight:700;letter-spacing:-0.02em">Photos</span><span style="flex:1"></span>
+        <sc-for list="{{ phaseChips }}" as="c" hint-placeholder-count="4"><span onClick="{{ c.pick }}" style="height:28px;padding:0 11px;border-radius:999px;font-size:12.5px;font-weight:600;display:flex;align-items:center;cursor:pointer;background:{{ c.bg }};color:{{ c.col }};box-shadow:inset 0 0 0 1px #E2E0DB">{{ c.label }}</span></sc-for>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:9px;box-shadow:inset 0 0 0 1px #E2E0DB"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A877F" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg><input value="{{ lib }}" onChange="{{ onLib }}" placeholder="Filter by shot, job or person" style="flex:1;border:none;outline:none;font-size:13px;background:transparent"><span style="font-size:12px;color:#8A877F">{{ libCount }}</span></div>
+      <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px">
+        <sc-for list="{{ libPhotos }}" as="p" hint-placeholder-count="12">
+          <div onClick="{{ p.open }}" style="display:flex;flex-direction:column;gap:5px;cursor:pointer" style-hover="opacity:0.85"><div style="height:92px;border-radius:10px;overflow:hidden"><img src="{{ p.img }}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div><span style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</span><span style="font-size:11px;color:#6B6860;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.jobAddr }} · {{ p.t }}</span></div>
+        </sc-for>
+      </div>
+      <sc-if value="{{ libEmpty }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#6B6860">No photos match.</div></sc-if>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isReports }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:22px 28px;display:flex;flex-direction:column;gap:12px">
+      <span style="font-size:20px;font-weight:700;letter-spacing:-0.02em">Reports</span>
+      <sc-for list="{{ reports }}" as="r" hint-placeholder-count="2">
+        <div style="display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:12px;box-shadow:0 0 0 1px #E4E6EA"><span style="width:36px;height:36px;border-radius:10px;background:#F1EFEB;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A4842" stroke-width="1.8" stroke-linecap="round"><path d="M6 3h9l4 4v14H6z"></path><path d="M9 12h7M9 16h5"></path></svg></span><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">{{ r.title }}</span><span style="font-size:12.5px;color:#6B6860">To {{ r.to }} · {{ r.date }} · {{ r.n }} photos</span></div><span style="height:22px;padding:0 8px;border-radius:999px;background:#F4F3F0;color:#4A4842;font-size:12px;font-weight:600;display:flex;align-items:center">{{ r.status }}</span></div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isCrews }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:22px 28px;display:flex;flex-direction:column;gap:12px;max-width:640px">
+      <span style="font-size:20px;font-weight:700;letter-spacing:-0.02em">Crews · last sync</span>
+      <sc-for list="{{ crew }}" as="c" hint-placeholder-count="3">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;box-shadow:0 0 0 1px #E4E6EA"><span style="width:34px;height:34px;border-radius:50%;background:#F1EFEB;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ c.ini }}</span><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">{{ c.name }}</span><span style="font-size:12.5px;color:#6B6860">{{ c.sub }}</span></div><span style="height:22px;padding:0 8px;border-radius:999px;background:{{ c.pillBg }};color:{{ c.pillCol }};font-size:12px;font-weight:600;display:flex;align-items:center">{{ c.pill }}</span></div>
+      </sc-for>
+    </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ searchOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeSearch }}" style="position:absolute;inset:0;background:rgba(22,21,15,0.32);display:flex;justify-content:center;align-items:flex-start;padding-top:72px;z-index:20">
+    <div onClick="{{ stop }}" style="width:680px;background:#FFFFFF;border-radius:16px;box-shadow:0 0 0 1px #E4E2DD,0 30px 60px -10px rgba(16,15,12,0.35);overflow:hidden;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:10px;height:56px;padding:0 18px;border-bottom:1px solid #F1EFEB">
+        <span style="width:26px;height:26px;border-radius:8px;background:#EEF0FF;color:#4338CA;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">✦</span>
+        <input ref="{{ searchRef }}" value="{{ q }}" onChange="{{ onQ }}" onKeyDown="{{ onQKey }}" placeholder="Ask about any job, photo or crew…" style="flex:1;border:none;outline:none;font-size:15.5px;font-weight:500;background:transparent;color:#16150F">
+        <span style="font-size:11px;font-weight:600;padding:2px 7px;border-radius:5px;background:#F4F3F0;color:#6B6860">Esc</span>
+      </div>
+      <div style="max-height:560px;overflow:auto;padding:10px 10px 14px;display:flex;flex-direction:column;gap:4px">
+        <sc-if value="{{ qEmpty }}" hint-placeholder-val="{{ true }}">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.07em;color:#A19E96;padding:8px 10px 4px">TRY ASKING</div>
+          <sc-for list="{{ askSuggestions }}" as="s" hint-placeholder-count="4"><div onClick="{{ s.use }}" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:9px;font-size:14px;cursor:pointer" style-hover="background:#F7F7FF"><span style="color:#4338CA;font-size:12px">✦</span><span style="flex:1">{{ s.label }}</span><span style="font-size:12px;color:#A19E96">{{ s.hint }}</span></div></sc-for>
+        </sc-if>
+        <sc-if value="{{ typing }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ askNow }}" style="display:flex;align-items:center;gap:10px;padding:11px 10px;border-radius:9px;background:#F7F7FF;box-shadow:inset 0 0 0 1px #DADCF7;cursor:pointer"><span style="color:#4338CA;font-size:13px">✦</span><span style="flex:1;font-size:14px;font-weight:600;color:#1E1B4B">Ask AI: “{{ q }}”</span><span style="font-size:11px;font-weight:600;padding:2px 7px;border-radius:5px;background:#FFFFFF;color:#4338CA;box-shadow:inset 0 0 0 1px #DADCF7">↵ Enter</span></div>
+          <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;font-weight:700;letter-spacing:0.07em;color:#A19E96;padding:12px 10px 4px">JUMP TO</div></sc-if>
+          <sc-for list="{{ results }}" as="r" hint-placeholder-count="0">
+            <div onClick="{{ r.go }}" style="display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:9px;cursor:pointer" style-hover="background:#F7F6F3"><img src="{{ r.img }}" loading="lazy" alt="" style="width:36px;height:36px;border-radius:8px;object-fit:cover;flex-shrink:0;background:#F1EFEB"><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px"><span style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.title }}</span><span style="font-size:12px;color:#6B6860;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.sub }}</span></div><span style="font-size:11px;font-weight:700;letter-spacing:0.05em;color:#A19E96">{{ r.kind }}</span></div>
+          </sc-for>
+        </sc-if>
+        <sc-if value="{{ aiOn }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:18px;padding:8px 10px 4px">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div onClick="{{ toggleSteps }}" style="display:inline-flex;align-items:center;gap:7px;align-self:flex-start;cursor:pointer;font-size:13px;font-weight:600;color:#3F3D56"><span style="color:#4338CA;font-size:13px">✦</span><span>{{ aiStatus }}</span><span style="font-weight:500;color:#8A877F">{{ aiScope }}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8A877F" stroke-width="2.2" stroke-linecap="round" style="transform:{{ stepsRot }}"><path d="M6 9l6 6 6-6"></path></svg></div>
+              <sc-if value="{{ stepsVisible }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;margin-left:5px;padding-left:16px;border-left:1.5px solid #E6E7F0">
+                  <sc-for list="{{ aiSteps }}" as="st" hint-placeholder-count="3">
+                    <div style="position:relative;display:flex;flex-direction:column;gap:2px;padding:4px 0 8px">
+                      <span style="position:absolute;left:-21.5px;top:9px;width:8px;height:8px;border-radius:50%;background:{{ st.bg }};box-shadow:0 0 0 3px #FFFFFF,{{ st.ring }}"></span>
+                      <span style="font-size:13px;font-weight:600;color:{{ st.col }}">{{ st.text }}</span>
+                      <span style="font-size:12.5px;color:#8A877F">{{ st.detail }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+            <sc-if value="{{ aiDone }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:18px">
+                <div style="font-size:15px;line-height:1.7;color:#16150F;text-wrap:pretty"><sc-for list="{{ aiSegs }}" as="sg" hint-placeholder-count="2"><span>{{ sg.t }}</span><sc-if value="{{ sg.hasC }}" hint-placeholder-val="{{ false }}"><span onClick="{{ sg.open }}" style="display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:#EEF0FF;color:#4338CA;font-size:10px;font-weight:700;vertical-align:3px;cursor:pointer;margin-left:3px" style-hover="background:#DFE2FC">{{ sg.c }}</span></sc-if></sc-for></div>
+                <sc-if value="{{ aiHasPhotos }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+                    <sc-for list="{{ aiPhotos }}" as="p" hint-placeholder-count="0">
+                      <div onClick="{{ p.open }}" style="border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px #E8E9EE;cursor:pointer;background:#FFFFFF" style-hover="box-shadow:0 0 0 1px #C9CCF5">
+                        <div style="position:relative;height:148px;background:#F1EFEB"><img src="{{ p.img }}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;left:8px;top:8px;display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:999px;background:rgba(255,255,255,0.92);color:#16150F;font-size:11px;font-weight:700"><span style="color:#4338CA">{{ p.n }}</span>{{ p.label }}</span></div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 12px"><span style="font-size:13px;font-weight:600">{{ p.name }}</span><span style="font-size:12px;color:#8A877F">{{ p.meta }}</span></div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ aiHasSources }}" hint-placeholder-val="{{ false }}">
+                  <div style="border-radius:12px;box-shadow:0 0 0 1px #E8E9EE;overflow:hidden">
+                    <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:#FAFAFB;border-bottom:1px solid #EEEFF3"><span style="font-size:12px;font-weight:600;color:#4A4842">{{ aiSrcCount }}</span><span style="font-size:11.5px;color:#8A877F">{{ aiScope }}</span></div>
+                    <sc-for list="{{ aiSources }}" as="sr" hint-placeholder-count="2">
+                      <div onClick="{{ sr.open }}" style="display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid #F3F4F7;cursor:pointer" style-hover="background:#FAFAFB"><span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:999px;background:#EEF0FF;color:#4338CA;font-size:10px;font-weight:700;flex-shrink:0">{{ sr.n }}</span><span style="flex:1;font-size:13px;font-weight:500">{{ sr.label }}</span><span style="font-size:12px;color:#8A877F">{{ sr.meta }}</span></div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ aiShowResults }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:2px">
+                  <div style="font-size:11px;font-weight:700;letter-spacing:0.07em;color:#A19E96;padding:0 4px 4px">MATCHING ITEMS</div>
+                  <sc-for list="{{ results }}" as="r" hint-placeholder-count="0">
+                    <div onClick="{{ r.go }}" style="display:flex;align-items:center;gap:12px;padding:8px 6px;border-radius:9px;cursor:pointer" style-hover="background:#F7F6F3"><img src="{{ r.img }}" loading="lazy" alt="" style="width:36px;height:36px;border-radius:8px;object-fit:cover;flex-shrink:0;background:#F1EFEB"><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px"><span style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.title }}</span><span style="font-size:12px;color:#6B6860;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.sub }}</span></div><span style="font-size:11px;font-weight:700;letter-spacing:0.05em;color:#A19E96">{{ r.kind }}</span></div>
+                  </sc-for>
+                </div>
+                </sc-if>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:2px">
+                  <span style="display:flex;align-items:flex-start;gap:7px;font-size:12.5px;line-height:1.45;color:#6B6860"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A877F" stroke-width="2" stroke-linecap="round" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5M12 16.5v.5"></path></svg>{{ aiCaution }}</span>
+                  <div style="display:flex;gap:8px;flex-shrink:0">
+                    <sc-for list="{{ aiActions }}" as="a" hint-placeholder-count="2"><div onClick="{{ a.go }}" style="display:inline-flex;align-items:center;height:34px;padding:0 13px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;background:{{ a.bg }};color:{{ a.col }};box-shadow:{{ a.ring }}">{{ a.label }}</div></sc-for>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:10px 18px;border-top:1px solid #F1EFEB;font-size:12px;color:#6B6860"><span>↵ ask AI · Esc close</span><span>Searches photos, voice notes, emails and the inbox</span></div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ hasLight }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeLight }}" style="position:absolute;inset:0;background:rgba(9,9,7,0.86);display:flex;align-items:center;justify-content:center;gap:24px;padding:40px;z-index:30">
+    <div style="width:720px;height:540px;border-radius:12px;overflow:hidden"><img src="{{ light.big }}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+    <div onClick="{{ stop }}" style="width:300px;background:#FFFFFF;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;font-weight:700;letter-spacing:0.06em;color:#8A877F">{{ light.phase }}</span><span onClick="{{ closeLight }}" style="font-size:18px;cursor:pointer;line-height:1">×</span></div>
+      <span style="font-size:17px;font-weight:700">{{ light.name }}</span>
+      <div style="display:flex;flex-direction:column;gap:7px;font-size:12.5px;border-top:1px solid #F1EFEB;padding-top:10px">
+        <div style="display:flex;justify-content:space-between;gap:10px"><span style="color:#6B6860">Taken</span><span style="font-weight:600">{{ light.date }} {{ light.t }}</span></div>
+        <div style="display:flex;justify-content:space-between;gap:10px"><span style="color:#6B6860">Location</span><span style="font-weight:600">At {{ light.jobAddr }} · ±6 m</span></div>
+        <div style="display:flex;justify-content:space-between;gap:10px"><span style="color:#6B6860">Taken by</span><span style="font-weight:600">{{ light.byFull }}</span></div>
+        <div style="display:flex;justify-content:space-between;gap:10px"><span style="color:#6B6860">Received</span><span style="font-weight:600">{{ light.recv }}</span></div>
+        <div style="display:flex;justify-content:space-between;gap:10px"><span style="color:#6B6860">File</span><span style="font-weight:600">Original · unaltered</span></div>
+      </div>
+      <sc-if value="{{ light.hasNote }}" hint-placeholder-val="{{ false }}"><div style="padding:10px 12px;border-radius:9px;background:#FAF9F7;font-size:12.5px;line-height:1.45;color:#3D3A34"><b style="font-weight:700">Voice note · 0:09</b><br>"{{ light.note }}"</div></sc-if>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;height:40px;padding:0 16px;border-radius:999px;background:#16150F;color:#FFFFFF;font-size:13px;font-weight:600;box-shadow:0 10px 30px -8px rgba(16,15,12,0.45);z-index:40;white-space:nowrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"><path d="M5 12l5 5 9-10"></path></svg>{{ toast }}</div>
+  </sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  IMG = id => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=`;
+  JOBS = {
+    oak: { id:'oak', addr:'421 Oak St', cust:'Sarah Miller', type:'Re-roof', crew:'Ravi, Jay, Kim', status:'Work done · 13/13', dot:'#2F9E62', img:'15505770', g:'100%', a:'0%', today:true, date:'23 Oct' },
+    ash: { id:'ash', addr:'7 Ash Rd', cust:'Dan Wells', type:'Repair', crew:'Jay', status:'In progress · 6/8', dot:'#F0A43A', img:'32608171', g:'75%', a:'25%', today:true, date:'22 Oct' },
+    pine: { id:'pine', addr:'118 Pine Ave', cust:'Mia Chen', type:'Inspection', crew:'Ravi', status:'Starts 17:00', dot:'#D4D1CA', img:'9431615', g:'0%', a:'0%', today:true, date:'23 Oct' },
+    birch: { id:'birch', addr:'61 Birch Lane', cust:'Tom Reyes', type:'Repair', crew:'Ravi, Jay', status:'Done Mon · 18/18', dot:'#2F9E62', img:'39623734', g:'100%', a:'0%', today:false, date:'20 Oct' }
+  };
+  BY = { Ravi:'Ravi Menon', Jay:'Jay Torres', Kim:'Kim Diaz' };
+  PHOTOS = [
+    ['o1','oak','Front elevation','Arrival','07:38','15505770','Ravi'],
+    ['o2','oak','Gutters, before','Arrival','07:43','32608171','Ravi','Front gutter already has a dent on the left, by the downspout. Not touching it.'],
+    ['o3','oak','Ground below','Arrival','07:45','39623734','Jay'],
+    ['o4','oak','Roof overview','Arrival','07:47','9431615','Ravi'],
+    ['o5','oak','Leak source','Repair','08:10','38781381','Ravi'],
+    ['o6','oak','Old boot removed','Repair','08:24','37704237','Jay'],
+    ['o7','oak','Decking checked','Repair','08:40','39623734','Kim'],
+    ['o8','oak','Underlayment','Repair','09:30','9431615','Kim'],
+    ['o9','oak','New boot fitted','Repair','10:12','38781381','Ravi'],
+    ['o10','oak','Flashing sealed','Repair','10:40','37704237','Jay'],
+    ['o11','oak','Gutters, after','Cleanup','15:40','32608171','Kim'],
+    ['o12','oak','Ground cleared','Cleanup','15:30','39623734','Kim'],
+    ['o13','oak','Final roof','Cleanup','15:41','15505770','Ravi'],
+    ['a1','ash','Front elevation','Arrival','09:05','15505770','Jay'],
+    ['a2','ash','Rear elevation','Arrival','09:31','9431615','Jay'],
+    ['a3','ash','Right side gutter','Arrival','09:33','32608171','Jay'],
+    ['a4','ash','Pipe boot','Repair','10:02','38781381','Jay'],
+    ['a5','ash','Leak source','Repair','10:10','37704237','Jay'],
+    ['a6','ash','Decking checked','Repair','10:30','39623734','Jay'],
+    ['b1','birch','Decking, close-up','Repair','10:40','39623734','Ravi'],
+    ['b2','birch','North slope, wide','Repair','11:02','9431615','Ravi'],
+    ['b3','birch','Boards replaced','Repair','11:40','37704237','Jay']
+  ].map(([id,job,name,phase,t,img,by,note]) => ({ id, job, name, phase, t, imgId:img, by, note }));
+  ITEMS = [
+    { id:'waiver', view:'waiver', title:'Waive "Ground below, before"', sub:'Waiver', cust:'Dan Wells', ctx:'Arrival shot · by Jay', impact:'Doesn\'t block', impBg:'#F4F3F0', impCol:'#4A4842', by:'JT', byName:'Raised by Jay Torres', job:'7 Ash Rd', age:'50 min', cta:'Review', iconBg:'#FEF4E6', iconCol:'#B54708', d:'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z' },
+    { id:'insurer', view:'insurer', title:'Send State Farm wider decking photo', sub:'Insurer', cust:'Tom Reyes', ctx:'Claim SF-20418', impact:'Due Fri', impBg:'#FEF4E6', impCol:'#B54708', by:'PS', byName:'Raised by Priya Shah, claims', job:'61 Birch Lane', age:'2 d', cta:'Open', iconBg:'#F1EFEB', iconCol:'#4A4842', d:'M14 3H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2V9z M14 3v6h6' },
+    { id:'retake', view:'retake', title:'Blurred pipe boot: keep or retake', sub:'Retake', cust:'Dan Wells', ctx:'Repair · Jay kept it', impact:'✦ AI flag', impBg:'#EEF0FF', impCol:'#4338CA', by:'JT', byName:'Kept by Jay Torres', job:'7 Ash Rd', age:'1 d', cta:'Review', iconBg:'#EEF0FF', iconCol:'#4338CA', d:'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z' }
+  ];
+  NAV = [
+    { id:'inbox', label:'Inbox', d:'M3 13l3-8h12l3 8v6H3z M3 13h5l1 2h6l1-2h5' },
+    { id:'jobs', label:'Jobs', d:'M3 11l9-7 9 7v9H3z' },
+    { id:'photos', label:'Photos', d:'M3 5h18v14H3z M21 17l-5-5-8 7' },
+    { id:'reports', label:'Reports', d:'M6 3h9l4 4v14H6z M9 12h7 M9 16h5' },
+    { id:'crews', label:'Crews', d:'M16 8a4 4 0 11-8 0 4 4 0 018 0z M4 21c0-4 4-6 8-6s8 2 8 6' }
+  ];
+  DEFAULT_SUMMARY = "The dent on the left of the front gutter, by the downspout, is visible at 07:43 on 23 Oct, before work started. The same dent looks unchanged at 15:40 after cleanup.";
+  state = { wvChoice:'approve', deferred:true, movedFlash:false, view:'inbox', prev:'inbox', range:'today', resolved:{}, step:1, sel:{ o2:true, o11:true }, cq:"Before photo of Sarah's gutter", summary:this.DEFAULT_SUMMARY, originals:false, outcome:null, reason:'', searchOpen:false, q:'', lib:'', libPhase:'All', light:null, toast:null, jobId:'oak', waiverNote:'', birchSel:null, claimOutcome:'', showAll:false, claimPhase:'All', voiceOn:false,
+    reports:[{ title:'Gutter at 61 Birch Lane', to:'Tom Reyes', date:'20 Oct', n:2, status:'Opened 21 Oct' }] };
+  searchRef = React.createRef();
+
+  componentDidMount() {
+    this.onKey = e => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); this.openSearch(); }
+      else if (e.key === 'Escape') this.setState({ searchOpen:false, light:null });
+    };
+    window.addEventListener('keydown', this.onKey);
+  }
+  componentWillUnmount() { window.removeEventListener('keydown', this.onKey); clearTimeout(this.tt); this.clearAi(); }
+  componentDidUpdate(pp, ps) { if (this.state.searchOpen && !ps.searchOpen && this.searchRef.current) this.searchRef.current.focus(); }
+
+  img(p, w) { return this.IMG(p.imgId) + (w || 300); }
+  go(view, extra) { this.setState(s => ({ view, prev: s.view, searchOpen:false, ...(extra || {}) })); }
+  openSearch = () => { this.clearAi(); this.setState({ searchOpen:true, q:'', ai:null, aiPhase:0 }); };
+  clearAi() { (this._ai || []).forEach(clearTimeout); this._ai = []; }
+  JOBKEYS = [['oak', /oak st|\boak\b|sarah|miller/], ['ash', /ash rd|\bash\b|\bdan\b|wells/], ['birch', /birch|\btom\b|reyes/], ['pine', /pine|\bmia\b|chen/]];
+  TOPICS = { gutter: { label:'gutter', re:/gutter|dent/, m: p => /gutter/i.test(p.name) }, deck: { label:'decking', re:/deck|\brot|board/, m: p => /deck|board/i.test(p.name) }, before: { label:'before', re:/before|arrival/, m: p => p.phase === 'Arrival' } };
+  jobOf(t) { const j = this.JOBKEYS.find(([, re]) => re.test(t)); return j ? j[0] : null; }
+  intent(q) { const t = q.toLowerCase(); const job = this.jobOf(t); const topic = Object.keys(this.TOPICS).find(k => this.TOPICS[k].re.test(t));
+    if (/\b(ravi|jay|kim)\b/.test(t) && !topic && !/dumpster|waiver|ground|blur|retake|boot/.test(t)) return 'person:' + t.match(/\b(ravi|jay|kim)\b/)[1];
+    if (/blur|retake|pipe boot/.test(t)) return 'retake';
+    if (/dumpster|waiver|skip/.test(t) || (/ground/.test(t) && (!job || job === 'ash'))) return 'waiver';
+    if (/phone|upload|sync|missing|waiting|received/.test(t)) return 'sync';
+    if (topic) { const withIt = [...new Set(this.PHOTOS.filter(this.TOPICS[topic].m).map(p => p.job))];
+      if (job) return (withIt.includes(job) ? 'topic:' : 'nojob:') + topic + ':' + job;
+      return withIt.length === 1 ? 'topic:' + topic + ':' + withIt[0] : 'choose:' + topic; }
+    return 'none'; }
+  ask(q) { if (!q.trim()) return; this.clearAi(); this.setState({ q, ai: this.intent(q), aiPhase: 1, aiStepsOpen: false }); [550, 1100, 1650].forEach((ms, i) => this._ai.push(setTimeout(() => this.setState({ aiPhase: i + 2 }), ms))); }
+  showToast(msg) { clearTimeout(this.tt); this.setState({ toast: msg }); this.tt = setTimeout(() => this.setState({ toast:null }), 2800); }
+  resolve(id, msg, extra) { this.setState(s => ({ resolved: { ...s.resolved, [id]: true }, view:'inbox', ...(extra || {}) })); this.showToast(msg); }
+  openPhoto(p) {
+    const j = this.JOBS[p.job];
+    this.setState({ light: { big: this.img(p, 1200), name: p.name, phase: (p.phase + ' · ' + j.addr).toUpperCase(), date: j.date, t: p.t, jobAddr: j.addr, byFull: this.BY[p.by], recv: j.date + ' ' + this.addMin(p.t, 19), hasNote: !!p.note, note: p.note || '' } });
+  }
+  addMin(t, m) { const [h, mm] = t.split(':').map(Number); const x = h * 60 + mm + m; return String(Math.floor(x / 60)).padStart(2, '0') + ':' + String(x % 60).padStart(2, '0'); }
+  openJob(id) { this.go('job', { jobId: id }); }
+  tokens(q) { const stop = ['photo','photos','of','the','sarah','sarah\'s','show','me','a','for','find']; return q.toLowerCase().split(/[^a-z0-9']+/).filter(w => w.length > 2 && !stop.includes(w)); }
+  matches(p, toks) { const hay = (p.name + ' ' + p.phase).toLowerCase(); return toks.some(t => hay.includes(t.replace(/s$/, ''))); }
+
+  renderVals() {
+    const s = this.state;
+    const claimRow = { id:'claim', view:'claim', title:'Sarah Miller says the gutter was damaged', sub:'Customer claim', cust:'Sarah Miller', ctx:'Customer claim · all 13 photos in', impact:'Needs attention', impBg:'#FDECEA', impCol:'#B42318', by:'', byName:'Customer email 14:20', job:'421 Oak St', age:'2 h', cta:'Find photos', iconBg:'#FDECEA', iconCol:'#B42318', d:'M12 3l9 16H3z M12 10v4 M12 17h.01' };
+    const open = [...((!s.resolved.claim && s.deferred) ? [claimRow] : []), ...this.ITEMS.filter(i => !s.resolved[i.id])];
+    const claimOpen = !s.resolved.claim;
+    const needCount = open.length + (claimOpen && !s.deferred ? 1 : 0);
+    const activeNav = { inbox:'inbox', claim:'inbox', waiver:'inbox', insurer:'inbox', retake:'inbox', jobs:'jobs', job:'jobs', photos:'photos', reports:'reports', crews:'crews' }[s.view];
+    const nav = this.NAV.map(n => { const a = n.id === activeNav; return { ...n, go: () => this.go(n.id), bg: a ? 'rgba(255,255,255,0.10)' : 'transparent', sh: a ? 'inset 0 0 0 1px rgba(255,255,255,0.08)' : 'none', fw: a ? 600 : 500, col: a ? '#FFFFFF' : '#B9B5AC', ic: a ? '#F2644F' : '#7E7A72', hasBadge: n.id === 'inbox' && needCount > 0, badge: needCount }; });
+    const jobRow = j => ({ ...j, thumb: this.IMG(j.img) + 120, open: () => this.openJob(j.id) });
+    const todayJobs = Object.values(this.JOBS).filter(j => j.today).map(jobRow);
+    const allJobs = Object.values(this.JOBS).map(jobRow);
+    const week = s.range === 'week';
+    const titles = { inbox:'Inbox', claim:'Gutter claim', waiver:'Waiver', insurer:'Insurer request', retake:'Retake check', jobs:'Jobs', job: this.JOBS[s.jobId].addr, photos:'Photos', reports:'Reports', crews:'Crews' };
+    const sub = ['claim','waiver','insurer','retake','job'].includes(s.view);
+    const backTo = s.view === 'job' && s.prev !== 'job' ? s.prev : (s.view === 'job' ? 'jobs' : 'inbox');
+    const crew = [
+      { ini:'JT', name:'Jay Torres', sub:'7 Ash Rd · synced 16:05', pill:'2 waiting', dot:'#F0A43A', pillBg:'#FEF4E6', pillCol:'#B54708' },
+      { ini:'RM', name:'Ravi Menon', sub:'421 Oak St · synced 16:12', pill:'All in', dot:'#2F9E62', pillBg:'#E9F6EF', pillCol:'#1F7A4D' },
+      { ini:'KD', name:'Kim Diaz', sub:'421 Oak St · synced 16:18', pill:'All in', dot:'#2F9E62', pillBg:'#E9F6EF', pillCol:'#1F7A4D' }
+    ];
+    // claim
+    const oak = this.PHOTOS.filter(p => p.job === 'oak');
+    const toks = this.tokens(s.cq);
+    const anyTok = toks.length > 0;
+    const matchN = oak.filter(p => this.matches(p, toks)).length;
+    const groupBy = (list, mk) => ['Arrival','Repair','Cleanup'].map(ph => { const ps = list.filter(p => p.phase === ph); return { label: ph.toUpperCase() + ' · ' + ps.length + ' SHOTS', photos: ps.map(mk) }; }).filter(g => g.photos.length);
+    const claimGroups = groupBy(oak, p => { const on = !!s.sel[p.id]; const m = !anyTok || this.matches(p, toks); return { ...p, img: this.img(p), op: m || on ? 1 : 0.38, ring: on ? '0 0 0 2.5px #B8341F' : '0 0 0 1px #E4E6EA', chkBg: on ? '#B8341F' : 'rgba(22,21,15,0.35)', chk: on ? '✓' : '', toggle: () => this.setState(st => ({ sel: { ...st.sel, [p.id]: !st.sel[p.id] } })) }; });
+    const selList = oak.filter(p => s.sel[p.id]);
+    const showAnswer = toks.some(t => t.startsWith('gutter'));
+    const srcP = id => oak.find(p => p.id === id);
+    const sources = [
+      { n:1, thumb: this.img(srcP('o2'), 120), label:'Gutters, before', meta:'Arrival · 07:43 · Ravi Menon', open: () => this.openPhoto(srcP('o2')) },
+      { n:2, thumb: this.img(srcP('o11'), 120), label:'Gutters, after', meta:'Cleanup · 15:40 · Kim Diaz', open: () => this.openPhoto(srcP('o11')) },
+      { n:3, glyph:'♪', label:'Ravi\'s voice note · 0:09', meta:'07:44 · “Front gutter already has a dent on the left…”', open: () => this.openPhoto(srcP('o2')) },
+      { n:4, label:'Sarah\'s email', meta:'14:20', open: () => this.showToast('Email from Sarah Miller · 23 Oct 14:20') }
+    ];
+    const stepDefs = ['1. Pick photos','2. Send to Sarah','3. Close dispute'];
+    const steps = stepDefs.map((label, i) => { const n = i + 1; const done = n < s.step, cur = n === s.step; return { label: done ? label + ' ✓' : label, bar: cur ? '#B8341F' : done ? '#16150F' : '#ECEAE6', col: cur ? '#B8341F' : done ? '#16150F' : '#A19E96', cur: n <= s.step ? 'pointer' : 'default', go: () => { if (n <= s.step && s.step < 3) this.setState({ step: n }); } }; });
+    const nSel = selList.length;
+    const tagOf = p => p.phase === 'Arrival' ? 'BEFORE' : p.phase === 'Cleanup' ? 'AFTER' : 'DURING';
+    const outcomes = [['before','Damage was there before work'],['crew','Crew caused it'],['unclear','Unclear']].map(([id, label]) => ({ label, ring: s.outcome === id ? '5px' : '1.5px', fw: s.outcome === id ? 700 : 500, box: s.outcome === id ? '0 0 0 2px #16150F' : '0 0 0 1px #E4E6EA', pick: () => this.setState({ outcome: id }) }));
+    // job
+    const job = this.JOBS[s.jobId];
+    const jobPs = this.PHOTOS.filter(p => p.job === s.jobId);
+    const jobGroups = groupBy(jobPs, p => ({ ...p, img: this.img(p), open: () => this.openPhoto(p) }));
+    // library
+    const lt = s.lib.toLowerCase().trim();
+    const libPhotos = this.PHOTOS.filter(p => (s.libPhase === 'All' || p.phase === s.libPhase) && (!lt || (p.name + ' ' + p.phase + ' ' + this.JOBS[p.job].addr + ' ' + this.BY[p.by]).toLowerCase().includes(lt))).map(p => ({ ...p, img: this.img(p), jobAddr: this.JOBS[p.job].addr, open: () => this.openPhoto(p) }));
+    const phaseChips = ['All','Arrival','Repair','Cleanup'].map(ph => ({ label: ph, bg: s.libPhase === ph ? '#16150F' : '#FFFFFF', col: s.libPhase === ph ? '#FFFFFF' : '#16150F', pick: () => this.setState({ libPhase: ph }) }));
+    // search
+    const qt = s.q.toLowerCase().trim();
+    let results = [];
+    if (qt) {
+      const words = qt.split(/\s+/);
+      const hit = h => words.every(w => h.toLowerCase().includes(w.replace(/s$/, '')));
+      Object.values(this.JOBS).forEach(j => { if (hit(j.addr + ' ' + j.cust + ' ' + j.type + ' ' + j.crew)) results.push({ kind:'JOB', title: j.addr, sub: j.cust + ' · ' + j.type + ' · ' + j.status, img: this.IMG(j.img) + 120, go: () => this.openJob(j.id) }); });
+      const its = [...(claimOpen ? [{ id:'claim', view:'claim', title:'Sarah Miller says the gutter was damaged', sub:'Customer claim', job:'421 Oak St' }] : []), ...open];
+      its.forEach(i => { if (hit(i.title + ' ' + i.sub + ' ' + i.job + ' ' + i.id + ' ' + (i.cust || '') + ' ' + (i.ctx || ''))) results.push({ kind:'INBOX', title: i.title, sub: i.job + ' · ' + (i.cust ? i.cust + ' · ' + i.ctx : i.sub), img: this.IMG(i.job === '421 Oak St' ? '15505770' : i.job === '7 Ash Rd' ? '32608171' : '39623734') + 120, go: () => this.go(i.view, i.view === 'claim' ? { step: 1 } : {}) }); });
+      this.PHOTOS.forEach(p => { const j = this.JOBS[p.job]; if (hit(p.name + ' ' + p.phase + ' ' + j.addr + ' ' + this.BY[p.by] + ' ' + j.cust)) results.push({ kind:'PHOTO', title: p.name, sub: j.addr + ' · ' + p.phase + ' · ' + j.date + ' ' + p.t + ' · ' + p.by, img: this.img(p, 120), go: () => { this.go('job', { jobId: p.job }); this.openPhoto(p); } }); });
+      results = results.slice(0, 9);
+    }
+    const askSuggestions = [["Before photo of Sarah's gutter",'421 Oak St'],['Which photos are still on a crew phone?','Today'],['Why did Jay skip the ground photo at Ash Rd?','7 Ash Rd'],['Decking photos at 61 Birch Lane','Insurer']].map(([t, hn]) => ({ label: t, hint: hn, use: () => this.ask(t) }));
+    const P = id => this.PHOTOS.find(p => p.id === id);
+    const birch = this.PHOTOS.filter(p => p.job === 'birch'); const bDeck = birch.filter(p => /deck/i.test(p.name)); const bPick = (bDeck.length >= 2 ? bDeck : birch).slice(0, 2);
+    const ph = (p, tag) => p ? { tag, name: p.name, meta: (this.JOBS[p.job] || {}).date + ' ' + p.t + ' · ' + p.by, img: this.img(p, 600), open: () => this.openPhoto(p) } : null;
+    const D = { gutter: ['Sarah Miller · 14:20 · 1 email', 'Gutters, before (07:43) and Gutters, after (15:40)', "1 voice note from Ravi at 07:44"], sync: ['421 Oak St, 7 Ash Rd, 61 Birch Lane and 3 more', '41 of 43 received', 'Ravi 16:12 · Jay 16:05 · Kim 16:18'], waiver: ['Ground below, before · requested 9:40', 'Blocked · dumpster on the driveway', 'Rear elevation and right side, both received'], deck: ['Repair stage · north slope', 'Shot names that mention decking', 'Notes from the crew on those shots'], none: ['Names of all shots on every job', 'Transcribed notes from the crew', 'Open items waiting on you'], 'person:ravi': ['421 Oak St · lead · 118 Pine Ave at 17:00', '13 taken · 13 received', '16:12 · nothing waiting'], 'person:jay': ['7 Ash Rd', '8 taken · 6 received', '16:05 · 2 waiting'], 'person:kim': ['421 Oak St · with Ravi', 'All received', '16:18 · nothing waiting'] };
+    const btn = (label, go, primary) => ({ label, go, bg: primary ? '#B8341F' : '#FFFFFF', col: primary ? '#FFFFFF' : '#16150F', ring: primary ? 'none' : 'inset 0 0 0 1px #DAD8D2' });
+    const toast = m => () => this.showToast(m);
+    const A = {
+      gutter: { scope: "421 Oak St · this job only", steps: ["Read Sarah's email: “the gutter was damaged”", 'Matched 2 gutter shots on 421 Oak St', 'Checked voice notes from 07:00–08:00'],
+        segs: [['The before photo is “Gutters, before”, taken by Ravi at 07:43 before work started', 1], ['. The dent on the left, by the downspout, is already visible, and Ravi mentions it in his voice note', 3], ['. The after photo at 15:40 shows it unchanged', 2], ['.']],
+        photos: [ph(P('o2'), '1 · BEFORE'), ph(P('o11'), '2 · AFTER')],
+        sources: [[1, 'Gutters, before', '07:43 · Ravi', () => this.openPhoto(P('o2'))], [2, 'Gutters, after', '15:40 · Kim', () => this.openPhoto(P('o11'))], [3, "Ravi's voice note", '07:44 · 0:09', () => this.openPhoto(P('o2'))], [4, "Sarah's email", '14:20', toast('Email from Sarah Miller · 23 Oct 14:20')]],
+        caution: "AI can't tell who caused the dent. It only shows when it was visible. Open each source before you send anything.",
+        actions: [btn('Open job', () => this.go('job', { jobId: 'oak' })), (claimOpen ? btn('Use in claim reply', () => this.go('claim', { step: 2, sel: { o2: true, o11: true } }), true) : btn('Dispute closed', toast(s.claimOutcome || 'Dispute already closed'), true))] },
+      sync: { scope: "Today · all 6 jobs", steps: ["Checked today's 6 jobs", 'Compared photos taken with photos received', "Read each crew phone's last sync"],
+        segs: [["2 photos for 7 Ash Rd are still on Jay's phone, last synced 16:05", 1], [". They're saved on the phone and upload when he has signal. Every other job today is fully received", 2], ['.']],
+        photos: [], sources: [[1, "Jay's phone", 'Last sync 16:05 · 2 waiting', toast('Jay Torres · last sync 16:05')], [2, "Today's jobs", '41 of 43 received', () => this.go('jobs')]],
+        caution: 'Counts only photos the office has confirmed. Photos still on a phone are safe, but you can’t see them yet.',
+        actions: [btn('Message Jay', toast('Message to Jay opens here')), btn('Open 7 Ash Rd', () => this.go('job', { jobId: 'ash' }), true)] },
+      waiver: { scope: '7 Ash Rd · this job only', steps: ['Found the waiver request on 7 Ash Rd', "Read Jay's reason and voice note", 'Found the closest photos he did take'],
+        segs: [['Jay couldn’t take “Ground below, before” because the dumpster was parked on it', 1], ['. He took the rear and right-side views as the closest photos instead', 2], ['.']],
+        photos: [ph(P('a2'), '2 · CLOSEST'), ph(P('a3'), '2 · CLOSEST')], sources: [[1, 'Waiver request', 'Jay · 08:12', () => this.go('waiver')], [2, 'Closest photos', '2 photos · Arrival', () => this.openPhoto(P('a2'))]],
+        caution: 'Only you can approve a waiver. Until then the shot stays Missing.',
+        actions: [btn('Open job', () => this.go('job', { jobId: 'ash' })), (s.resolved.waiver ? btn('Waiver decided', toast('Waiver already decided'), true) : btn('Review waiver', () => this.go('waiver'), true))] },
+      deck: { scope: '61 Birch Lane · this job only', steps: ['Found 61 Birch Lane', 'Matched decking shots in the Repair photos', 'Read the crew notes on those shots'],
+        segs: [['These are the decking photos from the Repair stage at 61 Birch Lane', 1], ['. Each has the time, place and who took it, ready to send to the insurer', 2], ['.']],
+        photos: bPick.map((p, i) => ph(p, (i + 1) + ' · DECKING')), sources: bPick.map((p, i) => [i + 1, p.name, p.t + ' · ' + p.by, () => this.openPhoto(p)]),
+        caution: 'AI shows what’s in the photo. It doesn’t judge how bad the damage is.',
+        actions: [btn('Open job', () => this.go('job', { jobId: 'birch' })), (s.resolved.insurer ? btn('Sent to insurer', toast('Already sent to Priya · State Farm #SF-20418'), true) : btn('Send to insurer', () => this.go('insurer'), true))] },
+      'person:ravi': { scope: 'Ravi Menon · today', steps: ["Found Ravi's jobs today", 'Counted his photos taken and received', "Read his phone's last sync"],
+        segs: [['Ravi led 421 Oak St today. All 13 of his crew’s photos are received', 1], ['. Next is the 118 Pine Ave inspection at 17:00', 3], ['. His phone last synced at 16:12 with nothing waiting', 2], ['.']],
+        photos: [ph(P('o1'), '1 · 421 OAK ST')].filter(Boolean), sources: [[1, '421 Oak St', '13 of 13 received', () => this.go('job', { jobId: 'oak' })], [2, "Ravi's phone", 'Last sync 16:12 · 0 waiting', toast('Ravi Menon · last sync 16:12')], [3, '118 Pine Ave', 'Inspection · 17:00', () => this.go('job', { jobId: 'pine' })]],
+        caution: 'Shows work and photos only. It doesn’t rate the person.', actions: [btn('Open 421 Oak St', () => this.go('job', { jobId: 'oak' }), true)] },
+      'person:jay': { scope: 'Jay Torres · today', steps: ["Found Jay's jobs today", 'Counted his photos taken and received', "Read his phone's last sync"],
+        segs: [['Jay is on 7 Ash Rd, 6 of 8 photos in', 1], [". 2 photos are still on his phone, last synced 16:05, and he's asked to waive “Ground below, before”", 2], ['.']],
+        photos: [ph(P('a2'), '1 · 7 ASH RD')].filter(Boolean), sources: [[1, '7 Ash Rd', '6 of 8 received', () => this.go('job', { jobId: 'ash' })], [2, "Jay's phone", 'Last sync 16:05 · 2 waiting', toast('Jay Torres · last sync 16:05')]],
+        caution: 'Photos still on his phone are safe; you’ll see them when he has signal.', actions: [btn('Message Jay', toast('Message to Jay opens here')), btn('Open 7 Ash Rd', () => this.go('job', { jobId: 'ash' }), true)] },
+      'person:kim': { scope: 'Kim Diaz · today', steps: ["Found Kim's jobs today", 'Counted her photos taken and received', "Read her phone's last sync"],
+        segs: [['Kim worked on 421 Oak St with Ravi today', 1], ['. Her phone last synced at 16:18 with nothing waiting', 2], ['.']],
+        photos: [], sources: [[1, '421 Oak St', '13 of 13 received', () => this.go('job', { jobId: 'oak' })], [2, "Kim's phone", 'Last sync 16:18 · 0 waiting', toast('Kim Diaz · last sync 16:18')]],
+        caution: 'Shows work and photos only. It doesn’t rate the person.', actions: [btn('Open 421 Oak St', () => this.go('job', { jobId: 'oak' }), true)] },
+      none: { scope: 'All jobs', steps: ['Searched photo names and stages', 'Searched voice notes', 'Searched the inbox'],
+        segs: [['I couldn’t find a clear answer. Try naming a job, a shot or a person, like “gutter at Oak St”.']], photos: [], sources: [], caution: 'AI only answers from photos, notes and emails it can link back to a job.', actions: [] }
+    };
+    A.retake = { scope: '7 Ash Rd · this job only', steps: ['Found the AI flag on 7 Ash Rd', 'Read why Jay kept the photo', 'Looked for a sharper shot of the boot'],
+      detail: ['Pipe boot · Repair · 10:02', 'Kept by Jay Torres', 'None on this job'],
+      segs: [['“Pipe boot” at 10:02 was flagged as blurred, and Jay kept it', 1], ['. There is no sharper photo of the boot on this job', 2], ['.']],
+      photos: [ph(P('a4'), '1 · FLAGGED')], sources: [[1, 'Pipe boot', '10:02 · Jay', () => this.openPhoto(P('a4'))], [2, 'Retake item', 'Kept by Jay', () => this.go('retake')]],
+      caution: 'AI only flags blur. You decide if the photo is good enough as proof.',
+      actions: [btn('Open 7 Ash Rd', () => this.openJob('ash')), s.resolved.retake ? btn('Retake decided', toast('Retake already decided'), true) : btn('Review retake', () => this.go('retake'), true)] };
+    const aKey = { 'topic:gutter:oak':'gutter', 'topic:deck:birch':'deck' }[s.ai] || s.ai;
+    const cap = w => w.charAt(0).toUpperCase() + w.slice(1);
+    const dyn = key => { const [kind, tk, jid] = (key || '').split(':'); const T = this.TOPICS[tk]; if (!T) return null;
+      const jobsWith = [...new Set(this.PHOTOS.filter(T.m).map(p => p.job))].map(id => this.JOBS[id]);
+      const names = jobsWith.map(j => j.addr).join(' and ');
+      const reAsk = j => () => this.ask(cap(T.label) + ' photos at ' + j.addr);
+      if (kind === 'choose' || kind === 'nojob') { const j0 = this.JOBS[jid]; const no = kind === 'nojob';
+        return { scope: no ? j0.addr + ' · this job only' : 'All jobs',
+          steps: no ? ['Found ' + j0.addr, 'Looked for ' + T.label + ' shots there', 'Checked the other jobs'] : ['Looked for ' + T.label + ' shots on every job', 'Found them on ' + jobsWith.length + ' jobs', 'Looked for a job in your question'],
+          detail: no ? [j0.cust + ' · ' + j0.type, 'None found', names] : ['Photo names and stages', names, 'No address, customer or crew named'],
+          segs: [[no ? 'There are no ' + T.label + ' photos on ' + j0.addr + '. There are some on ' + names + '.' : cap(T.label) + ' photos are on ' + jobsWith.length + ' jobs. Which one do you mean?']],
+          photos: [], sources: [], caution: 'AI won’t guess the job. Proof from the wrong job is worse than none.', actions: jobsWith.map(j => btn(j.addr, reAsk(j))) }; }
+      const j = this.JOBS[jid]; const ps = this.PHOTOS.filter(p => p.job === jid && T.m(p));
+      return { scope: j.addr + ' · this job only', steps: ['Found ' + j.addr, 'Matched ' + ps.length + ' ' + T.label + ' shot' + (ps.length === 1 ? '' : 's'), 'Read the crew notes on those shots'],
+        detail: [j.cust + ' · ' + j.type + ' · ' + j.date, ps.map(p => p.name).join(', '), ps.some(p => p.note) ? 'Note found' : 'No notes on these shots'],
+        segs: [['On ' + j.addr + ': ' + ps.map(p => '“' + p.name + '” (' + p.t + ', ' + p.by + ')').join(', '), 1], ['. Each has the time, place and who took it.']],
+        photos: ps.slice(0, 4).map((p, i) => ph(p, (i + 1) + ' · ' + p.phase.toUpperCase())), sources: ps.map((p, i) => [i + 1, p.name, p.t + ' · ' + p.by, () => this.openPhoto(p)]),
+        caution: 'AI shows what’s in the photo. It doesn’t judge cause or damage.', actions: [btn('Open ' + j.addr, () => this.openJob(jid), true)] }; };
+    const birchPick = this.PHOTOS.filter(p => p.job === 'birch').map(p => { const on = s.birchSel === p.id; return { ...p, img: this.img(p), ring: on ? '0 0 0 2.5px #B8341F' : '0 0 0 1px #E4E6EA', chkBg: on ? '#B8341F' : 'rgba(22,21,15,0.35)', chk: on ? '✓' : '', pick: () => this.setState({ birchSel: p.id }) }; });
+    const birchSelP = this.PHOTOS.find(p => p.id === s.birchSel);
+    const ashClose = ['a2','a3'].map(id => { const p = this.PHOTOS.find(x => x.id === id); return { ...p, img: this.img(p, 600), open: () => this.openPhoto(p) }; });
+    const outcomeLabel = { before:'Damage was there before work', crew:'Crew caused it', unclear:'Unclear' };
+
+    const crewHover = crew.map((c, i) => ({ ...c, show: s.hoverCrew === i, enter: () => this.setState({ hoverCrew: i }), leave: () => this.setState({ hoverCrew: null }) }));
+    const reviewJobs = [{ addr:'421 Oak St', cust:'Sarah Miller', type:'Re-roof', detail:'Done 15:48 · 13 of 13 photos in', flag:'1 AI flag, kept', thumb: this.IMG('15505770') + 120, open: () => this.openJob('oak') }];
+    return {
+      crewHover, reviewJobs, reviewCount: reviewJobs.length, goPhotos: () => this.go('photos'),
+      nav, todayJobs, allJobs, crew, openSearch: this.openSearch,
+      isInbox: s.view === 'inbox', isClaim: s.view === 'claim', isWaiver: s.view === 'waiver', isInsurer: s.view === 'insurer', isRetake: s.view === 'retake', isJobs: s.view === 'jobs', isJob: s.view === 'job', isPhotos: s.view === 'photos', isReports: s.view === 'reports', isCrews: s.view === 'crews',
+      hasBack: sub, backLabel: backTo === 'inbox' ? 'Inbox' : backTo === 'jobs' ? 'Jobs' : backTo.charAt(0).toUpperCase() + backTo.slice(1), goBack: () => this.go(backTo), pageTitle: titles[s.view],
+      setToday: () => this.setState({ range:'today' }), setWeek: () => this.setState({ range:'week' }),
+      todayBg: week ? 'transparent' : '#FFFFFF', todaySh: week ? 'none' : '0 1px 2px rgba(16,15,12,0.08)', todayCol: week ? '#6B6860' : '#16150F',
+      weekBg: week ? '#FFFFFF' : 'transparent', weekSh: week ? '0 1px 2px rgba(16,15,12,0.08)' : 'none', weekCol: week ? '#16150F' : '#6B6860',
+      photosTitle: week ? 'Photos this week' : 'Photos today', ...(() => { const C = 2 * Math.PI * 42, r = week ? 186 / 188 : 41 / 43, g = C * r - 4, a = Math.max(C * (1 - r) - 4, 0.1); return { gDash: g.toFixed(1) + ' ' + C.toFixed(1), aDash: a.toFixed(1) + ' ' + C.toFixed(1), aOff: (-(g + 4)).toFixed(1), recvPctLabel: Math.round(r * 100) + '%' }; })(), recv: week ? 186 : 41, total: week ? 188 : 43, recvPct: week ? '98.9%' : '95.3%', phonePct: week ? '1.1%' : '4.7%',
+      needText: needCount === 0 ? 'Nothing needs you' : needCount === 1 ? '1 thing needs you' : needCount + ' things need you',
+      claimOpen, claimDone: !claimOpen, claimOutcomeText: s.claimOutcome,
+      showTop: false, ...(() => {
+        const KIND = { claim:'CUSTOMER CLAIM', waiver:'WAIVER', insurer:'INSURER', retake:'AI FLAG' };
+        const GRP = { claim:'now', insurer:'week', waiver:'later', retake:'later' };
+        const defs = [{ k:'now', label:'NOW', hint:'customer is waiting', dot:'#D92D20', labelCol:'#B42318', pillBg:'#FDECEA', sum:'urgent' }, { k:'week', label:'THIS WEEK', hint:'has a deadline', dot:'#F0A43A', labelCol:'#B54708', pillBg:'#FEF4E6', sum:'due this week' }, { k:'later', label:'WHEN YOU CAN', hint:"doesn't block work", dot:'#A19E96', labelCol:'#4A4842', pillBg:'#ECEAE6', sum:'can wait' }];
+        let first = true;
+        const groups = defs.map(d => ({ ...d, items: open.filter(i => GRP[i.id] === d.k).map(i => { const primary = i.id === 'claim'; return { ...i, kind: KIND[i.id], kindLow: { claim:'Customer claim', waiver:'Waiver', insurer:'Insurer', retake:'Retake' }[i.id], primary, secondary: !primary, ring: primary ? '#F6C9C2' : '#F1EFEB', rowBg: (i.id === 'claim' && s.movedFlash) ? '#FFF4F1' : 'transparent', open: i.id === 'claim' ? () => this.go('claim', { step: 1, showAll: false }) : () => this.go(i.view) }; }) })).filter(g => g.items.length);
+        const toast = t => () => this.showToast(t + ' opens here');
+        const EXTRA = {
+          week: [
+            { id:'x1', title:'Approve change order: 2 extra vents', job:'118 Pine Ave', kindLow:'Change order', age:'1 day', impact:'Due Mon', impBg:'#FEF4E6', impCol:'#B54708' },
+            { id:'x2', title:'Send Allstate the hail inspection photos', job:'9 Elm Ct', kindLow:'Insurer', age:'2 days', impact:'Due Tue', impBg:'#FEF4E6', impCol:'#B54708' }
+          ],
+          later: [
+            { id:'x3', title:'Name 3 extra photos Kim added', job:'9 Elm Ct', kindLow:'Extra photos', age:'4 h', impact:"Doesn't block", impBg:'#ECEAE6', impCol:'#4A4842' },
+            { id:'x4', title:'Confirm crew for Friday inspection', job:'118 Pine Ave', kindLow:'Schedule', age:'1 day', impact:"Doesn't block", impBg:'#ECEAE6', impCol:'#4A4842' }
+          ]
+        };
+        groups.forEach(g => {
+          const all = g.items.concat((EXTRA[g.k] || []).map(x => ({ ...x, open: toast(x.title) })));
+          const lim = 2;
+          Object.assign(g, { all, total: all.length, shown: all.slice(0, lim), hasMore: all.length > lim, moreText: '+' + (all.length - lim) + ' more',
+            viewAll: () => this.setState({ sheetK: g.k }),
+            cardRing: g.k === 'now' ? '0 0 0 1px #F4C7C0,0 1px 2px rgba(180,35,24,0.06)' : '0 0 0 1px #E4E6EA,0 1px 2px rgba(16,24,40,0.04)',
+            headBg: g.k === 'now' ? '#FFF6F4' : '#FAFBFC', headLine: g.k === 'now' ? '#F8DDD8' : '#ECEEF1' });
+        });
+        const sg = groups.find(g => g.k === s.sheetK);
+        const sheetVals = { sheetOpen: !!sg, sheet: sg ? { ...sg, items: sg.all, hintCap: sg.hint.charAt(0).toUpperCase() + sg.hint.slice(1) } : { items: [] }, closeSheet: () => this.setState({ sheetK: null }) };
+        const U = { claim:['Customer waiting','#B42318','#D92D20'], insurer:['Due Fri','#B54708','#F0A43A'], waiver:['','#6B6860','#C9C6BF'], retake:['','#6B6860','#C9C6BF'] };
+        const simpleItems = groups.flatMap(g => g.items).map(i => ({ ...i, urg: U[i.id][0], urgCol: U[i.id][1], dot: U[i.id][2], rowBg: (i.id === 'claim' && s.movedFlash) ? '#FFF4F1' : 'transparent' }));
+        const heroG = groups.find(g => g.k === 'now'); const restGroups = groups.filter(g => g.k !== 'now'); return { ...sheetVals, groups, restGroups, showHero: !!heroG, restCount: restGroups.reduce((n, g) => n + g.items.length, 0), simpleItems, grpSummary: groups.map(g => ({ dot: g.dot, text: g.items.length + ' ' + g.sum })) };
+      })(), openItems: open.map(i => ({ ...i, rowBg: (i.id === 'claim' && s.movedFlash) ? '#FFF4F1' : 'transparent', open: i.id === 'claim' ? () => this.go('claim', { step: 1, showAll: false }) : () => this.go(i.view) })), openCount: open.length, noOpen: open.length === 0,
+      openClaim: () => this.go('claim', { step: 1, showAll: false, claimPhase: 'All', sel: { o2: true, o11: true } }), replyLater: () => { this.setState({ deferred: true, movedFlash: true }); this.showToast('Moved to Needs your decision'); clearTimeout(this._mf); this._mf = setTimeout(() => this.setState({ movedFlash: false }), 1600); }, openOak: () => this.openJob('oak'), goJobs: () => this.go('jobs'), goReports: () => this.go('reports'),
+      steps, step1: s.step === 1, step2: s.step === 2, step3: s.step === 3,
+      cq: s.cq, onCq: e => this.setState({ cq: e.target.value }), showAnswer, noAnswer: !showAnswer, matchText: anyTok ? matchN + ' photo' + (matchN === 1 ? '' : 's') + ' on this job match "' + s.cq + '". Others are dimmed.' : 'Showing all 13 photos on this job.',
+      sources, claimGroups, claimGroupsF: claimGroups.filter(g => s.claimPhase === 'All' || String(g.label).toLowerCase().includes(s.claimPhase.toLowerCase())),
+      phaseTabs: ['All','Arrival','Repair','Cleanup'].map(l => { const on = s.showAll ? s.claimPhase === l : l === 'All'; return { label: l, bg: on ? '#FFFFFF' : 'transparent', col: on ? '#16150F' : '#6B6860', sh: on ? '0 1px 2px rgba(0,0,0,0.08)' : 'none', pick: () => this.setState({ claimPhase: l, showAll: l !== 'All' ? true : this.state.showAll }) }; }),
+      goInbox: () => this.go('inbox'), voiceOn: s.voiceOn, toggleVoice: () => this.setState(st => ({ voiceOn: !st.voiceOn })), voiceBg: s.voiceOn ? '#16150F' : '#D4D4D8', voiceJc: s.voiceOn ? 'flex-end' : 'flex-start', origBg: s.originals ? '#16150F' : '#D4D4D8', origJc: s.originals ? 'flex-end' : 'flex-start',
+      reportHint: s.originals ? 'Each photo with time, place and who took it · originals downloadable' : 'Each photo with time, place and who took it', showAll: s.showAll, showPair: !s.showAll, allLabel: s.showAll ? 'show the 2 matches' : 'view all 13',
+      toggleAll: () => this.setState(st => ({ showAll: !st.showAll })), callSarah: () => this.showToast('Calling Sarah Miller · 07700 900 412'),
+      pairPhotos: [['o2', '1 · BEFORE', 'Arrival, before work', 'Ravi Menon', '08:58'], ['o11', '2 · AFTER', 'Cleanup, after work', 'Kim Diaz', '16:18']].map(([id, tag, stage, byFull, recv]) => { const p = this.PHOTOS.find(x => x.id === id); const on = !!s.sel[id]; return { ...p, tag, stage, byFull, recv, img: this.img(p, 900), ring: on ? '0 0 0 2.5px #B8341F' : '0 0 0 1px #E4E6EA', chkBg: on ? '#B8341F' : 'rgba(22,21,15,0.35)', chk: on ? '✓' : '', open: () => this.openPhoto(p), toggle: e => { e.stopPropagation(); this.setState(st => ({ sel: { ...st.sel, [id]: !st.sel[id] } })); } }; }), selText: nSel === 0 ? 'No photos selected' : nSel + ' photo' + (nSel === 1 ? '' : 's') + ' selected', nextBg: nSel ? 'linear-gradient(180deg,#CF4433,#B8341F)' : '#D9D6D0',
+      toStep2: () => { if (nSel) this.setState({ step: 2 }); }, toStep1: () => this.setState({ step: 1 }),
+      selPhotos: selList.map(p => ({ ...p, img: this.img(p, 600), tag: tagOf(p) })), summary: s.summary, onSummary: e => this.setState({ summary: e.target.value }),
+      toggleOriginals: () => this.setState(st => ({ originals: !st.originals })), origBg: s.originals ? '#16150F' : '#D9D6D0', origJ: s.originals ? 'flex-end' : 'flex-start',
+      sendLabel: 'Send ' + nSel + ' photo' + (nSel === 1 ? '' : 's') + ' to Sarah',
+      sendReport: () => { this.setState(st => ({ step: 3, reports: [{ title:'Your gutter at 421 Oak St', to:'Sarah Miller', date:'Today 16:40', n: nSel, status:'Sent · not opened yet' }, ...st.reports] })); this.showToast('Report sent to Sarah'); },
+      sentText: nSel + ' photo' + (nSel === 1 ? '' : 's') + ' with time, place and who took them.',
+      outcomes, reason: s.reason, onReason: e => this.setState({ reason: e.target.value }), closeHint: s.outcome ? (s.reason.trim() ? 'Saved on the job with your name.' : 'Add a reason to close.') : 'Pick what the photos show.', closeBg: s.outcome && s.reason.trim() ? 'linear-gradient(180deg,#CF4433,#B8341F)' : '#D9D6D0',
+      closeDispute: () => { if (s.outcome && s.reason.trim()) this.resolve('claim', 'Dispute closed · saved on 421 Oak St', { claimOutcome: outcomeLabel[s.outcome] + ' · "' + s.reason.trim() + '" · report sent to Sarah' }); },
+      ashClose, waiverNote: s.waiverNote, onWaiverNote: e => this.setState({ waiverNote: e.target.value }),
+      waiverApprove: () => this.resolve('waiver', 'Waiver approved · shows as Waived by Sean'), waiverAsk: () => this.resolve('waiver', 'Jay asked for another angle · shot stays Missing'),
+      birchPick, birchSelName: birchSelP ? birchSelP.name : 'None yet', insBg: s.birchSel ? 'linear-gradient(180deg,#CF4433,#B8341F)' : '#D9D6D0',
+      sendInsurer: () => { if (s.birchSel) this.resolve('insurer', 'Sent to Priya · State Farm #SF-20418'); },
+      retakeKeep: () => this.resolve('retake', 'Photo kept · your reason is on the record'), retakeAsk: () => this.resolve('retake', 'Jay asked to retake · shows as Needs retake on his phone'),
+      job, jobGroups, jobEmpty: jobPs.length === 0,
+      lib: s.lib, onLib: e => this.setState({ lib: e.target.value }), libPhotos, libEmpty: libPhotos.length === 0, libCount: libPhotos.length + ' photos', phaseChips,
+      reports: s.reports,
+      searchOpen: s.searchOpen, closeSearch: () => this.setState({ searchOpen:false }), stop: e => e.stopPropagation(), searchRef: this.searchRef,
+      q: s.q, onQ: e => { this.clearAi(); this.setState({ q: e.target.value, ai: null, aiPhase: 0 }); }, onQKey: e => { if (e.key === 'Enter') this.ask(s.q); },
+      qEmpty: !qt && !s.ai, askSuggestions, results, hasResults: results.length > 0, typing: !!qt && !s.ai, askNow: () => this.ask(s.q),
+      ...(() => { const a = s.ai ? (A[aKey] || dyn(s.ai)) : null; const ph = s.aiPhase || 0; const done = ph >= 4;
+        if (!a) return { aiHasSources: false, aiShowResults: false, aiOn: false, aiDone: false, aiSteps: [], aiSegs: [], aiPhotos: [], aiSources: [], aiActions: [], aiHasPhotos: false };
+        const srcOpen = n => { const x = a.sources.find(z => z[0] === n); return x ? x[3] : () => {}; };
+        return { aiOn: true, aiDone: done, aiStatus: done ? 'Searched ' + a.steps.length + ' places' : 'Thinking…', aiScope: '· ' + a.scope, aiSrcCount: a.sources.length + (a.sources.length === 1 ? ' source' : ' sources'),
+          stepsVisible: !done || !!s.aiStepsOpen, stepsRot: (!done || s.aiStepsOpen) ? 'rotate(180deg)' : 'none', toggleSteps: () => this.setState({ aiStepsOpen: !s.aiStepsOpen }),
+          aiSteps: a.steps.map((t, i) => { const st = i + 1 < ph ? 'done' : i + 1 === ph ? 'now' : 'wait'; return { text: t, detail: (a.detail || D[aKey] || [])[i] || '', mark: st === 'done' ? '✓' : '', bg: st === 'done' ? '#4338CA' : st === 'now' ? '#A5B4FC' : '#FFFFFF', ring: st === 'wait' ? '0 0 0 4.5px #D4D6F0' : st === 'now' ? '0 0 0 6px rgba(165,180,252,0.35)' : '0 0 0 3px #FFFFFF', col: st === 'wait' ? '#A19E96' : '#16150F' }; }),
+          aiSegs: a.segs.map(([t, c]) => ({ t, c: c || '', hasC: !!c, open: c ? srcOpen(c) : () => {} })),
+          aiPhotos: a.photos.filter(Boolean).map(p => { const m = (p.tag || '').match(/^(\d+) · (.*)$/); return { ...p, n: m ? m[1] : '', label: m ? m[2].charAt(0) + m[2].slice(1).toLowerCase() : p.tag }; }), aiHasPhotos: a.photos.filter(Boolean).length > 0,
+          aiSources: a.sources.map(([n, label, meta, open]) => ({ n, label, meta, open })), aiHasSources: a.sources.length > 0, aiShowResults: done && s.ai === 'none' && results.length > 0,
+          ...(s.ai === 'none' && results.length ? { aiSegs: [{ t: 'No single answer, but ' + results.length + (results.length === 1 ? ' item matches' : ' items match') + ' “' + s.q.trim() + '”.', c: '', hasC: false, open: () => {} }] } : {}), aiCaution: a.caution, aiActions: a.actions }; })(),
+      ...(() => { const mk = k => { const on = s.wvChoice === k; return { pick: () => this.setState({ wvChoice: k }), ring: on ? '0 0 0 1.5px #B8341F' : '0 0 0 1px #E4E6EA', bg: on ? '#FFF8F6' : '#FFFFFF', dotRing: on ? 'inset 0 0 0 1.5px #B8341F' : 'inset 0 0 0 1.5px #C9C6BF', dot: on ? '#B8341F' : 'transparent' }; };
+        const app = s.wvChoice === 'approve'; return { wvA: mk('approve'), wvK: mk('ask'), wvBtn: app ? 'Approve waiver' : 'Send request to Jay', wvGo: app ? () => this.resolve('waiver', 'Waiver approved · shows as Waived by Sean') : () => this.resolve('waiver', 'Request sent to Jay · shot stays Missing') }; })(),
+      hasLight: !!s.light, light: s.light || {}, closeLight: () => this.setState({ light:null }),
+      hasToast: !!s.toast, toast: s.toast || ''
+    };
+  }
+}
+</script>
+</body>
+</html>

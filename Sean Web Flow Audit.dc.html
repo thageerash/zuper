@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>body{margin:0;background:#F5F3EE;color:#1B1A17;font-family:'Instrument Sans',sans-serif;-webkit-font-smoothing:antialiased}a{color:#1B1A17;text-underline-offset:2px}a:hover{color:#A23B1E}</style></helmet>
+<div style="max-width:1080px;margin:0 auto;padding:56px 32px 96px;display:flex;flex-direction:column;gap:56px">
+
+<section id="r4" style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#5E5A52">ROUND 4 · FEEDBACK ON <a href="Sean Flow Final.dc.html" style="color:#5E5A52">SEAN FLOW FINAL</a> (PASTED, 5 POINTS) · 25 OCT</span>
+    <h1 style="margin:0;font-size:40px;font-weight:600;letter-spacing:-0.02em;line-height:1.1;text-wrap:balance">Two real fixes, three already covered, one point to push back on</h1>
+    <p style="margin:0;max-width:780px;font-size:17px;line-height:1.5;color:#3D3A34;text-wrap:pretty">Checked each point against what the page says now. The feedback also misses one gap: Sean is never told when a spot he was alerted about gets covered.</p>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#F3E3DC;color:#A23B1E;border-radius:3px;align-self:start;justify-self:start">VALID · FIX</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">1. Lost: the state table note contradicts the flow</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">Correct. A5 has Ravi recording Lost; the note under the table says “office-only”. The flow already matches the recommendation (Ravi reports, Sean records on his behalf after a call, “recorded by Sean 16:10”). Fix: delete “office-only”, show the reporter on both apps: “Lost · reported by Ravi” or “Lost · recorded by Sean for Ravi”.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#F3E3DC;color:#A23B1E;border-radius:3px;align-self:start;justify-self:start">VALID · FIX</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">4. A downloaded PDF is not “sent”</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">Correct. B4 offers PDF download, but B5 and the Flow B end say “confirmed sent”. Fix: two end states. Link: “Sent to lena@… 14:05” after the email is accepted. PDF: “PDF exported 14:05 by Sean”. Both go in share history; only the link is called sent. Recipient check is a valid email format; “access permissions” has no meaning yet for a link anyone with the URL opens, so leave it out.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#EFEBE3;color:#1B1A17;border-radius:3px;align-self:start;justify-self:start">PUSH BACK</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">5. Failed uploads don’t belong level with open gaps</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">An open spot gets covered within minutes; a failed file is still on the phone and can be retried tomorrow. Putting them in one tier hides the only item with a real deadline. Order Today: 1. Not taken · open. 2. Failed after check-out. 3. On phone past 4 h. “Other unresolved exceptions” is empty: Explained and Lost are resolved, so they sit on the job, not Today. Not heard is a label on the job row, not a tier.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#E2EDE6;color:#2F6B4F;border-radius:3px;align-self:start;justify-self:start">MOSTLY COVERED</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">2 and 3. Alert timing</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">Already in: AL1 fires only if the photo is still not taken and the spot still open when the 10 min runs out, so a stale AL1 is never sent; AL2 only closes an AL1 Sean received; the 4 h timer runs from check-out. Worth writing out: AL3 is per photo, so a file that arrives before 4 h drops out of the alert, and AL3 isn’t sent if none are left.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#E2EDE6;color:#2F6B4F;border-radius:3px;align-self:start;justify-self:start">COVERED</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">Tally, prototype concepts, four screens</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">“Accounted for is not the same as complete proof”, the 15 · 1 · 1 header, and “prototype concepts” are on the page. Terminology check is fair: keep <b>steps</b> for the crew’s six work steps, <b>stages</b> for Before · Opened up · Fixed, <b>states</b> for the seven evidence states.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#F3E3DC;color:#A23B1E;border-radius:3px;align-self:start;justify-self:start">MISSED</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">AL1 closes silently when the spot is covered</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">If Sean got AL1 and Ravi then covers the spot with a reason, nothing tells Sean. He calls about a window that has already closed. AL2 should cover both endings: “Opened up taken 10:31” or “Covered 10:34 · reason: rain, crew explained”.</span></div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:24px;font-weight:600">Changes to make in Sean Flow Final</h2>
+    <ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px;font-size:15px;line-height:1.5;max-width:820px">
+      <li>Remove “Lost is office-only”; show who reported it.</li>
+      <li>Split B5 and the Flow B end: link sent vs PDF exported.</li>
+      <li>AL2 also fires on “covered with reason”.</li>
+      <li>AL3 per photo; drops items that arrive.</li>
+      <li>Today order: open gap, Failed after check-out, On phone past 4 h.</li>
+    </ol>
+  </div>
+  <div style="border-top:1px solid #DEDAD1;padding-top:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#5E5A52">ROUND 3 BELOW</span></div>
+</section>
+
+<section id="r3" style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#5E5A52">ROUND 3 · FINAL SEAN FLOW (PASTED, FLOW A + B, 6 STATES, 4 SCREENS) · 25 OCT</span>
+    <h1 style="margin:0;font-size:40px;font-weight:600;letter-spacing:-0.02em;line-height:1.1;text-wrap:balance">Ready to design after four fixes, all in the alert layer</h1>
+    <p style="margin:0;max-width:780px;font-size:17px;line-height:1.5;color:#3D3A34;text-wrap:pretty">Every round 2 must-fix and should-fix is taken: push alerts, two flows with their own endpoints, six states, update after the call, internal note only, spot-set sharing, search by customer and date. New and correct: “Explained is documented, not complete”, share confirmed only on success, prototype concepts labelled.</p>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#F3E3DC;color:#A23B1E;border-radius:3px;align-self:start;justify-self:start">MUST FIX</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">The A1 alert fires on top of the crew’s own warning</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">The crew shoots in any order (D13). The moment Ravi marks “opened”, the Opened up photo is “not taken · open”, so Sean gets paged before Ravi has had a chance to shoot. Alert Sean only after the crew app’s milestone warning (D17) has been shown and ignored, or after a set delay (e.g. 15 min open with no photo). The crew is the first line; Sean is the backup.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#F3E3DC;color:#A23B1E;border-radius:3px;align-self:start;justify-self:start">MUST FIX</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">A lost phone leaves Flow A open forever</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">A5 keeps On phone items open “until received or formally explained”. A4 says Sean can’t change evidence state, and the crew’s “explain” is for photos not taken. If Ravi’s phone breaks, nobody can close the item. Name who records “file lost” and how it shows: it should carry into Priya’s set as an exception, like Explained.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#F3E3DC;color:#A23B1E;border-radius:3px;align-self:start;justify-self:start">MUST FIX</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Instrument Sans',sans-serif;font-size:17px;font-weight:600">Failed has a response but no alert</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">The state table says “follow up on recovery”, yet only two alerts exist (A1 not taken · open, A5 On phone 4 h). A failed upload after check-out is the closest thing to loss. Either alert on Failed after check-out or fold it into the 4-hour escalation.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#F3E3DC;color:#A23B1E;border-radius:3px;align-self:start;justify-self:start">MUST FIX</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">A3 update: only for the item Sean was alerted about</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">“Sean receives an update” reads as every capture. Job #421 has 17 photos; that’s 17 pings per job. Send the update only to close an open alert, and let the job screen show the rest.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#EFEBE3;color:#1B1A17;border-radius:3px;align-self:start;justify-self:start">SHOULD FIX</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">Colour must carry correction B</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">Explained uses the neutral chip, never opportunity green, and the job header counts it separately (“15 in office · 2 explained”), not as “17 / 17”. Red stays for Not taken · open, Failed and No GPS. On phone and Not heard stay neutral.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#EFEBE3;color:#1B1A17;border-radius:3px;align-self:start;justify-self:start">SHOULD FIX</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">Covered with no reason has no state</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">The six states assume every covered gap has a reason. That holds only if the crew’s gap check at “I’m done on site” makes a reason mandatory. Confirm it does; otherwise add “Not taken · closed, no reason” in risk colour.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#EFEBE3;color:#1B1A17;border-radius:3px;align-self:start;justify-self:start">MINOR</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">Smaller points</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">“Confirmed sent” for a secure link means the link was created and delivered by email or text; say which, plus expiry. B1 date filter means visit date. If the window closes while Sean is on the call, the gap panel switches from Call Ravi to the crew’s reason. Product name: the paste says keep Zuper; round 2 noted D6 (extend Zuper) was dropped in #10, and earlier screens use Halden. Your call. One dataset for the prototype: job #421, 17 photos, same times on every screen.</span></div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:24px;font-weight:600">Problem Statement check</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">
+      <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:flex;flex-direction:column;gap:6px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#E2EDE6;color:#2F6B4F;border-radius:3px;align-self:start">MEETS</span><span style="font-size:15px;font-weight:600">See gaps before the crew leaves</span><span style="font-size:14px;line-height:1.5;color:#3D3A34">Once A1 is delayed behind the crew warning.</span></div>
+      <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:flex;flex-direction:column;gap:6px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#E2EDE6;color:#2F6B4F;border-radius:3px;align-self:start">MEETS</span><span style="font-size:15px;font-weight:600">Find and share proof in a dispute</span><span style="font-size:14px;line-height:1.5;color:#3D3A34">Search by customer, spot set, metadata, honest delivery state.</span></div>
+      <div style="background:#FFFFFF;border-radius:4px;padding:18px;display:flex;flex-direction:column;gap:6px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#EFEBE3;color:#1B1A17;border-radius:3px;align-self:start">PARTLY</span><span style="font-size:15px;font-weight:600">Zero loss</span><span style="font-size:14px;line-height:1.5;color:#3D3A34">4-hour escalation is in. Failed alert and lost-file closure are missing.</span></div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:24px;font-weight:600">To decide before building</h2>
+    <ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px;font-size:15px;line-height:1.5;max-width:820px">
+      <li>A1 trigger: after the crew warning is ignored, or a fixed delay?</li>
+      <li>Who records a lost file: Sean, the crew, or Priya?</li>
+      <li>Product name: Zuper or Halden?</li>
+    </ol>
+  </div>
+  <div style="border-top:1px solid #DEDAD1;padding-top:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#5E5A52">ROUND 2 BELOW</span></div>
+</section>
+
+<section id="r2" style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#5E5A52">ROUND 2 · SEAN END-TO-END FLOW (PASTED, 6 STEPS) · 25 OCT</span>
+    <h1 style="margin:0;font-size:40px;font-weight:600;letter-spacing:-0.02em;line-height:1.1;text-wrap:balance">Much closer. Three issues left: Sean isn’t watching, two flows are joined, and one state hides two meanings</h1>
+    <p style="margin:0;max-width:780px;font-size:17px;line-height:1.5;color:#3D3A34;text-wrap:pretty">Round 1 fixes taken: shared states, “still open or covered” decision, No GPS flag, thumbnails in search, share step, and “unknown” when milestones don’t arrive.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#F3E3DC;color:#A23B1E;border-radius:3px;align-self:start;justify-self:start">MUST FIX</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">Sean only sees a gap if he happens to have the app open</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">Step 1 is a dashboard he scans. A PM is driving between sites. An open spot stays open for minutes to an hour, so “see gaps before the crew leaves” needs a push: text or notification when a required photo is not taken and its spot is open, and when photos are still on a phone 4 hours after check-out (D14). Today becomes where the alert lands, not where he has to look.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#F3E3DC;color:#A23B1E;border-radius:3px;align-self:start;justify-self:start">MUST FIX</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">Monitoring and dispute are two flows, written as one</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">The flow runs Today → gap → search → share and ends “Sean has shared the evidence”. A dispute call comes weeks later, about a finished job, and starts with the search bar, not Today. Split into Flow A (live job, ends when every gap is in office or explained) and Flow B (dispute, ends when the photo is shared).</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#F3E3DC;color:#A23B1E;border-radius:3px;align-self:start;justify-self:start">MUST FIX</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">“Gap / Explained” is one state for two opposite situations</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">“Not taken, spot open” needs a call now. “Explained” needs nothing. Same chip means Sean reads every gap as urgent or none of them. Use the six states from round 1: In office, On phone, Failed, Not taken · open, Explained, Not heard. Failed and Not heard are also missing from the step 2 legend.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#EFEBE3;color:#1B1A17;border-radius:3px;align-self:start;justify-self:start">SHOULD FIX</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">After the call, Sean has to keep checking (step 3)</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">“Recheck the reported evidence state” is a loop with no end. When Ravi takes the photo, the gap report says On phone within seconds of signal. Tell Sean (“Soft decking · Opened up taken 10:31”) and drop step 3 as a step; it’s just the Job screen updating.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#EFEBE3;color:#1B1A17;border-radius:3px;align-self:start;justify-self:start">SHOULD FIX</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">“Records the unresolved gap for follow-up”: Sean has nothing to record</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">The gap is already in the record, with the crew’s reason if given. Sean’s only possible action on a covered spot is an internal note. Say so, and say what happens next: the gap carries into Priya’s claim set as an explained gap.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#EFEBE3;color:#1B1A17;border-radius:3px;align-self:start;justify-self:start">SHOULD FIX</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">Share sends one photo; disputes need a pair</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">A customer disputing a repair needs Before and Fixed side by side. Before/after view is in scope and still missing. Let Sean share a spot’s set (Before · Opened up · Fixed), and say what the recipient gets: a link or a PDF.</span></div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 24px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#EFEBE3;color:#1B1A17;border-radius:3px;align-self:start;justify-self:start">MINOR</span>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:17px;font-weight:600">Smaller points</span><span style="font-size:15px;line-height:1.5;color:#3D3A34">Search should also take the customer’s name and a date. Callers rarely know the job number. It says “Zuper assignment”, but D6 (extend Zuper) was dropped in #10. The name is still open. Flag the limit honestly: if the crew has no signal, Sean can’t intervene, and the crew app’s warnings and lock-screen reminder are the real protection. Sean is the backup.</span></div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <h2 style="margin:0;font-size:24px;font-weight:600">Proposed shape</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px">
+      <div style="background:#FFFFFF;border-radius:4px;padding:22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">FLOW A · LIVE JOB</span><ol style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:1.5;color:#3D3A34"><li>Alert: “#421 Soft decking open, no Opened up photo”</li><li>Job screen, gap panel open. Primary: Call Ravi</li><li>Update arrives: On phone → In office</li><li>Or the spot is covered: crew’s reason shown, Sean adds a note if needed</li></ol><span style="font-size:14px;color:#1B1A17">Ends when every required photo is In office or Explained.</span></div>
+      <div style="background:#FFFFFF;border-radius:4px;padding:22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">FLOW B · DISPUTE CALL</span><ol style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:1.5;color:#3D3A34"><li>Top-bar search from any screen: customer, address or job</li><li>Results grouped by job and spot, thumbnails</li><li>Photo or before/after view with provenance</li><li>Share the photo or spot set with time and location</li></ol><span style="font-size:14px;color:#1B1A17">Ends when the share is confirmed sent.</span></div>
+    </div>
+  </div>
+  <div style="border-top:1px solid #DEDAD1;padding-top:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#5E5A52">ROUND 1 BELOW</span></div>
+</section>
+
+<header style="display:flex;flex-direction:column;gap:14px">
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#5E5A52">AUDIT · SEAN WEB FLOW (PASTED, 5 SCREENS) · 25 OCT</span>
+  <h1 style="margin:0;font-size:40px;font-weight:600;letter-spacing:-0.02em;line-height:1.1;text-wrap:balance">The flow names Sean’s two jobs but can’t do either reliably yet</h1>
+  <p style="margin:0;max-width:780px;font-size:17px;line-height:1.5;color:#3D3A34;text-wrap:pretty">Checked against the <a href="Problem Statement.dc.html">Problem Statement</a>, decisions D2, D4, D14 and the crew prototype (<a href="Crew App v3.dc.html">Crew App v3</a>, job #421, 17 photos). Main issue: the office only sees what has synced, and the crew is usually offline. The pasted screens treat “not received” as “missing”, so Sean would chase photos that are safe on Ravi’s phone and miss photos that are about to be covered.</p>
+</header>
+
+<section style="display:flex;flex-direction:column;gap:16px">
+  <h2 style="margin:0;font-size:24px;font-weight:600">1. Against the Problem Statement</h2>
+  <div style="background:#FFFFFF;border-radius:4px;overflow-x:auto">
+    <div style="min-width:820px;display:flex;flex-direction:column;font-size:14px;line-height:1.45">
+      <div style="display:grid;grid-template-columns:200px minmax(0,1fr) minmax(0,1fr) 110px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52;border-bottom:1px solid #DEDAD1"><div style="padding:12px 14px">NEED</div><div style="padding:12px 14px">PASTED FLOW</div><div style="padding:12px 14px">GAP</div><div style="padding:12px 14px">VERDICT</div></div>
+      <div style="display:grid;grid-template-columns:200px minmax(0,1fr) minmax(0,1fr) 110px;border-bottom:1px solid #EEEBE4"><div style="padding:14px;font-weight:600">See gaps before the crew leaves</div><div style="padding:14px;color:#3D3A34">“Missing evidence” badge, “Action needed” panel, gap detail screen</div><div style="padding:14px;color:#3D3A34">Can’t tell missing from not-synced. Doesn’t show whether the photo can still be taken (spot covered or not). Ignores the gap report that syncs first (D14).</div><div style="padding:14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#F3E3DC;color:#A23B1E;border-radius:3px">FAILS</span></div></div>
+      <div style="display:grid;grid-template-columns:200px minmax(0,1fr) minmax(0,1fr) 110px;border-bottom:1px solid #EEEBE4"><div style="padding:14px;font-weight:600">Find one photo during a dispute call</div><div style="padding:14px;color:#3D3A34">Separate search screen, filters, text-only results</div><div style="padding:14px;color:#3D3A34">No thumbnails, so Sean can’t recognise the photo. Search isn’t reachable from the other screens. No before/after (in scope).</div><div style="padding:14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#EFEBE3;color:#1B1A17;border-radius:3px">PARTLY</span></div></div>
+      <div style="display:grid;grid-template-columns:200px minmax(0,1fr) minmax(0,1fr) 110px;border-bottom:1px solid #EEEBE4"><div style="padding:14px;font-weight:600">Share with time and location provable (HMW)</div><div style="padding:14px;color:#3D3A34">Not covered</div><div style="padding:14px;color:#3D3A34">Sean needs to send one photo to a customer during the dispute. No share action anywhere.</div><div style="padding:14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#F3E3DC;color:#A23B1E;border-radius:3px">MISSING</span></div></div>
+      <div style="display:grid;grid-template-columns:200px minmax(0,1fr) minmax(0,1fr) 110px;border-bottom:1px solid #EEEBE4"><div style="padding:14px;font-weight:600">Proof: capture time and location</div><div style="padding:14px;color:#3D3A34">Device time + server time shown separately; “Location metadata: Available”</div><div style="padding:14px;color:#3D3A34">Times are right. “Available” proves nothing: show distance from the job address, or a “No GPS” flag.</div><div style="padding:14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#EFEBE3;color:#1B1A17;border-radius:3px">PARTLY</span></div></div>
+      <div style="display:grid;grid-template-columns:200px minmax(0,1fr) minmax(0,1fr) 110px;border-bottom:1px solid #EEEBE4"><div style="padding:14px;font-weight:600">AI sorting, confirmed by a person (D2)</div><div style="padding:14px;color:#3D3A34">“Current label” + label history</div><div style="padding:14px;color:#3D3A34">Doesn’t say who set the label: AI suggestion, Ravi confirmed, or office corrected.</div><div style="padding:14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#EFEBE3;color:#1B1A17;border-radius:3px">PARTLY</span></div></div>
+      <div style="display:grid;grid-template-columns:200px minmax(0,1fr) minmax(0,1fr) 110px"><div style="padding:14px;font-weight:600">Zero loss (metric)</div><div style="padding:14px;color:#3D3A34">“Sync status needs checking”</div><div style="padding:14px;color:#3D3A34">No view of photos still on a phone after check-out, and no 4-hour escalation (D14).</div><div style="padding:14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#F3E3DC;color:#A23B1E;border-radius:3px">MISSING</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:16px">
+  <h2 style="margin:0;font-size:24px;font-weight:600">2. Data doesn’t add up across screens</h2>
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <div style="background:#FFFFFF;border-radius:4px;padding:16px 20px;display:grid;grid-template-columns:110px minmax(0,1fr);gap:16px;font-size:15px;line-height:1.5"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A23B1E">03 vs 02, 05</span><span>Soft decking · Opened up is <b>Missing</b> on Job Evidence and Search, but <b>received 10:44</b> on Photo Detail.</span></div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:16px 20px;display:grid;grid-template-columns:110px minmax(0,1fr);gap:16px;font-size:15px;line-height:1.5"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A23B1E">02 vs 05</span><span>Soft decking · Fixed is <b>Pending</b> on Job Evidence, <b>Received 11:02</b> in Search.</span></div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:16px 20px;display:grid;grid-template-columns:110px minmax(0,1fr);gap:16px;font-size:15px;line-height:1.5"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A23B1E">02</span><span>Summary says 3 missing, the table shows 1. The table lists only the 6 spot photos; the other 11 (property, roof before/after, clean up) aren’t visible.</span></div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:16px 20px;display:grid;grid-template-columns:110px minmax(0,1fr);gap:16px;font-size:15px;line-height:1.5"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A23B1E">02, 04</span><span>A Fixed photo exists, so the decking is already covered. “The visit is active, so Sean can follow up” is wrong: the Opened up photo can only be explained now, not taken.</span></div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:16px 20px;display:grid;grid-template-columns:110px minmax(0,1fr);gap:16px;font-size:15px;line-height:1.5"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A23B1E">01</span><span>Cards say 8 active, 3 need attention, 2 sync issues. The table shows 4 jobs (1 already ended), 2 needing attention, 1 sync issue.</span></div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:16px">
+  <h2 style="margin:0;font-size:24px;font-weight:600">3. Screen by screen</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px">
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">01 · JOBS OVERVIEW</span><ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:1.5;color:#3D3A34"><li>Remove the 4 count cards. They repeat the table and their numbers don’t match it.</li><li>Sort by risk: a photo whose spot is open right now goes first, then photos still on a phone after check-out.</li><li>Replace “Missing evidence” with the specific item and window: “Soft decking · Opened up · spot open since 10:20”.</li><li>Add “Last heard from Ravi’s phone 10:52” per job. Without it, every offline job looks like a gap.</li><li>Ended visits go in a separate list, not mixed with active ones.</li></ul></div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">02 · JOB EVIDENCE</span><ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:1.5;color:#3D3A34"><li>Show all 17 photos in the crew app’s six steps, with thumbnails, not just spots.</li><li>Show milestones as they happen: setup, tear-off, opened, covered, done on site. They decide whether a gap can still be fixed.</li><li>“Action needed” only while a window is open. Primary action: <b>Call Ravi</b>. After the window closes, show the crew’s explanation instead.</li><li>Merge Screen 04 into this page as a side panel; it repeats the action panel.</li></ul></div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">03 · PHOTO DETAIL</span><ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:1.5;color:#3D3A34"><li>Primary action: <b>Share with time and location</b>. Secondary: before/after for this spot.</li><li>Location as “28 m from 18 Oak St”, or “No GPS” in risk colour.</li><li>Label source: AI suggested, Ravi confirmed, office corrected, each with time.</li><li>The image is a roofing company’s marketing photo from the web. Replace it with a placeholder.</li></ul></div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">04 · EVIDENCE GAP</span><ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:1.5;color:#3D3A34"><li>The 4-option status radio lets Sean change evidence state. The screen itself says he shouldn’t. Make status read-only and keep only the internal note.</li><li>“Prepare crew follow-up” is vague. Sean’s real move is a phone call.</li><li>“Crew says captured — awaiting office confirmation” is the crew app’s <b>On phone</b> state. Use that name.</li></ul></div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">05 · SEARCH</span><ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:1.5;color:#3D3A34"><li>Search box in the top bar of every screen. A dispute call can start anywhere.</li><li>Group results by job, then spot, with thumbnails for Before · Opened up · Fixed side by side.</li><li>Keep missing records in results, labelled. Good call in the paste.</li><li>Matches the earlier <a href="Office Flow Audit.dc.html">office audit</a>: every search resolves to a job or item first.</li></ul></div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">ACROSS ALL</span><ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:1.5;color:#3D3A34"><li>“Fieldproof” is a new product name. The project is Halden Roofing; confirm before using it.</li><li>An “illustrative” disclaimer on every screen. One note in the prototype is enough.</li><li>Red only for a window open now, failed uploads and no GPS. “On phone” and “Sending” are neutral.</li></ul></div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:16px">
+  <h2 style="margin:0;font-size:24px;font-weight:600">4. One set of states for both apps (D4)</h2>
+  <p style="margin:0;max-width:780px;font-size:15px;line-height:1.5;color:#3D3A34">The paste uses 7 different terms. The crew app already has these. The office adds only what it can know from the gap report.</p>
+  <div style="background:#FFFFFF;border-radius:4px;overflow-x:auto">
+    <div style="min-width:760px;display:flex;flex-direction:column;font-size:14px;line-height:1.45">
+      <div style="display:grid;grid-template-columns:180px minmax(0,1fr) minmax(0,1fr);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52;border-bottom:1px solid #DEDAD1"><div style="padding:12px 14px">STATE</div><div style="padding:12px 14px">MEANS</div><div style="padding:12px 14px">REPLACES IN PASTE</div></div>
+      <div style="display:grid;grid-template-columns:180px minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid #EEEBE4"><div style="padding:12px 14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#E2EDE6;color:#2F6B4F;border-radius:3px">IN OFFICE</span></div><div style="padding:12px 14px">Server has the file</div><div style="padding:12px 14px;color:#5E5A52">Received, Photo received by office</div></div>
+      <div style="display:grid;grid-template-columns:180px minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid #EEEBE4"><div style="padding:12px 14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#EFEBE3;color:#1B1A17;border-radius:3px">ON PHONE</span></div><div style="padding:12px 14px">Taken; gap report says so; file not here yet</div><div style="padding:12px 14px;color:#5E5A52">Pending confirmation, Not confirmed, Crew says captured</div></div>
+      <div style="display:grid;grid-template-columns:180px minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid #EEEBE4"><div style="padding:12px 14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#F3E3DC;color:#A23B1E;border-radius:3px">FAILED</span></div><div style="padding:12px 14px">Upload tried and didn’t arrive</div><div style="padding:12px 14px;color:#5E5A52">Sync status needs checking</div></div>
+      <div style="display:grid;grid-template-columns:180px minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid #EEEBE4"><div style="padding:12px 14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#F3E3DC;color:#A23B1E;border-radius:3px">NOT TAKEN · OPEN</span></div><div style="padding:12px 14px">Not taken, window still open (spot not covered)</div><div style="padding:12px 14px;color:#5E5A52">Missing (while active)</div></div>
+      <div style="display:grid;grid-template-columns:180px minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid #EEEBE4"><div style="padding:12px 14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#EFEBE3;color:#1B1A17;border-radius:3px">EXPLAINED</span></div><div style="padding:12px 14px">Not taken; crew recorded why</div><div style="padding:12px 14px;color:#5E5A52">Crew explanation received</div></div>
+      <div style="display:grid;grid-template-columns:180px minmax(0,1fr) minmax(0,1fr)"><div style="padding:12px 14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;background:#EFEBE3;color:#1B1A17;border-radius:3px">NOT HEARD</span></div><div style="padding:12px 14px">No gap report yet; shows last-heard time</div><div style="padding:12px 14px;color:#5E5A52">Missing (when the phone is just offline)</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:16px">
+  <h2 style="margin:0;font-size:24px;font-weight:600">5. Proposed Sean flow: 4 screens, one primary action each</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+    <div style="border-top:2px solid #1B1A17;padding-top:14px;display:flex;flex-direction:column;gap:6px"><span style="font-size:16px;font-weight:600">Today</span><span style="font-size:14px;line-height:1.5;color:#3D3A34">Active jobs by risk, last heard, photos on phone after check-out.</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">PRIMARY · open top job</span></div>
+    <div style="border-top:2px solid #1B1A17;padding-top:14px;display:flex;flex-direction:column;gap:6px"><span style="font-size:16px;font-weight:600">Job</span><span style="font-size:14px;line-height:1.5;color:#3D3A34">Six steps, 17 thumbnails, milestones; gap side panel.</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">PRIMARY · Call Ravi (window open only)</span></div>
+    <div style="border-top:2px solid #1B1A17;padding-top:14px;display:flex;flex-direction:column;gap:6px"><span style="font-size:16px;font-weight:600">Photo</span><span style="font-size:14px;line-height:1.5;color:#3D3A34">Large image, times, distance, label source, before/after.</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">PRIMARY · Share with time + location</span></div>
+    <div style="border-top:2px solid #1B1A17;padding-top:14px;display:flex;flex-direction:column;gap:6px"><span style="font-size:16px;font-weight:600">Search results</span><span style="font-size:14px;line-height:1.5;color:#3D3A34">From the top bar anywhere; grouped by job and spot, thumbnails.</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">PRIMARY · open result</span></div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #DEDAD1;padding-top:32px">
+  <h2 style="margin:0;font-size:24px;font-weight:600">To decide before building</h2>
+  <ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px;font-size:15px;line-height:1.5;max-width:820px">
+    <li>Does the crew app send milestones (opened, covered) with the gap report? Sean’s “can it still be taken” depends on it.</li>
+    <li>Can Sean only call, or also push a reminder to Ravi’s lock screen?</li>
+    <li>Product name: Fieldproof or Halden?</li>
+  </ol>
+</section>
+
+</div>
+</x-dc>
+</body>
+</html>

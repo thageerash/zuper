@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F3EE;color:#1B1A17;font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#1B1A17;text-decoration:underline;text-underline-offset:2px}
+a:hover{color:#A23B1E}
+</style>
+</helmet>
+<div style="max-width:1120px;margin:0 auto;padding:56px 32px 96px;display:flex;flex-direction:column;gap:64px">
+
+<header style="display:flex;flex-direction:column;gap:20px">
+  <div style="display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#5E5A52">
+    <div>Halden Roofing · Photo documentation · Problem statement v1</div>
+    <a href="Journey Map.dc.html" style="color:#5E5A52">← Journey map</a>
+  </div>
+  <h1 style="margin:0;font-size:52px;line-height:1.04;font-weight:600;letter-spacing:-0.02em;text-wrap:balance;max-width:960px">Halden's crews take plenty of photos. Few of them work as evidence.</h1>
+  <p style="margin:0;font-size:19px;line-height:1.5;color:#3D3A34;max-width:780px;text-wrap:pretty">Photos are captured without a plan, stored on personal phones, uploaded unreliably, and stripped of the context that proves when and where they were taken. When a customer disputes the work or an insurer asks for proof, the office can't find the right photo or show it can be trusted.</p>
+</header>
+
+<section style="display:flex;flex-direction:column;gap:20px">
+  <h2 style="margin:0;font-size:24px;font-weight:600;letter-spacing:-0.01em">Three underlying failures</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+    <div style="background:#FFFFFF;border-radius:4px;padding:28px;display:flex;flex-direction:column;gap:14px;border-top:4px solid #A23B1E">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A23B1E">01 · Capture</div>
+      <div style="font-size:21px;font-weight:600;line-height:1.25">Incomplete capture</div>
+      <p style="margin:0;font-size:15px;line-height:1.55;color:#3D3A34;text-wrap:pretty">Nothing tells the crew which photos a job needs, or when. The shots that matter most (arrival condition, roof before tear-off, exposed decking) have short windows that close as work progresses. Once one is missed, it's gone.</p>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:28px;display:flex;flex-direction:column;gap:14px;border-top:4px solid #A23B1E">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A23B1E">02 · Custody</div>
+      <div style="font-size:21px;font-weight:600;line-height:1.25">Unreliable custody</div>
+      <p style="margin:0;font-size:15px;line-height:1.55;color:#3D3A34;text-wrap:pretty">With no signal on site, photos sit on personal phones and get uploaded in batches at night. Uploads fail silently. The crew can't tell what the office actually received.</p>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:28px;display:flex;flex-direction:column;gap:14px;border-top:4px solid #A23B1E">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A23B1E">03 · Proof</div>
+      <div style="font-size:21px;font-weight:600;line-height:1.25">Unprovable context</div>
+      <p style="margin:0;font-size:15px;line-height:1.55;color:#3D3A34;text-wrap:pretty">Photos lose their capture time and location when shared through messaging apps. Without a date and location, insurers reject them and they don't settle disputes.</p>
+    </div>
+  </div>
+</section>
+
+<section style="background:#1B1A17;color:#F5F3EE;border-radius:4px;padding:48px;display:flex;flex-direction:column;gap:18px">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#B8B2A6">How might we</div>
+  <p style="margin:0;font-size:32px;line-height:1.3;font-weight:500;letter-spacing:-0.01em;text-wrap:pretty;max-width:920px">How might we help a roofing crew capture the right photos at the right moment, even with no signal, so the office can find any photo in seconds and share it with its capture time and location still provable?</p>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:20px">
+  <h2 style="margin:0;font-size:24px;font-weight:600;letter-spacing:-0.01em">What each person needs</h2>
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 28px;display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:24px;align-items:baseline">
+      <div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:17px;font-weight:600">Ravi Menon</div><div style="font-size:13px;color:#5E5A52">Crew lead</div></div>
+      <div style="font-size:16px;line-height:1.5;color:#3D3A34">Know what to shoot next, and trust that every photo is safe and has reached the office, without slowing the job.</div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 28px;display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:24px;align-items:baseline">
+      <div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:17px;font-weight:600">Sean Doyle</div><div style="font-size:13px;color:#5E5A52">Project manager</div></div>
+      <div style="font-size:16px;line-height:1.5;color:#3D3A34">See gaps before the crew leaves. Find one specific photo during a dispute call.</div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:4px;padding:22px 28px;display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:24px;align-items:baseline">
+      <div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:17px;font-weight:600">Priya Shah</div><div style="font-size:13px;color:#5E5A52">Insurance claims</div></div>
+      <div style="font-size:16px;line-height:1.5;color:#3D3A34">A labeled set with capture time and location intact that an adjuster accepts the first time.</div>
+    </div>
+  </div>
+</section>
+
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+  <div style="background:#E2EDE6;border-radius:4px;padding:28px;display:flex;flex-direction:column;gap:16px">
+    <h2 style="margin:0;font-size:20px;font-weight:600;color:#1D4432">In scope</h2>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:15px;line-height:1.5;color:#1D4432">
+      <div>Job requirements: a shot list by phase and area</div>
+      <div>Guided, offline-first capture with visible upload status per photo</div>
+      <div>Provenance recorded at capture</div>
+      <div>AI sorting and gap-spotting, confirmed by a person</div>
+      <div>Office search, before/after view, shareable proof package</div>
+    </div>
+  </div>
+  <div style="background:#FFFFFF;border-radius:4px;padding:28px;display:flex;flex-direction:column;gap:16px">
+    <h2 style="margin:0;font-size:20px;font-weight:600">Out of scope</h2>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:15px;line-height:1.5;color:#5E5A52">
+      <div>Scheduling, estimates, invoicing, CRM</div>
+      <div>Photo editing, video, drones</div>
+      <div>AI damage assessment or claim decisions</div>
+      <div>Insurer portal integrations</div>
+    </div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:20px;border-top:1px solid #DEDAD1;padding-top:40px">
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <h2 style="margin:0;font-size:24px;font-weight:600;letter-spacing:-0.01em">How we'd know it works</h2>
+    <div style="font-size:14px;color:#5E5A52">Hypotheses to measure, not results.</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+    <div style="display:flex;flex-direction:column;gap:8px;padding-top:14px;border-top:2px solid #1B1A17"><div style="font-size:16px;font-weight:600">Complete jobs</div><div style="font-size:14px;line-height:1.5;color:#3D3A34">More jobs closed with every required photo.</div></div>
+    <div style="display:flex;flex-direction:column;gap:8px;padding-top:14px;border-top:2px solid #1B1A17"><div style="font-size:16px;font-weight:600">Zero loss</div><div style="font-size:14px;line-height:1.5;color:#3D3A34">No photos lost between capture and the office.</div></div>
+    <div style="display:flex;flex-direction:column;gap:8px;padding-top:14px;border-top:2px solid #1B1A17"><div style="font-size:16px;font-weight:600">Fast retrieval</div><div style="font-size:14px;line-height:1.5;color:#3D3A34">Minutes, not days, to find a specific photo in a dispute.</div></div>
+    <div style="display:flex;flex-direction:column;gap:8px;padding-top:14px;border-top:2px solid #1B1A17"><div style="font-size:16px;font-weight:600">Accepted claims</div><div style="font-size:14px;line-height:1.5;color:#3D3A34">Fewer rejections for missing date or location.</div></div>
+  </div>
+</section>
+
+</div>
+</x-dc>
+</body>
+</html>

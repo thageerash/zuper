@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes shimmer{0%{background-position:-200px 0}100%{background-position:200px 0}}@keyframes toastIn{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}body{margin:0;background:#F5F3EE;font-family:'Inter',sans-serif;color:#111111;-webkit-font-smoothing:antialiased}a{color:#C0392B}a:hover{color:#9E2F22}*{box-sizing:border-box}</style>
+</helmet>
+<div style="min-height:100vh;padding:20px 24px 32px;display:flex;flex-direction:column;gap:14px;align-items:flex-start;width:max-content;min-width:100%;margin:0 auto">
+  <div style="width:1440px;display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.06em;color:#5E5A52">DEMO WALKTHROUGH · NOT PART OF THE PRODUCT · START A FLOW</span>
+      <sc-for list="{{ flows }}" as="f" hint-placeholder-count="5">
+        <span onClick="{{ f.go }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:600;display:flex;align-items:center;border:1px solid {{ f.border }};background:{{ f.bg }};color:{{ f.fg }}">{{ f.label }}</span>
+      </sc-for>
+      <span onClick="{{ reset }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;margin-left:auto;font-size:13px;font-weight:600;color:#5E5A52;text-decoration:underline">Reset demo</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;min-height:30px;flex-wrap:wrap">
+      <span style="font-size:13px;color:#5E5A52">{{ flowWho }}</span>
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+        <span style="display:flex;align-items:center;gap:8px"><span style="color:#A39D92;font-size:13px">{{ s.arrow }}</span><span onClick="{{ s.go }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;height:28px;padding:0 11px;border-radius:7px;font-size:12px;font-weight:600;display:flex;align-items:center;background:{{ s.bg }};color:{{ s.fg }};border:1px solid {{ s.border }}">{{ s.label }}</span></span>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="width:1440px;height:900px;border-radius:14px;border:1px solid #DAD7D1;background:#F7F6F4;display:flex;overflow:hidden;box-shadow:0 12px 40px rgba(27,26,23,0.10)">
+    <div style="width:224px;flex-shrink:0;padding:18px 14px;display:flex;flex-direction:column;gap:4px">
+      <img src="assets/zuper-wordmark.png" alt="Zuper" style="height:26px;width:auto;align-self:flex-start;margin:0 0 14px 2px;mix-blend-mode:multiply">
+      <div style="height:40px;padding:0 10px;border-radius:9px;border:1px solid #E6E4DF;background:#FFFFFF;display:flex;align-items:center;gap:9px;margin-bottom:12px"><span style="width:22px;height:22px;border-radius:6px;background:#1B1A17;color:#FFFFFF;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">H</span><span style="font-size:13px;font-weight:600">Halden Roofing</span></div>
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4">
+        <div onClick="{{ n.go }}" style-hover="background:#FBFAF8" style="transition:background .15s ease;cursor:pointer;height:34px;border-radius:8px;padding:0 10px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:{{ n.weight }};background:{{ n.bg }};border:1px solid {{ n.border }};color:#111111"><span style="flex:1">{{ n.label }}</span><sc-if value="{{ n.hasBadge }}" hint-placeholder-val="{{ false }}"><span style="min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:#C0392B;color:#FFFFFF;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ n.badge }}</span></sc-if></div>
+      </sc-for>
+      <div style="flex:1"></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 6px"><span style="width:30px;height:30px;border-radius:50%;background:#DAD7D1;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">SD</span><div style="display:flex;flex-direction:column"><span style="font-size:13px;font-weight:600">Sean Doyle</span><span style="font-size:11px;color:#77726A">Project manager</span></div></div>
+    </div>
+
+    <div style="flex:1;min-width:0;margin:10px 10px 10px 0;border-radius:12px;border:1px solid #E6E4DF;background:#FFFFFF;display:flex;flex-direction:column;overflow:hidden;position:relative">
+      <div style="height:54px;flex-shrink:0;border-bottom:1px solid #EFEDE9;display:flex;align-items:center;gap:8px;padding:0 24px">
+        <span onClick="{{ goBack }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;font-size:13px;color:#77726A">{{ crumbParent }}</span><sc-if value="{{ hasCrumbChild }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#A39D92">/</span><span style="font-size:13px;font-weight:600">{{ crumbChild }}</span></sc-if>
+        <div style="flex:1"></div>
+        <span onClick="{{ openSearch }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;width:300px;height:36px;padding:0 12px;border-radius:9px;border:1px solid #DAD7D1;display:flex;align-items:center;gap:9px;font-size:13px;color:#8C877D"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5E5A52" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><span style="flex:1">Find photos by address or shot</span><span style="font-size:11px;font-weight:600;border:1px solid #E6E4DF;border-radius:5px;padding:1px 6px">⌘K</span></span>
+        <span style="height:36px;padding:0 12px;border-radius:9px;border:1px solid #E6E4DF;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;white-space:nowrap"><span style="width:7px;height:7px;border-radius:50%;background:#E3B341"></span>5 on crew phones</span>
+      </div>
+
+      <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:5;animation:toastIn .25s ease both;padding:12px 16px;border-radius:10px;background:#1B1A17;color:#FFFFFF;font-size:13px;font-weight:500;display:flex;gap:14px;align-items:center;box-shadow:0 8px 24px rgba(0,0,0,0.2)"><span>{{ toast }}</span><span onClick="{{ hideToast }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;color:#B8B2A6">✕</span></div>
+      </sc-if>
+
+      <div style="flex:1;min-height:0;overflow:auto;padding:22px 28px 28px">
+        <sc-if value="{{ inWs }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #EEECE8">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+              <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-size:20px;font-weight:700;letter-spacing:-0.01em">{{ wsTitle }}</span><span style="font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{ wsStatusBg }};color:{{ wsStatusFg }}">{{ wsStatus }}</span></div>
+                <span style="font-size:13px;color:#5E5A52">{{ wsMeta }}</span>
+              </div>
+              <sc-if value="{{ wsCanPreview }}" hint-placeholder-val="{{ false }}"><span onClick="{{ wsPreview }}" style-hover="background:#F4F3F0" style="cursor:pointer;height:36px;padding:0 14px;border-radius:9px;border:1px solid #DAD7D1;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;white-space:nowrap">{{ wsPreviewLabel }}</span></sc-if>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat({{ wsCount }},minmax(0,1fr));gap:8px;min-width:0;width:100%;max-width:560px">
+              <sc-for list="{{ wsTabs }}" as="t" hint-placeholder-count="3">
+                <div onClick="{{ t.go }}" style="cursor:pointer;display:flex;flex-direction:column;gap:8px;min-width:0">
+                  <span style="height:3px;border-radius:2px;background:{{ t.bar }}"></span>
+                  <span style="font-size:12px;font-weight:{{ t.weight }};color:{{ t.fg }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.mark }} {{ t.label }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+          <div style="animation:fadeUp .3s ease both;display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;align-items:baseline;gap:12px"><span style="font-size:24px;font-weight:700;letter-spacing:-0.02em">Today</span><span style="font-size:13px;color:#5E5A52">Thu 23 Oct · 9:40</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:16px;align-items:start">
+              <div style="display:flex;flex-direction:column;gap:16px">
+                <div style="border:1px solid #E6E4DF;border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(17,17,17,0.04)">
+                  <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px 12px;border-bottom:1px solid #EEECE8"><span style="font-size:15px;font-weight:600">Needs action · {{ openCount }}</span><span style="font-size:12px;color:#77726A">Most urgent first</span></div>
+                  <sc-for list="{{ decisions }}" as="d" hint-placeholder-count="4">
+                    <div style="display:grid;grid-template-columns:34px minmax(0,1fr) 170px 100px;align-items:center;column-gap:14px;padding:12px 18px;border-bottom:1px solid #F0EEEA">
+                      <span style="width:34px;height:34px;border-radius:9px;background:{{ d.tagBg }};color:{{ d.tagFg }};display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="{{ d.icon }}"></path></svg></span>
+                      <div style="min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ d.title }}</span><span style="font-size:12px;color:#5E5A52;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ d.sub }}</span></div>
+                      <span style="justify-self:start;font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap;background:{{ d.tagBg }};color:{{ d.tagFg }}">{{ d.tag }}</span>
+                      <span onClick="{{ d.go }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="justify-self:stretch;cursor:pointer;transition:all .15s ease;height:30px;padding:0 10px;border-radius:8px;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;white-space:nowrap;background:{{ d.btnBg }};color:{{ d.btnFg }};border:1px solid {{ d.btnBorder }}">{{ d.btn }}</span>
+                    </div>
+                  </sc-for>
+                  <sc-if value="{{ allClear }}" hint-placeholder-val="{{ false }}">
+                    <div style="padding:28px 18px;display:flex;flex-direction:column;gap:4px;align-items:center"><span style="font-size:14px;font-weight:600">Nothing waiting on you</span><span style="font-size:12px;color:#5E5A52">New issues, waivers and disputes land here.</span></div>
+                  </sc-if>
+                </div>
+                <sc-if value="{{ hasDone }}" hint-placeholder-val="{{ false }}">
+                  <div style="border:1px solid #E6E4DF;border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(17,17,17,0.04)">
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px 12px;border-bottom:1px solid #EEECE8"><span style="font-size:15px;font-weight:600;white-space:nowrap">{{ doneHeading }}</span><span style="font-size:12px;color:#77726A">Saved on each job</span></div>
+                    <sc-for list="{{ doneList }}" as="x" hint-placeholder-count="1">
+                      <div style="display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;column-gap:14px;padding:12px 18px;border-bottom:1px solid #F0EEEA">
+                        <span style="width:34px;height:34px;border-radius:9px;background:#E2EDE6;color:#2F6B4F;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+                        <div style="min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ x.title }}</span><span style="font-size:12px;color:#5E5A52;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ x.what }}</span></div>
+                        <span style="font-size:12px;color:#77726A;white-space:nowrap">{{ x.when }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <div style="border:1px solid #E6E4DF;border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(17,17,17,0.04)">
+                  <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px 12px;border-bottom:1px solid #EEECE8"><span style="font-size:15px;font-weight:600">Crew sync</span><span style="font-size:12px;color:#77726A">Checked 9:40</span></div>
+                  <div style="display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;column-gap:14px;padding:12px 18px;border-bottom:1px solid #F0EEEA">
+                    <span style="width:34px;height:34px;border-radius:50%;background:#F1EFEB;color:#3D3A34;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center">RM</span>
+                    <div style="min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font-size:13px;font-weight:600">Ravi Menon</span><span style="font-size:12px;color:#5E5A52">Last sync 9:12</span></div>
+                    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap;background:#FBF1DC;color:#7A5A16">3 on phone</span>
+                  </div>
+                  <div style="display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;column-gap:14px;padding:12px 18px;border-bottom:1px solid #F0EEEA">
+                    <span style="width:34px;height:34px;border-radius:50%;background:#F1EFEB;color:#3D3A34;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center">JT</span>
+                    <div style="min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font-size:13px;font-weight:600">Jay Torres</span><span style="font-size:12px;color:#5E5A52">Last sync 8:58</span></div>
+                    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap;background:#FBF1DC;color:#7A5A16">2 on phone</span>
+                  </div>
+                  <div style="display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;column-gap:14px;padding:12px 18px;border-bottom:1px solid #F0EEEA;border-bottom:none">
+                    <span style="width:34px;height:34px;border-radius:50%;background:#F1EFEB;color:#3D3A34;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center">KD</span>
+                    <div style="min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font-size:13px;font-weight:600">Kim Diaz</span><span style="font-size:12px;color:#5E5A52">Last sync 9:30</span></div>
+                    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap;background:#E2EDE6;color:#2F6B4F">All uploaded</span>
+                  </div>
+                </div>
+              </div>
+              <div style="border:1px solid #E6E4DF;border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(17,17,17,0.04)">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px 12px;border-bottom:1px solid #EEECE8"><span style="font-size:15px;font-weight:600">Today's jobs · 6</span><span onClick="{{ goJobs }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;font-size:13px;font-weight:600;color:#3D3A34">All jobs ›</span></div>
+                <div style="display:flex;gap:18px;padding:10px 18px;border-bottom:1px solid #EEECE8;font-size:12px;color:#3D3A34;flex-wrap:wrap"><span><b style="font-weight:600;color:#111111">16 of 21</b> photos uploaded</span><span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:2px;background:#2F6B4F"></span>Office has it</span><span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:2px;background:#E3B341"></span>On crew phone</span></div>
+                <sc-for list="{{ todayJobs }}" as="j" hint-placeholder-count="6">
+                  <div onClick="{{ j.go }}" style-hover="background:#FBFAF8" style="transition:background .15s ease;cursor:{{ j.cursor }};display:flex;align-items:center;gap:14px;padding:11px 18px;border-bottom:1px solid #F0EEEA">
+                    <span style="width:36px;height:36px;border-radius:10px;flex-shrink:0;background:#F4F3F1 url('{{ j.img }}') center/cover"></span>
+                    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font-size:13px;font-weight:600">{{ j.addr }}</span><span style="font-size:12px;color:#5E5A52">{{ j.status }} <span style="color:#7A5A16;font-weight:500">{{ j.pending }}</span></span></div>
+                    <div style="width:150px;display:flex;flex-direction:column;align-items:flex-end;gap:5px"><span style="font-size:12px;color:#5E5A52">{{ j.count }}</span><span style="width:150px;height:5px;border-radius:3px;background:#EEECE8;display:flex;overflow:hidden"><span style="width:{{ j.upPct }};background:#2F6B4F"></span><span style="width:{{ j.phPct }};background:#E3B341"></span></span></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isSearch }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:14px;max-width:1120px">
+            <div style="display:flex;align-items:center;gap:12px;height:52px;padding:0 8px 0 16px;border:1.5px solid #1B1A17;border-radius:12px;background:#FFFFFF;box-shadow:0 0 0 4px rgba(27,26,23,0.05)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1B1A17" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+              <input ref="{{ qRef }}" value="{{ q }}" onChange="{{ onQ }}" onKeyDown="{{ onKey }}" placeholder="Search photos by address, shot or date" style="flex:1;border:0;outline:none;background:transparent;font-family:inherit;font-size:15px;font-weight:500;color:#111111">
+              <span onClick="{{ runSearch }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;height:36px;padding:0 14px;border-radius:9px;background:#1B1A17;color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px">✦ Search</span>
+            </div>
+
+            <sc-if value="{{ isIdle }}" hint-placeholder-val="{{ true }}">
+              <div style="border:1px solid #E6E4DF;border-radius:14px;overflow:hidden;background:#FFFFFF;animation:fadeUp .3s ease both">
+                <div style="padding:14px 18px 10px;font-size:12px;font-weight:600;letter-spacing:0.04em;color:#77726A">TRY</div>
+                <sc-for list="{{ suggestions }}" as="g" hint-placeholder-count="3">
+                  <div onClick="{{ g.go }}" style-hover="background:#FBFAF8" style="cursor:pointer;transition:background .15s ease;display:flex;align-items:center;gap:12px;padding:12px 18px;border-top:1px solid #F0EEEA;animation:fadeUp .3s ease both;animation-delay:{{ g.delay }}">
+                    <span style="width:30px;height:30px;border-radius:8px;background:#EEF0FA;color:#4A55A2;display:flex;align-items:center;justify-content:center;font-size:13px">✦</span>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">{{ g.label }}</span><span style="font-size:12px;color:#5E5A52">{{ g.sub }}</span></div>
+                    <span style="font-size:13px;color:#A39D92">↵</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ showSteps }}" hint-placeholder-val="{{ false }}">
+              <div style="border:1px solid #E6E4DF;border-radius:14px;overflow:hidden;background:#FFFFFF;animation:fadeUp .3s ease both">
+                <div onClick="{{ toggleSteps }}" style-hover="background:#FBFAF8" style="cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 18px">
+                  <sc-if value="{{ isRunning }}" hint-placeholder-val="{{ false }}"><span style="width:16px;height:16px;border-radius:50%;border:2px solid #D9DDF2;border-top-color:#4A55A2;animation:spin .7s linear infinite"></span></sc-if>
+                  <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#4A55A2">✦</span></sc-if>
+                  <span style="flex:1;font-size:13px;font-weight:600;color:#2A2F55">{{ stepsTitle }}</span>
+                  <span style="font-size:12px;color:#77726A">{{ stepsToggleLabel }}</span>
+                </div>
+                <sc-if value="{{ stepsOpen }}" hint-placeholder-val="{{ true }}">
+                  <div style="padding:2px 18px 14px 44px;display:flex;flex-direction:column;gap:10px">
+                    <sc-for list="{{ aiSteps }}" as="a" hint-placeholder-count="4">
+                      <div style="display:flex;gap:10px;align-items:flex-start;animation:fadeUp .3s ease both">
+                        <span style="width:16px;height:16px;margin-top:1px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:{{ a.dotBg }};color:#FFFFFF;border:2px solid {{ a.dotBorder }};border-top-color:{{ a.dotTop }};animation:{{ a.anim }}">{{ a.mark }}</span>
+                        <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:500;color:{{ a.fg }}">{{ a.title }}</span><span style="font-size:12px;color:#5E5A52">{{ a.detail }}</span></div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isRunning }}" hint-placeholder-val="{{ false }}">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+                <div style="height:140px;border-radius:12px;background:linear-gradient(90deg,#F2F1EE 0,#F8F7F5 50%,#F2F1EE 100%);background-size:400px 100%;animation:shimmer 1.2s linear infinite"></div>
+                <div style="height:140px;border-radius:12px;background:linear-gradient(90deg,#F2F1EE 0,#F8F7F5 50%,#F2F1EE 100%);background-size:400px 100%;animation:shimmer 1.2s linear infinite"></div>
+                <div style="height:140px;border-radius:12px;background:linear-gradient(90deg,#F2F1EE 0,#F8F7F5 50%,#F2F1EE 100%);background-size:400px 100%;animation:shimmer 1.2s linear infinite"></div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div style="padding:16px 18px;border-radius:14px;background:#EEF0FA;border:1px solid #D9DDF2;display:flex;flex-direction:column;gap:8px;animation:fadeUp .35s ease both">
+                  <span style="font-size:11px;font-weight:700;letter-spacing:0.05em;color:#4A55A2">✦ AI FOUND</span>
+                  <span style="font-size:15px;line-height:1.5;color:#1F2447;font-weight:500">{{ sr.answer }}</span>
+                  <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:#2A2F55"><span>✓ {{ sr.proof1 }}</span><span>✓ {{ sr.proof2 }}</span><span>✓ {{ sr.proof3 }}</span></div>
+                  <span style="font-size:12px;color:#4A55A2">AI ranks and points. It doesn't decide what a photo proves. Check before sending.</span>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;animation:fadeUp .35s ease both;animation-delay:.05s">
+                  <sc-for list="{{ sr.chips }}" as="c" hint-placeholder-count="2"><span style="height:30px;padding:0 8px 0 12px;border-radius:999px;background:#1B1A17;color:#FFFFFF;font-size:12px;font-weight:500;display:flex;align-items:center;gap:6px">{{ c }} <span style="opacity:.7">✕</span></span></sc-for>
+                  <span style="height:30px;padding:0 12px;border-radius:999px;border:1px solid #DAD7D1;font-size:12px;display:flex;align-items:center">Date: any</span>
+                  <span style="height:30px;padding:0 12px;border-radius:999px;border:1px solid #DAD7D1;font-size:12px;display:flex;align-items:center">Uploaded only</span>
+                </div>
+                <div style="display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;align-items:start;animation:fadeUp .4s ease both;animation-delay:.1s">
+                  <div style="border:1px solid #E6E4DF;border-radius:14px;overflow:hidden;background:#FFFFFF">
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px 12px;border-bottom:1px solid #EEECE8"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600">{{ sr.title }}</span><span style="font-size:12px;color:#5E5A52">{{ sr.meta }}</span></div><span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:#FBF1DC;color:#7A5A16">{{ sr.tag }}</span></div>
+                    <div style="padding:16px 18px;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                      <sc-for list="{{ sr.key }}" as="p" hint-placeholder-count="2">
+                        <div onClick="{{ p.toggle }}" style-hover="transform:translateY(-2px);box-shadow:0 8px 20px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .18s ease;border:2px solid {{ p.ring }};border-radius:12px;overflow:hidden">
+                          <div style="height:170px;background:#DAD7D1 url('{{ p.img }}') {{ p.pos }}/cover;position:relative"><span style="position:absolute;left:10px;top:10px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:5px;background:#FFFFFF">{{ p.label }}</span><span style="position:absolute;right:10px;top:10px;width:22px;height:22px;border-radius:6px;background:{{ p.checkBg }};border:1.5px solid #FFFFFF;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;transition:all .15s ease">{{ p.check }}</span></div>
+                          <div style="padding:12px 14px;display:flex;flex-direction:column;gap:5px;font-size:12px"><span style="font-size:14px;font-weight:600">{{ p.shot }}</span><span>{{ p.time }} · {{ p.by }}</span><span style="color:#2F6B4F;font-weight:500">{{ p.place }} · received {{ p.rcv }}</span></div>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-top:1px solid #EEECE8;background:#FBFAF8"><span style="font-size:13px"><b style="font-weight:600">{{ selCount }} selected</b> <span style="color:#5E5A52">· time, place and author go with them</span></span><div style="display:flex;gap:8px"><span onClick="{{ openResultJob }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;height:34px;padding:0 14px;border-radius:8px;border:1px solid #DAD7D1;font-size:13px;font-weight:600;display:flex;align-items:center">Open job</span><span onClick="{{ toReport }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;height:34px;padding:0 14px;border-radius:8px;background:#C0392B;color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center">Add to report</span></div></div>
+                  </div>
+                  <div style="border:1px solid #E6E4DF;border-radius:14px;overflow:hidden;background:#FFFFFF">
+                    <div style="padding:14px 18px 10px;font-size:15px;font-weight:600">More matches · {{ sr.moreCount }}</div>
+                    <sc-for list="{{ sr.more }}" as="m" hint-placeholder-count="4">
+                      <div style-hover="background:#FBFAF8" style="transition:background .15s ease;display:flex;align-items:center;gap:12px;padding:10px 18px;border-top:1px solid #F0EEEA"><span style="width:42px;height:42px;border-radius:8px;flex-shrink:0;background:#DAD7D1 url('{{ m.img }}') {{ m.pos }}/cover"></span><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:600">{{ m.shot }}</span><span style="font-size:12px;color:#5E5A52">{{ m.sub }}</span></div><span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:#E2EDE6;color:#1D4432">Uploaded</span></div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isJob }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .3s ease both;display:flex;flex-direction:column;gap:20px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px">
+              <sc-if value="{{ notWs }}" hint-placeholder-val="{{ true }}"><div style="display:flex;flex-direction:column;gap:8px;min-width:0"><span style="font-size:24px;font-weight:700;letter-spacing:-0.02em">{{ job.addr }}</span><div style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{ job.tags }}" as="t" hint-placeholder-count="2"><span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:{{ t.bg }};color:{{ t.fg }}">{{ t.label }}</span></sc-for></div></div></sc-if><sc-if value="{{ inWs }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600">Which photos show the gutter before and after?</span><span style="font-size:13px;color:#5E5A52">Tick the ones to send. Each keeps its time, place and who took it.</span></div></sc-if>
+              <sc-if value="{{ notWs }}" hint-placeholder-val="{{ true }}"><span onClick="{{ toReport }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;height:36px;padding:0 16px;border-radius:9px;background:#C0392B;color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;flex-shrink:0;white-space:nowrap;margin-right:4px">{{ addLabel }}</span></sc-if>
+            </div>
+            <sc-if value="{{ job.hasPending }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:12px 16px;border-radius:10px;background:#FBF1DC;color:#5C4510;font-size:13px;line-height:1.45"><b style="font-weight:600">{{ job.pendingTitle }}</b> {{ job.pendingText }}</div>
+            </sc-if>
+            <sc-if value="{{ job.hasAI }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:10px 14px;border-radius:10px;background:#EEF0FA;border:1px solid #D9DDF2;display:flex;gap:10px;align-items:baseline"><span style="font-size:11px;font-weight:700;letter-spacing:0.05em;color:#4A55A2;white-space:nowrap">✦ AI NOTICED</span><span style="font-size:13px;line-height:1.45;color:#2A2F55">{{ job.ai }}</span></div>
+            </sc-if>
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:start">
+              <div style="display:flex;flex-direction:column;gap:22px;min-width:0">
+                <sc-if value="{{ notWs }}" hint-placeholder-val="{{ true }}"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:#F4F3F1"><span style="font-size:13px"><b style="font-weight:600">{{ selShort }}</b><span style="color:#5E5A52"> · only selected photos go in the report</span></span><span onClick="{{ clearSel }}" style-hover="color:#1B1A17" style="cursor:pointer;font-size:12px;font-weight:600;color:#5E5A52">Clear</span></div></sc-if>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:20px 24px;align-items:start"><sc-for list="{{ job.phases }}" as="ph" hint-placeholder-count="3">
+                  <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+                    <span style="font-size:12px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:#5E5A52">{{ ph.name }} <span style="color:#8C877D;font-weight:500">· {{ ph.count }}</span></span>
+                    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+                      <sc-for list="{{ ph.photos }}" as="p" hint-placeholder-count="3">
+                        <div onClick="{{ p.toggle }}" style-hover="box-shadow:0 4px 14px rgba(17,17,17,0.08)" style="transition:box-shadow .15s ease;cursor:{{ p.cursor }};border:2px solid {{ p.ring }};border-radius:12px;overflow:hidden;background:#FFFFFF">
+                          <div style="aspect-ratio:4/3;background:{{ p.bg }};position:relative;display:flex;align-items:center;justify-content:center"><span style="font-size:12px;font-weight:600;color:#7A5A16">{{ p.placeholder }}</span><span style="position:absolute;right:8px;top:8px;width:22px;height:22px;border-radius:6px;background:{{ p.checkBg }};border:1.5px solid #FFFFFF;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">{{ p.check }}</span></div>
+                          <div style="padding:9px 11px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:600">{{ p.shot }}</span><div style="display:flex;justify-content:space-between;gap:8px;font-size:11px"><span style="color:#5E5A52">{{ p.time }} · {{ p.by }}</span><span style="color:{{ p.stateFg }};font-weight:500">{{ p.stateShort }}</span></div></div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-for></div>
+                <span style="font-size:12px;color:#77726A">Every photo is the original file, with capture time, location and crew member stored alongside.</span>
+              </div>
+              <sc-if value="{{ notWs }}" hint-placeholder-val="{{ true }}"><div style="display:flex;flex-direction:column;gap:16px;width:300px">
+                <sc-if value="{{ notWs }}" hint-placeholder-val="{{ true }}"><div style="border:1px solid #E6E4DF;border-radius:12px;background:#FFFFFF;padding:4px 16px">
+                  <div style="font-size:11px;font-weight:700;letter-spacing:0.05em;color:#77726A;padding:12px 0 6px">DETAILS</div>
+                  <sc-for list="{{ jobProps }}" as="r" hint-placeholder-count="5"><div style="display:grid;grid-template-columns:92px minmax(0,1fr);gap:10px;padding:8px 0;border-top:1px solid #F0EEEA;font-size:12px"><span style="color:#77726A">{{ r.k }}</span><span style="font-weight:500">{{ r.v }}</span></div></sc-for>
+                </div></sc-if>
+                
+                <sc-if value="{{ showCloseCard }}" hint-placeholder-val="{{ false }}">
+                  <div style="border:1px solid #E6E4DF;border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px">
+                    <span style="font-size:14px;font-weight:600">Dispute still open</span>
+                    <span style="font-size:12px;line-height:1.45;color:#5E5A52">{{ deliveryText }}</span>
+                    <span onClick="{{ goClose }}" style-hover="background:#F4F3F0" style="cursor:pointer;height:34px;border-radius:8px;border:1px solid #DAD7D1;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center">Record the outcome</span>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ notWs }}" hint-placeholder-val="{{ true }}"><div style="border:1px solid #E6E4DF;border-radius:12px;background:#FFFFFF;padding:14px 16px;display:flex;flex-direction:column;gap:10px">
+                  <span style="font-size:11px;font-weight:700;letter-spacing:0.05em;color:#77726A">ACTIVITY</span>
+                  <sc-for list="{{ job.activity }}" as="a" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:10px minmax(0,1fr);gap:10px;font-size:12px;line-height:1.4"><span style="width:7px;height:7px;border-radius:50%;background:#C9C5BD;margin-top:5px"></span><div style="display:flex;flex-direction:column;gap:1px"><span>{{ a.e }}</span><span style="color:#77726A;font-size:11px">{{ a.t }}</span></div></div></sc-for>
+                </div></sc-if>
+              </div></sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isClose }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .3s ease both;display:flex;flex-direction:column;gap:20px;min-width:0">
+            <sc-if value="{{ notWs }}" hint-placeholder-val="{{ true }}"><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding-bottom:16px;border-bottom:1px solid #EEECE8">
+              <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:24px;font-weight:700;letter-spacing:-0.02em">Close the dispute</span><div style="display:flex;gap:8px;flex-wrap:wrap"><span style="font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:#FBF1DC;color:#7A5A16">Open · 3 days</span><span style="font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:#F4F3F1;color:#5E5A52">14 Maple Drive · Lena Park</span></div></div>
+              <span style="font-size:12px;color:#77726A;max-width:300px;text-align:right">Sending a report never closes a dispute. Only an outcome does.</span>
+            </div></sc-if>
+            <sc-if value="{{ closeNotReady }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;background:#FBF1DC;color:#5E4512"><span style="font-size:13px">The report hasn't been sent to Lena yet, so there's nothing to close.</span><span onClick="{{ goReportMaple }}" style="cursor:pointer;height:32px;padding:0 12px;border-radius:8px;background:#FFFFFF;border:1px solid #E5D3A8;font-size:12px;font-weight:600;display:flex;align-items:center;white-space:nowrap">Go to report</span></div>
+            </sc-if>
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:32px;align-items:start;min-width:0">
+              <div style="display:flex;flex-direction:column;gap:24px;min-width:0">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <span style="font-size:15px;font-weight:600">What's happened</span>
+                  <div style="display:flex;flex-direction:column">
+                    <sc-for list="{{ closeSteps }}" as="s" hint-placeholder-count="5">
+                      <div style="display:grid;grid-template-columns:14px 92px minmax(0,1fr);column-gap:14px">
+                        <div style="display:flex;flex-direction:column;align-items:center"><span style="width:12px;height:12px;border-radius:50%;box-sizing:border-box;border:2px solid {{ s.ring }};background:{{ s.dot }};margin-top:3px;flex-shrink:0"></span><span style="flex:1;width:2px;background:{{ s.line }};min-height:18px"></span></div>
+                        <span style="font-size:12px;color:#77726A;padding-top:1px">{{ s.t }}</span>
+                        <span style="font-size:13px;line-height:1.45;color:{{ s.fg }};padding-bottom:16px">{{ s.e }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{ closeReady }}" hint-placeholder-val="{{ true }}"><sc-if value="{{ canReply }}" hint-placeholder-val="{{ true }}"><span onClick="{{ simReply }}" style="align-self:flex-start;cursor:pointer;font-size:12px;font-weight:600;color:#5E5A52;padding:6px 10px;border-radius:7px;border:1px dashed #C9C5BD">{{ simLabel }}</span></sc-if></sc-if>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:15px;font-weight:600">Evidence sent</span><span style="font-size:12px;color:#77726A">2 photos · originals kept on the job</span></div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                    <div style="display:flex;flex-direction:column;gap:4px"><div style="aspect-ratio:16/9;border-radius:10px;background:#DAD7D1 url('assets/est-gutter.png') center 30%/cover"></div><span style="font-size:13px;font-weight:600;padding-top:4px">Gutters, before</span><span style="font-size:12px;color:#5E5A52">20 Oct 07:58 · Ravi M</span></div>
+                    <div style="display:flex;flex-direction:column;gap:4px"><div style="aspect-ratio:16/9;border-radius:10px;background:#DAD7D1 url('assets/est-gutter.png') center 70%/cover"></div><span style="font-size:13px;font-weight:600;padding-top:4px">Gutters, after</span><span style="font-size:12px;color:#5E5A52">20 Oct 15:22 · Jay T</span></div>
+                  </div>
+                </div>
+              </div>
+              <div style="border:1px solid #E6E4DF;border-radius:14px;background:#FFFFFF;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 1px 2px rgba(17,17,17,0.04)">
+                <div style="padding:16px 18px;display:flex;flex-direction:column;gap:12px">
+                  <div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:15px;font-weight:600">Outcome</span><span style="font-size:12px;line-height:1.4;color:#5E5A52">{{ closeIntro }}</span></div>
+                  <div style="display:flex;flex-direction:column;border:1px solid #E6E4DF;border-radius:10px;overflow:hidden">
+                    <sc-for list="{{ outcomes }}" as="o" hint-placeholder-count="4"><div onClick="{{ o.pick }}" style-hover="background:#FBFAF8" style="cursor:pointer;display:grid;grid-template-columns:16px minmax(0,1fr);column-gap:10px;padding:10px 12px;border-bottom:1px solid #F0EEEA"><span style="width:16px;height:16px;border-radius:50%;border:1.5px solid {{ o.border }};box-sizing:border-box;margin-top:1px;display:flex;align-items:center;justify-content:center"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dot }}"></span></span><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:{{ o.weight }}">{{ o.label }}</span><span style="font-size:11px;color:#77726A">{{ o.sub }}</span></div></div></sc-for>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;font-weight:600;color:#5E5A52">Note for the record</span><div style="min-height:52px;padding:9px 11px;border-radius:8px;border:1px solid #DAD7D1;font-size:12px;line-height:1.45;color:#3D3A34">Lena replied by email and accepted the before photo.</div></div>
+                </div>
+                <sc-if value="{{ notWs }}" hint-placeholder-val="{{ true }}"><div style="padding:14px 18px;border-top:1px solid #EEECE8;background:#FBFAF8;display:flex;flex-direction:column;gap:8px">
+                  <span onClick="{{ closeDispute }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;height:40px;border-radius:9px;background:#C0392B;color:#FFFFFF;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;white-space:nowrap">{{ closeLabel }}</span>
+                  <span style="font-size:11px;color:#77726A;text-align:center">Saved on the job with the finding, report and your name.</span>
+                </div></sc-if>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isReport }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .3s ease both;display:flex;flex-direction:column;gap:18px;min-width:0">
+            <sc-if value="{{ notWs }}" hint-placeholder-val="{{ true }}"><div style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding-bottom:16px;border-bottom:1px solid #EEECE8">
+              <div style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-size:20px;font-weight:700;letter-spacing:-0.02em">{{ rpt.title }}</span><span style="font-size:13px;color:#5E5A52">Report for {{ rpt.to }} · 2 photos from the job</span></div>
+              <div style="display:flex;gap:8px;flex-shrink:0">
+                <span style-hover="background:#F4F3F0" style="cursor:pointer;height:36px;padding:0 14px;border-radius:9px;border:1px solid #DAD7D1;font-size:13px;font-weight:600;display:flex;align-items:center;white-space:nowrap">Copy link</span>
+                <span onClick="{{ sendReport }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;height:36px;padding:0 16px;border-radius:9px;background:#C0392B;color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;white-space:nowrap">{{ sendLabel }}</span>
+              </div>
+            </div></sc-if>
+            <sc-if value="{{ inWs }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:20px;font-weight:700;letter-spacing:-0.01em">Check what Lena will see</span><span style="font-size:13px;color:#5E5A52">The summary was drafted by AI. Read it before you send.</span></div></sc-if>
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:32px;align-items:start;min-width:0">
+              <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><span style="font-size:11px;font-weight:600;letter-spacing:0.05em;color:#77726A;white-space:nowrap">PREVIEW · WHAT {{ rpt.toUpper }} SEES</span><span style="font-size:12px;color:#77726A;white-space:nowrap">Opens in a browser · no login</span></div>
+                <div style="background:#F4F3F0;border-radius:14px;padding:24px">
+                  <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 2px rgba(17,17,17,0.06),0 4px 16px rgba(17,17,17,0.05);padding:28px;display:flex;flex-direction:column;gap:14px;max-width:620px;margin:0 auto">
+                    <span style="font-size:11px;font-weight:600;letter-spacing:0.05em;color:#77726A">HALDEN ROOFING · SHARED BY SEAN DOYLE</span>
+                    <span style="font-size:22px;font-weight:700;letter-spacing:-0.02em">{{ rpt.title }}</span>
+                    <span style="font-size:14px;line-height:1.55;color:#3D3A34">{{ rpt.summary }}</span>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                      <sc-for list="{{ rpt.photos }}" as="p" hint-placeholder-count="2">
+                        <div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="aspect-ratio:4/3;border-radius:8px;background:#DAD7D1 url('{{ p.img }}') {{ p.pos }}/cover"></div><span style="font-size:12px;font-weight:600;padding-top:5px">{{ p.shot }}</span><span style="font-size:11px;color:#5E5A52">{{ p.time }} · {{ p.place }} · {{ p.by }}</span></div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+              <div style="display:flex;flex-direction:column;gap:22px;min-width:0">
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span style="font-size:14px;font-weight:600">What do the photos show?</span><span style="font-size:11px;color:#77726A">Only you see this</span></div>
+                  <div style="display:flex;flex-direction:column;border:1px solid #E6E4DF;border-radius:10px;overflow:hidden">
+                    <sc-for list="{{ findings }}" as="f" hint-placeholder-count="3"><div onClick="{{ f.pick }}" style-hover="background:#FBFAF8" style="cursor:pointer;display:flex;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid #F0EEEA;font-size:13px;font-weight:{{ f.weight }}"><span style="width:16px;height:16px;border-radius:50%;border:1.5px solid {{ f.border }};box-sizing:border-box;flex-shrink:0;display:flex;align-items:center;justify-content:center"><span style="width:8px;height:8px;border-radius:50%;background:{{ f.dot }}"></span></span><span style="line-height:1.35">{{ f.label }}</span></div></sc-for>
+                  </div>
+                  <div style="padding:10px 12px;border-radius:10px;border:1px solid #E6E4DF;font-size:12px;line-height:1.5;color:#3D3A34">{{ rationale }}</div>
+                  
+                </div>
+                <div style="height:1px;background:#EEECE8"></div>
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <span style="font-size:14px;font-weight:600">Link</span>
+                  <div onClick="{{ toggleOrig }}" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px">Include original files</span><span style="font-size:11px;color:#77726A">With capture data, for insurers</span></div><span style="width:36px;height:20px;border-radius:10px;background:{{ origBg }};display:flex;align-items:center;padding:2px;box-sizing:border-box;justify-content:{{ origJustify }};flex-shrink:0"><span style="width:16px;height:16px;border-radius:50%;background:#FFFFFF"></span></span></div>
+                  <div style="display:flex;justify-content:space-between;font-size:13px"><span>Link expires</span><span style="color:#5E5A52">22 Nov · 30 days</span></div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isCustomer }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .3s ease both;display:flex;flex-direction:column;gap:14px;align-items:center">
+            <div style="width:100%;padding:12px 16px;border-radius:10px;background:#E2EDE6;color:#1D4432;font-size:13px;display:flex;justify-content:space-between;align-items:center"><span><b style="font-weight:600">Office view · Sent 9:44</b> · {{ deliveryText }}</span><span onClick="{{ simReply }}" style="cursor:pointer;font-size:12px;font-weight:600;padding:5px 10px;border-radius:7px;border:1px solid #2F6B4F;margin-left:auto;margin-right:14px">{{ simLabel }}</span><span onClick="{{ afterSend }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;font-weight:600;text-decoration:underline">{{ afterSendLabel }}</span></div>
+            <span style="width:760px;font-size:11px;font-weight:700;letter-spacing:0.05em;color:#77726A">WHAT {{ rpt.toUpper }} SEES · NO LOGIN, NO APP</span><div style="width:760px;border:1px solid #E6E4DF;border-radius:14px;overflow:hidden">
+              <div style="padding:16px 22px;background:#1B1A17;color:#FFFFFF;display:flex;justify-content:space-between;align-items:center"><span style="font-size:15px;font-weight:700">Halden Roofing</span><span style="font-size:12px;color:#D9D4CA">Photo report · shared 23 Oct</span></div>
+              <div style="padding:24px;display:flex;flex-direction:column;gap:14px">
+                <span style="font-size:22px;font-weight:700;letter-spacing:-0.02em">{{ rpt.title }}</span>
+                <span style="font-size:14px;line-height:1.55;color:#3D3A34">{{ rpt.summary }}</span>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                  <sc-for list="{{ rpt.photos }}" as="p" hint-placeholder-count="2">
+                    <div style="display:flex;flex-direction:column;gap:6px"><div style="height:190px;border-radius:8px;background:#DAD7D1 url('{{ p.img }}') {{ p.pos }}/cover"></div><span style="font-size:13px;font-weight:600">{{ p.shot }}</span><span style="font-size:12px;color:#5E5A52">{{ p.time }} · {{ p.place }} · {{ p.by }}</span></div>
+                  </sc-for>
+                </div>
+                <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:#2F6B4F;font-weight:500"><span>✓ Time recorded at capture</span><span>✓ Location matches the address</span><span>✓ Original, unaltered</span></div>
+                <span style="font-size:12px;color:#5E5A52">These photos record the gutter's condition before and after our work. They don't on their own say what caused the dent.</span><div style="display:flex;align-items:center;gap:12px;padding-top:4px;border-top:1px solid #EEECE8"><span style="flex:1;font-size:12px;color:#5E5A52;padding-top:10px">Questions? Sean Doyle · sean@haldenroofing.com</span><span onClick="{{ simReply }}" style="cursor:pointer;margin-top:10px;height:34px;padding:0 14px;border-radius:8px;background:#C0392B;color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center">Reply or ask a question</span></div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isIssue }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .3s ease both;display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:20px;align-items:start">
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;gap:6px"><span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:#FBEAE6;color:#9E2F22">Blocks work · 2 h</span><span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:#F4F3F1;color:#5E5A52">Awaiting Sean</span></div>
+              <span style="font-size:24px;font-weight:700;letter-spacing:-0.02em">ISS-311 · Rotten decking</span>
+              <span style="font-size:13px;color:#5E5A52">61 Birch Lane · reported by Ravi M 7:31 (no signal) · received 7:52 · Repair paused at 2 of 5</span>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div style="height:220px;border-radius:12px;background:#DAD7D1 url('assets/est-ceiling.png') center/cover"></div><div style="height:220px;border-radius:12px;background:#DAD7D1 url('assets/est-attic.png') center/cover"></div></div>
+              <div style="padding:12px 14px;border-radius:10px;background:#F4F3F1;font-size:13px;line-height:1.5">"About 3 boards near the vent. Soft when pressed." · north slope</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px;border:1px solid #E6E4DF;border-radius:14px;padding:18px">
+              <span style="font-size:15px;font-weight:600">Your decision</span>
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">Boards to replace</span><div style="display:flex;align-items:center;gap:8px"><span onClick="{{ boardsDown }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;width:30px;height:30px;border-radius:8px;border:1px solid #DAD7D1;display:flex;align-items:center;justify-content:center;font-size:16px">−</span><span style="width:28px;text-align:center;font-size:15px;font-weight:700">{{ boards }}</span><span onClick="{{ boardsUp }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;width:30px;height:30px;border-radius:8px;border:1px solid #DAD7D1;display:flex;align-items:center;justify-content:center;font-size:16px">+</span></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;color:#5E5A52"><span>× $85 per board</span><b style="color:#111111;font-weight:600">{{ boardsCost }}</b></div>
+              <span style="font-size:11px;color:#77726A">You set the count from the photos. AI doesn't estimate quantity or price.</span>
+              <div style="padding:10px 12px;border-radius:8px;border:1px solid #E6E4DF;font-size:12px;line-height:1.45">Reply to Ravi: "Replace {{ boards }} boards, added to the job. Photo each board before and after."</div>
+              <div style="display:flex;gap:8px"><span onClick="{{ issueMore }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;flex:1;height:38px;border-radius:9px;border:1px solid #DAD7D1;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center">Ask for more photos</span><span onClick="{{ issueApprove }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;flex:1.2;height:38px;border-radius:9px;background:#C0392B;color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center">Approve {{ boards }} boards</span></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isWaiver }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .3s ease both;display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:20px;align-items:start">
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;gap:6px"><span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:#F4F3F1;color:#5E5A52">Waiver request · doesn't block work</span></div>
+              <span style="font-size:24px;font-weight:700;letter-spacing:-0.02em">Gutters, close-up · 7 Ash Road</span>
+              <span style="font-size:13px;color:#5E5A52">Requested by Jay T · 8:50 · Arrival step</span>
+              <div style="padding:12px 14px;border-radius:10px;background:#F4F3F1;font-size:13px;line-height:1.5"><b style="font-weight:600">No safe access</b> · "Power line over the back gutter."</div>
+              <span style="font-size:13px;font-weight:600">Closest photos Jay did take</span>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div style="display:flex;flex-direction:column;gap:6px"><div style="height:190px;border-radius:12px;background:#DAD7D1 url('assets/est-north.png') center/cover"></div><span style="font-size:12px;color:#5E5A52">Rear elevation · 8:41 · uploaded</span></div><div style="display:flex;flex-direction:column;gap:6px"><div style="height:190px;border-radius:12px;background:#DAD7D1 url('assets/est-gutter.png') center/cover"></div><span style="font-size:12px;color:#5E5A52">Right-side gutter · 8:44 · uploaded</span></div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px;border:1px solid #E6E4DF;border-radius:14px;padding:18px">
+              <span style="font-size:15px;font-weight:600">Your decision</span>
+              <div style="font-size:12px;line-height:1.5;color:#3D3A34">Approve: the shot shows as "Waived by Sean · No safe access". It never counts as taken.<br>Ask for another angle: the shot stays missing and Jay is notified.</div>
+              <span style="font-size:11px;color:#77726A">Only a PM can approve a waiver.</span>
+              <div style="display:flex;gap:8px"><span onClick="{{ waiverAngle }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;flex:1;height:38px;border-radius:9px;border:1px solid #DAD7D1;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center">Ask for another angle</span><span onClick="{{ waiverApprove }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;flex:1;height:38px;border-radius:9px;background:#C0392B;color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center">Approve waiver</span></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isJobs }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .3s ease both;display:flex;flex-direction:column;gap:14px">
+            <span style="font-size:24px;font-weight:700;letter-spacing:-0.02em">Jobs</span>
+            <div style="border:1px solid #E6E4DF;border-radius:14px;overflow:hidden">
+              <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:14px;padding:10px 18px;font-size:11px;font-weight:600;letter-spacing:0.04em;color:#77726A;background:#FBFAF8;border-bottom:1px solid #EEECE8"><span>JOB</span><span>DATE · CREW</span><span>WORK</span><span>PHOTOS</span></div>
+              <sc-for list="{{ allJobs }}" as="j" hint-placeholder-count="5">
+                <div onClick="{{ j.go }}" style-hover="background:#FBFAF8" style="transition:background .15s ease;cursor:{{ j.cursor }};display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:14px;padding:12px 18px;border-bottom:1px solid #F0EEEA;font-size:13px;align-items:center"><span style="font-weight:600">{{ j.addr }}</span><span style="color:#5E5A52">{{ j.when }}</span><span>{{ j.work }}</span><span style="color:{{ j.photoFg }};font-weight:500">{{ j.photos }}</span></div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isReports }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .3s ease both;display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:16px"><div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:24px;font-weight:700;letter-spacing:-0.02em">Reports</span><span style="font-size:13px;color:#5E5A52">Photo reports shared with customers and insurers.</span></div><span onClick="{{ togglePick }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;height:36px;padding:0 14px;border-radius:9px;background:#C0392B;color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;white-space:nowrap"><span style="font-size:16px;line-height:1">+</span>New report</span></div>
+            <sc-if value="{{ pickJob }}" hint-placeholder-val="{{ false }}">
+              <div style="border:1px solid #E6E4DF;border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(17,17,17,0.06);animation:fadeUp .2s ease both">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px 12px;border-bottom:1px solid #EEECE8"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600">Which job is this report for?</span><span style="font-size:12px;color:#5E5A52">You'll pick the photos on the job, then write the summary.</span></div><span onClick="{{ togglePick }}" style="cursor:pointer;font-size:13px;color:#77726A">Cancel</span></div>
+                <sc-for list="{{ pickList }}" as="p" hint-placeholder-count="3">
+                  <div onClick="{{ p.go }}" style-hover="background:#FBFAF8" style="cursor:pointer;display:grid;grid-template-columns:34px minmax(0,1fr) auto 20px;align-items:center;column-gap:14px;padding:12px 18px;border-bottom:1px solid #F0EEEA">
+                    <span style="width:34px;height:34px;border-radius:9px;background:#DAD7D1 url('{{ p.img }}') center/cover"></span>
+                    <div style="min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font-size:13px;font-weight:600">{{ p.addr }}</span><span style="font-size:12px;color:#5E5A52">{{ p.sub }}</span></div>
+                    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap;background:{{ p.bg }};color:{{ p.fg }}">{{ p.tag }}</span>
+                    <span style="color:#77726A;font-size:16px">›</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <div style="border:1px solid #E6E4DF;border-radius:14px;overflow:hidden">
+              <div style="display:grid;grid-template-columns:1.4fr 1.2fr 0.7fr 1.4fr 120px;gap:14px;padding:10px 18px;font-size:11px;font-weight:600;letter-spacing:0.04em;color:#77726A;background:#FBFAF8;border-bottom:1px solid #EEECE8"><span>REPORT</span><span>SENT TO</span><span>SENT</span><span>DELIVERY</span><span></span></div>
+              <sc-for list="{{ reportsList }}" as="r" hint-placeholder-count="4">
+                <div style="display:grid;grid-template-columns:1.4fr 1.2fr 0.7fr 1.4fr 120px;gap:14px;padding:12px 18px;border-bottom:1px solid #F0EEEA;font-size:13px;align-items:center"><span style="font-weight:600">{{ r.title }}</span><span style="color:#5E5A52">{{ r.to }}</span><span style="color:#5E5A52">{{ r.sent }}</span><span style="justify-self:start;font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;background:{{ r.bg }};color:{{ r.fg }}">{{ r.state }}</span><span onClick="{{ r.act }}" style-hover="background:#F4F3F0" style="justify-self:end;cursor:pointer;height:30px;padding:0 12px;border-radius:8px;border:1px solid #DAD7D1;background:#FFFFFF;font-size:12px;font-weight:600;display:flex;align-items:center;white-space:nowrap">{{ r.actLabel }}</span></div>
+              </sc-for>
+            </div>
+            <span style="font-size:12px;color:#77726A">Delivery states come from the sharing service: Sent → Delivered → Opened, or Expired after 30 days.</span>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ inWs }}" hint-placeholder-val="{{ false }}">
+          <div style="position:sticky;bottom:-28px;margin:24px -28px -28px;padding:14px 28px;background:rgba(255,255,255,0.96);border-top:1px solid #E6E4DF;display:flex;align-items:center;gap:14px;backdrop-filter:blur(6px);z-index:3">
+            <span onClick="{{ wsBack }}" style-hover="background:#F4F3F0" style="cursor:pointer;height:38px;padding:0 14px;border-radius:9px;border:1px solid #DAD7D1;background:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;white-space:nowrap">{{ wsBackLabel }}</span>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px"><span style="font-size:13px;font-weight:600">{{ wsFootTitle }}</span><span style="font-size:12px;color:#5E5A52;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ wsFootSub }}</span></div>
+            <sc-if value="{{ wsHasSecondary }}" hint-placeholder-val="{{ false }}"><span onClick="{{ wsSecondary }}" style-hover="background:#F4F3F0" style="cursor:pointer;height:38px;padding:0 14px;border-radius:9px;border:1px solid #DAD7D1;background:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;white-space:nowrap">{{ wsSecondaryLabel }}</span></sc-if>
+            <span onClick="{{ wsNext }}" style-hover="transform:translateY(-1px);box-shadow:0 4px 12px rgba(17,17,17,0.10)" style="cursor:pointer;transition:all .15s ease;height:38px;padding:0 18px;border-radius:9px;background:{{ wsNextBg }};color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;white-space:nowrap">{{ wsNextLabel }}</span>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  init() { return { screen: 'home', jobId: 'maple', flow: null, sel: { m1: true, m2: true, e1: true, e2: true, e3: false }, orig: false, boards: 3, outcome: 0, toast: '', dec: { iss: 'open', claim: 'open', dispute: 'open', waiver: 'open' }, sent: [], done: [], finding: 0, delivery: 'sent', q: '', phase: 'idle', stepN: 0, stepsOpen: true, srJob: 'maple' }; }
+  runSearch(qIn) {
+    const q = (qIn != null ? qIn : this.state.q || '14 Maple gutter').trim() || '14 Maple gutter';
+    const srJob = /elm|insur|north|shingle/i.test(q) ? 'elm' : 'maple';
+    clearInterval(this._iv);
+    this.setState({ q, srJob, phase: 'running', stepN: 0, stepsOpen: true, screen: 'search', jobId: srJob });
+    this._iv = setInterval(() => {
+      const n = this.state.stepN + 1;
+      if (n >= 4) { clearInterval(this._iv); this.setState({ stepN: 4 }); setTimeout(() => this.setState({ phase: 'done', stepsOpen: false }), 450); }
+      else this.setState({ stepN: n });
+    }, 750);
+  }
+  componentWillUnmount() { clearInterval(this._iv); }
+  state = this.init();
+  componentDidMount() { try { const s = JSON.parse(localStorage.getItem('officeProto') || 'null'); if (s) this.setState(s); } catch (e) {} }
+  qRef = React.createRef();
+  componentDidUpdate(pp, ps) { if (this.state.screen === 'search' && this.state.phase === 'idle' && (ps.screen !== 'search' || ps.phase !== 'idle') && this.qRef.current) { try { this.qRef.current.focus({ preventScroll: true }); } catch (e) {} } try { localStorage.setItem('officeProto', JSON.stringify(this.state)); } catch (e) {} }
+  go(screen, extra = {}) { this.setState({ screen, toast: '', ...extra }); }
+  note(t) { this.setState({ toast: t }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: '' }), 3500); }
+  renderVals() {
+    const st = this.state, d = st.dec;
+    const FLOWS = {
+      dispute: { label: 'Customer dispute', who: 'Sean answers Lena Park about her gutter:', steps: [['Home','home'],['Evidence','job','maple'],['Report','report','maple'],['Lena opens link','customer'],['Response','close','maple']] },
+      claim: { label: 'Insurance claim', who: 'Priya\'s insurer needs dated photos:', steps: [['Home','home'],['Job evidence','job','elm'],['Report + originals','report','elm'],['Insurer\'s view','customer']] },
+      search: { label: 'Search', who: 'Sean looks up a photo directly:', steps: [['Home','home'],['Search results','search'],['Report','report','maple'],['Lena\'s view','customer']] },
+      issue: { label: 'Crew issue', who: 'Ravi\'s crew is paused on rotten decking:', steps: [['Home','home'],['Issue decision','issue'],['Back on Home','home']] },
+      waiver: { label: 'Waiver', who: 'Jay can\'t take a required photo:', steps: [['Home','home'],['Waiver decision','waiver'],['Back on Home','home']] },
+    };
+    const start = k => () => this.setState({ ...this.init(), dec: st.dec, sent: st.sent, done: st.done, flow: k, screen: 'home' });
+    const flows = Object.entries(FLOWS).map(([k, f]) => ({ label: f.label, go: start(k), bg: st.flow === k ? '#1B1A17' : '#FFFFFF', fg: st.flow === k ? '#FFFFFF' : '#1B1A17', border: st.flow === k ? '#1B1A17' : '#DAD7D1' }));
+    const F = st.flow ? FLOWS[st.flow] : null;
+    let cur = -1;
+    if (F) F.steps.forEach((s, i) => { if (s[1] === st.screen && (!s[2] || s[2] === st.jobId) && cur < 0) cur = i; });
+    if (F && st.flow === 'dispute' && st.screen === 'job' && d.dispute === 'sent') cur = 4;
+    if (F && (st.flow === 'issue' || st.flow === 'waiver') && st.screen === 'home' && d[st.flow === 'issue' ? 'iss' : 'waiver'] !== 'open') cur = 2;
+    const steps = F ? F.steps.map((s, i) => ({ label: `${i + 1} · ${s[0]}`, arrow: i ? '→' : '', go: () => this.go(s[1], s[2] ? { jobId: s[2] } : {}), bg: i === cur ? '#C0392B' : i < cur ? '#E2EDE6' : '#FFFFFF', fg: i === cur ? '#FFFFFF' : i < cur ? '#1D4432' : '#3D3A34', border: i === cur ? '#C0392B' : i < cur ? '#E2EDE6' : '#DAD7D1' })) : [];
+    const flowWho = F ? F.who : 'Pick a flow above, or click around the app. Every button that matters works.';
+
+    const tagS = { block: ['#FBEAE6', '#9E2F22'], due: ['#FBF1DC', '#7A5A16'], wait: ['#F4F3F1', '#5E5A52'], sent: ['#E2EDE6', '#1D4432'] };
+    const btn = (primary) => primary ? { btnBg: '#C0392B', btnFg: '#FFFFFF', btnBorder: '#C0392B' } : { btnBg: '#FFFFFF', btnFg: '#1B1A17', btnBorder: '#DAD7D1' };
+    const all = [
+      d.iss === 'open' && { title: 'ISS-311 · Rotten decking · 61 Birch Lane', sub: 'Approve 3 extra boards · $255', tag: 'Blocks work · 2 h', k: 'block', btn: 'Review', primary: true, icon: 'M12 3 2 20h20L12 3zM12 10v4M12 17h.01', go: () => this.go('issue') },
+      d.claim !== 'closed' && d.claim === 'open' && { title: 'Insurance claim · 9 Elm Court', sub: 'Send dated photos to Northside Insurance', tag: 'Due Fri 24 Oct', k: 'due', btn: 'Find photos', icon: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3zM9 12l2 2 4-4', go: () => this.go('job', { jobId: 'elm' }) },
+      d.dispute === 'open' && { title: 'Dispute · 14 Maple Drive', sub: 'Lena Park · send before and after', tag: 'Waiting 3 days', k: 'due', btn: 'Find photos', icon: 'M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12zM9 11h6M9 14h4', go: () => this.go('job', { jobId: 'maple' }) },
+      d.dispute === 'sent' && { title: 'Dispute · 14 Maple Drive', sub: st.delivery === 'replied' ? 'Lena replied · record the outcome' : 'Report sent · ' + (st.delivery === 'opened' ? 'opened, no reply' : 'not opened yet'), tag: st.delivery === 'replied' ? 'Customer replied' : 'Awaiting customer', k: 'sent', btn: 'Close', icon: 'M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12zM9 11h6M9 14h4', go: () => this.go('close', { jobId: 'maple' }) },
+      d.dispute === 'escalated' && { title: 'Dispute · 14 Maple Drive', sub: 'Lena still disputes · with ops manager', tag: 'Escalated', k: 'block', btn: 'Open', icon: 'M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12zM9 11h6M9 14h4', go: () => this.go('job', { jobId: 'maple' }) },
+      d.dispute === 'sent' && st.delivery === 'replied' && false,
+      d.waiver === 'open' && { title: 'Waiver · 7 Ash Road', sub: 'Jay T · power line over gutter', tag: "Doesn't block work", k: 'wait', btn: 'Review', icon: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5zM14 3v5h5M9 15l6-6', go: () => this.go('waiver') },
+    ].filter(Boolean).map(x => ({ ...x, tagBg: tagS[x.k][0], tagFg: tagS[x.k][1], ...btn(x.primary) }));
+    const openCount = all.length;
+
+    const todayJobs = [
+      ['61 Birch Lane', 'Work done · Ravi M ·', '3 awaiting upload', 9, 3, 12, 'assets/est-pipe-boot.png', 'birch'],
+      ['7 Ash Road', 'In progress · Jay T ·', '2 awaiting upload', 4, 2, 6, 'assets/est-north.png', null],
+      ['3 Cedar Close', 'In progress · Kim D', '', 3, 0, 3, '', null],
+      ['24 Oak Street', 'Not started · 10:00 · Ravi M', '', 0, 0, 0, '', null],
+      ['18 Pine Avenue', 'Not started · 13:00 · Jay T', '', 0, 0, 0, '', null],
+      ['5 Elm Row', 'Not started · 14:30 · Kim D', '', 0, 0, 0, '', null],
+    ].map(([addr, status, pending, up, ph, cap, img, id]) => ({ addr, status, pending, img, count: cap ? `${up} of ${cap} uploaded` : 'No photos yet', upPct: cap ? `${up / cap * 100}%` : '0%', phPct: cap ? `${ph / cap * 100}%` : '0%', cursor: 'pointer', go: id ? () => this.go('job', { jobId: id }) : addr === '7 Ash Road' ? () => this.go('waiver') : () => this.note('3 Cedar Close is in progress. Open 61 Birch Lane, 14 Maple Drive or 9 Elm Court to see a full job.') }));
+
+    const P = (id, shot, time, by, img, pos, state, sel) => ({ id, shot, time, by, img, pos, state, selectable: sel });
+    const JOBS = {
+      maple: { addr: '14 Maple Drive', meta: 'Lena Park · Repair · 20 Oct · Ravi M, Jay T · HR-2031', countLabel: '18 photos', tags: [d.dispute === 'closed' ? ['Dispute closed', 'sent'] : ['Dispute open · 3 days', 'due'], ['Work done 20 Oct', 'wait'], ['18 of 18 uploaded', 'sent']], ai: 'The dent on the left downspout is already there at 07:58, before work started, and looks the same at 15:22. AI cannot tell who caused it.',
+        phases: [['Arrival', [P('m1', 'Gutters, before', '07:58', 'Ravi M', 'assets/est-gutter.png', 'center 30%', 'up', true), P('m3', 'Front elevation', '07:55', 'Ravi M', 'assets/est-north.png', 'center', 'up', true), P('m4', 'Downspout, left', '08:01', 'Ravi M', 'assets/est-gutter.png', 'right 40%', 'up', true)]],
+                 ['Cleanup', [P('m2', 'Gutters, after', '15:22', 'Jay T', 'assets/est-gutter.png', 'center 70%', 'up', true), P('m5', 'Ground below gutter', '15:24', 'Jay T', 'assets/est-gutter.png', 'center 90%', 'up', true), P('m6', 'Driveway clear', '15:26', 'Jay T', 'assets/est-north.png', 'center 80%', 'up', true)]]],
+        activity: [['20 Oct 16:41', '18 photos received from crew phones'], ['20 Oct 08:15', 'Lena Park emailed about her gutter'], ...(d.dispute !== 'open' ? [['23 Oct 9:44', 'Finding recorded by Sean · ' + ['Damage visible before work began', 'Damage likely during work', 'Inconclusive'][st.finding]], ['23 Oct 9:44', 'Report sent to Lena · ' + ({ sent: 'not opened yet', opened: 'opened 9:51', replied: 'Lena replied 9:58' }[st.delivery] || '')]] : []), ...(d.dispute === 'closed' ? [['23 Oct 10:02', 'Dispute closed by Sean · ' + ['', 'customer accepted', '', 'resolved by agreement'][st.outcome]]] : [])] },
+      elm: { addr: '9 Elm Court', meta: 'Priya Shah · Storm damage inspection · 16 Oct · Kim D · HR-2024', countLabel: '14 photos', tags: [[d.claim === 'open' ? 'Insurance claim · due Fri' : 'Report sent to insurer', d.claim === 'open' ? 'due' : 'sent'], ['14 of 14 uploaded', 'sent']], ai: 'Missing shingles on the north slope appear in 3 photos taken 16 Oct between 10:05 and 10:14. The claim form asks for date of loss 14 Oct; photos are after that date. Check before sending.',
+        phases: [['Inspection', [P('e1', 'North slope, wide', '16 Oct 10:05', 'Kim D', 'assets/est-north.png', 'center', 'up', true), P('e2', 'Shingles missing', '16 Oct 10:09', 'Kim D', 'assets/est-attic.png', 'center', 'up', true), P('e3', 'Flashing lifted', '16 Oct 10:14', 'Kim D', 'assets/est-flashing.png', 'center', 'up', true)]]],
+        activity: [['16 Oct 11:02', '14 photos received'], ['22 Oct 15:30', 'Northside Insurance asked for dated photos'], ...(d.claim !== 'open' ? [['23 Oct', 'Report with original files sent by Sean']] : [])] },
+      birch: { addr: '61 Birch Lane', meta: 'Tom Reyes · Pipe boot repair · today · Ravi M', countLabel: '12 photos', tags: [['Work done', 'wait'], ['9 of 12 uploaded', 'due']], ai: '', hasPending: true, pendingTitle: '3 photos are still on Ravi\'s phone.', pendingText: 'Last successful sync 9:12. They appear here when they arrive. Don\'t send a report from this job until they do.',
+        phases: [['Arrival', [P('b1', 'Leak source', '07:04', 'Ravi M', 'assets/est-pipe-boot.png', 'center', 'up', true), P('b2', 'Old boot removed', '07:18', 'Ravi M', 'assets/est-flashing.png', 'center', 'up', true), P('b3', 'Decking checked', '07:31', 'Ravi M', 'assets/est-ceiling.png', 'center', 'up', true)]],
+                 ['Cleanup', [P('b4', 'Gutters after', '9:16', 'Ravi M', '', '', 'phone', false), P('b5', 'Ground below', '9:18', 'Ravi M', '', '', 'phone', false), P('b6', 'Driveway clear', '9:20', 'Ravi M', '', '', 'phone', false)]]],
+        activity: [['7:52', 'ISS-311 received ahead of other photos'], ['9:12', 'Last successful sync from Ravi\'s phone']] },
+    };
+    const J = JOBS[st.jobId] || JOBS.maple;
+    const toggle = id => () => this.setState(s => ({ sel: { ...s.sel, [id]: !s.sel[id] } }));
+    const photoV = p => { const on = !!st.sel[p.id]; p = { ...p, stateShort: p.state === 'phone' ? 'On phone' : 'Uploaded' }; const phone = p.state === 'phone'; return { ...p, ring: on ? '#C0392B' : '#E6E4DF', check: on ? '✓' : '', checkBg: on ? '#C0392B' : 'rgba(0,0,0,0.25)', bg: phone ? '#FBF1DC' : `#DAD7D1 url('${p.img}') ${p.pos}/cover`, placeholder: phone ? 'On Ravi\'s phone' : '', state: phone ? 'Not received yet' : 'Uploaded · original kept', stateFg: phone ? '#7A5A16' : '#2F6B4F', cursor: phone ? 'default' : 'pointer', toggle: phone ? () => {} : toggle(p.id) }; };
+    const job = { ...J, hasAI: !!J.ai, hasPending: !!J.hasPending, tags: J.tags.map(([label, k]) => ({ label, bg: tagS[k][0], fg: tagS[k][1] })), phases: J.phases.map(([name, ps]) => ({ name, count: `${ps.length} shots`, photos: ps.map(photoV) })), activity: J.activity.map(([t, e]) => ({ t, e })) };
+    const jobPhotos = J.phases.flatMap(x => x[1]);
+    const selected = jobPhotos.filter(p => st.sel[p.id] && p.state !== 'phone');
+    const isMapleSr = st.srJob !== 'elm';
+    const keyIds = isMapleSr ? ['m1', 'm2'] : ['e1', 'e2'];
+    const selCount = st.screen === 'search' ? keyIds.filter(k => st.sel[k]).length : selected.length;
+    const SR = isMapleSr ? {
+      title: '14 Maple Drive · Repair', meta: 'Lena Park · 20 Oct · Ravi M, Jay T · 18 of 18 uploaded', tag: d.dispute === 'closed' ? 'Dispute closed' : 'Dispute open', chips: ['Address: 14 Maple Drive', 'Shot: Gutters'],
+      answer: 'Before and after photos of the gutter at 14 Maple Drive, taken 20 Oct at 07:58 and 15:22. A dent on the left downspout shows in both, so it was there before work started.',
+      proof1: 'Time recorded at capture', proof2: 'Location matches the address (±6 m)', proof3: 'Original files kept',
+      key: [['m1', 'BEFORE', 'Gutters, before · Arrival', '20 Oct 07:58', 'Ravi M', 'center 30%', '16:40', 'assets/est-gutter.png'], ['m2', 'AFTER', 'Gutters, after · Cleanup', '20 Oct 15:22', 'Jay T', 'center 70%', '16:41', 'assets/est-gutter.png']], place: 'At 14 Maple Drive',
+      more: [['Gutters, close-up', 'Arrival · 07:59 · Ravi M', 'left 40%'], ['Downspout, left', 'Arrival · 08:01 · Ravi M', 'right 40%'], ['Gutter guard fitted', 'Repair · 13:10 · Jay T', 'center 55%'], ['Ground below gutter', 'Cleanup · 15:24 · Jay T', 'center 90%']].map(([shot, sub, pos]) => ({ shot, sub, pos, img: 'assets/est-gutter.png' })),
+      steps: [['Reading your search', 'Address 14 Maple Drive · shot type Gutters'], ['Searching 1,284 job photos', 'Matched 1 job · 6 gutter photos'], ['Checking capture data', 'All 6 have time, location and the original file'], ['Comparing before and after', 'Same dent on the left downspout in both']] }
+    : {
+      title: '9 Elm Court · Storm damage inspection', meta: 'Priya Shah · 16 Oct · Kim D · 14 of 14 uploaded', tag: 'Insurance claim', chips: ['Address: 9 Elm Court', 'Area: North slope'],
+      answer: 'Three photos of the north slope at 9 Elm Court, taken 16 Oct between 10:05 and 10:14, show missing shingles and lifted flashing. The insurer\'s date of loss is 14 Oct, so these show the roof two days later.',
+      proof1: 'Time recorded at capture', proof2: 'Location matches the address (±4 m)', proof3: 'Original files kept',
+      key: [['e1', 'WIDE', 'North slope, wide', '16 Oct 10:05', 'Kim D', 'center', '11:02', 'assets/est-north.png'], ['e2', 'DETAIL', 'Shingles missing', '16 Oct 10:09', 'Kim D', 'center', '11:02', 'assets/est-attic.png']], place: 'At 9 Elm Court',
+      more: [['Flashing lifted', 'Inspection · 10:14 · Kim D', 'center', 'assets/est-flashing.png'], ['Gutter debris', 'Inspection · 10:18 · Kim D', 'center', 'assets/est-gutter.png']].map(([shot, sub, pos, img]) => ({ shot, sub, pos, img })),
+      steps: [['Reading your search', 'Address 9 Elm Court · area North slope'], ['Searching 1,284 job photos', 'Matched 1 job · 4 photos'], ['Checking capture data', 'All 4 have time, location and the original file'], ['Comparing with the claim', 'Taken 16 Oct, two days after the 14 Oct date of loss']] };
+    const sr = { ...SR, moreCount: SR.more.length, key: SR.key.map(([id, label, shot, time, by, pos, rcv, img]) => { const on = !!st.sel[id]; return { label, shot, time, by, pos, rcv, img, place: SR.place, ring: on ? '#C0392B' : '#E6E4DF', check: on ? '✓' : '', checkBg: on ? '#C0392B' : 'rgba(0,0,0,0.25)', toggle: toggle(id) }; }) };
+    const aiSteps = SR.steps.slice(0, Math.min(4, st.stepN + 1)).map(([title, detail], i) => { const done = i < st.stepN || st.phase === 'done'; return { title, detail: done ? detail : '', mark: done ? '✓' : '', fg: done ? '#1F2447' : '#4A55A2', dotBg: done ? '#4A55A2' : 'transparent', dotBorder: done ? '#4A55A2' : '#D9DDF2', dotTop: done ? '#4A55A2' : '#4A55A2', anim: done ? 'none' : 'spin .7s linear infinite' }; });
+    const suggestions = [['14 Maple gutter', 'Before and after for the Lena Park dispute'], ['9 Elm Court north slope', 'Dated photos for Northside Insurance'], ['Gutters before work, this week', 'Every arrival gutter shot since Monday']].map(([label, sub], i) => ({ label, sub, delay: `${i * 0.05}s`, go: () => this.runSearch(label) }));
+
+    const mapleKey = [['m1', 'BEFORE', 'Gutters, before · Arrival', '20 Oct 07:58', 'Ravi M', 'center 30%', '±6 m', '16:40'], ['m2', 'AFTER', 'Gutters, after · Cleanup', '20 Oct 15:22', 'Jay T', 'center 70%', '±5 m', '16:41']].map(([id, label, shot, time, by, pos, acc, rcv]) => { const on = !!st.sel[id]; return { label, shot, time, by, pos, acc, rcv, img: 'assets/est-gutter.png', ring: on ? '#C0392B' : '#E6E4DF', check: on ? '✓' : '', checkBg: on ? '#C0392B' : 'rgba(0,0,0,0.25)', toggle: toggle(id) }; });
+    const moreMatches = [['Gutters, close-up', 'Arrival · 07:59 · Ravi M', 'left 40%'], ['Downspout, left', 'Arrival · 08:01 · Ravi M', 'right 40%'], ['Gutter guard fitted', 'Repair · 13:10 · Jay T', 'center 55%'], ['Ground below gutter', 'Cleanup · 15:24 · Jay T', 'center 90%']].map(([shot, sub, pos]) => ({ shot, sub, pos }));
+
+    const isElm = st.jobId === 'elm';
+    const rptPhotos = (isElm ? JOBS.elm.phases[0][1] : JOBS.maple.phases.flatMap(x => x[1])).filter(p => st.sel[p.id]).map(p => ({ ...p, place: isElm ? 'At 9 Elm Court' : 'At 14 Maple Drive' }));
+    const rpt = isElm
+      ? { title: 'Storm damage at 9 Elm Court', to: 'claims@northside-ins.com · Northside Insurance', toShort: 'Northside', toUpper: 'THE INSURER', summary: 'Photos from our inspection on 16 October, taken at the property by Kim D. Each photo carries its capture time and location. Original files are attached.', aiNote: 'AI wrote "damage caused by the 14 Oct storm". Sean removed it: the photos show the roof on 16 Oct, not the cause or date of loss.', photos: rptPhotos }
+      : { title: 'Your gutter at 14 Maple Drive', to: 'lena.park@email.com · Lena Park', toShort: 'Lena', toUpper: 'LENA', summary: 'The dent on the left downspout is visible at 07:58 on 20 October, before work started. The same dent appears unchanged at 15:22 after cleanup.', aiNote: 'AI wrote "no damage was caused by our crew". Sean removed it: the photos show timing, not cause.', photos: rptPhotos };
+    const orig = st.orig || isElm;
+
+    const wsKind = st.jobId === 'maple' && d.dispute !== 'closed' ? 'dispute' : st.jobId === 'elm' && d.claim === 'open' ? 'claim' : null;
+    const inWs = !!wsKind && ['job', 'report', 'close'].includes(st.screen);
+    const wsTitle = wsKind === 'claim' ? 'Insurance claim · 9 Elm Court' : 'Dispute · 14 Maple Drive';
+    const nav = [['Home', 'home', openCount], ['Jobs', 'jobs'], ['Photos', 'search'], ['Reports', 'reports']].map(([label, scr, badge]) => { const act = inWs ? scr === 'home' : st.screen === scr || (scr === 'jobs' && st.screen === 'close') || (scr === 'jobs' && st.screen === 'job') || (scr === 'reports' && (st.screen === 'report' || st.screen === 'customer')) || (scr === 'home' && (st.screen === 'issue' || st.screen === 'waiver')); return { label, badge, hasBadge: !!badge, go: () => this.go(scr), bg: act ? '#FFFFFF' : 'transparent', border: act ? '#E6E4DF' : 'transparent', weight: act ? 600 : 500 }; });
+    const crumbs = inWs ? ['Home', wsTitle] : { close: ['Jobs', '14 Maple Drive · Close dispute'], home: ['Home'], search: ['Photos', 'Search'], job: ['Jobs', J.addr], report: ['Reports', 'New report'], customer: ['Reports', 'Sent'], issue: ['Home', 'ISS-311'], waiver: ['Home', 'Waiver'], jobs: ['Jobs'], reports: ['Reports'] }[st.screen] || ['Home'];
+    const parentScr = { Home: 'home', Jobs: 'jobs', Photos: 'search', Reports: 'reports' }[crumbs[0]];
+
+    const reportsList = [...st.sent, { title: 'Leak repair · 3 Cedar Close', to: 'Mark Hill', sent: '21 Oct', state: 'Opened 21 Oct', k: 'sent' }, { title: 'Hail damage · 52 Pine Avenue', to: 'Northside Insurance · originals', sent: '17 Oct', state: 'Opened 18 Oct', k: 'sent' }, { title: 'Re-roof handover · 8 Willow Way', to: 'Ana Cruz', sent: '15 Oct', state: 'Delivered · not opened · expires 14 Nov', k: 'wait' }, { title: 'Chimney flashing · 2 Ash Close', to: 'Dan Ortiz', sent: '19 Sep', state: 'Expired 19 Oct', k: 'block' }].map(r => { const maple = /Maple/.test(r.title), elm = /Elm/.test(r.title); const actLabel = r.k === 'block' ? 'Resend link' : (maple || elm) ? 'View' : r.k === 'wait' ? 'Send reminder' : 'View'; const act = () => { if ((maple || elm) && r.k !== 'block') return this.go('customer', { jobId: maple ? 'maple' : 'elm' }); this.note(r.k === 'block' ? 'New link sent to ' + r.to + '. Expires in 30 days.' : r.k === 'wait' ? 'Reminder sent to ' + r.to + '.' : 'Opened by ' + r.to + '. Full report view not drawn in this prototype.'); }; return { ...r, bg: tagS[r.k][0], fg: tagS[r.k][1], actLabel, act }; });
+    const pickList = [['14 Maple Drive', 'Lena Park · 18 photos · gutter dispute open', d.dispute === 'open' ? 'Dispute open' : 'Report sent', 'maple', 'assets/est-gutter.png', d.dispute === 'open' ? 'due' : 'sent'], ['9 Elm Court', 'Priya Shah · 14 photos · insurance claim', d.claim === 'open' ? 'Due Fri' : 'Report sent', 'elm', 'assets/est-north.png', d.claim === 'open' ? 'due' : 'sent'], ['61 Birch Lane', 'Today · 9 of 12 uploaded', '3 still on phone', 'birch', 'assets/est-pipe-boot.png', 'wait']].map(([addr, sub, tag, id, img, k]) => ({ addr, sub, tag, img, bg: tagS[k][0], fg: tagS[k][1], go: () => { this.setState({ pickJob: false }); this.go('job', { jobId: id }); if (id === 'birch') this.note('3 photos are still on Ravi\'s phone. Wait for them before sharing.'); } }));
+    const allJobs = [['61 Birch Lane', 'Today · Ravi M', 'Work done', '9 of 12 · 3 on phone', 'birch', '#7A5A16'], ['7 Ash Road', 'Today · Jay T', 'In progress', '4 of 6 · 2 on phone', null, '#7A5A16'], ['14 Maple Drive', '20 Oct · Ravi M, Jay T', 'Done', '18 of 18 uploaded', 'maple', '#2F6B4F'], ['9 Elm Court', '16 Oct · Kim D', 'Inspection done', '14 of 14 uploaded', 'elm', '#2F6B4F'], ['3 Cedar Close', 'Today · Kim D', 'In progress', '3 of 3 uploaded', null, '#2F6B4F']].map(([addr, when, work, photos, id, photoFg]) => ({ addr, when, work, photos, photoFg, cursor: 'pointer', go: id ? () => this.go('job', { jobId: id }) : addr === '7 Ash Road' ? () => this.go('waiver') : () => this.note('3 Cedar Close is in progress. Open 61 Birch Lane, 14 Maple Drive or 9 Elm Court to see a full job.') }));
+    const findings = ['Damage visible before work began', 'Evidence suggests damage occurred during work', 'Inconclusive · cause can\'t be established'].map((label, i) => ({ label, border: st.finding === i ? '#1B1A17' : '#E6E4DF', dot: st.finding === i ? '#1B1A17' : '#FFFFFF', weight: st.finding === i ? 600 : 400, pick: () => this.setState({ finding: i }) }));
+    const rationale = ['The dent is visible in the 07:58 before photo and looks unchanged at 15:22. The photos don\'t show when or by whom it was caused.', 'The dent is not visible before work and appears after. Offer a repair and review with the crew.', 'The photos don\'t clearly show the downspout before work. Ask the crew and offer an inspection.'][st.finding];
+    const deliveryText = { sent: 'Delivered · not opened yet', opened: 'Opened by Lena 9:51 · no reply yet', replied: 'Lena replied 9:58: "Thanks, I can see it was already there."' }[st.delivery];
+    const outcomes = ['Awaiting customer response', 'Customer accepts the explanation', 'Customer still disputes the finding', 'Resolved by agreement'].map((label, i) => ({ label, border: st.outcome === i ? '#1B1A17' : '#E6E4DF', weight: st.outcome === i ? 600 : 400, dot: st.outcome === i ? '#1B1A17' : '#FFFFFF', sub: ['Keeps it open. Reminder on 30 Oct.', 'Closes the dispute.', 'Stays open, goes to the ops manager.', 'Closes the dispute.'][i], pick: () => this.setState({ outcome: i }) }));
+    const addDone = (title, what) => [{ title, what, when: '9:4' + (st.done.length + 2) }, ...st.done];
+
+    const wsStage = st.screen === 'job' ? 0 : st.screen === 'report' ? 1 : 2;
+    const sentNow = wsKind === 'dispute' ? d.dispute !== 'open' : d.claim !== 'open';
+    const delWord = { sent: 'Delivered · not opened', opened: 'Opened · no reply', replied: 'Lena replied' }[st.delivery];
+    const wsStatusTxt = wsKind === 'claim' ? 'Evidence for Northside Insurance · due Fri' : d.dispute === 'escalated' ? 'Escalated · ops manager' : !sentNow ? (wsStage === 1 ? 'Preparing report' : wsStage === 2 ? 'Report not sent' : 'Evidence review') : st.delivery === 'replied' ? 'Lena replied · record outcome' : 'Awaiting Lena';
+    const wsTabDefs = (wsKind === 'claim' ? [['Pick photos', 'job', '14 photos · ' + selCount + ' selected', selCount > 0], ['Send to insurer', 'report', 'Draft · sends original files', false]] : [['Pick photos', 'job', '18 photos · ' + (sentNow ? '2 shared' : selCount + ' selected'), sentNow || selCount > 0], ['Send to Lena', 'report', sentNow ? 'Sent · ' + delWord : 'Draft · not sent', sentNow], ['Close dispute', 'close', !sentNow ? 'After the report is sent' : st.delivery === 'replied' ? 'Ready to record' : 'Waiting for Lena', false]]);
+    const wsTabs = wsTabDefs.map(([label, scr, sub, done], i, arr) => { const cur = i === wsStage; const last = i === arr.length - 1; return { label, sub, bar: cur ? '#C0392B' : done ? '#1B1A17' : '#E6E4DF', step: 'STEP ' + (i + 1), mark: done && !cur ? '✓' : String(i + 1) + '.', ring: cur ? '#C0392B' : done ? '#1B1A17' : '#C9C5BD', dotBg: cur ? '#C0392B' : done ? '#1B1A17' : '#FFFFFF', dotFg: cur || done ? '#FFFFFF' : '#77726A', fg: cur ? '#1B1A17' : done ? '#3D3A34' : '#8C877D', weight: cur ? 600 : 500, hasLine: !last, flex: last ? '0 0 auto' : '1 1 0', line: done ? '#1B1A17' : '#DAD7D1', go: () => this.go(scr, { jobId: st.jobId }) }; });
+    const wsCount = wsTabDefs.length;
+    const goStage = (n) => this.go(wsTabDefs[n][1], { jobId: st.jobId });
+    const isClaimWs = wsKind === 'claim';
+    const out = {
+      wsBack: () => wsStage === 0 ? this.go('home') : goStage(wsStage - 1), wsBackLabel: wsStage === 0 ? 'Back to Home' : '← Back',
+      wsFootTitle: wsStage === 0 ? selCount + ' of ' + (isClaimWs ? 14 : 18) + ' photos selected' : wsStage === 1 ? (sentNow ? 'Report sent to ' + (isClaimWs ? 'Northside Insurance' : 'Lena') : 'Ready to send to ' + (isClaimWs ? 'Northside Insurance' : 'Lena Park')) : (st.delivery === 'replied' ? 'Lena replied · choose the outcome' : 'Waiting for Lena'),
+      wsFootSub: wsStage === 0 ? 'Only selected photos go in the report. Next: write the summary.' : wsStage === 1 ? (sentNow ? delWord : 'Check the preview, finding and summary before sending.') : 'Sending a report never closes a dispute. Only an outcome does.',
+      wsHasSecondary: wsStage === 0 && selCount > 0 || (wsStage === 1 && !sentNow), wsSecondaryLabel: wsStage === 0 ? 'Clear selection' : 'Copy link', wsSecondary: () => wsStage === 0 ? this.setState({ sel: {} }) : this.note('Link copied.'),
+      wsNextLabel: wsStage === 0 ? (selCount ? 'Continue to report →' : 'Select photos first') : wsStage === 1 ? (sentNow ? (isClaimWs ? 'Back to Home' : 'Go to response →') : (isClaimWs ? 'Send to insurer' : 'Send to Lena')) : (sentNow ? ['Keep open · remind me 30 Oct', 'Close dispute', 'Escalate to ops manager', 'Close dispute'][st.outcome] : 'Send the report first'),
+      wsNextBg: (wsStage === 0 && !selCount) || (wsStage === 2 && !sentNow) ? '#C9C5BD' : '#C0392B',
+      wsNext: () => { if (wsStage === 0) return selCount ? goStage(1) : this.note('Select at least one photo.'); if (wsStage === 1) { if (!sentNow) return out.sendReport(); return isClaimWs ? this.go('home') : goStage(2); } if (!sentNow) return goStage(1); return out.closeDispute(); },
+      showCloseCard: false, wsCount, inWs, notWs: !inWs, wsTitle, wsTabs, wsStatus: wsStatusTxt, wsStatusBg: wsKind === 'claim' || !sentNow ? '#FBF1DC' : st.delivery === 'replied' ? '#FBEAE7' : '#F4F3F1', wsStatusFg: wsKind === 'claim' || !sentNow ? '#7A5A16' : st.delivery === 'replied' ? '#9A2E22' : '#5E5A52',
+      wsMeta: wsKind === 'claim' ? 'Priya Shah · storm damage · insurer decides the outcome' : 'Lena Park · dent in front gutter · opened 20 Oct · last updated ' + (st.delivery === 'replied' ? '9:58' : sentNow ? '9:46' : '9:40'),
+      wsCanPreview: true, wsPreviewLabel: wsKind === 'claim' ? 'Preview as insurer' : 'Preview as Lena', wsPreview: () => this.go('customer', { jobId: st.jobId }),
+      flows, steps, flowWho, nav, toast: st.toast, hideToast: () => this.setState({ toast: '' }),
+      crumbParent: crumbs[0], crumbChild: crumbs[1] || '', hasCrumbChild: !!crumbs[1], goBack: () => this.go(parentScr),
+      openSearch: () => { clearInterval(this._iv); this.go('search', { phase: 'idle', q: '', stepN: 0 }); },
+      qRef: this.qRef, q: st.q, onQ: (e) => this.setState({ q: e.target.value }), onKey: (e) => { if (e.key === 'Enter') this.runSearch(); }, runSearch: () => this.runSearch(),
+      isIdle: st.phase === 'idle', isRunning: st.phase === 'running', isDone: st.phase === 'done', showSteps: st.phase !== 'idle', stepsOpen: st.stepsOpen,
+      toggleSteps: () => this.setState({ stepsOpen: !st.stepsOpen }), stepsToggleLabel: st.stepsOpen ? 'Hide' : 'Show steps',
+      stepsTitle: st.phase === 'running' ? (SR.steps[Math.min(3, st.stepN)][0] + '…') : `Searched 1,284 photos · ${SR.steps.length} steps`,
+      sr, aiSteps, suggestions, openResultJob: () => this.go('job', { jobId: st.srJob }), goJobs: () => this.go('jobs'), openMaple: () => this.go('job', { jobId: 'maple' }),
+      isHome: st.screen === 'home', isSearch: st.screen === 'search', isJob: st.screen === 'job', isReport: st.screen === 'report', isCustomer: st.screen === 'customer', isIssue: st.screen === 'issue', isClose: st.screen === 'close', closeReady: d.dispute === 'sent' || d.dispute === 'escalated', closeNotReady: !(d.dispute === 'sent' || d.dispute === 'escalated'), goReportMaple: () => this.go('report', { jobId: 'maple' }), goClose: () => this.go('close', { jobId: 'maple' }), canReply: st.delivery !== 'replied', closeSteps: [['20 Oct 08:15', 'Lena emailed about a dent in her gutter', true], ['20 Oct 16:41', '18 photos received from crew phones', true], ['23 Oct 9:44', 'Finding recorded by Sean: ' + ['Damage visible before work began', 'Damage likely during work', 'Inconclusive'][st.finding], d.dispute !== 'open'], ['23 Oct 9:46', 'Report sent to Lena', d.dispute !== 'open'], [st.delivery === 'sent' ? 'Now' : st.delivery === 'opened' ? '23 Oct 9:51' : '23 Oct 9:58', { sent: 'Delivered · not opened yet', opened: 'Opened by Lena · no reply yet', replied: 'Lena replied: "Thanks, I can see it was already there."' }[st.delivery], d.dispute !== 'open'], ['Next', 'Record the outcome', false]].map(([t, e, ok], i, arr) => ({ t, e, dot: ok ? '#1B1A17' : '#FFFFFF', ring: ok ? '#1B1A17' : '#C9C5BD', line: i === arr.length - 1 ? 'transparent' : '#E6E4DF', fg: ok ? '#1B1A17' : '#77726A' })), isWaiver: st.screen === 'waiver', isJobs: st.screen === 'jobs', isReports: st.screen === 'reports',
+      decisions: all, openCount, allClear: openCount === 0, todayJobs, doneList: st.done, doneCount: st.done.length, doneHeading: 'Done today · ' + st.done.length, hasDone: st.done.length > 0,
+      jobProps: (() => { const m = (J.meta || '').split(' · '); return [['Customer', m[0]], ['Job', (m[1] || '') + (m[4] ? ' · ' + m[4] : '')], ['Work date', m[2]], ['Crew', m[3]], ['Photos', ({ maple: '18 · 18 uploaded', elm: '14 · 14 uploaded', birch: '12 · 9 uploaded, 3 on phone' }[st.jobId] || '')]].filter(r => r[1]).map(([k, v]) => ({ k, v })); })(),
+      selShort: selCount + ' of ' + ({ maple: 18, elm: 14, birch: 12 }[st.jobId] || jobPhotos.length) + ' selected',
+      clearSel: () => this.setState(s2 => { const n = { ...s2.sel }; jobPhotos.forEach(p => { n[p.id] = false; }); return { sel: n }; }),
+      addLabel: selCount ? 'Add ' + selCount + (selCount === 1 ? ' photo' : ' photos') + ' to report' : 'Select photos to add',
+      sendLabel: 'Send to ' + (rpt && rpt.toShort ? rpt.toShort : 'customer'),
+      job, selCount, mapleKey, moreMatches, rpt, origBg: orig ? '#2F6B4F' : '#DAD7D1', origJustify: orig ? 'flex-end' : 'flex-start',
+      toReport: () => { if (!selCount) return this.note('Select at least one photo first.'); if (st.jobId === 'birch') return this.note('3 photos are still on Ravi\'s phone. Send once they arrive.'); this.go('report', st.screen === 'search' ? { jobId: st.srJob } : {}); },
+      toggleOrig: () => this.setState({ orig: !st.orig }),
+      sendReport: () => { const r = isElm ? { title: 'Storm damage · 9 Elm Court', to: 'Northside Insurance · originals', sent: '23 Oct', state: 'Sent · waiting for delivery', k: 'wait' } : { title: 'Gutter · 14 Maple Drive', to: 'Lena Park', sent: '23 Oct', state: 'Sent · waiting for delivery', k: 'wait' }; this.setState(s => ({ screen: 'customer', sent: [r, ...s.sent], dec: { ...s.dec, [isElm ? 'claim' : 'dispute']: 'sent' }, done: isElm ? addDone('Insurance claim · 9 Elm Court', 'report with originals sent') : s.done })); },
+      afterSend: () => isElm ? this.go('home') : this.go('close', { jobId: 'maple' }), afterSendLabel: isElm ? 'Back to Home' : 'Record the outcome',
+      showClose: st.jobId === 'maple' && (d.dispute === 'sent' || d.dispute === 'escalated'), outcomes, findings, rationale, deliveryText,
+      findingLabel: ['Damage visible before work began', 'Damage likely during work', 'Inconclusive'][st.finding],
+      selSummary: st.jobId === 'birch' ? selCount + ' of 12 selected' : selCount + ' of ' + (st.jobId === 'elm' ? 14 : 18) + ' selected · only these go in the report',
+      closeIntro: st.delivery === 'replied' ? 'Lena has replied. Pick what she said; only a resolved outcome closes the dispute.' : 'Default is to keep it open until Lena responds.',
+      closeLabel: ['Keep open · remind me 30 Oct', 'Close dispute', 'Escalate to ops manager', 'Close dispute'][st.outcome],
+      simLabel: { sent: 'Simulate: Lena opens it', opened: 'Simulate: Lena replies', replied: 'Lena replied ✓' }[st.delivery],
+      simReply: () => { const nx = { sent: 'opened', opened: 'replied', replied: 'replied' }[st.delivery]; this.setState({ delivery: nx, outcome: nx === 'replied' ? 1 : st.outcome }); this.note(nx === 'opened' ? 'Lena opened the report.' : 'Lena replied. Record the outcome on the job.'); },
+      closeDispute: () => { const o = st.outcome; if (o === 0) { this.go('home'); return this.note('Kept open. Reminder set for 30 Oct.'); } if (o === 2) { this.setState(s => ({ dec: { ...s.dec, dispute: 'escalated' }, screen: 'home' })); return this.note('Escalated to the ops manager. Still open.'); } this.setState(s => ({ dec: { ...s.dec, dispute: 'closed' }, done: addDone('Dispute · 14 Maple Drive', o === 1 ? 'closed · Lena accepted' : 'closed · resolved by agreement'), screen: 'home' })); this.note('Dispute closed. Finding, response and note saved on the job.'); },
+      boards: st.boards, boardsCost: `$${st.boards * 85}`, boardsDown: () => this.setState({ boards: Math.max(1, st.boards - 1) }), boardsUp: () => this.setState({ boards: st.boards + 1 }),
+      issueApprove: () => { this.setState(s => ({ dec: { ...s.dec, iss: 'approved' }, done: addDone('ISS-311 · Rotten decking', `${s.boards} boards approved · Ravi notified`), screen: 'home' })); this.note(`Approved. Ravi sees "Replace ${st.boards} boards" on his phone.`); },
+      issueMore: () => { this.setState(s => ({ dec: { ...s.dec, iss: 'more' }, done: addDone('ISS-311 · Rotten decking', 'asked Ravi for more photos'), screen: 'home' })); this.note('Sent back to Ravi. It returns here when he adds photos.'); },
+      waiverApprove: () => { this.setState(s => ({ dec: { ...s.dec, waiver: 'approved' }, done: addDone('Waiver · 7 Ash Road', 'approved · shot shows as Waived'), screen: 'home' })); this.note('Waiver approved. The shot shows as "Waived by Sean".'); },
+      waiverAngle: () => { this.setState(s => ({ dec: { ...s.dec, waiver: 'angle' }, done: addDone('Waiver · 7 Ash Road', 'asked Jay for another angle'), screen: 'home' })); this.note('Jay is asked for another angle. The shot stays missing.'); },
+      allJobs, reportsList, pickList, pickJob: !!st.pickJob, togglePick: () => this.setState({ pickJob: !st.pickJob }),
+      reset: () => this.setState(this.init()),
+    };
+    return out;
+  }
+}
+</script>
+</body>
+</html>

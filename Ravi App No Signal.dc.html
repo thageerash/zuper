@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>[data-phone-scroll]::-webkit-scrollbar{display:none}@keyframes upBob{0%,100%{transform:translateY(1px);opacity:1}50%{transform:translateY(-2.5px);opacity:.55}}@keyframes aiflow{0%{background-position:0% 50%}100%{background-position:200% 50%}}@keyframes aishim{0%{background-position:200% 0}100%{background-position:-200% 0}}@keyframes aispin{to{transform:rotate(360deg)}}@keyframes rvPend{0%,100%{opacity:1}50%{opacity:0.4}}@keyframes aiIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}@keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}@keyframes dimIn{from{opacity:0}to{opacity:1}}@keyframes rvFlow{0%{left:0%;opacity:0}15%{opacity:1}85%{opacity:1}100%{left:100%;opacity:0}}body{margin:0;background:#E9EBEF;color:#16150F;font-family:'Manrope',sans-serif}a{color:#16150F}a:hover{color:#B8341F}button{font-family:'Manrope',sans-serif;cursor:pointer}@keyframes phTurn{0%,15%{transform:rotate(0deg)}55%,85%{transform:rotate(90deg)}100%{transform:rotate(90deg)}}
+</style>
+<script>window.GUIDE_CFG={id:'ravi',pos:'left',tours:[
+{label:'A day on site',screens:['My jobs','Job details','On site','Camera','Lock screen','Job messages'],off:'Go back to My jobs to start this walkthrough.',steps:[
+{title:'Ravi’s jobs',body:'Ravi runs a roofing crew. His first job today is 18 Oak St. Tap View job.',target:'View job'},
+{when:'Check in',title:'Check in',body:'Here is the address, the problem and who to call. Tap Check in when the crew gets there.',target:'Check in',mode:'prefix'},
+{when:'Take arrival photos',title:'Arrival photos',body:'Take five photos of the house and roof before any work starts. Tap Take arrival photos.',target:'Take arrival photos'},
+{when:'Take photo',title:'Take the photo',body:'The camera tells you when the shot looks right. Tap the round button.',target:'Take photo'},
+{when:['Spot A · Take','Spot B · Take'],title:'Each repair spot',body:'Take a Before, Opened up and Fixed photo for each spot as the work goes. No signal is fine: photos save on the phone.',target:['Spot A · Take','Spot B · Take'],mode:'prefix'},
+{when:'Spot A · Take Opened up',title:'Phone in the pocket',body:'Ravi works for a while between photos. Tap “Prototype: lock the phone” below the timeline to see his lock screen.',target:'Prototype: lock the phone'},
+{when:'Open app instead',title:'Lock screen',body:'The next photo waits on his lock screen. Tap the card to go straight to the camera.',target:'Open camera for next photo'},
+{when:'Messages · new from Sean',title:'A message from Sean',body:'Spot B is open and the Opened up photo isn’t taken yet. After two reminders, Sean sent a message. Tap the message button at the top.',target:'Messages · new from Sean'},
+{when:'~Job messages',title:'Reply to Sean',body:'All messages for this job are in one place: reminders and Sean. Tap On it, then take the photo.',target:'On it'},
+{when:'Take finish photos',title:'Finish photos',body:'Take six photos of the finished roof and the clean-up.',target:'Take finish photos'},
+{when:'Check out',title:'Check out',body:'Tap Check out. Any photos still on the phone send by themselves later.',target:'Check out'}]},
+{label:'Phone locked while working',screens:['Lock screen','Camera','On site'],sub:true,off:'Pick this walkthrough again to jump to the lock screen.',steps:[
+{title:'Lock screen',body:'Ravi has put the phone in his pocket mid-job. The next photo waits on his lock screen. Tap the card.',target:'Open camera for next photo'},
+{when:'Take photo',title:'Straight to the camera',body:'One tap from the lock screen opens the camera on the right photo. Take it.',target:'Take photo'},
+{when:['Spot A · Take','Spot B · Take'],title:'Back on the job',body:'The photo is saved and the job moves on. That’s the lock screen flow.',target:['Spot A · Take','Spot B · Take'],mode:'prefix'}]},
+{label:'Uploads',screens:['My jobs','Uploads','One job’s photos'],off:'Go back to My jobs first. Then tap Uploads at the bottom.',steps:[
+{title:'Where are my photos?',body:'Tap Uploads at the bottom.',target:'Uploads'},
+{when:['~BY JOB','~By job','~BY STAGE','~By stage'],title:'No signal',body:'Tap a job to see each photo. Photos waiting for signal are safe and will send on their own.'}]},
+{label:'No signal',screens:['Uploads','One job’s photos'],sub:true,off:'Pick this walkthrough again to jump to Uploads with no signal.',steps:[
+{title:'No signal on the roof',body:'3 photos are waiting. Amber means waiting, not lost: they’re saved on the phone with time and location. Tap the job to see which ones.',target:'18 Oak St',mode:'prefix'}]},
+{label:'Signal comes back',screens:['Uploads','One job’s photos'],sub:true,off:'Pick this walkthrough again to watch photos send.',steps:[
+{title:'Signal is back',body:'Watch the photos send by themselves. Ravi doesn’t tap anything.'},
+{when:'~All sent',title:'All in the office',body:'Everything is sent. The strip on My jobs disappears too.'}]}],screens:[
+{name:'My jobs',info:'Ravi’s jobs for today, next one first.',why:'Each job shows the address first, because that’s where he’s driving. There are only two tabs: My jobs and Uploads.'},
+{when:'Check in',name:'Job details',info:'What Ravi needs before he gets out of the truck.',why:'Just the basics: start time, crew, gate code and the customer’s number. One big Check in button. Directions and Call sit below it.'},
+{when:['Take arrival photos','Spot A · Take','Spot B · Take','Take finish photos','Check out'],name:'On site',info:'The whole job in order, from arrival photos to check out.',why:'Ravi only sees the next step. Each repair spot asks for its photos at the right moment, because once a spot is covered it can’t be photographed again.'},
+{when:['~BY JOB','~By job'],name:'Uploads',info:'Shows whether the office has each photo yet.',why:'It opens on a no-signal day, because that’s normal on a roof. Amber means waiting to send, not lost. Red only means a photo failed to send.'},
+{when:['~BY STAGE','~By stage'],name:'One job’s photos',info:'Every photo from one job, and where each one is.',why:'It opens as a sheet, so Ravi doesn’t lose his place. Waiting photos pulse slowly to show they’ll send by themselves.'},
+{when:'Open app instead',name:'Lock screen',info:'What Ravi sees when his phone is locked on the roof.',why:'He doesn’t have to open the app and find the job. The next photo is on the lock screen, and one tap opens the camera for it. Messages from Sean show here too.'},
+{when:'~Job messages',name:'Job messages',info:'Every message for this job: photo reminders and notes from the office.',why:'One place for all messages, so it works for one message or twenty. A red count on the message button shows what’s new. Ravi can reply On it or call Sean in one tap.'},
+{when:'Take photo',name:'Camera',info:'The camera, with the name of the photo to take.',why:'Photos always come out the same shape, however he holds the phone. The camera only speaks up for real problems, like the roof edge being cut off.'}]};</script><script src="./guide.js"></script><script src="./fit.js"></script></helmet>
+<div data-fit="1" style="min-height:100vh;display:flex;justify-content:center;align-items:center;padding:40px 24px">
+  <div style="width:390px;height:844px;flex-shrink:0;border-radius:52px;position:relative;background:#F2F2F4;color:#16150F;box-shadow:0 0 0 11px #111214,0 30px 60px rgba(17,18,20,0.2);overflow:hidden;display:flex;flex-direction:column;position:relative">
+    <div data-phone-scroll="1" style="flex:1;overflow:auto;scrollbar-width:none;padding:36px 20px 120px;display:flex;flex-direction:column;gap:26px;min-height:0">
+      <sc-if value="{{ isSched }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600;color:#6B6860">Next 7 days · 4 jobs</span><span style="font-size:28px;font-weight:800;letter-spacing:-0.025em;line-height:1.1">Schedule</span></div>
+        <sc-for list="{{ days }}" as="d" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;padding:0 16px"><span style="font-size:13px;font-weight:800;color:{{ d.col }};letter-spacing:0.04em;text-transform:uppercase">{{ d.day }}</span><span style="font-size:13px;font-weight:600;color:#8A877F">{{ d.count }}</span></div>
+            <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 2px 10px rgba(16,15,12,0.05);overflow:hidden;display:flex;flex-direction:column">
+              <sc-for list="{{ d.jobs }}" as="j" hint-placeholder-count="1">
+                <div style="display:flex;align-items:center;gap:12px;min-height:76px;padding:14px 16px;border-top:{{ j.line }}">
+                  <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+                    <div style="display:flex;align-items:center;gap:8px"><span style="font-size:13.5px;font-weight:700;color:#4A4842;font-variant-numeric:tabular-nums">{{ j.time }}</span><span style="font-size:13.5px;color:#8A877F">{{ j.dur }}</span><sc-if value="{{ j.next }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;font-weight:800;color:#FFFFFF;background:#16150F;border-radius:5px;padding:2px 6px;letter-spacing:0.03em">NEXT</span></sc-if></div>
+                    <span style="font-size:17px;font-weight:800;letter-spacing:-0.01em">{{ j.addr }}</span>
+                    <span style="font-size:13.5px;color:#6B6860">{{ j.meta }}</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-shrink:0"><span style="font-size:13.5px;font-weight:600;color:#6B6860;white-space:nowrap">{{ j.mi }}</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8A59D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </sc-if>
+      <sc-if value="{{ isUp }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:6px"><span style="font-size:28px;font-weight:700;letter-spacing:-0.025em;line-height:1.1">Uploads</span><span style="height:36px;display:flex;align-items:center;gap:7px;padding:0 12px;border-radius:999px;background:{{ u.pillBg }};color:{{ u.pillFg }};font-size:13px;font-weight:700;white-space:nowrap"><sc-if value="{{ u.pillOff }}" hint-placeholder-val="{{ true }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2 8.8a15 15 0 0 1 4.2-2.6M9.5 5.2A15 15 0 0 1 22 8.8M5 12.5a10 10 0 0 1 4-2.2M15.5 10.6A10 10 0 0 1 19 12.5M8.5 16a5 5 0 0 1 7 0M3 3l18 18"></path></svg></sc-if><sc-if value="{{ u.pillDot }}" hint-placeholder-val="{{ false }}"><span style="width:7px;height:7px;border-radius:50%;background:currentColor"></span></sc-if>{{ u.pill }}</span></div>
+        <div style="background:#FFFFFF;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding-top:6px">
+            <div style="width:164px;height:164px;border-radius:50%;background:{{ ring }};display:flex;align-items:center;justify-content:center">
+              <div style="width:140px;height:140px;border-radius:50%;background:#FFFFFF;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px"><span style="font-size:40px;font-weight:700;letter-spacing:-0.03em;font-variant-numeric:tabular-nums;color:#1B1A17;line-height:1">{{ u.inOffice }}</span><span style="font-size:12px;font-weight:600;color:#6B6860;white-space:nowrap;text-align:center">of {{ ringTot }} sent</span></div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;max-width:270px"><span style="font-size:17px;font-weight:700;color:{{ u.headInk }}">{{ u.head }}</span><span style="font-size:14px;line-height:1.4;color:#6B6860;text-wrap:pretty">{{ u.sub }}</span></div>
+          </div>
+          <div style="display:flex;justify-content:center;gap:20px;border-top:1px solid #EFEFF1;padding-top:12px;font-size:13px;color:#6B6860">
+            <span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#2F6B4F"></span>Sent<b style="color:#1B1A17;font-variant-numeric:tabular-nums">{{ u.inOffice }}</b></span>
+            <span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:{{ phoneCol }}"></span>{{ phoneLbl }}<b style="color:#1B1A17;font-variant-numeric:tabular-nums">{{ u.onPhone }}</b></span>
+          </div>
+          <sc-if value="{{ u.retry }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ retry }}" style="height:52px;border:none;border-radius:999px;background:#A23B1E;color:#FFFFFF;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer">Try again</button>
+          </sc-if>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:13px;font-weight:600;color:#8E8E93;letter-spacing:0.06em;padding:0 4px">BY JOB</span>
+          <div style="background:#FFFFFF;border-radius:16px;padding:0 16px;display:flex;flex-direction:column">
+            <sc-for list="{{ u.jobs }}" as="r" hint-placeholder-count="3">
+              <div style="display:flex;flex-direction:column;border-top:{{ r.line }}">
+                <div onClick="{{ r.toggle }}" style="display:flex;flex-direction:column;gap:8px;padding:14px 0;cursor:pointer;min-height:44px">
+                  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+                    <div style="min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font-size:15px;font-weight:700;color:#1B1A17">{{ r.addr }}</span><span style="font-size:13px;color:#6B6860">{{ r.meta }}</span></div>
+                    <div style="display:flex;align-items:center;gap:6px;flex-shrink:0"><span style="font-size:13px;font-weight:600;color:#6B6860;white-space:nowrap">{{ r.n }}</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></div>
+                  </div>
+                  <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:{{ r.stCol }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.stDot }};flex-shrink:0"></span>{{ r.status }}</span>
+                  <div style="display:flex;height:4px;border-radius:2px;overflow:hidden;background:#ECECEF;gap:1px">
+                    <sc-for list="{{ r.segs }}" as="g" hint-placeholder-count="12"><div style="flex:1;background:{{ g.bg }}"></div></sc-for>
+                  </div>
+                </div>
+                
+              </div>
+            </sc-for>
+          </div>
+          
+        </div>
+      </sc-if>
+      <sc-if value="{{ isJob }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:24px;flex:1">
+          <div style="margin:-36px -20px 8px;padding:52px 20px 20px;background:linear-gradient(180deg,#E4EAF2 0%,#FFFFFF 100%);border-bottom:1px solid #E6E6EA;display:flex;flex-direction:column;gap:16px">
+            <button onClick="{{ backHome }}" aria-label="Back" style="width:44px;height:44px;border:none;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1B1A17" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></button>
+            <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px"><span style="font-size:13px;font-weight:600;color:#6B6860;font-family:'IBM Plex Mono',monospace">JOB #421</span><span style="font-size:30px;font-weight:700;letter-spacing:-0.025em;line-height:1.1;color:#1B1A17">18 Oak St</span><span style="font-size:15px;color:#6B6860">Leak repair</span></div>
+            <div style="display:flex;align-items:center;padding:14px 0 2px;border-top:1px solid rgba(27,26,23,0.08)"><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0"><span style="font-size:17px;font-weight:700;color:#1B1A17">8:00 AM</span><span style="font-size:12px;color:#6B6860">Start time</span></div><span style="width:1px;align-self:stretch;background:#E6E3DC"></span><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0"><span style="font-size:17px;font-weight:700;color:#1B1A17">3</span><span style="font-size:12px;color:#6B6860">Crew members</span></div><span style="width:1px;align-self:stretch;background:#E6E3DC"></span><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0"><span style="font-size:17px;font-weight:700;color:#1B1A17">17</span><span style="font-size:12px;color:#6B6860">Photos to take</span></div></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;justify-content:space-between;padding:0 4px"><span style="font-size:13px;font-weight:600;color:#8E8E93;letter-spacing:0.06em">GETTING IN</span></div><div style="background:#FFFFFF;border-radius:16px;padding:0 16px;display:flex;flex-direction:column"><div style="display:flex;gap:12px;align-items:flex-start;padding:16px 0;min-height:48px"><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:#6B6860">Side gate code</span><span style="font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;letter-spacing:0.16em;color:#1B1A17;line-height:1.25">4812</span><span style="font-size:13px;color:#6B6860;line-height:1.4;text-wrap:pretty">Set the ladder at the back of the house, not on the flower bed.</span></div></div><div style="border-top:1px solid #EFEFF1;display:flex;gap:12px;align-items:center;padding:14px 0;min-height:48px"><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600;color:#1B1A17">Ruth Okafor</span><span style="font-size:13px;color:#6B6860;line-height:1.4;text-wrap:pretty">Homeowner</span><span style="font-size:13px;font-weight:600;color:#2F6B4F">Home until 9 AM</span></div><div style="display:flex;gap:8px"><a href="tel:" aria-label="Call Ruth" style="width:48px;height:48px;border-radius:50%;background:#C0392B;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg></a></div></div></div></div>
+          <div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;justify-content:space-between;padding:0 4px"><span style="font-size:13px;font-weight:600;color:#8E8E93;letter-spacing:0.06em">REPORTED BY CUSTOMER</span></div><div style="background:#FFFFFF;border-radius:16px;padding:0 16px;display:flex;flex-direction:column"><div style="display:flex;gap:12px;align-items:flex-start;padding:16px 0;min-height:48px"><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:500;color:#1B1A17;line-height:1.4;text-wrap:pretty">Water stain on the kitchen ceiling after heavy rain. Worse near the back wall.</span></div></div></div></div>
+          <div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;justify-content:space-between;padding:0 4px"><span style="font-size:13px;font-weight:600;color:#8E8E93;letter-spacing:0.06em">PHOTOS TO TAKE</span><span style="font-size:13px;font-weight:700;color:#3C3C43">17</span></div><div style="background:#FFFFFF;border-radius:16px;padding:0 16px;display:flex;flex-direction:column"><div style="display:flex;gap:12px;align-items:center;padding:14px 0;min-height:48px"><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600;color:#1B1A17">Site photos</span><span style="font-size:13px;color:#6B6860;line-height:1.4;text-wrap:pretty">Arrival, roof, before and after</span></div><span style="font-size:15px;font-weight:600;color:#6B6860">11</span></div><div style="border-top:1px solid #EFEFF1;display:flex;gap:12px;align-items:center;padding:14px 0;min-height:48px"><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600;color:#1B1A17">Spot A · Vent pipe</span><span style="font-size:13px;color:#6B6860;line-height:1.4;text-wrap:pretty">Before · Opened up · Fixed</span></div><span style="font-size:15px;font-weight:600;color:#6B6860">3</span></div><div style="border-top:1px solid #EFEFF1;display:flex;gap:12px;align-items:center;padding:14px 0;min-height:48px"><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600;color:#1B1A17">Spot B · Soft decking</span><span style="font-size:13px;color:#6B6860;line-height:1.4;text-wrap:pretty">Before · Opened up · Fixed</span></div><span style="font-size:15px;font-weight:600;color:#6B6860">3</span></div></div></div>
+          <div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;justify-content:space-between;padding:0 4px"><span style="font-size:13px;font-weight:600;color:#8E8E93;letter-spacing:0.06em">CREW</span></div><div style="background:#FFFFFF;border-radius:16px;padding:0 16px;display:flex;flex-direction:column"><div style="display:flex;gap:12px;align-items:center;padding:12px 0;"><span style="width:36px;height:36px;border-radius:50%;background:#1B1A17;color:#FFFFFF;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">RK</span><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px"><span style="font-size:15px;font-weight:600;color:#1B1A17">Ravi · you</span><span style="font-size:13px;color:#6B6860">Crew lead · checks in, takes the photos</span></div></div><div style="display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid #EFEFF1;"><span style="width:36px;height:36px;border-radius:50%;background:#F2F2F4;color:#3C3C43;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">JM</span><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px"><span style="font-size:15px;font-weight:600;color:#1B1A17">Jay</span><span style="font-size:13px;color:#6B6860">Roofer</span></div></div><div style="display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid #EFEFF1;"><span style="width:36px;height:36px;border-radius:50%;background:#F2F2F4;color:#3C3C43;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">KL</span><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px"><span style="font-size:15px;font-weight:600;color:#1B1A17">Kim</span><span style="font-size:13px;color:#6B6860">Roofer</span></div></div></div></div>
+        </div>
+        <div style="position:sticky;bottom:-120px;margin:auto -20px -120px;padding:16px 20px 16px;background:#FFFFFF;border-top:1px solid #E6E6EA;display:flex;gap:10px">
+      <button aria-label="Directions" style="width:54px;height:54px;border:none;border-radius:50%;background:#FBEAE6;box-shadow:0 1px 2px rgba(192,57,43,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-sizing:border-box;cursor:pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="#C0392B" stroke="#C0392B" stroke-width="1.6" stroke-linejoin="round"><path d="M20.5 3.5 3.8 10.6a.6.6 0 0 0 .07 1.13l6.6 1.8 1.8 6.6a.6.6 0 0 0 1.13.07z"></path></svg></button>
+      <button onClick="{{ checkIn }}" style="flex:1;height:54px;border:none;border-radius:999px;background:#C0392B;color:#FFFFFF;font-family:inherit;font-size:16px;font-weight:700">{{ ctaLbl }}</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isSite }}" hint-placeholder-val="{{ false }}">
+        <div style="margin:-36px -20px -8px;padding:24px 20px 16px;background:linear-gradient(180deg,#E4EAF2 0%,#FFFFFF 100%);border-bottom:1px solid #E6E6EA;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <button onClick="{{ backJob }}" aria-label="Back" style="width:44px;height:44px;border:none;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-left:-4px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B1A17" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"></path></svg></button>
+            <div style="display:flex;align-items:center;gap:8px"><button onClick="{{ msgOpenF }}" aria-label="{{ msgAria }}" style="position:relative;width:48px;height:36px;border:none;border-radius:999px;background:#FFFFFF;box-shadow:0 1px 3px rgba(27,26,23,0.12),inset 0 0 0 1px #E2E4E8;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B1A17" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-10.9 6.7L4.5 19.5l1.3-4.2A7.5 7.5 0 1 1 20 11.5z"></path><path d="M8.6 11.6h.01M12 11.6h.01M15.4 11.6h.01" stroke-width="2.6"></path></svg><sc-if value="{{ msgBadge }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:-2px;right:-2px;min-width:20px;height:20px;padding:0 5px;box-sizing:border-box;border-radius:999px;background:#C0392B;color:#FFFFFF;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px #FFFFFF">{{ msgN }}</span></sc-if></button><sc-if value="{{ noSig }}" hint-placeholder-val="{{ true }}"><button onClick="{{ sigBack }}" title="Prototype: tap to bring signal back" style="height:36px;display:flex;align-items:center;gap:7px;padding:0 12px;border:none;border-radius:999px;background:#FBEBC9;color:#7A4B00;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7A4B00" stroke-width="2.2" stroke-linecap="round"><path d="M2 8.8a15 15 0 0 1 4.2-2.6M9.5 5.2A15 15 0 0 1 22 8.8M5 12.5a10 10 0 0 1 4-2.2M15.5 10.6A10 10 0 0 1 19 12.5M8.5 16a5 5 0 0 1 7 0M3 3l18 18"></path></svg>{{ sigPill }}</button></sc-if><sc-if value="{{ hasSig }}" hint-placeholder-val="{{ false }}"><span style="height:36px;display:flex;align-items:center;gap:7px;padding:0 12px;border-radius:999px;background:#E2EDE6;color:#2F6B4F;font-size:13px;font-weight:700"><span style="width:7px;height:7px;border-radius:50%;background:#2F6B4F"></span>{{ sigPill }}</span></sc-if></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:12px;font-weight:600;color:#8E8E93;letter-spacing:0.06em">#421 · ON SITE</span><span style="font-size:28px;font-weight:700;letter-spacing:-0.025em;line-height:1.1;color:#1B1A17">18 Oak St</span><span style="font-size:15px;font-weight:500;color:#6B6860">Leak repair</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span style="font-size:14px;font-weight:700;color:#1B1A17">{{ arr }} of 17 photos</span><sc-if value="{{ pendShow }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;font-weight:600;color:#7A4B00">{{ pendLine }}</span></sc-if></div>
+            <div style="height:6px;border-radius:3px;background:#ECECEF;overflow:hidden"><div style="height:100%;width:{{ pct }};background:#2F6B4F;border-radius:3px"></div></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <sc-if value="{{ back }}" hint-placeholder-val="{{ false }}"><div style="background:#1B1A17;color:#FFFFFF;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:3px;margin-bottom:6px"><span style="font-size:12px;font-weight:700;letter-spacing:0.06em;color:#B9B9BE">WELCOME BACK · ON SITE {{ workFor }}</span><span style="font-size:17px;font-weight:700">Next photo: {{ nextTitle }}</span><span style="font-size:13px;color:#D9D9DE">{{ nextHint }}</span></div></sc-if>
+          
+          <span style="font-size:13px;font-weight:700;color:#8E8E93;letter-spacing:0.06em;padding-left:4px">JOB PROGRESS</span>
+          <div style="background:#FFFFFF;border-radius:16px;padding:6px 16px;display:flex;flex-direction:column">
+            <sc-for list="{{ tl }}" as="s" hint-placeholder-count="6">
+              <div style="display:flex;gap:12px">
+                <div style="width:24px;display:flex;flex-direction:column;align-items:center;flex-shrink:0">
+                  <span style="width:2px;height:12px;background:{{ s.lineTop }}"></span>
+                  <span style="width:22px;height:22px;border-radius:50%;flex-shrink:0;background:{{ s.dotBg }};box-shadow:{{ s.dotRing }};color:#FFFFFF;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ s.mark }}</span>
+                  <span style="width:2px;flex:1;min-height:10px;background:{{ s.lineBot }}"></span>
+                </div>
+                <div style="flex:1;min-width:0;padding:10px 0 12px;display:flex;flex-direction:column;gap:3px">
+                  <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><span style="font-size:15px;font-weight:{{ s.wt }};color:{{ s.col }}">{{ s.title }}</span><span style="font-size:13px;font-weight:600;color:{{ s.timeCol }};white-space:nowrap">{{ s.time }}</span></div>
+                  <sc-if value="{{ s.sub }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;color:#6B6860">{{ s.sub }}</span></sc-if>
+                  <sc-if value="{{ s.hasChips }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;gap:4px;padding-top:8px">
+                      <sc-for list="{{ s.chips }}" as="c" hint-placeholder-count="3"><span style="flex:1;display:flex;flex-direction:column;gap:5px"><span style="height:3px;border-radius:2px;background:{{ c.bar }}"></span><span style="font-size:12px;font-weight:{{ c.w }};color:{{ c.fg }}">{{ c.t }}</span></span></sc-for>
+                    </div>
+                    <span style="font-size:13px;color:#1B1A17;padding-top:8px">{{ s.hint }}</span>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <span style="font-size:13px;color:#6B6860;padding:4px 4px 0;text-wrap:pretty">Photos are stored on this device and upload automatically when a signal is available.</span>
+          <sc-if value="{{ canLock }}" hint-placeholder-val="{{ false }}"><button onClick="{{ lock }}" style="align-self:center;margin-top:8px;height:44px;padding:0 16px;border:1.5px dashed #C7C7CC;border-radius:999px;background:transparent;font-family:inherit;font-size:13px;font-weight:600;color:#6B6860;cursor:pointer">Prototype: lock the phone</button></sc-if>
+        </div>
+        <div style="position:sticky;bottom:-120px;margin:auto -20px -120px;padding:16px 20px 16px;background:#FFFFFF;border-top:1px solid #E6E6EA;display:flex;flex-direction:column;gap:2px">
+          <sc-if value="{{ sigToast }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:0;right:0;bottom:calc(100% + 12px);display:flex;justify-content:center;pointer-events:none"><span style="display:flex;align-items:center;gap:8px;height:36px;padding:0 16px;border-radius:18px;background:#FBEBC8;border:1px solid #E9C77A;color:#6B4A0E;font-size:14px;font-weight:600;box-shadow:0 4px 14px rgba(107,74,14,0.15)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B4A0E" stroke-width="2" stroke-linecap="round"><path d="M2 20h.01M7 20v-4M12 20v-8M17 20V8M22 4 2 22"></path></svg>No signal · photos save on this phone</span></div></sc-if><sc-if value="{{ snackOn }}" hint-placeholder-val="{{ false }}"><div key="{{ snackT }}" style="position:absolute;left:20px;right:20px;bottom:calc(100% + 10px);background:#1B1A17;color:#FFFFFF;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.18);animation:sheetUp 280ms cubic-bezier(.2,.9,.3,1)"><span style="width:22px;height:22px;border-radius:50%;background:#2F6B4F;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">✓</span><span style="font-size:14px;font-weight:600;flex:1">{{ snackT }}</span><span style="font-size:13px;color:#B9B9BE">{{ snackAt }}</span></div></sc-if>
+          <button onClick="{{ openCam }}" style="flex-shrink:0;height:56px;border:none;border-radius:999px;background:#C0392B;color:#FFFFFF;font-family:inherit;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><svg style="display:{{ camIco }};flex-shrink:0" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7.5 6.5H5a2 2 0 0 0-2 2V18a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a2 2 0 0 0-2-2h-2.5z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>{{ siteCta }}</button>
+          
+        </div>
+      </sc-if>
+      <sc-if value="{{ isOut }}" hint-placeholder-val="{{ false }}">
+        <div style="margin:-36px -20px 0;padding:72px 24px 28px;background:#2F6B4F;color:#FFFFFF;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
+          <span style="width:68px;height:68px;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center;margin-bottom:6px;animation:sheetUp 360ms cubic-bezier(.2,.9,.3,1)"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2F6B4F" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+          <span style="font-size:12px;font-weight:700;color:#CFE3D6;letter-spacing:0.08em">#421 · 18 OAK ST</span>
+          <span style="font-size:28px;font-weight:700;letter-spacing:-0.025em">Checked out</span>
+          <span style="font-size:15px;color:#E2EDE6">10:45 AM · On site 2 h 43 min</span><span style="font-size:13px;font-weight:700;color:#FFFFFF;background:rgba(255,255,255,0.16);border-radius:999px;padding:5px 12px;margin-top:4px">All 17 accounted for</span>
+          <div style="margin-top:18px;width:100%;display:grid;grid-template-columns:1fr 1fr;background:rgba(255,255,255,0.12);border-radius:16px">
+            <div style="padding:14px 8px;display:flex;flex-direction:column;gap:2px;border-right:1px solid rgba(255,255,255,0.18)"><span style="font-size:26px;font-weight:700;letter-spacing:-0.02em">{{ outPhotos }}</span><span style="font-size:12px;color:#E2EDE6">Photos taken</span></div>
+            <div style="padding:14px 8px;display:flex;flex-direction:column;gap:2px"><span style="font-size:26px;font-weight:700;letter-spacing:-0.02em">{{ outReasons }}</span><span style="font-size:12px;color:#E2EDE6">{{ outReasonLbl }}</span></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;padding-top:20px">
+          <span style="font-size:13px;font-weight:700;color:#8E8E93;letter-spacing:0.06em;padding-left:4px">UPLOAD TO OFFICE</span>
+          <div style="background:#FFFFFF;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;gap:16px">
+              <div style="position:relative;width:72px;height:72px;border-radius:50%;background:{{ outRing }};flex-shrink:0;display:flex;align-items:center;justify-content:center"><div style="width:58px;height:58px;border-radius:50%;background:#FFFFFF;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1"><span style="font-size:18px;font-weight:700;color:#1B1A17">{{ outSent }}</span><span style="font-size:11px;font-weight:600;color:#8E8E93;padding-top:2px">of {{ outTot }}</span></div></div>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+                <span style="font-size:17px;font-weight:700;color:#1B1A17">{{ outLine }}</span>
+                <div style="display:flex;flex-direction:column;gap:3px;font-size:13px;color:#6B6860"><span style="display:flex;align-items:center;gap:7px"><span style="width:8px;height:8px;border-radius:50%;background:#2F6B4F"></span>{{ outSent }} in the office</span><sc-if value="{{ outHasLeft }}" hint-placeholder-val="{{ true }}"><span style="display:flex;align-items:center;gap:7px"><span style="width:8px;height:8px;border-radius:50%;background:{{ outWaitCol }}"></span>{{ outLeft }} {{ outWaitLbl2 }}</span></sc-if></div>
+              </div>
+            </div>
+            <span style="font-size:14px;line-height:1.45;color:#3C3C43;text-wrap:pretty;padding-top:2px;border-top:1px solid #EFEFF1;padding-top:12px">{{ outSub }}</span>
+          </div>
+          <sc-if value="{{ outWait }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#FFFFFF;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:13px;font-weight:700;color:#8E8E93;letter-spacing:0.06em">GOOD TO KNOW</span>
+              <span style="font-size:14px;line-height:1.45;color:#1B1A17">They send by themselves, even with the app closed.</span>
+              <span style="font-size:14px;line-height:1.45;color:#1B1A17">Don’t delete the app until this says all are in the office.</span>
+              <span style="font-size:14px;line-height:1.45;color:#1B1A17">Not in by 2:45 PM? Sean will call you.</span>
+            </div>
+          </sc-if>
+        </div>
+        <div style="position:sticky;bottom:-120px;margin:auto -20px -120px;padding:16px 20px 16px;background:#FFFFFF;border-top:1px solid #E6E6EA;display:flex">
+          <button onClick="{{ backHome }}" style="flex:1;height:56px;border:none;border-radius:999px;background:#1B1A17;color:#FFFFFF;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer">Back to my jobs</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isLock }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:30;background:linear-gradient(180deg,#2B2F36,#14161A);color:#FFFFFF;display:flex;flex-direction:column;align-items:center;padding:70px 14px 30px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+          <span style="font-size:17px;font-weight:600;color:#D9D9DE;padding-top:8px">Friday 24 October</span>
+          <span style="font-size:84px;font-weight:600;letter-spacing:-0.03em;line-height:1">{{ lockClock }}</span>
+          <sc-if value="{{ seanLock }}" hint-placeholder-val="{{ false }}"><div onClick="{{ fromMsg }}" style="margin-top:auto;margin-bottom:10px;width:100%;box-sizing:border-box;background:rgba(255,255,255,0.78);color:#1B1A17;border-radius:20px;padding:12px 14px;display:flex;gap:10px;cursor:pointer;animation:sheetUp 320ms cubic-bezier(.2,.9,.3,1)"><span style="width:34px;height:34px;border-radius:50%;background:#1B1A17;color:#FFFFFF;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">SD</span><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><div style="display:flex;justify-content:space-between;gap:8px"><span style="font-size:14px;font-weight:700">Sean · Office</span><span style="font-size:12px;color:#6B6860">now</span></div><span style="font-size:14px;line-height:1.35;text-wrap:pretty">Ravi, Spot B is still open. Please take the Opened up photo before you cover it.</span></div></div></sc-if>
+          <div onClick="{{ fromLive }}" aria-label="Open camera for next photo" style="margin-top:{{ liveMt }};width:100%;box-sizing:border-box;background:rgba(255,255,255,0.92);color:#1B1A17;border-radius:24px;padding:14px 14px 14px 16px;display:flex;flex-direction:column;gap:10px;cursor:pointer;animation:sheetUp 320ms cubic-bezier(.2,.9,.3,1)">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px"><span style="display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:#6B6860"><img src="assets/zuper-logo.png" alt="" style="width:18px;height:18px;border-radius:5px"></img><span>18 Oak St · {{ arr }} of 17</span></span><span style="font-size:19px;font-weight:700;letter-spacing:-0.01em;color:#1B1A17">{{ lockTitle }}</span></div>
+              <span style="width:56px;height:56px;border-radius:50%;background:#C0392B;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg></span>
+            </div>
+          </div>
+          <span style="font-size:13px;color:#B9B9BE;padding-top:12px">Tap the card to take it</span>
+          <button onClick="{{ fromApp }}" style="margin-top:14px;height:44px;padding:0 18px;border:none;border-radius:999px;background:rgba(255,255,255,0.16);color:#FFFFFF;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer">Open app instead</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ msgSheet }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ msgClose }}" style="position:absolute;inset:0;z-index:40;background:rgba(0,0,0,0.45);animation:dimIn 200ms ease-out"></div>
+        <div style="position:absolute;left:0;right:0;bottom:0;z-index:41;height:86%;background:#F2F2F4;border-radius:26px 26px 0 0;animation:sheetUp 300ms cubic-bezier(.2,.9,.3,1);display:flex;flex-direction:column;overflow:hidden;color:#1B1A17">
+          <div style="background:#FFFFFF;padding:10px 20px 14px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid #E6E6EA">
+            <span style="align-self:center;width:38px;height:5px;border-radius:3px;background:#D6D6DA"></span>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><div style="display:flex;flex-direction:column;gap:1px"><span style="font-size:22px;font-weight:700;letter-spacing:-0.02em">Job messages</span><span style="font-size:13px;color:#6B6860">#421 · 18 Oak St · Sean and reminders</span></div><button onClick="{{ msgClose }}" aria-label="Close" style="width:44px;height:44px;border:none;border-radius:50%;background:#F2F2F4;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B1A17" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+          </div>
+          <div style="flex:1;min-height:0;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:10px">
+            <sc-if value="{{ msgEmpty }}" hint-placeholder-val="{{ false }}"><span style="padding:24px 8px;text-align:center;font-size:14px;color:#6B6860;text-wrap:pretty">No messages yet. Messages from the office and photo reminders for this job show here.</span></sc-if>
+            <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="0">
+              <div style="display:flex;flex-direction:column;gap:3px;align-self:{{ m.side }};max-width:86%">
+                <span style="font-size:12px;font-weight:600;color:#8E8E93;align-self:{{ m.side }}">{{ m.who }} · {{ m.at }}</span>
+                <span style="padding:10px 13px;border-radius:16px;background:{{ m.bg }};color:{{ m.fg }};font-size:15px;line-height:1.4;text-wrap:pretty">{{ m.t }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ seanAsk }}" hint-placeholder-val="{{ false }}"><div style="background:#FFFFFF;border-top:1px solid #E6E6EA;padding:12px 16px 28px;display:flex;gap:8px"><button onClick="{{ seanOn }}" style="flex:1;height:52px;border:none;border-radius:999px;background:#1B1A17;color:#FFFFFF;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer">On it</button><a href="tel:" style="flex:1;height:52px;border-radius:999px;background:#F2F2F4;color:#1B1A17;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;text-decoration:none">Call Sean</a></div></sc-if>
+        </div>
+      </sc-if>
+      <sc-if value="{{ upSheet }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeUp }}" style="position:absolute;inset:0;z-index:40;background:rgba(0,0,0,0.45);animation:dimIn 200ms ease-out"></div>
+        <div style="position:absolute;left:0;right:0;bottom:0;z-index:41;max-height:82%;background:#F2F2F4;border-radius:26px 26px 0 0;animation:sheetUp 300ms cubic-bezier(.2,.9,.3,1);display:flex;flex-direction:column;overflow:hidden;color:#1B1A17">
+          <div style="background:#FFFFFF;padding:10px 20px 18px;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid #E6E6EA">
+            <span style="align-self:center;width:40px;height:5px;border-radius:3px;background:#D1D1D6"></span>
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+              <div style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-size:22px;font-weight:700;letter-spacing:-0.02em">{{ uj.addr }}</span><span style="font-size:14px;color:#6B6860">{{ uj.meta }}</span></div>
+              <button onClick="{{ closeUp }}" aria-label="Close" style="width:44px;height:44px;flex-shrink:0;border:none;border-radius:50%;background:#F2F2F4;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1B1A17" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:{{ uj.stBg }}"><span style="width:14px;height:14px;border-radius:50%;flex-shrink:0;box-sizing:border-box;border:2px solid {{ uj.stDot }};border-top-color:{{ uj.stTop }};background:{{ uj.stTop }};animation:{{ uj.spin }}"></span><div style="display:flex;flex-direction:column;gap:2px;flex:1;min-width:0"><span style="font-size:15px;font-weight:700;color:{{ uj.stCol }}">{{ uj.status }}</span><span style="font-size:13px;color:#4A4842">{{ uj.n }} sent</span></div></div>
+            <div style="display:flex;height:6px;border-radius:3px;overflow:hidden;background:#ECECEF;gap:1px"><sc-for list="{{ uj.segs }}" as="g" hint-placeholder-count="12"><div style="flex:1;background:{{ g.bg }};animation:{{ g.anim }}"></div></sc-for></div>
+          </div>
+          <div style="overflow-y:auto;padding:16px 20px 30px;display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:13px;font-weight:600;color:#8E8E93;letter-spacing:0.06em;padding:0 4px">BY STAGE</span>
+            <div style="background:#FFFFFF;border-radius:16px;padding:0 16px;display:flex;flex-direction:column">
+              <sc-for list="{{ uj.groups }}" as="gr" hint-placeholder-count="4">
+                <div style="display:flex;flex-direction:column;gap:6px;padding:14px 0;border-top:{{ gr.line }}">
+                  <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline"><span style="font-size:15px;font-weight:600">{{ gr.name }}</span><span style="font-size:13px;font-weight:600;color:{{ gr.col }};white-space:nowrap">{{ gr.sum }}</span></div>
+                  <sc-for list="{{ gr.items }}" as="it" hint-placeholder-count="0"><span style="display:flex;align-items:center;gap:8px;font-size:14px;color:#4A4842"><span style="width:8px;height:8px;border-radius:50%;background:{{ it.dot }};flex-shrink:0"></span>{{ it.t }}</span></sc-for>
+                </div>
+              </sc-for>
+            </div>
+            <span style="font-size:13px;color:#6B6860;padding:4px 4px 0;text-wrap:pretty">{{ uj.foot }}</span>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isCam }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:30;background:#0E0E10;color:#FFFFFF;overflow:hidden">
+          <div style="position:absolute;left:50%;top:50%;width:{{ cam.w }};height:{{ cam.h }};transform:translate(-50%,-50%) rotate({{ cam.rot }});transition:transform 420ms cubic-bezier(.3,.9,.3,1);display:grid;grid-template-columns:{{ cam.cols }};grid-template-rows:{{ cam.rows }};grid-template-areas:{{ cam.areas }}">
+          <div style="grid-area:h;padding:{{ cam.hPad }};display:flex;align-items:center;gap:12px">
+            <button onClick="{{ closeCam }}" aria-label="Close camera" style="width:44px;height:44px;border:none;border-radius:50%;background:rgba(255,255,255,0.14);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+            <div style="flex:1;display:flex;flex-direction:column;gap:1px"><span style="font-size:12px;font-weight:700;letter-spacing:0.06em;color:#B9B9BE">{{ phKick }} · {{ shotNo }} OF {{ phN }}</span><span style="font-size:20px;font-weight:700">{{ shot.title }}</span></div>
+          </div>
+          <div style="grid-area:v;align-self:center;width:100%;aspect-ratio:4 / 3;position:relative;overflow:visible;background:#2A2A2E">
+            <div style="position:absolute;inset:0;overflow:hidden"><div style="width:100%;height:100%;background:#2A2A2E url({{ shot.img }}) center/cover;opacity:0.85;transform:{{ ai.xf }};transform-origin:{{ ai.xo }};transition:transform 900ms cubic-bezier(.3,.7,.2,1)"></div></div>
+            <div style="position:absolute;inset:28px 24px;border:2px {{ ai.border }};border-radius:14px;transition:border-color 300ms"></div>
+            <div style="position:absolute;inset:0;background:#FFFFFF;pointer-events:none;opacity:{{ flashOp }};transition:{{ flashTr }}"></div>
+            <div style="position:absolute;left:16px;right:16px;top:calc(100% + 16px);border-radius:16px;padding:1.5px;background:{{ ai.edge }};background-size:200% 100%;animation:{{ ai.edgeAnim }};box-shadow:{{ ai.glow }}">
+              <div style="border-radius:14.5px;background:#FFFFFF;padding:11px 14px;display:flex;flex-direction:column;gap:4px">
+                <div style="display:flex;align-items:center;gap:7px">
+                  <sc-if value="{{ ai.busy }}" hint-placeholder-val="{{ true }}"><span style="width:13px;height:13px;border-radius:50%;border:2px solid #E4DEFC;border-top-color:#6D5DF5;animation:aispin 0.8s linear infinite;flex-shrink:0"></span></sc-if>
+                  <sc-if value="{{ ai.warn }}" hint-placeholder-val="{{ false }}"><span style="width:16px;height:16px;border-radius:50%;background:#B7791F;color:#FFFFFF;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;animation:aiIn 240ms ease-out">!</span></sc-if>
+                  <sc-if value="{{ ai.done }}" hint-placeholder-val="{{ false }}"><span style="width:16px;height:16px;border-radius:50%;background:#2F6B4F;color:#FFFFFF;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;animation:aiIn 240ms ease-out">✓</span></sc-if>
+                  <span style="font-size:12px;font-weight:700;background-image:{{ ai.labelBg }};background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:{{ ai.labelCol }};animation:{{ ai.labelAnim }}">{{ ai.label }}</span>
+                </div>
+                <span style="font-size:15px;font-weight:600;line-height:1.35;color:#16150F;text-wrap:pretty;animation:aiIn 260ms ease-out" key="{{ ai.msg }}">{{ ai.msg }}</span>
+                <sc-if value="{{ ai.keep }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:4px"><span style="font-size:12px;color:#6B6860">Not saved yet · move and take it again</span><button onClick="{{ keepAnyway }}" style="height:36px;padding:0 12px;border:1px solid #D9D6CE;border-radius:999px;background:#FFFFFF;color:#1B1A17;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap">Use it anyway</button></div></sc-if>
+              </div>
+            </div>
+            <sc-if value="{{ showSaved }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);padding:8px 14px;border-radius:999px;background:rgba(14,14,16,0.85);font-size:13px;font-weight:600;white-space:nowrap;display:flex;gap:6px;align-items:center"><span style="color:#7FC39C">✓</span>{{ savedText }}</div></sc-if>
+          </div>
+          <div style="grid-area:c;padding:{{ cam.cPad }};display:flex;flex-direction:column;justify-content:center;gap:16px">
+            <div style="display:flex;justify-content:center;gap:6px">
+              <sc-for list="{{ dots }}" as="d" hint-placeholder-count="5"><span style="width:{{ cam.dotW }};height:4px;border-radius:2px;background:{{ d.bg }}"></span></sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:{{ cam.rowCols }};row-gap:{{ cam.rowGap }};align-items:center;justify-items:center">
+              <button onClick="{{ cantTake }}" style="justify-self:{{ cam.js }};order:{{ cam.cantOrd }};height:44px;padding:0 4px;border:none;background:none;color:#D9D9DE;font-family:inherit;font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer">Can't take it</button>
+              <button onClick="{{ snap }}" aria-label="Take photo" style="width:80px;height:80px;border-radius:50%;border:4px solid {{ ai.ring }};background:transparent;padding:4px;cursor:pointer;transition:border-color 300ms"><span style="display:block;width:100%;height:100%;border-radius:50%;background:#FFFFFF;transform:scale({{ pressScale }});transition:transform 120ms"></span></button>
+              <div style="justify-self:{{ cam.je }};order:{{ cam.thOrd }};min-height:48px;display:flex;align-items:center;gap:8px"><sc-if value="{{ hasThumb }}" hint-placeholder-val="{{ false }}"><div style="position:relative;width:48px;height:48px;border-radius:10px;overflow:hidden;border:2px solid #FFFFFF;transform:scale({{ thumbScale }});transition:transform 260ms cubic-bezier(.3,1.6,.5,1)"><div style="width:100%;height:100%;background:#2A2A2E url({{ lastImg }}) center/cover"></div><span style="position:absolute;right:2px;bottom:2px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:#2F6B4F;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ arr }}</span></div></sc-if></div>
+            </div>
+          </div>
+          </div>
+          
+          <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.55);animation:dimIn 200ms ease-out;z-index:5"></div>
+            <div style="position:absolute;left:0;right:0;bottom:0;z-index:6;background:#F2F2F4;border-radius:26px 26px 0 0;color:#16150F;animation:sheetUp 280ms cubic-bezier(.2,.9,.3,1);display:flex;flex-direction:column">
+              <div style="background:#FFFFFF;border-radius:26px 26px 0 0;padding:10px 20px 16px;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid #E6E6EA">
+                <span style="align-self:center;width:38px;height:5px;border-radius:3px;background:#D6D6DA"></span>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:12px;font-weight:700;letter-spacing:0.06em;color:#8E8E93">{{ phLabel }} · {{ shotNo }} OF {{ phN }}</span><span style="font-size:22px;font-weight:700;letter-spacing:-0.02em">Can't take {{ shot.title }}?</span><span style="font-size:14px;color:#6B6860">Pick a reason. Sean sees it in place of the photo.</span></div>
+              </div>
+              <div style="padding:12px 16px 0;display:flex;flex-direction:column;gap:10px">
+                <div style="background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column">
+                  <sc-for list="{{ reasons }}" as="r" hint-placeholder-count="5">
+                    <button onClick="{{ r.pick }}" style="display:flex;align-items:center;gap:12px;min-height:56px;padding:0 16px;border:none;border-top:{{ r.line }};background:{{ r.bg }};font-family:inherit;text-align:left;cursor:pointer;transition:background 150ms">
+                      <span style="width:22px;height:22px;border-radius:50%;border:2px solid {{ r.ring }};display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color 150ms"><span style="width:12px;height:12px;border-radius:50%;background:#1B1A17;transform:scale({{ r.dot }});transition:transform 180ms cubic-bezier(.3,1.6,.5,1)"></span></span>
+                      <div style="flex:1;display:flex;flex-direction:column;gap:1px"><span style="font-size:15px;font-weight:600;color:#16150F">{{ r.t }}</span><span style="font-size:13px;color:#6B6860">{{ r.s }}</span></div>
+                      <sc-if value="{{ r.ai }}" hint-placeholder-val="{{ false }}"><span style="padding:3px 8px;border-radius:999px;background:#EEEBFE;color:#4338CA;font-size:11px;font-weight:700">✦ Likely</span></sc-if>
+                    </button>
+                  </sc-for>
+                </div>
+                <div style="background:#FFFFFF;border-radius:16px;padding:12px 14px;display:flex;align-items:center;gap:10px;min-height:52px">
+                  <span style="flex:1;font-size:15px;color:{{ noteCol }}">{{ noteTxt }}</span>
+                  <button onClick="{{ dictate }}" aria-label="Speak a note" style="width:44px;height:44px;border-radius:50%;border:none;background:#F2F2F4;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1B1A17" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg></button>
+                </div>
+              </div>
+              <div style="padding:14px 16px 30px;display:flex;flex-direction:column;gap:6px">
+                <button onClick="{{ saveReason }}" style="height:56px;border:none;border-radius:999px;background:{{ saveBg }};color:{{ saveFg }};font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;transition:background 200ms">Save reason</button>
+                <button onClick="{{ closeSheet }}" style="height:44px;border:none;background:none;font-family:inherit;font-size:15px;font-weight:600;color:#1B1A17;cursor:pointer">Back to camera</button>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isToday }}" hint-placeholder-val="{{ true }}">
+
+      <div style="margin:-36px -20px 4px;padding:56px 20px 20px;background:linear-gradient(180deg,#E4EAF2 0%,#FFFFFF 100%);border-bottom:1px solid #E6E6EA;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end">
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;font-weight:600;color:#6B6860;letter-spacing:0.06em">FRIDAY 24 OCTOBER</span><span style="font-size:34px;font-weight:700;letter-spacing:-0.025em;color:#1B1A17">My jobs</span></div>
+        <div style="width:48px;height:48px;border-radius:50%;background:#FFFFFF;color:#1B1A17;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;box-shadow:0 1px 2px rgba(27,26,23,0.08)">RM</div>
+      </div>
+      <sc-if value="{{ u.notClear }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:10px;min-height:64px;padding:10px 10px 10px 12px;box-sizing:border-box;border-radius:18px;background:{{ u.cardBg }};box-shadow:inset 0 0 0 1.5px {{ u.cardRing }},0 4px 14px -6px rgba(27,26,23,0.12)">
+        <div onClick="{{ goUp }}" style="flex:1;min-width:0;display:flex;align-items:center;gap:12px;min-height:44px;cursor:pointer"><span style="width:32px;height:32px;color:{{ u.tileFg }};display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:4px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="overflow:visible"><path d="M7 18a4 4 0 0 1-.6-7.95A6 6 0 0 1 18 11.5 3.5 3.5 0 0 1 17.5 18"></path><g style="animation:{{ u.icoAnim }}"><path d="M12 12.5V20M9 15l3-3 3 3"></path></g></svg></span><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:700;color:{{ u.lineInk }}">{{ u.line }}</span><sc-if value="{{ u.sub2 }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#6B6860">{{ u.sub2 }}</span></sc-if></div><sc-if value="{{ u.noRetry }}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B6860" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;flex-shrink:0"><path d="M9 6l6 6-6 6"></path></svg></sc-if></div>
+        <sc-if value="{{ u.retry }}" hint-placeholder-val="{{ false }}"><button onClick="{{ retry }}" style="height:44px;padding:0 16px;border:none;border-radius:999px;background:#A23B1E;color:#FFFFFF;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;flex-shrink:0">Try again</button></sc-if>
+      </div>
+      </sc-if>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:13px;font-weight:600;color:#8E8E93;letter-spacing:0.06em;padding:0 4px">TODAY</span>
+        <div onClick="{{ openJob }}" style="background:#FFFFFF;border-radius:24px;padding:18px 18px 18px;display:flex;flex-direction:column;cursor:pointer">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid #EFEFF1">
+            <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:22px;font-weight:700;letter-spacing:-0.01em;color:#1B1A17">18 Oak St</span><span style="font-size:15px;font-weight:500;color:#6B6860">Ruth Okafor · Leak repair</span></div>
+            
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;padding:16px 0 18px">
+            <div style="display:flex;align-items:center;gap:14px;font-size:15px;font-weight:500;color:#3C3C43"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span>8:00 – 11:00 AM</span></div>
+            
+            <div style="display:flex;align-items:center;gap:14px;font-size:15px;font-weight:500;color:#3C3C43"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg><span>17 photos · 2 repair spots</span></div>
+            <div style="display:flex;align-items:center;gap:14px;font-size:15px;font-weight:500;color:#3C3C43"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M9 4.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2.2.6 3.5 2.6 3.5 6"></path></svg><span>Ravi, Jay, Kim</span></div>
+          </div>
+          <div style="display:flex;gap:12px">
+            <span aria-label="Directions" style="width:52px;height:52px;border:none;border-radius:50%;background:#FBEAE6;box-shadow:0 1px 2px rgba(192,57,43,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-sizing:border-box;cursor:pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="#C0392B" stroke="#C0392B" stroke-width="1.6" stroke-linejoin="round"><path d="M20.5 3.5 3.8 10.6a.6.6 0 0 0 .07 1.13l6.6 1.8 1.8 6.6a.6.6 0 0 0 1.13.07z"></path></svg></span>
+            <span style="flex:1;height:52px;border-radius:999px;background:#C0392B;color:#FFFFFF;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center">View job</span>
+          </div>
+        </div>
+      </div>
+
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:13px;font-weight:600;color:#8E8E93;letter-spacing:0.06em;padding:0 4px;text-transform:uppercase">{{ g.label }}</span>
+        <div style="display:flex;flex-direction:column;background:#FFFFFF;border-radius:22px;padding:0 16px">
+          <sc-for list="{{ g.jobs }}" as="j" hint-placeholder-count="2">
+            <div style="display:flex;gap:14px;align-items:center;padding:14px 0;min-height:76px;border-top:{{ j.line }};cursor:pointer">
+              
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font-size:15px;font-weight:700;color:#1B1A17">{{ j.addr }}</span><span style="font-size:13px;font-weight:500;color:#6B6860;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ j.meta }}</span><span style="font-size:13px;font-weight:500;color:#6B6860;display:flex;align-items:center;gap:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A877F" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>{{ j.start }} · {{ j.dur }}</span></div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B5B2AA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M9 6l6 6-6 6"></path></svg>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-for>
+
+      </sc-if>
+    </div>
+    <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:16px 8px 16px;background:#FFFFFF;border-top:1px solid #E6E6EA;display:grid;grid-template-columns:repeat(2,1fr);align-items:center">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+        <button onClick="{{ t.go }}" style="height:56px;border:none;outline:none;-webkit-tap-highlight-color:transparent;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:{{ t.col }}">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ t.icon }}"></path></svg>
+          <span style="font-size:12px;font-weight:{{ t.wt }}">{{ t.label }}</span>
+        </button>
+      </sc-for>
+    </div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;uploadState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;clear&quot;,&quot;sending&quot;,&quot;offline&quot;,&quot;afterOut&quot;,&quot;failed&quot;],&quot;default&quot;:&quot;offline&quot;,&quot;tsType&quot;:&quot;'clear'|'sending'|'offline'|'afterOut'|'failed'&quot;,&quot;section&quot;:&quot;Uploads&quot;},&quot;showLockScreen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Presenting&quot;}}">
+class Component extends DCLogic {
+  autoSig() { if (this.state.sig || !(this.state.pend||0)) return; clearTimeout(this._as); this._as=setTimeout(()=>{ if (this.state.tab!=='out') return; this.setState({ sig: true }); const tick=()=>{ if((this.state.pend||0)>0){ this.setState(s=>({ pend: s.pend-1 })); setTimeout(tick,450); } }; setTimeout(tick,700); },5000); }
+  componentDidUpdate(pp, ps) { if (ps && ps.tab!=='cam' && this.state.tab==='cam') { this.setState({ land: false }); clearTimeout(this._land); this._land=setTimeout(()=>{ if (this.state.tab==='cam' && !this.state.land) { this.setState({ land: true }); this.aiCheck(); } },2200); } if ((this.state.arr||0)===5 && this.state.tab==='site' && !this.state.snackDone && !this._sn) this._sn=setTimeout(()=>this.setState({ snackDone: true }),3200); const on=!!this.props.showLockScreen; if (on!==!!pp.showLockScreen) { if (on && this.state.tab==='site' && (this.state.arr||0)>5 && (this.state.arr||0)<17) this.setState({ tab: 'lock', back: false }); else if (!on && this.state.tab==='lock') this.setState({ tab: 'site', back: true }); } }
+  aiCheck() { this.setState({ aiOk: false, aiS: 'check' }); clearTimeout(this._ai); clearTimeout(this._ai2); const n = this.state.arr || 0, warn = n === 1 || n === 6; if (warn) { this._ai = setTimeout(() => this.setState({ aiS: 'fix' }), 1300); this._ai2 = setTimeout(() => this.setState({ aiOk: true, aiS: 'ok' }), 4200); } else this._ai2 = setTimeout(() => this.setState({ aiOk: true, aiS: 'ok' }), 1100); }
+  snackFor(n, rsn) { const m = 16 + Math.max(n - 5, 0) * 8 + 22, at = n === 5 ? '8:14 AM' : (8 + Math.floor(m / 60)) + ':' + String(m % 60).padStart(2, '0') + ' AM';
+    let t; if (n === 5) t = 'Arrival photos complete'; else if (n >= 17) t = 'Finish photos complete'; else if (n > 5 && n <= 11) { const sp = n <= 8 ? 'Spot A' : 'Spot B', st = ['Before', 'Opened up', 'Fixed'][(n - 6) % 3]; t = st === 'Fixed' ? sp + ' complete · 3 of 3' : sp + ' · ' + st + (rsn ? ' · reason saved' : ' saved'); } else return;
+    clearTimeout(this._sn); this.setState({ snack: { t, at } }); this._sn = setTimeout(() => this.setState({ snack: null }), 3500); }
+  aiRetake() { clearTimeout(this._ai); clearTimeout(this._ai2); this.setState({ aiOk: false, aiS: 'retake' }); this._ai2 = setTimeout(() => this.setState({ aiOk: true, aiS: 'ok' }), 3600); }
+  state = { tapped: false };
+  componentDidMount() { this._gt = (ev) => { const z = {}; Object.keys(this.state).forEach(k => z[k] = undefined); const d = ev && ev.detail; const J = { 1: { tab: 'lock', arr: 6, work: true, pend: 6, msgSeenN: 2 }, 3: { tab: 'up', arr: 9, work: true, pend: 3, msgSeenN: 5 }, 4: { tab: 'up', arr: 9, work: true, pend: 3, msgSeenN: 5 } }[d] || {}; this.setState({ ...z, tapped: false, ...J }); if (d === 4) { clearTimeout(this._sr); this._sr = setTimeout(() => { this.setState({ sig: true }); const tick = () => { if ((this.state.pend||0) > 0) { this.setState(s => ({ pend: s.pend - 1 })); setTimeout(tick, 900); } }; setTimeout(tick, 900); }, 1500); } }; window.addEventListener('guide:tour', this._gt); }
+  renderVals() {
+    const SHOTS = [{title:'House front',tip:'House number not visible. Move left to get it in frame.',ok:'Whole house and number 18 in frame. Take it.'},{title:'Roof · street side',tip:'Roof edge is cut off at the top. Step back a little.',ok:'Full roof edge fits the box. Take it.'},{title:'Roof · back side',tip:'Too dark. Turn so the sun is behind you.',ok:'Back slope and ladder access in frame. Take it.'},{title:'Leak area outside',tip:'Stained shingles are out of frame. Move closer.',ok:'Vent pipe and stained shingles in frame. Take it.'},{title:'Leak area inside',tip:'Stain is out of frame. Tilt up toward the ceiling.',ok:'Ceiling stain is centred. Take it.'}];
+    const SP=(spot,imgs,tips)=>['Before','Opened up','Fixed'].map((st,j)=>({title:spot+' · '+st,stage:st,spot:true,img:imgs[j],tip:tips[j][0],ok:tips[j][1]}));
+    const ALL=[...SHOTS.map((s,i)=>({...s,img:['assets/oak/01.jpg','assets/oak/02.jpg','assets/oak/03.jpg','assets/oak/04.jpg','assets/oak/05.jpg'][i]})),
+      ...SP('Vent pipe',['assets/oak/06.jpg','assets/oak/07.jpg','assets/oak/08.jpg'],[['Pipe base is cut off. Tilt down a little.','Whole vent pipe and the cracked boot in frame. Take it.'],['Match the Before angle. Move right a little.','Same angle as Before. Boot removed and wet decking visible. Take it.'],['Match the Before angle. Step back a little.','Same angle as Before. New boot sealed and in frame. Take it.']]),
+      ...SP('Soft decking',['assets/oak/09.jpg','assets/oak/10.jpg','assets/oak/11.jpg'],[['Soft area is out of frame. Move closer.','Soft decking area and shingles around it in frame. Take it.'],['Too dark. Turn on the flash.','Rotten boards clearly visible. Take it.'],['Match the Before angle. Move left a little.','Same angle as Before. New decking and underlay visible. Take it.']]),
+      ...[['Roof after · street side','assets/oak/12.jpg'],['Roof after · back side','assets/oak/13.jpg'],['Spot A · finished wide','assets/oak/14.jpg'],['Spot B · finished wide','assets/oak/15.jpg'],['Clean up · ground','assets/oak/16.jpg'],['Debris removed','assets/oak/17.jpg']].map(([title,img])=>({title,img,tip:'Part of the area is cut off. Step back.',ok:'Whole area in frame. Take it.'}))];
+    const PHS=[{k:'Arrival',from:0,n:5},{k:'Spot A · Vent pipe',from:5,n:3},{k:'Spot B · Soft decking',from:8,n:3},{k:'Finish',from:11,n:6}];
+    const ar=this.state.arr||0, w=true, CUR=ALL[Math.min(ar,16)], PZ=PHS.find(x=>Math.min(ar,16)>=x.from&&Math.min(ar,16)<x.from+x.n);
+    const GRP = [
+      { label: 'Later today', jobs: [
+        { start: '1:00 PM', end: 'to 2:00 PM', addr: '52 Willow Way', meta: 'Inspection · Joan Price' },
+        { start: '3:00 PM', end: 'to 4:30 PM', addr: '9 Birch Ln', meta: 'Gutter clean · Tom Reyes' }] },
+      { label: 'Tomorrow', jobs: [
+        { start: '8:00 AM', end: 'to 12:00 PM', addr: '30 Elm Ct', meta: 'Gutter repair · Hugh Lam' },
+        { start: '1:30 PM', end: 'to 3:00 PM', addr: '7 Cedar Rd', meta: 'Flashing repair · Amy Shaw' }] },
+      { label: 'Monday 27 Oct', jobs: [
+        { start: '7:30 AM', end: 'All day', addr: '41 Pine Ave', meta: 'Re-roof · Nina Cole' }] } ];
+    const L = [
+      { addr: '52 Willow Way', meta: 'Inspection · Joan Price', t: '1:00', ap: 'PM', when: '1:00 – 2:00 PM', img: 'https://images.pexels.com/photos/32608171/pexels-photo-32608171.jpeg?auto=compress&cs=tinysrgb&w=200' },
+    ];
+    const icons = { today: 'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z', sched: 'M4 5h16v15H4zM4 10h16M9 3v4M15 3v4', up: 'M12 16V4M7 9l5-5 5 5M5 20h14' };
+    const t = this.state.tab || 'today';
+    const D = [
+      { day: 'Today · Fri 24 Oct', col: '#16150F', jobs: [
+        { time: '8:00 – 11:00 AM', dur: '3 hours', addr: '18 Oak St', meta: '#421 · Leak repair · Ruth Okafor', mi: '2.4 mi', next: true },
+        { time: '1:00 – 2:00 PM', dur: '1 hour', addr: '52 Willow Way', meta: 'Inspection · Joan Price', mi: '5.1 mi' }] },
+      { day: 'Sat 25 Oct', col: '#6B6860', jobs: [{ time: '8:00 AM – 12:00 PM', dur: '4 hours', addr: '30 Elm Ct', meta: '#427 · Gutter repair · Hugh Lam', mi: '3.8 mi' }] },
+      { day: 'Mon 27 Oct', col: '#6B6860', jobs: [{ time: '7:30 AM – 4:00 PM', dur: 'All day', addr: '41 Pine Ave', meta: '#431 · Re-roof · Nina Cole', mi: '7.2 mi' }] } ];
+    const G = '#2F6B4F', SEND = '#9CC3AE', PH = '#8E8E93', FAIL = '#A23B1E', EMPTY = '#ECECEF';
+    const seg = (arr) => arr.flatMap(([n, bg, ring]) => Array.from({ length: n }, () => ({ bg, ring: ring || 'none' })));
+    const RS = 'inset 0 0 0 1.5px #B9B6AE';
+    const AMB='#B7791F', AMBD='#D99A2B', RSN='#C9C6BE';
+    const SC={o:[G,'Sent'],s:[SEND,'Sending'],p:[AMBD,'Waiting for signal'],f:[FAIL,'Didn\u2019t send'],r:[RSN,'Not taken · reason given'],n:[EMPTY,'Not taken yet']};
+    const NM=[['Arrival',['House front','Roof · street side','Roof · back','Leak area · outside','Leak area · kitchen']],['Spot A · Vent pipe',['Before','Opened up','Fixed']],['Spot B · Soft decking',['Before','Opened up','Fixed']],['Finish',['Roof after · street','Roof after · back','Spot A finished','Spot B finished','Clean-up','Debris removed']]];
+    const mk=(code)=>{ const c=code.split(''); let k=0; return NM.map(([name,ph],gi)=>{ const st=ph.map(()=>c[k++]); const cnt=x=>st.filter(y=>y===x).length; const o=cnt('o'), tot=ph.length;
+      const bad=st.map((x,i)=>[x,ph[i]]).filter(([x])=>x!=='o'&&x!=='n');
+      const sum = cnt('n')===tot ? 'Not started' : (o===tot ? 'All sent' : o+' of '+tot+' sent');
+      const col = cnt('f')?FAIL:(cnt('p')?AMB:(o===tot||o+cnt('r')===tot?G:'#6B6860'));
+      return { name, sum, col, line: gi?'1px solid #E6E6EA':'none', items: bad.map(([x,n])=>({ t: n+' · '+SC[x][1], dot: SC[x][0] })) }; }); };
+    const segOf=(code)=>code.split('').map(x=>({ bg: SC[x][0], ring:'none', anim: (x==='p'||x==='s') ? 'rvPend 1.6s ease-in-out infinite' : 'none' }));
+    const job=(addr,meta,code,status,stDot,stCol)=>{ const o=code.split('').filter(x=>x==='o').length; return { addr, meta, n: o+' of '+code.length, status, stDot, stCol, segs: segOf(code), groups: mk(code), ink:'#16150F' }; };
+    const NM12=[['Arrival',['House front','Roof','Flashing area','Chimney']],['Spot A · Flashing',['Before','Opened up','Fixed']],['Finish',['Roof after','Flashing finished','Clean-up','Debris removed','Gutters']]];
+    const past = [
+      { addr: '12 Rose Ct', meta: 'Flashing repair · yesterday', n: '12 of 12', status: 'Checked out · all sent', stDot: G, stCol: G, segs: segOf('oooooooooooo'), groups: NM12.map(([name,ph],gi)=>({ name, sum:'All sent', col:G, line: gi?'1px solid #E6E6EA':'none', items: [] })) },
+      { addr: '14 Maple Dr', meta: 'Gutter repair · 3 Oct', n: '9 of 9', status: 'Checked out · all sent', stDot: G, stCol: G, segs: segOf('ooooooooo'), groups: [{ name:'Arrival', sum:'All sent', col:G, line:'none', items:[] },{ name:'Spot A · Gutter seam', sum:'All sent', col:G, line:'1px solid #E6E6EA', items:[] },{ name:'Spot B · Pipe boot', sum:'All sent', col:G, line:'1px solid #E6E6EA', items:[] },{ name:'Finish', sum:'All sent', col:G, line:'1px solid #E6E6EA', items:[] }] } ];
+    const OAK={ sent:'oooooooooooonnnnn', sending:'ooooooooosssnnnnn', offline:'ooooooooopppnnnnn', failed:'oooooooooofonnnnn', afterOut:'oooooooooooooroopp'.slice(0,17) };
+    OAK.afterOut='oooooooooooooropp';
+    const oak = (k) => job('18 Oak St', k==='afterOut'?'Leak repair · today':'Leak repair · today', OAK[k],
+      { sent:'On site · all sent', sending:'On site · sending 3 now', offline:'On site · 3 waiting for signal', failed:'On site · 1 didn\u2019t send', afterOut:'Checked out 10:45 AM · 2 waiting for signal' }[k],
+      { sent:G, sending:SEND, offline:AMBD, failed:FAIL, afterOut:AMBD }[k], { sent:G, sending:G, offline:AMB, failed:FAIL, afterOut:AMB }[k]);
+    const US = {
+      clear: { sync: this.state.sig ? 'Synced just now' : 'Synced 7:48 AM', onPhone: 0, inOffice: 17, head: 'Nothing left on this phone', sub: 'Every photo you’ve taken is in the office.', jobs: (this.state.sig && (this.state.arr||0) > 0) ? [oak('sent'), ...past] : past, dot: '#1F7A4A', line: 'All photos in the office', mode: 'done' },
+      sending: { sync: 'Sending now', onPhone: (this.state.pend||3), inOffice: 29-(this.state.pend||3), head: 'Sending '+(this.state.pend||3)+((this.state.pend||3)===1?' photo':' photos'), sub: 'Keep working. They send in the background.', jobs: [oak('sending'), ...past], dot: '#2F8A5B', line: 'Sending 3 photos…', mode: 'flow' },
+      offline: { sync: 'No signal since 9:20 AM', onPhone: 3, inOffice: 26, head: (this.state.pend||3)+((this.state.pend||3)===1?' photo':' photos')+' waiting for signal', sub: 'They’re safe on this phone and send on their own when you have signal.', jobs: [oak('offline'), ...past], dot: '#B7791F', line: '3 photos waiting for signal', sub2: 'Safe on this phone · sends on its own', mode: 'wait' },
+      failed: { sync: 'Last try 9:31 AM', onPhone: 1, inOffice: 28, head: '1 photo didn’t send', sub: 'Spot B · Opened up. It’s still on this phone. Try again, or call the office if it keeps failing.', jobs: [oak('failed'), ...past], dot: '#B8341F', line: '1 photo didn’t send', sub2: 'Still on this phone', mode: 'fail', retry: true },
+      afterOut: { sync: 'No signal since 10:30 AM', onPhone: 2, inOffice: 31, head: '2 photos still on this phone', sub: '18 Oak St is checked out. They send on their own when you have signal. If they’re not in by 2:45 PM, Sean gets a heads-up.', jobs: [oak('afterOut'), ...past], dot: '#B7791F', line: '2 photos from 18 Oak St still on this phone', sub2: 'Safe on this phone · sends on its own', mode: 'wait' } };
+    const pn = this.state.pend||0; const uk = this.state.retried ? 'sending' : (this.state.dbg || (pn>0 ? (this.state.sig ? 'sending' : (this.state.out ? 'afterOut' : 'offline')) : (this.state.sig ? 'clear' : (this.props.uploadState || 'offline'))));
+    const U = US[uk];
+    const PC={clear:'#2F6B4F',sending:'#8FC3A5',offline:'#D99A2B',afterOut:'#D99A2B',failed:'#A23B1E'}[uk]; const tot=(U.onPhone+U.inOffice)||1, op=Math.round(U.inOffice/tot*100);
+    this._ring={ ring: (U.onPhone? 'conic-gradient(#2F6B4F 0 '+op+'%, '+PC+' '+op+'% 100%)' : '#2F6B4F'), ringPct: op+'%', ringTot: tot, phoneCol: U.onPhone?PC:'#E5E5EA', phoneLbl: uk==='failed'?'Didn\'t send':(uk==='sending'?'Sending now':(uk==='offline'||uk==='afterOut'?'Waiting for signal':'On this phone')) };
+    const PL = { offline: ['No signal · since 9:20','#FBEBC9','#7A4B00',1], afterOut: ['No signal · since 10:30','#FBEBC9','#7A4B00',1], sending: ['Sending','#E2EDE6','#2F6B4F',0], failed: ['1 didn’t send','#F3E3DC','#A23B1E',0], clear: [this.state.sig ? 'All sent · just now' : 'All sent · 7:48 AM','#E2EDE6','#2F6B4F',0] }[uk];
+    const TL = { offline: ['#FBEBC9','#B7791F'], afterOut: ['#FBEBC9','#B7791F'], sending: ['#E2EDE6','#2F6B4F'], failed: ['#F3E3DC','#A23B1E'], clear: ['#E2EDE6','#2F6B4F'] }[uk];
+    const CB = { offline: ['#FDF6E8','#EFD9A8'], afterOut: ['#FDF6E8','#EFD9A8'], sending: ['#EEF5F0','#CFE3D6'], failed: ['#FBEFEB','#EBC9C0'], clear: ['#FFFFFF','#E6E6EA'] }[uk];
+    const u = { ...U, cardBg: CB[0], cardRing: CB[1], tileBg: TL[0], tileFg: TL[1], icoAnim: (uk==='offline'||uk==='afterOut') ? 'upBob 1.8s ease-in-out infinite' : (uk==='sending' ? 'upBob 0.9s ease-in-out infinite' : 'none'), pill: PL[0], pillBg: PL[1], pillFg: PL[2], pillOff: !!PL[3], pillDot: !PL[3], ring: uk === 'failed' ? '#EBC9C0' : '#E4E6EA', phoneBg: U.onPhone ? (uk === 'failed' ? '#F7E4DF' : '#F0F1F4') : '#F5F6F8', phoneInk: uk === 'failed' ? '#B8341F' : (U.onPhone ? '#16150F' : '#A8A59D'), phoneNum: uk === 'failed' ? '#B8341F' : (U.onPhone ? '#16150F' : '#A8A59D'), headInk: uk === 'failed' ? '#B8341F' : '#16150F', lineInk: uk === 'failed' ? '#A23B1E' : '#1B1A17', notClear: uk !== 'clear', retry: !!U.retry, noRetry: !U.retry,
+      jobs: U.jobs.map((j, i) => ({ ...j, line: i ? '1px solid #ECEEF1' : 'none', toggle: () => this.setState({ openJob: j.addr }) })) };
+    const UJ = U.jobs.find(j=>j.addr===this.state.openJob);
+    const h = React.createElement;
+    const lineCol = { done: '#9CCBB1', flow: '#9CCBB1', wait: '#C9C6BE', fail: '#E2A99A' }[U.mode];
+    const pipe = h('div', { style: { position: 'relative', width: '100%', height: 24, margin: '0 6px' } },
+      h('div', { style: { position: 'absolute', left: 0, right: 0, top: 11, height: 0, borderTop: (U.mode === 'flow' || U.mode === 'done' ? '2px solid ' : '2px dashed ') + lineCol } }),
+      U.mode === 'flow' ? [0, 0.6, 1.2].map(d => h('div', { key: d, style: { position: 'absolute', top: 7, width: 10, height: 10, marginLeft: -5, borderRadius: 3, background: '#2F8A5B', animation: 'rvFlow 1.8s linear ' + d + 's infinite' } })) : null,
+      U.mode !== 'flow' ? h('div', { style: { position: 'absolute', left: '50%', top: 0, marginLeft: -12, width: 24, height: 24, borderRadius: '50%', background: { done: '#1F7A4A', wait: '#FFFFFF', fail: '#B8341F' }[U.mode], boxShadow: U.mode === 'wait' ? 'inset 0 0 0 2px #C9C6BE' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' } },
+        h('svg', { width: 14, height: 14, viewBox: '0 0 24 24', fill: 'none', stroke: U.mode === 'wait' ? '#6B6860' : '#FFFFFF', strokeWidth: 3, strokeLinecap: 'round', strokeLinejoin: 'round' },
+          h('path', { d: { done: 'M5 12.5l4.5 4.5L19 7.5', wait: 'M12 7v5l3 2', fail: 'M7 7l10 10M17 7L7 17' }[U.mode] }))) : null);
+    const legend = [{ t: 'In office', bg: G }, ...(uk === 'sending' ? [{ t: 'Sending', bg: SEND }] : []), ...(uk === 'offline' || uk === 'failed' ? [{ t: 'On phone', bg: PH }] : []), ...(uk === 'failed' ? [{ t: 'Didn’t send', bg: FAIL }] : []), { t: 'Not taken · reason', bg: '#FFFFFF', ring: RS }, ...(uk !== 'clear' ? [{ t: 'Not taken yet', bg: EMPTY }] : [])].map(l => ({ ring: 'none', ...l }));
+    return { ...this._ring,
+      u, pipe, legend, upSheet: !!UJ && t==='up', closeUp: () => this.setState({ openJob: null }), uj: UJ ? { ...UJ, spin: (UJ.stDot===G||UJ.stDot===FAIL)?'none':'aispin 1.1s linear infinite', stTop: (UJ.stDot===G||UJ.stDot===FAIL)?UJ.stDot:'transparent', stBg: UJ.stDot===G?'#E2EDE6':(UJ.stDot===FAIL?'#F3E3DC':(UJ.stDot===SEND?'#E8F1EC':'#FBF0DC')), foot: UJ.stDot===G?'Nothing left on this phone for this job.':(UJ.stDot===FAIL?'Still on this phone. Go back to Uploads and tap Try again.':'Safe on this phone. They send on their own when you have signal.') } : { addr:'',meta:'',status:'',n:'',segs:[],groups:[],foot:'' }, retry: () => this.setState({ retried: true }), goUp: () => this.setState({ tab: 'up' }),
+      isToday: t === 'today', isSched: t === 'sched', isUp: t === 'up', isJob: t === 'job', isSite: t === 'site', showNav: t !== 'job' && t !== 'site' && t !== 'cam' && t !== 'out', backJob: () => this.setState({ tab: 'job', tapped: false }),
+      steps: [['1','Arrival','House front, roof',5],['2','Spot A · Vent pipe','Before, Opened up, Fixed',3],['3','Spot B · Soft decking','Before, Opened up, Fixed',3],['4','Finish','Roof after, clean up, debris',6]].map(([n,title,sub,total],i)=>{ const a=this.state.arr||0, nx=a<5?0:1, dn=i===0?a:0, ok=i===0&&dn===5; return {n,title,sub,total,done:dn,next:i===nx,tileBg:i===nx?'#1B1A17':(ok?'#E2EDE6':'#F2F2F4'),tileFg:i===nx?'#FFFFFF':(ok?'#2F6B4F':'#3C3C43'),line:i?'1px solid #EFEFF1':'none'}; }),
+      isCam: t === 'cam', isOut: t === 'out', isLock: t === 'lock',
+      canLock: w && ar>5 && ar<17, back: !!this.state.back && t==='site',
+      lockClock: (()=>{ const m=16+Math.max(ar-5,0)*8+22; return (8+Math.floor(m/60))+':'+String(m%60).padStart(2,'0'); })(),
+      workFor: (()=>{ const m=Math.max(ar-5,0)*8+22; return m>=60?Math.floor(m/60)+' h '+(m%60)+' min':m+' min'; })(),
+      nextHint: CUR.spot ? ['Capture the area before any work begins.','Capture the damage once it is exposed.','Capture the completed repair before covering it.'][(ar-5)%3] : (ar>=11?'Final photos before check-out.':'Take it now.'),
+      lockTitle: CUR.spot ? (ar<8?'Spot A':'Spot B')+' · '+CUR.stage : CUR.title, nextTitle: CUR.spot ? (ar<8?'Spot A · ':'Spot B · ')+CUR.title : CUR.title,
+      snackOn: !!this.state.snack && t==='site', snackT: this.state.snack ? this.state.snack.t : '', snackAt: this.state.snack ? this.state.snack.at : '',
+      ...(()=>{ const has = w && ar>=9, M0 = [{ who: 'Sean · Office', at: '7:45 AM', t: 'Morning Ravi. Ruth is home until 9 AM, so check in with her first.' }, { who: 'Sean · Office', at: '7:46 AM', t: 'Park on the street, not the driveway. Side gate code is 4812.' }], M = [...M0, ...(has ? [{ who: 'Reminder', at: '9:14 AM', t: 'Spot B is open. Take the Opened up photo before you cover it.' }, { who: 'Reminder', at: '9:24 AM', t: 'Still need the Opened up photo of Spot B.' }, { who: 'Sean · Office', at: '9:31 AM', t: 'Ravi, Spot B is still open. Please take the Opened up photo before you cover it.' }, ...(this.state.seanOk ? [{ who: 'You', at: '9:32 AM', t: 'On it, taking it now.', me: 1 }] : [])] : [])];
+        const inc = M.filter(m => !m.me).length, unread = Math.max(inc - (this.state.msgSeenN||0), 0), lateNew = has && (this.state.msgSeenN||0) < inc;
+        return { msgs: M.map(m => ({ ...m, side: m.me ? 'flex-end' : 'flex-start', bg: m.me ? '#1B1A17' : (m.who === 'Reminder' ? '#E9E9EC' : '#FFFFFF'), fg: m.me ? '#FFFFFF' : '#1B1A17' })), msgEmpty: false, msgSheet: !!this.state.msgOpen && t==='site', msgBadge: !!unread, msgN: String(unread), msgAria: lateNew ? 'Messages · new from Sean' : (unread ? 'Messages · '+unread+' new' : 'Messages'),
+          msgOpenF: () => this.setState({ msgOpen: true, msgSeenN: inc }), msgClose: () => this.setState({ msgOpen: false }), fromMsg: () => this.setState({ tab: 'site', back: true, msgOpen: true, msgSeenN: inc }),
+          seanAsk: has && ar===9 && !this.state.seanOk, seanOn: () => this.setState({ seanOk: true }) }; })(), seanLock: w && ar===9 && !this.state.seanOk, liveMt: (w && ar===9 && !this.state.seanOk) ? '0' : 'auto',
+      lock: () => this.setState({ tab: 'lock', back: false }),
+      fromLive: () => { this.setState({ tab: 'cam', back: false, savedMsg: null }); this.aiCheck(); },
+      fromApp: () => this.setState({ tab: 'site', back: true }), arr: ar, pct: Math.round(ar/17*100)+'%', camIco: ((ar===5 && !w) || ar>=17) ? 'none' : 'block',
+      siteCta: ar<5 ? 'Take arrival photos' : (!w ? 'Start work' : (ar<11 ? (ar<8?'Spot A':'Spot B')+' · Take '+CUR.stage+' photo' : (ar<17 ? 'Take finish photos' : 'Check out'))),
+      sendTxt: !this.state.sig && this.state.pend ? 'Saved on phone' : (this.state.pend ? 'Sending '+this.state.pend+'…' : (ar ? 'All sent to the office' : 'Nothing to send yet')),
+      sigToast: !!this.state.sigToast && t==='site', pendShow: !this.state.sig && (this.state.pend||0)>0, pendLine: (this.state.pend||0)+' saved on phone', noSig: !this.state.sig, hasSig: !!this.state.sig, pendN: this.state.pend||0,
+      sigPill: !this.state.sig ? 'No signal' : ((this.state.pend||0)>0 ? 'Sending '+this.state.pend+'…' : 'All sent'),
+      sigBack: () => { this.setState({ sig: true }); const tick=()=>{ if((this.state.pend||0)>0){ this.setState(s=>({ pend: s.pend-1 })); setTimeout(tick,450); } }; setTimeout(tick,700); },
+      tl: (()=>{ const G='#2F6B4F', L='#E6E6EA', rs=this.state.rs||{};
+        const spot=(name,from,time)=>{ const k=ar-from, st=ar>=from+3?'done':(w&&ar>=from?'cur':'todo'); const nr=[0,1,2].filter(j=>rs[from+j]).length;
+          return {title:name,sub:st==='done'?(nr?(3-nr)+' of 3 · '+nr+' reason recorded':'3 of 3 · Before, Opened up, Fixed'):(st==='cur'?'':'3 photos · Before, Opened up, Fixed'),time:st==='done'?time:(st==='cur'?k+' of 3':''),st,chips:st==='cur',
+            hint:['Capture the area before any work begins.','Capture the damage once it is exposed.','Capture the completed repair before covering it.'][Math.min(k,2)],
+            chipList:['Before','Opened up','Fixed'].map((t,j)=>{ const d=j<k, r=rs[from+j], c=j===k; return { t: d?(r?t+' · reason':'✓  '+t):t, bar: d?(r?'#C7C7CC':'#2F6B4F'):(c?'#1B1A17':'#E6E6EA'), w: c?800:600, fg: d?(r?'#6B6860':'#2F6B4F'):(c?'#1B1A17':'#8E8E93') }; })}; };
+        const fk=Math.max(0,Math.min(ar-11,6)), nrAll=Object.keys(rs).length;
+        const S=[
+          {title:'Checked in',sub:'18 Oak St · Location verified',time:'8:02 AM',st:'done'},
+          {title:'Arrival photos',sub:(ar>=5?'5 of 5':ar+' of 5')+' · House front, roof, leak area',time:ar>=5?'8:04 – 8:14':'',st:ar>=5?'done':'cur'},
+          {skip:1,title:'',sub:'',time:w?'8:16 AM':'',st:w?'done':(ar>=5?'cur':'todo')},
+          spot('Spot A · Vent pipe',5,'8:20 – 9:15'), spot('Spot B · Soft decking',8,'9:22 – 10:20'),
+          {title:'Finish photos',sub:(ar>=17?'6 of 6':(ar>=11?fk+' of 6':'6 photos'))+' · Roof, clean-up, debris removal',time:ar>=17?'10:30 – 10:41':'',st:ar>=17?'done':(ar>=11?'cur':'todo')},
+          {title:'Check out',sub:ar>=17?'17 of 17 accounted for'+(nrAll?' · '+nrAll+' reason recorded':'')+'. Remaining photos upload after you leave.':'Notifies Sean when the crew leaves site',time:'',st:this.state.out?'done':(ar>=17?'cur':'todo')}];
+        return S.filter(s=>!s.skip).map((s,i,S)=>({ chips:false, chipList:[], hint:'', ...s, mark: s.st==='done'?'✓':'', dotBg: s.st==='done'?G:(s.st==='cur'?'#1B1A17':'#FFFFFF'), dotRing: s.st==='done'?'none':(s.st==='cur'?'inset 0 0 0 2px #1B1A17, inset 0 0 0 6px #FFFFFF, 0 0 0 4px rgba(27,26,23,0.08)':'inset 0 0 0 2px #C7C7CC'),
+          lineTop: i===0?'transparent':(S[i-1].st==='done'?G:L), lineBot: i===S.length-1?'transparent':(s.st==='done'?G:L),
+          wt: s.st==='todo'?600:700, col: s.st==='todo'?'#6B6860':'#1B1A17', timeCol: s.st==='done'?G:'#8E8E93', hasChips: !!s.chips, chips: s.chipList })); })(),
+      openCam: () => { this.setState({ back: false }); if (ar===5 && !w) this.setState({ work: true }); else if (ar>=17) { this.setState({ tab: 'out', out: true }); this.autoSig(); } else { this.setState({ tab: 'cam', savedMsg: null }); this.aiCheck(); } }, closeCam: () => this.setState({ tab: 'site' }),
+      phLabel: PZ.k.toUpperCase(), phKick: PZ.k.split(' · ')[0].toUpperCase(), phN: PZ.n, shotNo: ar-PZ.from+1, shot: CUR, lastImg: (ALL[Math.max(ar-1,0)]||CUR).img,
+      dots: ALL.slice(PZ.from,PZ.from+PZ.n).map((s,i)=>({ bg: PZ.from+i<ar?'#7FC39C':(PZ.from+i===ar?'#FFFFFF':'rgba(255,255,255,0.25)') })),
+      outWait: !this.state.sig && (this.state.pend||0)>0, outSync: !!this.state.sig && (this.state.pend||0)>0, outDone: !((this.state.pend||0)>0),
+      outLine: (this.state.pend||0)>0 ? (this.state.sig ? 'Sending to the office…' : 'Waiting for signal') : (Object.keys(this.state.rs||{}).length ? 'All photos and reasons received' : 'All photos received'),
+      outSub: (this.state.pend||0)>0 ? (this.state.sig ? 'Signal is back. They’re sending by themselves; you don’t need to do anything.' : 'No signal here. All photos are saved on this phone with time and location, so it’s safe to leave.') : 'Sean has the complete record for this job.',
+      ...(()=>{ const tot=17-Object.keys(this.state.rs||{}).length, left=Math.min(this.state.pend||0,tot), sent=tot-left, sig=!!this.state.sig, waitC=sig?'#8FC3A5':'#D99A2B';
+        return { outCount: sent+' of '+tot+' in office', outCountCol: left?'#6B6860':'#2F6B4F', outSent: String(sent), outLeft: String(left), outHasLeft: left>0, outWaitLbl: sig?'Sending':'On this phone', outWaitCol: waitC,
+          outTot: String(tot), outWaitLbl2: sig?'sending now':'on this phone', outRing: 'conic-gradient(#2F6B4F 0 '+Math.round(sent/tot*100)+'%, '+waitC+' '+Math.round(sent/tot*100)+'% 100%)' }; })(),
+      outReasons: Object.keys(this.state.rs||{}).length, outPhotos: 17-Object.keys(this.state.rs||{}).length, outReasonLbl: Object.keys(this.state.rs||{}).length===1?'Reason recorded':'Reasons recorded', outSplit: (()=>{ const n=Object.keys(this.state.rs||{}).length; return (17-n)+' photos'+(n?' · '+n+' with reason':''); })(),
+      ai: (()=>{ const R=(()=>{ const s=CUR, S=this.state.aiS, n=this.state.arr||0, bad=S==='fix'||S==='retake'||(S==='check'&&(n===1||n===6)); if(!bad) return {xf:'none',xo:'center'}; const t=s.tip; if(/top|Step back/.test(t)) return {xf:'scale(1.5)',xo:'center 92%'}; if(/Move right/.test(t)) return {xf:'scale(1.3) translateX(14%)',xo:'center'}; if(/Move left/.test(t)) return {xf:'scale(1.3) translateX(-14%)',xo:'center'}; if(/Tilt down|base/.test(t)) return {xf:'scale(1.45)',xo:'center 8%'}; if(/Tilt up/.test(t)) return {xf:'scale(1.45)',xo:'center 92%'}; return {xf:'scale(1.35)',xo:'center'}; })(); const r0=(()=>{ const s=CUR, ok=this.state.aiOk, S=this.state.aiS, A='#B7791F', AL='#E9B65C', W={busy:false,done:false,warn:true,labelBg:'none',labelCol:A,labelAnim:'none',edge:AL,edgeAnim:'none',glow:'0 8px 24px -10px rgba(183,121,31,0.6)',border:'solid '+AL,ring:AL,keep:false};
+        if (S==='fix') return {...W,label:'✦ Reposition',msg:s.tip};
+        if (S==='retake') return {...W,label:'✦ Retake this photo',msg:'That photo won\u2019t work. '+s.tip,keep:true};
+        const G='linear-gradient(90deg,#6D5DF5,#B65CF0,#F0679E,#F5A35C,#6D5DF5)'; return ok ? {busy:false,done:true,label:'✦ Looks good',labelBg:'none',labelCol:'#2F6B4F',labelAnim:'none',edge:'#7FC39C',edgeAnim:'none',glow:'0 8px 24px -10px rgba(47,107,79,0.6)',msg:s.ok,border:'solid #7FC39C',ring:'#7FC39C',warn:false,keep:false} : {busy:true,done:false,label:'✦ Checking the frame…',labelCol:'transparent',labelBg:'linear-gradient(90deg,#6D5DF5,#B65CF0,#F0679E,#6D5DF5)',labelAnim:'aishim 2s linear infinite',edge:G,edgeAnim:'aiflow 2.4s linear infinite',glow:'0 10px 40px -10px rgba(109,93,245,0.7)',msg:'Hold steady while the frame is checked.',border:'dashed rgba(255,255,255,0.7)',ring:'#FFFFFF',warn:false,keep:false}; })(); return {...r0,...R}; })(),
+      _l: 0,
+      rotateNow: () => { clearTimeout(this._land); this.setState({ land: true }); this.aiCheck(); },
+      cam: false ? { turn:false, w:'844px', h:'390px', rot:'90deg', cols:'minmax(0,1fr) 150px', rows:'auto minmax(0,1fr)', areas:'"h c" "v c"', hPad:'12px 16px 8px 50px', vMar:'0 0 14px 50px', vRad:'14px', cPad:'12px 12px', dotW:'18px', js:'center', je:'center', rowCols:'1fr', rowGap:'14px', cantOrd:3, thOrd:1 }
+        : { turn:false, w:'390px', h:'844px', rot:'0deg', cols:'minmax(0,1fr)', rows:'auto minmax(0,1fr) auto', areas:'"h" "v" "c"', hPad:'54px 16px 12px', vMar:'0', vRad:'0', cPad:'16px 20px 34px', dotW:'28px', js:'start', je:'end', rowCols:'1fr auto 1fr', rowGap:'0px', cantOrd:0, thOrd:0 },
+      flashOp: this.state.flash?0.9:0, flashTr: this.state.flash?'none':'opacity 320ms ease-out', pressScale: this.state.flash?0.86:1,
+      hasThumb: (this.state.arr||0)>0, thumbScale: this.state.pop?1.18:1, showSaved: !!this.state.saved, savedText: this.state.savedMsg || 'Saved on phone · time and location added', savedAt: '8:'+(10+(this.state.arr||0))+' AM',
+      snap: () => { if (this.state.flash || this.state.saved) return; if (!this.state.aiOk && !CUR.spot && this.state.aiS==='fix') { this.setState({ flash: true }); setTimeout(()=>{ this.setState({ flash: false }); this.aiRetake(); },110); return; } const n=ar+1, end=n>=PZ.from+PZ.n || CUR.spot; this.setState({ flash: true }); setTimeout(()=>{ this.setState(s=>({ flash: false, pop: true, saved: true, pend: (s.pend||0)+1, ...(end ? {} : { arr: n }) })); if (!end) this.aiCheck(); },110); setTimeout(()=>this.setState({ pop: false }),380); if (this.state.sig) setTimeout(()=>this.setState(s=>({ pend: Math.max((s.pend||1)-1,0) })),2600); setTimeout(()=>{ this.setState(end ? { saved: false, tab: 'site', arr: n } : { saved: false }); if (end) this.snackFor(n, false); },1100); }, keepAnyway: () => { clearTimeout(this._ai2); this.setState({ aiOk: true, aiS: 'ok' }); setTimeout(()=>{ const b=document.querySelector('[aria-label="Take photo"]'); if (b) b.click(); },60); },
+      cantTake: () => this.setState({ sheet: true, reason: null, note: false }), closeSheet: () => this.setState({ sheet: false }),
+      sheetOpen: !!this.state.sheet,
+      reasons: [['Not safe to reach','Steep, wet or no safe ladder spot'],['Blocked or covered','Tarp, vehicle, tree or furniture in the way'],['Customer asked not to','Inside the home or a private area'],['Weather','Rain, wind or too dark'],['Something else','Explain in the note']].map(([t,s],i)=>({ t, s, ai: i===(ar===3?2:-1), line: i?'1px solid #EFEFF1':'none', bg: this.state.reason===i?'#F7F7F9':'#FFFFFF', ring: this.state.reason===i?'#1B1A17':'#C7C7CC', dot: this.state.reason===i?1:0, pick: () => this.setState({ reason: i }) })),
+      noteTxt: this.state.note ? '"Started raining, roof too slippery."' : 'Add a note (optional)', noteCol: this.state.note ? '#16150F' : '#8E8E93', dictate: () => this.setState({ note: true }),
+      saveBg: this.state.reason==null ? '#D6D6DA' : '#C0392B', saveFg: this.state.reason==null ? '#8E8E93' : '#FFFFFF',
+      saveReason: () => { if (this.state.reason==null) return; const n=ar+1, end=n>=PZ.from+PZ.n || CUR.spot; this.setState(s=>({ sheet: false, arr: n, rs: { ...(s.rs||{}), [ar]: true }, saved: true, savedMsg: 'Reason saved · time and location added', pop: false })); setTimeout(()=>{ this.setState({ saved: false, savedMsg: null }); if (end) { this.setState({ tab: 'site' }); this.snackFor(n, true); } else this.aiCheck(); },1300); },
+      openJob: () => this.setState({ tab: 'job' }), backHome: () => this.setState({ tab: 'today', tapped: false }),
+      days: D.map(d => ({ ...d, count: d.jobs.length + (d.jobs.length > 1 ? ' jobs' : ' job'), jobs: d.jobs.map((j, i) => ({ next: false, ...j, line: i ? '1px solid #ECEEF1' : 'none' })) })),
+      groups: GRP.map((g, gi) => ({ ...g, jobs: g.jobs.map((j, ji) => { const IMG = ['assets/est-gutter.png','assets/est-flashing.png','assets/est-pipe-boot.png','assets/est-attic.png','assets/est-ceiling.png']; const [hm, ap] = j.start.split(' '); const m = s => { const [t, x] = s.replace('to ', '').split(' '); let [h, mm] = t.split(':').map(Number); if (x === 'PM' && h !== 12) h += 12; return h * 60 + mm; }; const d = m(j.end) - m(j.start); return { ...j, hm, ap, line: ji ? '1px solid #EFEFF1' : 'none', img: IMG[(gi * 2 + ji) % IMG.length], dur: j.end === 'All day' ? 'All day' : (d === 60 ? '1 hour' : (d % 60 ? (d / 60).toFixed(1).replace('.0','') : d / 60) + ' hours') }; }) })),
+      later: L.map((j, i) => ({ ...j, line: i ? '1px solid #ECEEF1' : 'none' })),
+      ctaLbl: this.state.tapped ? 'Checking location…' : 'Check in',
+      tabs: [['today','My jobs'],['up','Uploads']].map(([k,l]) => ({ label: l, icon: icons[k], col: t === k ? '#B8341F' : '#8A877F', wt: t === k ? 800 : 600, go: () => this.setState({ tab: k }) })),
+      checkIn: () => { this.setState({ tapped: true }); setTimeout(() => { this.setState({ tab: 'site', tapped: false, sigToast: !this.state.sig }); clearTimeout(this._st); this._st=setTimeout(()=>this.setState({ sigToast: false }),2800); }, 1200); }
+    };
+  }
+}
+</script>
+</body>
+</html>

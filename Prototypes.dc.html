@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>body{margin:0;background:#F5F3EE;color:#1B1A17;font-family:'Instrument Sans',sans-serif;-webkit-font-smoothing:antialiased}a{color:#1B1A17;text-underline-offset:2px}a:hover{color:#A23B1E}button{font-family:inherit;cursor:pointer}</style></helmet>
+<div style="height:100vh;display:flex;flex-direction:column">
+  <header style="flex-shrink:0;display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:14px 24px;border-bottom:1px solid #DEDAD1">
+    <button onClick="{{ goHome }}" style="border:none;background:none;padding:0;display:flex;flex-direction:column;gap:2px;text-align:left;color:#1B1A17"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#5E5A52">ROOFING PHOTO DOCUMENTATION</span><span style="font-size:18px;font-weight:600">Prototypes</span></button>
+    <div style="display:flex;gap:4px;background:#E9E5DC;padding:4px;border-radius:10px">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+        <button onClick="{{ t.go }}" style="height:40px;padding:0 16px;border:none;border-radius:7px;background:{{ t.bg }};color:#1B1A17;font-size:14px;font-weight:600;white-space:nowrap">{{ t.label }}</button>
+      </sc-for>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:18px;font-size:13px"><a href="Problem Statement.dc.html" style="color:#5E5A52">Problem statement</a><a href="Process Log.dc.html" style="color:#5E5A52">Process log</a></div>
+  </header>
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;overflow:auto;padding:48px 32px">
+      <div style="max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:28px">
+        <div style="display:flex;flex-direction:column;gap:10px"><h1 style="margin:0;font-size:40px;font-weight:600;letter-spacing:-0.02em;line-height:1.1">Pick a flow</h1><p style="margin:0;max-width:720px;font-size:17px;line-height:1.5;color:#3D3A34">All three use the same job: #421 · 18 Oak St, leak repair, 2 spots, 17 required photos.</p></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px">
+          <button onClick="{{ goSean }}" style="text-align:left;background:#FFFFFF;border:1px solid #E3DFD6;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:14px;color:#1B1A17" style-hover="border-color:#1B1A17">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">OFFICE WEB · 2 FLOWS</span>
+            <span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:22px;font-weight:600">Sean</span><span style="font-size:14px;color:#5E5A52">Project manager</span></span>
+            <span style="font-size:15px;line-height:1.5;color:#3D3A34">A · See gaps before the crew leaves. B · Find one photo during a dispute call and share it.</span>
+            <span style="margin-top:auto;font-size:15px;font-weight:600">Open Sean flow ›</span>
+          </button>
+          <button onClick="{{ goPriya }}" style="text-align:left;background:#FFFFFF;border:1px solid #E3DFD6;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:14px;color:#1B1A17" style-hover="border-color:#1B1A17">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">OFFICE WEB · 1 FLOW</span>
+            <span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:22px;font-weight:600">Priya</span><span style="font-size:14px;color:#5E5A52">Insurance claims</span></span>
+            <span style="font-size:15px;line-height:1.5;color:#3D3A34">Check the finished job’s photos, disclose what’s missing, send the package to the adjuster.</span>
+            <span style="margin-top:auto;font-size:15px;font-weight:600">Open Priya flow ›</span>
+          </button>
+          <button onClick="{{ goCrew }}" style="text-align:left;background:#FFFFFF;border:1px solid #E3DFD6;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:14px;color:#1B1A17" style-hover="border-color:#1B1A17">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">CREW APP · PHONE</span>
+            <span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:22px;font-weight:600">Ravi</span><span style="font-size:14px;color:#5E5A52">Crew lead</span></span>
+            <span style="font-size:15px;line-height:1.5;color:#3D3A34">Shoot in any order while working. Milestones warn before a photo window closes. Check-out shows what’s missing.</span>
+            <span style="margin-top:auto;font-size:15px;font-weight:600">Open app flow ›</span>
+          </button>
+        </div>
+        <p style="margin:0;font-size:14px;line-height:1.5;color:#5E5A52">Sean and Priya work in the office web app. Ravi works in the crew app on his phone.</p>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isCrew }}" hint-placeholder-val="{{ false }}"><iframe src="Crew App v3.dc.html" title="Crew app" style="flex:1;width:100%;border:none;display:block"></iframe></sc-if>
+  <sc-if value="{{ isSean }}" hint-placeholder-val="{{ false }}"><iframe src="Sean Web.dc.html" title="Sean flow" style="flex:1;width:100%;border:none;display:block"></iframe></sc-if>
+  <sc-if value="{{ isPriya }}" hint-placeholder-val="{{ false }}"><iframe src="Priya Web.dc.html" title="Priya flow" style="flex:1;width:100%;border:none;display:block"></iframe></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { view: 'home' };
+  renderVals() {
+    const v = this.state.view, go = view => () => this.setState({ view });
+    const tab = (key, label) => ({ label, bg: v === key ? '#FFFFFF' : 'transparent', go: go(key) });
+    return {
+      tabs: [tab('sean', 'Sean flow'), tab('priya', 'Priya flow'), tab('crew', 'App flow')],
+      goHome: go('home'), goCrew: go('crew'), goSean: go('sean'), goPriya: go('priya'),
+      isHome: v === 'home', isCrew: v === 'crew', isSean: v === 'sean', isPriya: v === 'priya'
+    };
+  }
+}
+</script>
+</body>
+</html>

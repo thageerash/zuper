@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>body{margin:0;background:#F5F3EE;color:#1B1A17;font-family:'Instrument Sans',sans-serif;-webkit-font-smoothing:antialiased}a{color:#1B1A17;text-underline-offset:2px}a:hover{color:#A23B1E}button,input,select,textarea{font-family:inherit}button{cursor:pointer}</style></helmet>
+<div style="min-height:100vh;display:flex;gap:20px;padding:20px;box-sizing:border-box">
+
+<aside style="width:240px;flex-shrink:0;display:flex;flex-direction:column;gap:20px;padding-top:4px;overflow-y:auto">
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#5E5A52">PROTOTYPE · OFFICE WEB</span>
+    <span style="font-size:21px;font-weight:600;line-height:1.2">{{ panelTitle }}</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:4px">
+    <sc-for list="{{ flows }}" as="f" hint-placeholder-count="3">
+      <button onClick="{{ f.go }}" style="text-align:left;border:{{ f.border }};background:{{ f.bg }};border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;color:#1B1A17"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5E5A52">{{ f.kicker }}</span><span style="font-size:14px;font-weight:600">{{ f.title }}</span></button>
+    </sc-for>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:4px">
+    <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;padding:7px 10px;border-radius:8px;background:{{ s.bg }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:{{ s.numFg }}">{{ s.n }}</span><div style="display:flex;flex-direction:column;gap:1px"><span style="font-size:14px;font-weight:600;color:{{ s.fg }}">{{ s.title }}</span><span style="font-size:12px;line-height:1.4;color:#5E5A52">{{ s.sub }}</span></div></div>
+    </sc-for>
+    <span style="font-size:13px;line-height:1.5;color:#3D3A34;padding:4px 2px 0">{{ doneWhen }}</span>
+  </div>
+  <sc-if value="{{ showSim }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">ON THE ROOF</span>
+      <button onClick="{{ simTake }}" style="height:44px;border-radius:10px;border:1.5px solid #1B1A17;background:#FFFFFF;color:#1B1A17;font-size:14px;font-weight:600" style-hover="background:#EFEBE3">Ravi takes the photo</button>
+      <button onClick="{{ simCover }}" style="height:44px;border-radius:10px;border:1px solid #CFC9BD;background:transparent;color:#3D3A34;font-size:14px" style-hover="background:#EFEBE3">Spot already covered</button>
+    </div>
+  </sc-if>
+  <sc-if value="{{ hint }}" hint-placeholder-val="{{ false }}">
+    <span style="font-size:13px;line-height:1.5;color:#3D3A34">{{ hint }}</span>
+  </sc-if>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+    <button onClick="{{ restart }}" style="height:40px;border-radius:10px;border:1px solid #CFC9BD;background:transparent;color:#3D3A34;font-size:14px" style-hover="background:#EFEBE3">Restart this flow</button>
+    <span style="font-size:12px;line-height:1.5;color:#5E5A52">Alerts, share links and PDF are prototype concepts.</span>
+  </div>
+</aside>
+
+<main style="flex:1;min-width:0;position:relative;background:#FFFFFF;border-radius:12px;box-shadow:0 0 0 1px #E3DFD6;display:flex;overflow:hidden">
+  <nav style="width:196px;flex-shrink:0;background:#FAF9F6;border-right:1px solid #EEEBE4;display:flex;flex-direction:column;gap:4px;padding:16px 10px">
+    <span style="font-size:15px;font-weight:700;padding:4px 10px 14px">Photo records</span>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="3">
+      <button onClick="{{ n.go }}" style="height:40px;border:none;border-radius:8px;background:{{ n.bg }};color:#1B1A17;font-size:15px;font-weight:{{ n.weight }};display:flex;align-items:center;justify-content:space-between;padding:0 10px;text-align:left"><span>{{ n.label }}</span><sc-if value="{{ n.badge }}" hint-placeholder-val="{{ false }}"><span style="min-width:20px;height:20px;border-radius:10px;background:{{ n.badgeBg }};color:{{ n.badgeFg }};font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 6px;box-sizing:border-box">{{ n.badge }}</span></sc-if></button>
+    </sc-for>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:4px;border-top:1px solid #EEEBE4;padding-top:12px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#5E5A52;padding:0 10px 4px">SIGNED IN AS</span>
+      <div style="padding:8px 10px;display:flex;flex-direction:column;gap:1px"><span style="font-size:14px;font-weight:600">{{ userName }}</span><span style="font-size:12px;color:#5E5A52">{{ userRole }}</span></div>
+    </div>
+  </nav>
+
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column;position:relative">
+    <div style="height:60px;flex-shrink:0;border-bottom:1px solid #EEEBE4;display:flex;align-items:center;gap:16px;padding:0 24px">
+      <div style="flex:1;max-width:520px;height:40px;border:1.5px solid {{ searchBorder }};border-radius:10px;display:flex;align-items:center;gap:8px;padding:0 12px;box-sizing:border-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5E5A52" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+        <input value="{{ q }}" onChange="{{ onQ }}" onKeyDown="{{ onKey }}" placeholder="Customer, address or job #" style="flex:1;min-width:0;border:none;outline:none;font-size:15px;background:transparent;color:#1B1A17">
+      </div>
+      <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5E5A52">25 Oct · {{ clock }}</span>
+    </div>
+
+    <sc-if value="{{ notif }}" hint-placeholder-val="{{ false }}">
+      <button onClick="{{ notifTap }}" style="position:absolute;top:72px;right:20px;z-index:5;width:360px;text-align:left;background:#1B1A17;color:#F5F3EE;border:none;border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;box-shadow:0 12px 32px rgba(27,26,23,0.25)">
+        <span style="display:flex;justify-content:space-between;width:100%;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#B8B2A6"><span>{{ notifKicker }}</span><span>{{ notifTime }}</span></span>
+        <span style="font-size:16px;font-weight:600;line-height:1.3">{{ notifTitle }}</span>
+        <span style="font-size:14px;line-height:1.4;color:#D9D4CA">{{ notifBody }}</span>
+        <sc-if value="{{ notifCall }}" hint-placeholder-val="{{ false }}"><span style="display:flex;gap:8px;padding-top:6px"><span onClick="{{ notifCallGo }}" style="height:40px;padding:0 16px;border-radius:8px;background:#F5F3EE;color:#1B1A17;font-size:14px;font-weight:600;display:flex;align-items:center">Call Ravi</span><span style="height:40px;padding:0 10px;font-size:14px;color:#D9D4CA;display:flex;align-items:center">Open job ›</span></span></sc-if>
+      </button>
+    </sc-if>
+
+    <div style="flex:1;overflow:auto">
+
+    <sc-if value="{{ isToday }}" hint-placeholder-val="{{ true }}">
+      <div style="padding:28px 28px 48px;display:flex;flex-direction:column;gap:24px;max-width:1160px;background:#FAF9F6;min-height:100%;box-sizing:border-box">
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:30px;font-weight:600;letter-spacing:-0.01em">{{ greet }}</span><span style="font-size:15px;color:#3D3A34">25 Oct · <b style="font-weight:600;color:#1B1A17">{{ needText }}</b></span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+          <div style="flex:999 1 460px;display:flex;flex-direction:column;gap:14px;min-width:0">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-size:19px;font-weight:600;display:flex;gap:8px;align-items:center">{{ needTitle }}<sc-if value="{{ needCount }}" hint-placeholder-val="{{ false }}"><span style="min-width:22px;height:22px;border-radius:11px;background:#1B1A17;color:#FFFFFF;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 7px;box-sizing:border-box">{{ needCount }}</span></sc-if></span><span style="font-size:13px;color:#5E5A52">Most urgent first</span></div>
+            <sc-for list="{{ needGroups }}" as="g" hint-placeholder-count="2">
+              <div style="background:#FFFFFF;border:1px solid #E3DFD6;border-radius:12px;border-color:{{ g.border }};overflow:hidden">
+                <div style="display:flex;gap:8px;align-items:center;padding:10px 16px;background:{{ g.headBg }};border-bottom:1px solid #EEEBE4"><span style="width:7px;height:7px;border-radius:50%;background:{{ g.dot }}"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;font-weight:500;color:{{ g.fg }}">{{ g.label }}</span><span style="font-size:13px;color:#5E5A52">· {{ g.sub }}</span></div>
+                <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="1">
+                  <div onClick="{{ it.go }}" style="display:grid;grid-template-columns:minmax(0,1fr) auto 14px;gap:14px;align-items:center;padding:14px 16px;border-top:1px solid #F1EEE8;cursor:{{ it.cursor }}" style-hover="background:#FAF9F6">
+                    <div style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-size:16px;font-weight:600;line-height:1.3">{{ it.title }}</span><span style="font-size:14px;line-height:1.4;color:#5E5A52">{{ it.sub }}</span></div>
+                    <div style="display:flex;gap:8px;align-items:center">
+                      <sc-if value="{{ it.chip }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 8px;border-radius:3px;background:{{ it.chipBg }};color:{{ it.chipFg }};white-space:nowrap">{{ it.chip }}</span></sc-if>
+                      <sc-if value="{{ it.btn }}" hint-placeholder-val="{{ false }}"><button onClick="{{ it.btnGo }}" style="height:44px;padding:0 18px;border:none;border-radius:10px;background:#1B1A17;color:#F5F3EE;font-size:15px;font-weight:600;white-space:nowrap" style-hover="background:#33312C">{{ it.btn }}</button></sc-if>
+                      <sc-if value="{{ it.pair }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:6px"><button onClick="{{ it.accGo }}" style="height:40px;padding:0 12px;border-radius:8px;border:1.5px solid #1B1A17;background:#FFFFFF;color:#1B1A17;font-size:13px;font-weight:600;white-space:nowrap" style-hover="background:#EFEBE3">Accepted</button><button onClick="{{ it.moreGo }}" style="height:40px;padding:0 12px;border-radius:8px;border:1.5px solid #1B1A17;background:#FFFFFF;color:#1B1A17;font-size:13px;font-weight:600;white-space:nowrap" style-hover="background:#EFEBE3">Asked for more</button></div></sc-if>
+                    </div>
+                    <span style="font-size:18px;color:#5E5A52">{{ it.arrow }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
+            <sc-if value="{{ noNeeds }}" hint-placeholder-val="{{ false }}"><div style="background:#FFFFFF;border:1px solid #E3DFD6;border-radius:12px;padding:18px;font-size:15px;color:#3D3A34">Nothing needs you right now.</div></sc-if>
+          </div>
+
+          <div style="flex:1 1 300px;max-width:380px;display:flex;flex-direction:column;gap:14px">
+            <sc-if value="{{ isSeanHome }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div style="background:#FFFFFF;border:1px solid #E3DFD6;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px">
+                  <span style="font-size:16px;font-weight:600">Photos today</span>
+                  <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:34px;font-weight:600;letter-spacing:-0.02em">{{ ptOffice }}</span><span style="font-size:15px;color:#5E5A52">of {{ ptTotal }} in office</span></div>
+                  <div style="height:8px;border-radius:4px;background:#EFEBE3;display:flex;overflow:hidden"><span style="width:{{ ptOfficePct }};background:#2F6B4F"></span><span style="width:{{ ptPhonePct }};background:#B8B2A6"></span></div>
+                  <div style="display:flex;flex-direction:column;gap:4px;font-size:14px;color:#3D3A34"><span style="display:flex;gap:8px;align-items:center"><span style="width:8px;height:8px;border-radius:2px;background:#B8B2A6"></span>{{ ptPhoneText }}</span><span style="display:flex;gap:8px;align-items:center"><span style="width:8px;height:8px;border-radius:2px;background:#EFEBE3;border:1px solid #CFC9BD;box-sizing:border-box"></span>{{ ptRestText }}</span></div>
+                </div>
+                <div style="background:#FFFFFF;border:1px solid #E3DFD6;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:4px">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;padding-bottom:6px"><span style="font-size:16px;font-weight:600">Today’s jobs</span><button onClick="{{ goJobsNav }}" style="height:32px;padding:0;border:none;background:none;color:#3D3A34;font-size:13px;text-decoration:underline;text-underline-offset:2px">All jobs</button></div>
+                  <sc-for list="{{ todayJobs }}" as="j" hint-placeholder-count="3">
+                    <div onClick="{{ j.go }}" style="border-top:1px solid #EEEBE4;padding:10px 0;display:flex;flex-direction:column;gap:6px;cursor:{{ j.cursor }}">
+                      <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline"><span style="font-size:15px;font-weight:600">{{ j.title }}</span><span style="font-size:13px;color:#5E5A52;white-space:nowrap">{{ j.state }}</span></div>
+                      <div style="height:6px;border-radius:3px;background:#EFEBE3;display:flex;overflow:hidden"><span style="width:{{ j.officePct }};background:#2F6B4F"></span><span style="width:{{ j.phonePct }};background:#B8B2A6"></span></div>
+                      <span style="font-size:13px;color:#5E5A52">{{ j.count }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="background:#FFFFFF;border:1px solid #E3DFD6;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:4px">
+                  <span style="font-size:16px;font-weight:600;padding-bottom:6px">Recently shared with customers</span>
+                  <sc-for list="{{ shares }}" as="x" hint-placeholder-count="2">
+                    <div style="border-top:1px solid #EEEBE4;padding:10px 0;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">{{ x.title }}</span><span style="font-size:13px;color:#5E5A52">{{ x.sub }}</span></div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ isPriyaHome }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div style="background:#FFFFFF;border:1px solid #E3DFD6;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px">
+                  <span style="font-size:16px;font-weight:600">Accepted first time · October</span>
+                  <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:34px;font-weight:600;letter-spacing:-0.02em">{{ accN }}</span><span style="font-size:15px;color:#5E5A52">of {{ accD }} answered</span></div>
+                  <div style="height:8px;border-radius:4px;background:#EFEBE3;overflow:hidden;display:flex"><span style="width:{{ accPct }};background:#2F6B4F"></span></div>
+                  <span style="font-size:13px;line-height:1.5;color:#5E5A52">Packages still waiting for an answer aren’t counted.</span>
+                </div>
+                <div style="background:#FFFFFF;border:1px solid #E3DFD6;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:8px">
+                  <span style="font-size:16px;font-weight:600">Can’t send yet</span>
+                  <span style="font-size:15px;font-weight:600">#424 · 31 Cedar Rd</span>
+                  <span style="font-size:14px;line-height:1.5;color:#3D3A34">3 photos still on Dana’s phone since 11:40. Sean gets an alert at 15:40. It moves to Ready to send when they arrive.</span>
+                </div>
+                <div style="background:#FFFFFF;border:1px solid #E3DFD6;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:4px">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;padding-bottom:6px"><span style="font-size:16px;font-weight:600">Recently sent</span><button onClick="{{ goClaimsNav }}" style="height:32px;padding:0;border:none;background:none;color:#3D3A34;font-size:13px;text-decoration:underline;text-underline-offset:2px">All claims</button></div>
+                  <sc-for list="{{ recentSent }}" as="x" hint-placeholder-count="2">
+                    <div style="border-top:1px solid #EEEBE4;padding:10px 0;display:flex;justify-content:space-between;gap:10px;align-items:center"><span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600">{{ x.title }}</span><span style="font-size:13px;color:#5E5A52">{{ x.sub }}</span></span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:3px 7px;border-radius:3px;background:{{ x.bg }};color:{{ x.fg }};white-space:nowrap">{{ x.chip }}</span></div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isJobs }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:28px 28px 48px;display:flex;flex-direction:column;gap:20px;max-width:960px">
+        <span style="font-size:30px;font-weight:600;letter-spacing:-0.01em">Jobs</span>
+        <sc-if value="{{ hasSearch }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;gap:12px;align-items:center"><span style="font-size:15px;color:#5E5A52">{{ resultsTitle }}</span><button onClick="{{ clearSearch }}" style="height:32px;padding:0;border:none;background:none;color:#3D3A34;font-size:14px;text-decoration:underline;text-underline-offset:2px">Clear</button></div>
+            <sc-for list="{{ results }}" as="j" hint-placeholder-count="2">
+              <div style="border:1px solid #E3DFD6;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px">
+                <button onClick="{{ j.open }}" style="align-self:flex-start;text-align:left;border:none;background:none;padding:0;display:flex;flex-direction:column;gap:2px;color:#1B1A17"><span style="font-size:18px;font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#CFC9BD">{{ j.title }}</span><span style="font-size:14px;color:#5E5A52">{{ j.sub }}</span></button>
+                <sc-for list="{{ j.spots }}" as="sp" hint-placeholder-count="2">
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <span style="font-size:14px;font-weight:600">{{ sp.label }}</span>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px">
+                      <sc-for list="{{ sp.ph }}" as="p" hint-placeholder-count="3">
+                        <button onClick="{{ p.open }}" style="width:150px;padding:0;border:{{ p.border }};border-radius:8px;overflow:hidden;background:#FFFFFF;text-align:left;display:flex;flex-direction:column;color:#1B1A17" style-hover="border-color:#1B1A17">
+                          <span style="height:96px;width:100%;background:{{ p.bg }};display:flex;align-items:center;justify-content:center;font-size:12px;color:#5E5A52">{{ p.empty }}</span>
+                          <span style="padding:7px 9px;font-family:'IBM Plex Mono',monospace;font-size:11px">{{ p.cap }}</span>
+                        </button>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
+            <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}"><span style="font-size:15px;color:#3D3A34">No jobs match. Try a customer name, street or job number.</span></sc-if>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noSearch }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ jobRows }}" as="r" hint-placeholder-count="5">
+              <button onClick="{{ r.go }}" style="text-align:left;background:#FFFFFF;border:1px solid #E3DFD6;border-radius:10px;padding:14px 16px;display:grid;grid-template-columns:minmax(0,1fr) auto 16px;gap:16px;align-items:center;color:#1B1A17" style-hover="border-color:#1B1A17">
+                <span style="display:flex;flex-direction:column;gap:3px"><span style="font-size:16px;font-weight:600">{{ r.title }}</span><span style="font-size:14px;color:#5E5A52">{{ r.sub }}</span></span>
+                <span style="font-size:14px;color:#3D3A34">{{ r.summary }}</span>
+                <span style="font-size:18px;color:#5E5A52">›</span>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isClaims }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:28px 28px 48px;display:flex;flex-direction:column;gap:28px;max-width:860px">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <span style="font-size:30px;font-weight:600;letter-spacing:-0.01em">Ready for claims</span>
+          <sc-for list="{{ readyRows }}" as="r" hint-placeholder-count="2">
+            <button onClick="{{ r.go }}" style="text-align:left;background:#FFFFFF;border:{{ r.border }};border-radius:10px;padding:14px 16px;display:grid;grid-template-columns:minmax(0,1fr) auto 16px;gap:16px;align-items:center;color:#1B1A17;cursor:{{ r.cursor }}">
+              <span style="display:flex;flex-direction:column;gap:3px"><span style="font-size:16px;font-weight:600;color:{{ r.titleFg }}">{{ r.title }}</span><span style="font-size:14px;color:#5E5A52">{{ r.sub }}</span></span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 8px;border-radius:3px;background:{{ r.chipBg }};color:{{ r.chipFg }}">{{ r.chip }}</span>
+              <span style="font-size:18px;color:#5E5A52">{{ r.arrow }}</span>
+            </button>
+          </sc-for>
+          <sc-if value="{{ noReady }}" hint-placeholder-val="{{ false }}"><span style="font-size:15px;color:#5E5A52">No finished jobs yet today.</span></sc-if>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <span style="font-size:19px;font-weight:600;padding-bottom:6px">Sent</span>
+          <sc-for list="{{ sentRows }}" as="r" hint-placeholder-count="2">
+            <div style="border-top:1px solid #EEEBE4;padding:12px 2px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center">
+              <span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600">{{ r.title }}</span><span style="font-size:13px;color:#5E5A52">{{ r.sub }}</span></span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 8px;border-radius:3px;background:{{ r.bg }};color:{{ r.fg }}">{{ r.chip }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isJob }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:18px 28px 48px;display:flex;flex-direction:column;gap:18px">
+        <button onClick="{{ back }}" style="align-self:flex-start;height:34px;padding:0 10px 0 4px;border:none;background:none;color:#3D3A34;font-size:14px;white-space:nowrap;display:flex;gap:4px;align-items:center"><span>‹</span><span>{{ backLabel }}</span></button>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
+          <div style="display:flex;flex-direction:column;gap:5px"><span style="font-size:28px;font-weight:600;letter-spacing:-0.01em">{{ jTitle }}</span><span style="font-size:15px;color:#5E5A52">{{ jSub }}</span><span style="font-size:15px">{{ jCounts }}</span></div>
+          <sc-if value="{{ showPrepare }}" hint-placeholder-val="{{ false }}"><button onClick="{{ goPackage }}" style="height:48px;padding:0 22px;border:none;border-radius:10px;background:#1B1A17;color:#F5F3EE;font-size:16px;font-weight:600" style-hover="background:#33312C">Prepare claim package</button></sc-if>
+          <sc-if value="{{ jSentChip }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 8px;border-radius:3px;background:#E2EDE6;color:#2F6B4F">{{ jSentChip }}</span></sc-if>
+        </div>
+        <sc-if value="{{ shareMsg }}" hint-placeholder-val="{{ false }}"><div style="background:#E2EDE6;color:#2F6B4F;border-radius:8px;padding:12px 16px;font-size:15px;font-weight:600">{{ shareMsg }}</div></sc-if>
+        <sc-if value="{{ hasExceptions }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:6px;background:#F5F3EE;border-radius:10px;padding:14px 16px">
+            <span style="font-size:15px;font-weight:600">{{ excTitle }}</span>
+            <sc-for list="{{ exceptions }}" as="e" hint-placeholder-count="2">
+              <button onClick="{{ e.go }}" style="text-align:left;border:none;background:none;padding:3px 0;font-size:15px;color:#1B1A17;display:flex;gap:10px;align-items:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 6px;border-radius:3px;background:{{ e.bg }};color:{{ e.fg }};border:{{ e.border }}">{{ e.chip }}</span><span style="text-decoration:underline;text-underline-offset:2px">{{ e.label }}</span></button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <div style="display:flex;flex-wrap:wrap-reverse;gap:24px;align-items:flex-end">
+          <div style="flex:999 1 420px;display:flex;flex-direction:column;gap:18px;min-width:0">
+            <sc-for list="{{ groups }}" as="g" hint-placeholder-count="5">
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">{{ g.label }}</span>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <sc-for list="{{ g.tiles }}" as="t" hint-placeholder-count="3">
+                    <button onClick="{{ t.pick }}" style="width:124px;padding:0;text-align:left;border-radius:8px;border:{{ t.border }};overflow:hidden;display:flex;flex-direction:column;background:#FFFFFF;color:#1B1A17">
+                      <span style="height:76px;width:100%;background:{{ t.bg }};display:flex;align-items:center;justify-content:center;font-size:12px;color:#5E5A52">{{ t.empty }}</span>
+                      <span style="padding:7px 9px;display:flex;flex-direction:column;gap:4px;align-items:flex-start"><span style="font-size:13px;font-weight:600;line-height:1.25">{{ t.name }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:{{ t.chipPad }};border-radius:3px;background:{{ t.chipBg }};color:{{ t.chipFg }}">{{ t.meta }}</span></span>
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="flex:1 1 280px;max-width:520px;position:sticky;top:16px;background:#F5F3EE;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px">
+            <sc-if value="{{ pNone }}" hint-placeholder-val="{{ true }}"><span style="font-size:15px;line-height:1.5;color:#5E5A52">Select a photo to see when and where it was taken, and its label history.</span></sc-if>
+            <sc-if value="{{ pGap }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <span style="align-self:flex-start;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;border-radius:3px;background:{{ gChipBg }};color:{{ gChipFg }};border:{{ gChipBorder }}">{{ gChip }}</span>
+                <span style="font-size:18px;font-weight:600;line-height:1.25">{{ dTitle }}</span>
+                <span style="font-size:15px;line-height:1.5;color:#3D3A34">{{ gBody }}</span>
+                <sc-if value="{{ gQuote }}" hint-placeholder-val="{{ false }}"><span style="font-size:15px;line-height:1.5;background:#FFFFFF;border-radius:8px;padding:12px 14px">{{ gQuote }}</span></sc-if>
+                <span style="font-size:13px;color:#5E5A52">{{ gMeta }}</span>
+                <sc-if value="{{ gCall }}" hint-placeholder-val="{{ false }}"><button onClick="{{ call }}" style="height:48px;border:none;border-radius:10px;background:#1B1A17;color:#F5F3EE;font-size:16px;font-weight:600" style-hover="background:#33312C">{{ callLabel }}</button></sc-if>
+                <sc-if value="{{ gCall }}" hint-placeholder-val="{{ false }}"><button onClick="{{ toggleNote }}" style="align-self:flex-start;height:34px;padding:0;border:none;background:none;color:#3D3A34;font-size:14px;text-decoration:underline;text-underline-offset:2px">{{ noteLabel }}</button></sc-if>
+                <sc-if value="{{ noteOpen }}" hint-placeholder-val="{{ false }}"><textarea placeholder="Internal note, office only" style="min-height:72px;border:1px solid #CFC9BD;border-radius:8px;padding:10px;font-size:14px;resize:vertical;background:#FFFFFF"></textarea></sc-if>
+              </div>
+            </sc-if>
+            <sc-if value="{{ pPhoto }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="aspect-ratio:4/3;border-radius:8px;background:{{ dBg }}"></div>
+                <span style="font-size:18px;font-weight:600;line-height:1.25">{{ dTitle }}</span>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">TAKEN (PHONE TIME)</span><span style="font-size:15px">{{ dTaken }}</span></div>
+                  <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">RECEIVED (OFFICE TIME)</span><span style="font-size:15px">{{ dRecv }}</span></div>
+                  <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">LOCATION</span><span style="font-size:15px;color:{{ dLocFg }}">{{ dLoc }}</span></div>
+                  <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">LABEL</span><span style="font-size:15px">{{ dLabel }}</span><sc-if value="{{ dHist }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;line-height:1.4;color:#5E5A52">{{ dHist }}</span></sc-if></div>
+                </div>
+                <sc-if value="{{ dCanShare }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openShare }}" style="height:46px;border-radius:10px;border:{{ shareBorder }};background:{{ shareBg }};color:{{ shareFg }};font-size:15px;font-weight:600">Share with customer</button></sc-if>
+                <sc-if value="{{ dUnconf }}" hint-placeholder-val="{{ false }}"><button onClick="{{ confirmLabel }}" style="height:44px;border-radius:10px;border:1.5px solid #1B1A17;background:#FFFFFF;color:#1B1A17;font-size:15px;font-weight:600" style-hover="background:#EFEBE3">Confirm “Opened up”</button></sc-if>
+                <sc-if value="{{ fixOpen }}" hint-placeholder-val="{{ false }}"><select onChange="{{ onFix }}" value="{{ dName }}" style="height:40px;border:1.5px solid #CFC9BD;border-radius:8px;padding:0 10px;font-size:14px;background:#FFFFFF;color:#1B1A17"><sc-for list="{{ fixOpts }}" as="o" hint-placeholder-count="3"><option value="{{ o }}">{{ o }}</option></sc-for></select></sc-if>
+                <button onClick="{{ toggleFix }}" style="align-self:flex-start;height:34px;padding:0;border:none;background:none;color:#3D3A34;font-size:14px;text-decoration:underline;text-underline-offset:2px">{{ fixLabel }}</button>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isPackage }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:18px 28px 48px;display:flex;flex-direction:column;gap:18px">
+        <button onClick="{{ backJob }}" style="align-self:flex-start;height:34px;padding:0 10px 0 4px;border:none;background:none;color:#3D3A34;font-size:14px">‹ #421 · 18 Oak St</button>
+        <div style="display:flex;flex-wrap:wrap-reverse;gap:24px;align-items:flex-end">
+          <div style="flex:999 1 440px;min-width:0;border:1px solid #E3DFD6;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:18px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">WHAT THE ADJUSTER SEES</span>
+            <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:24px;font-weight:600;letter-spacing:-0.01em">Claim photos · 18 Oak St</span><span style="font-size:14px;color:#5E5A52">Job #421 · leak repair · 25 Oct 2026 · 17 required, 16 included · prepared by Priya Shah</span></div>
+            <div style="display:flex;flex-direction:column;gap:8px;background:#F5F3EE;border-radius:8px;padding:14px 16px;font-size:14px;line-height:1.5">
+              <span style="font-weight:600">Disclosed</span>
+              <span><b>Missing:</b> B · Soft decking · Opened up. Crew’s reason: “Rain started, boards went on fast. Soft area was about 1 m², replaced 4 sheets.”</span>
+              <span><b>No GPS:</b> A · Vent pipe leak · Fixed. Phone and office times shown.</span>
+            </div>
+            <sc-for list="{{ pkg }}" as="g" hint-placeholder-count="6">
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">{{ g.label }}</span>
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">
+                  <sc-for list="{{ g.tiles }}" as="t" hint-placeholder-count="3">
+                    <div style="display:flex;flex-direction:column;gap:4px">
+                      <span style="height:88px;border-radius:6px;background:{{ t.bg }};border:{{ t.pkgBorder }};display:flex;align-items:center;justify-content:center;font-size:12px;color:#5E5A52">{{ t.empty }}</span>
+                      <span style="font-size:13px;font-weight:600">{{ t.name }}</span>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.4;color:{{ t.pkgFg }}">{{ t.pkgMeta }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="flex:1 1 280px;max-width:420px;position:sticky;top:16px;display:flex;flex-direction:column;gap:14px">
+            <sc-if value="{{ pkgNotSent }}" hint-placeholder-val="{{ true }}">
+              <div style="background:#F5F3EE;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:16px">
+                <span style="font-size:19px;font-weight:600">Send to adjuster</span>
+                <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;color:#3D3A34">Adjuster’s email</span><input value="{{ pkgEmail }}" onChange="{{ onPkgEmail }}" style="height:44px;border:1.5px solid {{ pkgEmailBorder }};border-radius:8px;padding:0 12px;font-size:15px;outline:none;background:#FFFFFF;color:#1B1A17"><span style="font-size:12px;color:#5E5A52">The insurer’s claims adjuster, from the customer’s claim.</span></div>
+                <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;color:#3D3A34">Format</span>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#E9E5DC;padding:4px;border-radius:10px">
+                    <button onClick="{{ pickLink }}" style="height:40px;border:none;border-radius:7px;background:{{ linkBg }};color:#1B1A17;font-size:14px;font-weight:600">Link + PDF</button>
+                    <button onClick="{{ pickPdf }}" style="height:40px;border:none;border-radius:7px;background:{{ pdfBg }};color:#1B1A17;font-size:14px;font-weight:600">PDF only</button>
+                  </div>
+                  <span style="font-size:13px;line-height:1.5;color:#5E5A52">{{ fmtNote }}</span>
+                </div>
+                <sc-if value="{{ pkgFailed }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#A23B1E">Not sent. Check the connection and try again.</span></sc-if>
+                <button onClick="{{ sendPkg }}" style="height:48px;border:none;border-radius:10px;background:#1B1A17;color:#F5F3EE;font-size:16px;font-weight:600" style-hover="background:#33312C">{{ pkgSendLabel }}</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{ pkgIsSent }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="background:#E2EDE6;color:#2F6B4F;border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:4px"><span style="font-size:17px;font-weight:600">{{ pkgSentTitle }}</span><span style="font-size:14px;line-height:1.5">{{ pkgSentSub }}</span></div>
+                <div style="background:#F5F3EE;border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#5E5A52">LATER · WHEN THE ADJUSTER REPLIES</span>
+                  <sc-if value="{{ noAnswer }}" hint-placeholder-val="{{ true }}">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                      <button onClick="{{ ansAccepted }}" style="height:44px;border-radius:10px;border:1.5px solid #1B1A17;background:#FFFFFF;color:#1B1A17;font-size:14px;font-weight:600" style-hover="background:#EFEBE3">Accepted</button>
+                      <button onClick="{{ ansMore }}" style="height:44px;border-radius:10px;border:1.5px solid #1B1A17;background:#FFFFFF;color:#1B1A17;font-size:14px;font-weight:600" style-hover="background:#EFEBE3">Asked for more</button>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ answerText }}" hint-placeholder-val="{{ false }}"><span style="font-size:15px;line-height:1.5">{{ answerText }}</span></sc-if>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+    </div>
+
+    <sc-if value="{{ shareOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="position:fixed;inset:0;z-index:10;background:rgba(27,26,23,0.35);display:flex;align-items:center;justify-content:center;padding:24px">
+        <div style="width:100%;max-width:480px;background:#FFFFFF;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:18px;box-shadow:0 24px 60px rgba(27,26,23,0.25)">
+          <span style="font-size:21px;font-weight:600">Share with customer</span>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;color:#3D3A34">To</span><input value="{{ shEmail }}" onChange="{{ onShEmail }}" style="height:44px;border:1.5px solid #CFC9BD;border-radius:8px;padding:0 12px;font-size:15px;outline:none;color:#1B1A17"></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600;color:#3D3A34">What</span>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <button onClick="{{ pickOne }}" style="min-height:52px;border-radius:8px;border:{{ oneBorder }};background:#FFFFFF;color:#1B1A17;font-size:14px;font-weight:600;text-align:left;padding:8px 12px;display:flex;flex-direction:column;gap:2px"><span>This photo</span><span style="font-size:12px;font-weight:400;color:#5E5A52">{{ dName }}</span></button>
+              <button onClick="{{ pickSet }}" style="min-height:52px;border-radius:8px;border:{{ setBorder }};background:#FFFFFF;color:#1B1A17;font-size:14px;font-weight:600;text-align:left;padding:8px 12px;display:flex;flex-direction:column;gap:2px"><span>Whole spot</span><span style="font-size:12px;font-weight:400;color:#5E5A52">Before · Opened up · Fixed</span></button>
+            </div>
+          </div>
+          <span style="font-size:14px;line-height:1.5;color:#3D3A34;background:#F5F3EE;border-radius:8px;padding:12px 14px">{{ previewText }}</span>
+          <div style="display:flex;justify-content:flex-end;align-items:center;gap:12px">
+            <button onClick="{{ closeShare }}" style="height:44px;padding:0 14px;border:none;background:none;color:#3D3A34;font-size:15px">Cancel</button>
+            <button onClick="{{ sendShare }}" style="height:44px;padding:0 20px;border:none;border-radius:10px;background:#1B1A17;color:#F5F3EE;font-size:15px;font-weight:600" style-hover="background:#33312C">{{ shSendLabel }}</button>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const IMG = n => "url('assets/est-" + n + ".png') center/cover #EDEAE3";
+const STAGES = ['Before', 'Opened up', 'Fixed'];
+const REASON = '“Rain started, boards went on fast. Soft area was about 1 m², replaced 4 sheets.” Ravi, 9:33';
+const I = (id, name, t, r, loc, img, st) => ({ id, name, t, r, loc, img, st: st || 'office' });
+
+function job421(b2, live) {
+  const L = st => live ? st : 'office';
+  const b2item = b2 === 'office' || b2 === 'phone' ? I('B2', 'Opened up', '9:31', '9:33', 25, 'attic', b2) : { id: 'B2', name: 'Opened up', st: b2, reason: b2 === 'reason' ? REASON : null };
+  const lat = (it) => live ? { ...it, st: 'later' } : it;
+  return [
+    { label: 'PROPERTY BEFORE', items: [I('p1', 'Front', '8:06', '8:07', 14), I('p2', 'Back', '8:08', '8:09', 16), I('p3', 'Gutters', '8:09', '8:10', 12, 'gutter'), I('p4', 'Ground below', '8:10', '8:11', 13)] },
+    { label: 'ROOF BEFORE', items: [I('r1', 'North slope', '8:20', '8:21', 22, 'north'), I('r2', 'South slope', '8:22', '8:23', 24)] },
+    { label: 'A · VENT PIPE LEAK', spot: true, items: [I('A1', 'Before', '8:35', '8:36', 21, 'pipe-boot'), I('A2', 'Opened up', '8:50', '8:51', 20, 'flashing'), I('A3', 'Fixed', '9:20', '9:41', null, null, L('phone'))] },
+    { label: 'B · SOFT DECKING', spot: true, items: [I('B1', 'Before', '8:40', '8:41', 26, 'ceiling'), b2item, lat(I('B3', 'Fixed', '9:48', '9:49', 25, 'attic'))] },
+    { label: 'ROOF AFTER', items: [lat(I('a1', 'North slope', '9:52', '9:53', 22, 'north')), lat(I('a2', 'South slope', '9:53', '9:54', 23))] },
+    { label: 'CLEAN UP', items: [lat(I('c1', 'Gutters after', '9:56', '9:57', 12, 'gutter')), lat(I('c2', 'Ground below after', '9:57', '9:58', 13)), lat(I('c3', 'Debris cleared', '9:58', '9:59', 15))] }
+  ];
+}
+const PAST = {
+  '388': [
+    { label: 'PROPERTY BEFORE', items: [I('m1', 'Front', '10:02', '10:03', 15), I('m2', 'Gutters', '10:03', '10:04', 11, 'gutter')] },
+    { label: 'A · GUTTER SEAM', spot: true, items: [I('mA1', 'Before', '10:12', '10:14', 18, 'gutter'), I('mA2', 'Opened up', '10:41', '10:44', 21, 'flashing'), I('mA3', 'Fixed', '11:20', '11:23', 19, 'gutter')] },
+    { label: 'B · PIPE BOOT', spot: true, items: [I('mB1', 'Before', '10:15', '10:17', 24, 'pipe-boot'), { id: 'mB2', name: 'Opened up', st: 'reason', reason: '“Boot swapped from above; deck not opened.” Ravi, 10:52' }, I('mB3', 'Fixed', '11:02', '13:40', null, 'pipe-boot')] },
+    { label: 'ROOF AFTER', items: [I('m9', 'North slope', '11:40', '11:41', 20, 'north')] }
+  ],
+  '362': [
+    { label: 'PROPERTY BEFORE', items: [I('e1', 'Front', '8:30', '8:31', 10)] },
+    { label: 'A · NORTH SLOPE', spot: true, items: [I('eA1', 'Before', '8:40', '8:41', 12, 'north'), I('eA2', 'Opened up', '9:30', '9:32', 15, 'attic'), I('eA3', 'Fixed', '12:05', '12:06', 11, 'north')] },
+    { label: 'CLEAN UP', items: [I('e9', 'Debris cleared', '12:20', '12:21', 13)] }
+  ]
+};
+const META = {
+  '421': { cust: 'Ruth Okafor', addr: '18 Oak St', date: '25 Oct', crew: 'Ravi', work: 'Leak repair · 2 spots' },
+  '388': { cust: 'Lena Marsh', addr: '14 Maple Dr', date: '3 Oct', crew: 'Ravi', work: 'Gutter repair · 2 spots', email: 'lena.marsh@mail.com' },
+  '362': { cust: 'Lena Ortiz', addr: '9 Elm Ct', date: '12 Sep', crew: 'Marco', work: 'Slope repair · 1 spot', email: 'lena.ortiz@mail.com' }
+};
+const FLOWS = {
+  A: { user: 'sean', scr: 'today', kicker: 'SEAN · A', title: 'Live job: catch a gap' },
+  B: { user: 'sean', scr: 'today', kicker: 'SEAN · B', title: 'Dispute call: find and share' },
+  C: { user: 'priya', scr: 'today', kicker: 'PRIYA · C', title: 'Claim package to adjuster' }
+};
+const QP = new URLSearchParams(location.search);
+const ONLY = (QP.get('flows') || 'ABC').split('').filter(k => FLOWS[k]);
+const base = f => ({ flow: f, user: FLOWS[f].user, scr: FLOWS[f].scr, from: FLOWS[f].scr, job: null, sel: null, b2: f === 'A' ? 'missing' : 'reason', notif: f === 'A' ? 'gap' : null, calling: false, noteOpen: false,
+  q: '', searched: '', fixOpen: false, labels: {}, a401: null, share: { open: false, what: 'set', email: '', sending: false, sent: null },
+  pkg: { fmt: 'link', email: 'm.chen@harborins.com', sending: false, failed: false, failOnce: true, sent: null, answer: null } });
+
+class Component extends DCLogic {
+  state = base(ONLY[0] || 'A');
+  componentWillUnmount() { [this.t1, this.t2, this.t3, this.t4].forEach(clearTimeout); }
+  clear() { [this.t1, this.t2, this.t3, this.t4].forEach(clearTimeout); }
+  groupsFor(id, s) { return id === '421' ? job421(s.b2, s.flow === 'A') : PAST[id]; }
+  take() {
+    this.clear();
+    this.setState({ b2: 'phone', calling: false, notif: 'taken', sel: 'B2' });
+    this.t1 = setTimeout(() => this.setState({ b2: 'office' }), 2500);
+    this.t3 = setTimeout(() => this.setState(s => s.notif === 'taken' ? { notif: null } : null), 5000);
+  }
+  cover() {
+    this.clear();
+    this.setState({ b2: 'reason', calling: false, notif: 'covered', sel: 'B2' });
+    this.t3 = setTimeout(() => this.setState(s => s.notif === 'covered' ? { notif: null } : null), 5000);
+  }
+  openJob(id, sel, from) { this.setState(s => ({ scr: 'job', job: id, sel: sel || null, fixOpen: false, from: from || s.scr, share: { ...s.share, sent: null } })); }
+  renderVals() {
+    const s = this.state, A = s.flow === 'A', live = A, sean = s.user === 'sean';
+    const nameOf = it => (s.labels[it.id] && s.labels[it.id].to) || it.name;
+    const titleCase = l => l.toLowerCase().replace(/(^|· )([a-z])/g, (m, a, b) => a + b.toUpperCase()).replace(/\b(a|b)\b/g, c => c.toUpperCase());
+    const tally = gs => { const n = { total: 0, office: 0, phone: 0, missing: 0, reason: 0, later: 0, nogps: 0 }; gs.forEach(g => g.items.forEach(it => { n.total++; n[it.st]++; if (it.st === 'office' && it.loc == null) n.nogps++; })); return n; };
+
+    // job page
+    let jv = { groups: [], pkg: [], exceptions: [] };
+    if (s.job) {
+      const gs = this.groupsFor(s.job, s), m = META[s.job], n = tally(gs);
+      const autoSel = s.sel || (s.job === '421' && A && s.b2 === 'missing' ? 'B2' : null);
+      const tile = (g, it) => {
+        const on = autoSel === it.id, pick = () => this.setState({ sel: it.id, fixOpen: false });
+        const base = { name: nameOf(it), pick, chipPad: '2px 6px' };
+        if (it.st === 'office') return { ...base, bg: it.img ? IMG(it.img) : '#E4E0D7', empty: '', meta: it.t + ' · ' + (it.loc == null ? 'No GPS' : it.loc + ' m'), chipBg: it.loc == null ? '#F3E3DC' : 'transparent', chipFg: it.loc == null ? '#A23B1E' : '#5E5A52', chipPad: it.loc == null ? '2px 6px' : '0',
+          border: on ? '2px solid #1B1A17' : '1px solid #E3DFD6', pkgBorder: 'none', pkgMeta: 'Taken ' + it.t + ' · received ' + it.r + ' · ' + (it.loc == null ? 'No GPS' : it.loc + ' m from ' + m.addr), pkgFg: it.loc == null ? '#A23B1E' : '#5E5A52' };
+        if (it.st === 'phone') return { ...base, bg: it.img ? IMG(it.img) : '#E4E0D7', empty: '', meta: 'ON PHONE', chipBg: '#EFEBE3', chipFg: '#1B1A17', border: on ? '2px solid #1B1A17' : '1px solid #E3DFD6' };
+        if (it.st === 'missing') return { ...base, bg: '#F3E3DC', empty: 'Not taken', meta: 'MISSING · SPOT OPEN', chipBg: '#F3E3DC', chipFg: '#A23B1E', border: '2px solid #A23B1E' };
+        if (it.st === 'reason') return { ...base, bg: '#F5F3EE', empty: 'Not taken', meta: 'MISSING · REASON', chipBg: '#EFEBE3', chipFg: '#1B1A17', border: on ? '2px solid #1B1A17' : '1.5px dashed #CFC9BD', pkgBorder: '1.5px dashed #CFC9BD', pkgMeta: 'Missing · crew’s reason above', pkgFg: '#1B1A17' };
+        return { ...base, bg: '#F5F3EE', empty: 'Not yet', meta: 'LATER', chipBg: 'transparent', chipFg: '#77726A', border: on ? '2px solid #1B1A17' : '1px dashed #CFC9BD' };
+      };
+      const groups = gs.map(g => ({ label: g.label, tiles: g.items.map(it => tile(g, it)) }));
+      const parts = live ? [n.office + ' in office'] : [n.office + ' of ' + n.total + ' photos in office'];
+      if (n.phone) parts.push(n.phone + ' on phone'); if (n.missing) parts.push(n.missing + ' missing, spot open'); if (n.reason) parts.push(n.reason + ' missing with reason'); if (n.later) parts.push(n.later + ' later'); if (!live && n.nogps) parts.push(n.nogps + ' no GPS');
+      if (live) parts.push(n.total + ' required');
+      const exceptions = [];
+      if (!live || s.job !== '421') gs.forEach(g => g.items.forEach(it => {
+        if (it.st === 'reason') exceptions.push({ chip: 'MISSING · REASON', bg: '#EFEBE3', fg: '#1B1A17', border: '1px solid #CFC9BD', label: titleCase(g.label) + ' · ' + it.name, go: () => this.setState({ sel: it.id, fixOpen: false }) });
+        if (it.st === 'office' && it.loc == null) exceptions.push({ chip: 'NO GPS', bg: '#F3E3DC', fg: '#A23B1E', border: 'none', label: titleCase(g.label) + ' · ' + nameOf(it), go: () => this.setState({ sel: it.id, fixOpen: false }) });
+      }));
+      let f = null; gs.forEach(g => g.items.forEach(it => { if (it.id === autoSel) f = { g, it }; }));
+      const it = f && f.it;
+      const isPhoto = it && it.st === 'office', isGap = it && !isPhoto;
+      const lab = it && s.labels[it.id];
+      const gapInfo = isGap ? ({
+        missing: { gChip: 'MISSING · SPOT OPEN', gChipBg: '#F3E3DC', gChipFg: '#A23B1E', gChipBorder: 'none', gBody: 'Ravi opened the decking at 9:12. Once new boards go on, this photo can’t be taken.', gMeta: 'Last heard from Ravi’s phone 9:29', gCall: true },
+        phone: { gChip: 'ON PHONE', gChipBg: '#EFEBE3', gChipFg: '#1B1A17', gChipBorder: 'none', gBody: 'Taken ' + it.t + ' on ' + m.crew + '’s phone. It’s uploading.', gMeta: 'Last heard ' + (it.id === 'B2' ? '9:31' : '9:29') },
+        reason: { gChip: 'MISSING · REASON', gChipBg: '#EFEBE3', gChipFg: '#1B1A17', gChipBorder: '1px solid #CFC9BD', gBody: 'Covered before the photo. It can’t be retaken; the claim package shows it as missing with this reason:', gQuote: it.reason, gMeta: 'Before and Fixed for this spot are in the set.' },
+        later: { gChip: 'LATER', gChipBg: 'transparent', gChipFg: '#77726A', gChipBorder: '1px dashed #CFC9BD', gBody: 'Not due yet. The crew takes this after the repair.', gMeta: '' }
+      })[it.st] : {};
+      const spotGroup = f && f.g.spot;
+      jv = {
+        jTitle: '#' + s.job + ' · ' + m.addr, jSub: m.cust + ' · ' + m.work + ' · ' + m.crew + ' · ' + (s.job === '421' ? (live ? 'on site since 8:04 · last heard ' + (s.b2 === 'missing' ? '9:29' : '9:33') : '25 Oct, 8:04–10:02') : m.date),
+        jCounts: parts.join(' · '), groups, pkg: groups,
+        showPrepare: s.job === '421' && !live && !sean && !s.pkg.sent,
+        jSentChip: s.job === '421' && s.pkg.sent ? 'SENT TO ADJUSTER ' + s.pkg.sent.at : (s.job === '388' ? 'SENT TO ADJUSTER 6 OCT · ACCEPTED' : s.job === '362' ? 'SENT TO ADJUSTER 15 SEP · ACCEPTED' : ''),
+        hasExceptions: exceptions.length > 0, exceptions, excTitle: (sean ? 'Not fully documented: ' : 'An adjuster will ask about ') + (exceptions.length === 1 ? '1 thing' : exceptions.length + ' things'), excCount: exceptions.length === 1 ? '1 thing' : exceptions.length + ' things',
+        pNone: !it, pGap: !!isGap, pPhoto: !!isPhoto, ...gapInfo,
+        gQuote: gapInfo.gQuote || '', gCall: !!gapInfo.gCall,
+        dTitle: f ? titleCase(f.g.label) + ' · ' + nameOf(it) : '',
+        dBg: isPhoto ? (it.img ? IMG(it.img) : '#E4E0D7') : '',
+        dTaken: isPhoto ? m.date + ' · ' + it.t : '', dRecv: isPhoto ? m.date + ' · ' + it.r : '',
+        dLoc: isPhoto ? (it.loc == null ? 'No GPS on this photo' : it.loc + ' m from ' + m.addr) : '', dLocFg: isPhoto && it.loc == null ? '#A23B1E' : '#1B1A17',
+        dLabel: isPhoto ? (lab ? (lab.confirm ? 'AI suggested · confirmed by ' + lab.by + ' ' + lab.at : 'Office corrected · ' + lab.by + ' ' + lab.at) : (live && it.id === 'A2' && s.job === '421' ? 'AI suggested · Ravi hasn’t confirmed' : 'AI suggested · ' + m.crew + ' confirmed ' + it.t)) : '',
+        dUnconf: !!(isPhoto && live && it.id === 'A2' && s.job === '421' && !lab),
+        dHist: lab && !lab.confirm ? 'Was “' + it.name + '”, set by ' + m.crew + ' ' + it.t + '. Changed to “' + lab.to + '” by ' + lab.by + ' ' + lab.at + '.' : '',
+        dName: it ? nameOf(it) : '', dCanShare: !!spotGroup && !(isPhoto && live && it.id === 'A2' && s.job === '421' && !lab),
+        fixOpts: f ? (spotGroup ? STAGES : f.g.items.map(x => x.name)) : [],
+        spotLabel: f ? titleCase(f.g.label) : '', spotMissing: f && spotGroup ? f.g.items.filter(x => x.st !== 'office').map(x => x.name) : []
+      };
+    }
+
+    // search
+    const q = s.searched.toLowerCase();
+    const ids = ['421', '388', '362'];
+    const matches = q ? ids.filter(id => [id, META[id].cust, META[id].addr].join(' ').toLowerCase().includes(q)) : [];
+    const results = matches.map(id => {
+      const m = META[id], gs = this.groupsFor(id, s);
+      return { title: m.cust + ' · ' + m.addr, sub: '#' + id + ' · ' + m.date + ' · ' + m.crew, open: () => this.openJob(id, null, 'jobs'),
+        spots: gs.filter(g => g.spot).map(g => ({ label: titleCase(g.label), ph: g.items.map(it => {
+          const ok = it.st === 'office' || it.st === 'phone';
+          return { bg: ok ? (it.img ? IMG(it.img) : '#E4E0D7') : '#F5F3EE', empty: ok ? '' : 'No photo', cap: it.name + (it.st === 'office' ? ' · ' + it.t : it.st === 'reason' ? ' · reason' : it.st === 'missing' ? ' · open' : it.st === 'later' ? ' · later' : ' · on phone'),
+            border: ok ? '1px solid #E3DFD6' : '1.5px dashed #CFC9BD', open: () => this.openJob(id, it.id, 'jobs') };
+        }) })) };
+    });
+
+    // today
+    const chip421 = live ? (s.b2 === 'missing' ? ['1 MISSING · SPOT OPEN', '#F3E3DC', '#A23B1E'] : s.b2 === 'phone' ? ['1 ON PHONE', '#EFEBE3', '#1B1A17'] : s.b2 === 'reason' ? ['1 MISSING · REASON', '#EFEBE3', '#1B1A17'] : ['NOTHING MISSING', '#E2EDE6', '#2F6B4F']) : ['1 MISSING · REASON', '#EFEBE3', '#1B1A17'];
+    const row = (title, sub, chip, go, risk, progress) => ({ title, sub, progress: progress || '', chip: chip[0], chipBg: chip[1], chipFg: chip[2], go: go || (() => {}), arrow: go ? '›' : '', cursor: go ? 'pointer' : 'default', border: risk ? '1.5px solid #A23B1E' : '1px solid #E3DFD6' });
+    const r421 = row('#421 · 18 Oak St', live ? 'Leak repair · Ravi · last heard ' + (s.b2 === 'missing' ? '9:29' : '9:33') : 'Leak repair · Ravi · finished 10:02', chip421, () => this.setState({ scr: 'job', job: '421', sel: null, from: 'today', notif: s.notif === 'gap' ? null : s.notif }), false);
+    const tal421 = tally(job421(s.b2, live));
+    const prog421 = live ? tal421.office + ' of 17 in office' + (tal421.phone ? ' · ' + tal421.phone + ' on phone' : '') : '16 of 17 in office · 1 missing with reason';
+    r421.progress = prog421;
+    if (live && s.b2 === 'missing') { r421.chip = '1 PHOTO AT RISK'; }
+    const todaySections = live
+      ? [{ label: 'ON SITE NOW · 3', rows: [r421, row('#423 · 7 Birch Ln', 'Gutter repair · Marco · since 8:30 · last heard 9:26', ['NOTHING MISSING', '#E2EDE6', '#2F6B4F'], null, false, '6 of 12 in office'), row('#424 · 31 Cedar Rd', 'Re-roof · Dana · since 7:45 · last heard 9:18', ['3 ON PHONE', '#EFEBE3', '#1B1A17'], null, false, '11 of 22 in office · 3 on phone')] }]
+      : [{ label: 'ON SITE NOW · 1', rows: [row('#423 · 7 Birch Ln', 'Gutter repair · Marco · since 8:30 · last heard 13:58', ['NOTHING MISSING', '#E2EDE6', '#2F6B4F'], null, false, '12 of 12 in office')] },
+         { label: 'FINISHED TODAY · 2', rows: [r421, row('#424 · 31 Cedar Rd', 'Re-roof · Dana · finished 11:40', ['3 ON PHONE', '#EFEBE3', '#1B1A17'], null, false, '19 of 22 in office · 3 on phone')] }];
+
+    // claims
+    const readyRows = live ? [] : [
+      ...(s.pkg.sent ? [] : [{ ...row('#421 · 18 Oak St', 'Leak repair · Ravi · finished today 10:02', ['16 OF 17 · 1 MISSING WITH REASON', '#EFEBE3', '#1B1A17'], () => this.openJob('421', null, 'claims')), titleFg: '#1B1A17', border: '1.5px solid #1B1A17' }]),
+      { ...row('#424 · 31 Cedar Rd', 'Re-roof · Dana · finished today 11:40', ['WAITING ON 3 PHOTOS FROM DANA’S PHONE', '#EFEBE3', '#1B1A17']), titleFg: '#5E5A52' }
+    ];
+    const sentRows = [];
+    if (s.pkg.sent) sentRows.push({ title: '#421 · 18 Oak St', sub: 'To ' + s.pkg.sent.to + ' · today ' + s.pkg.sent.at + ' · 16 photos, 2 disclosed', chip: s.pkg.answer === 'acc' ? 'ACCEPTED' : s.pkg.answer === 'more' ? 'ASKED FOR MORE' : 'WAITING FOR ANSWER', bg: s.pkg.answer === 'acc' ? '#E2EDE6' : '#EFEBE3', fg: s.pkg.answer === 'acc' ? '#2F6B4F' : '#1B1A17' });
+    sentRows.push({ title: '#388 · Lena Marsh · 14 Maple Dr', sub: 'To j.ortega@harborins.com · 6 Oct · 8 of 9 photos, 2 disclosed', chip: 'ACCEPTED', bg: '#E2EDE6', fg: '#2F6B4F' });
+    sentRows.push({ title: '#362 · Lena Ortiz · 9 Elm Ct', sub: 'To m.chen@harborins.com · 15 Sep · 5 photos', chip: 'ACCEPTED', bg: '#E2EDE6', fg: '#2F6B4F' });
+
+    // steps
+    let cur, doneAll, SD;
+    if (s.flow === 'A') { SD = [['Alert', 'Gap reaches Sean on the road'], ['Job · Call Ravi', 'Missing photo selected'], ['Photo arrives', 'Or Ravi’s reason shows']]; cur = s.b2 !== 'missing' ? 2 : s.scr === 'job' ? 1 : 0; doneAll = s.b2 === 'office' || s.b2 === 'reason'; }
+    else if (s.flow === 'B') { SD = [['Search', 'Customer, address or job #'], ['Pick the photo', 'Opens the job with the photo selected'], ['Share', 'Link with time and place']]; cur = s.scr === 'job' && s.sel ? 2 : s.scr === 'jobs' && s.searched ? 1 : s.scr === 'job' ? 1 : 0; doneAll = !!s.share.sent; }
+    else { SD = [['Pick the job', 'Home · ready to send'], ['Check the set', 'Exceptions on top'], ['Send', 'Adjuster sees exactly this'], ['Later · record answer', 'Accepted or asked for more']]; cur = s.pkg.sent ? 3 : s.scr === 'package' ? 2 : s.scr === 'job' && s.job === '421' ? 1 : 0; doneAll = !!s.pkg.answer; }
+    const steps = SD.map((x, i) => { const done = i < cur || (doneAll && i === cur); const on = i === cur && !done; return { n: done ? '✓' : String(i + 1), title: x[0], sub: x[1], bg: on ? '#FFFFFF' : 'transparent', fg: on || done ? '#1B1A17' : '#77726A', numFg: done ? '#2F6B4F' : on ? '#1B1A17' : '#77726A' }; });
+
+    const NOTIF = { gap: ['ALERT · #421', '9:30', 'Soft decking · Opened up photo missing', 'Spot still open. Tap to see the job.'], taken: ['UPDATE · #421', '9:31', 'Soft decking · Opened up taken 9:31', 'Ravi took it. Status updates on the job.'], covered: ['UPDATE · #421', '9:33', 'Soft decking covered without the photo', 'Ravi gave a reason. Tap to read it.'] }[s.notif];
+
+    const gapCount = live && s.b2 === 'missing' ? 1 : 0, readyCount = live || s.pkg.sent ? 0 : 1;
+    const navItem = (key, label, badge, risk) => ({ label, badge: badge ? String(badge) : '', badgeBg: risk ? '#A23B1E' : '#1B1A17', badgeFg: '#FFFFFF', bg: (s.scr === key || (key === 'jobs' && s.scr === 'job' && s.from === 'jobs') || (key === 'claims' && (s.scr === 'package' || (s.scr === 'job' && s.from === 'claims'))) || (key === 'today' && s.scr === 'job' && s.from === 'today')) ? '#EFEBE3' : 'transparent', weight: s.scr === key ? '600' : '500', go: () => this.setState({ scr: key, sel: null }) });
+
+    const goJob = (id, sel) => e => { if (e && e.stopPropagation) e.stopPropagation(); this.setState(st => ({ scr: 'job', job: id, sel: sel || null, from: 'today', fixOpen: false, notif: st.notif === 'gap' ? null : st.notif, share: { ...st.share, sent: null } })); };
+    const stop = fn => e => { if (e && e.stopPropagation) e.stopPropagation(); fn(); };
+    const G = (label, sub, tone, items) => ({ label, sub, items, dot: tone === 'now' ? '#A23B1E' : tone === 'soon' ? '#1B1A17' : '#B8B2A6', fg: tone === 'now' ? '#A23B1E' : '#1B1A17', headBg: tone === 'now' ? '#FBF1EC' : '#FAF9F6', border: tone === 'now' ? '#E7C2B4' : '#E3DFD6' });
+    const IT = o => ({ chip: '', chipBg: '#EFEBE3', chipFg: '#1B1A17', btn: '', pair: false, arrow: o.go ? '›' : '', cursor: o.go ? 'pointer' : 'default', go: o.go || (() => {}), ...o });
+    let needGroups = [];
+    if (sean) {
+      if (live) {
+        if (s.b2 === 'missing') needGroups.push(G('NOW', 'photo can still be taken', 'now', [IT({ title: '#421 · Soft decking · Opened up not taken', sub: 'Spot open since 9:12 · Ravi · last heard 9:29', btn: s.calling ? 'Calling Ravi…' : 'Call Ravi', btnGo: stop(() => this.setState({ calling: true })), go: goJob('421', 'B2') })]));
+        if (!s.labels.A2) { const g = needGroups.find(x => x.label === 'WHEN YOU CAN'); const item = IT({ title: '#421 · Confirm AI label: Vent pipe leak · Opened up', sub: 'Ravi didn’t confirm it on site', chip: 'AI LABEL', go: goJob('421', 'A2') }); if (g) g.items.push(item); else needGroups.push(G('WHEN YOU CAN', 'doesn’t block work', 'later', [item])); }
+      } else {
+        needGroups.push(G('TODAY', 'not in office yet', 'soon', [IT({ title: '#424 · 3 photos still on Dana’s phone', sub: 'Checked out 11:40 · safe on the phone until it has signal', chip: 'ALERT AT 15:40' })]));
+      }
+    } else {
+      if (!s.pkg.sent) needGroups.push(G('READY TO SEND', 'every photo in the office', 'soon', [IT({ title: '#421 · 18 Oak St · leak repair', sub: '16 of 17 photos · 1 missing with reason · 1 no GPS', btn: 'Check the set', btnGo: goJob('421'), go: goJob('421') })]));
+      const wait = [];
+      if (s.pkg.sent && !s.pkg.answer) wait.push(IT({ title: '#421 · 18 Oak St', sub: 'Sent today ' + s.pkg.sent.at + ' to ' + s.pkg.sent.to, pair: true, accGo: stop(() => setPkg({ answer: 'acc' })), moreGo: stop(() => setPkg({ answer: 'more' })) }));
+      if (!s.a401) wait.push(IT({ title: '#401 · Paul Grant · 6 Ash Rd', sub: 'Sent 22 Oct to j.ortega@harborins.com · 3 days, no answer', pair: true, accGo: stop(() => this.setState({ a401: 'acc' })), moreGo: stop(() => this.setState({ a401: 'more' })) }));
+      if (wait.length) needGroups.push(G('WAITING FOR AN ANSWER', 'record it when the adjuster replies', 'later', wait));
+    }
+    const needN = needGroups.reduce((n, g) => n + g.items.length, 0);
+    // photos today (Sean)
+    const jt = live ? [['421', tally(job421(s.b2, true)), 'In progress'], ['423', { total: 12, office: 6, phone: 0 }, 'In progress'], ['424', { total: 22, office: 11, phone: 3 }, 'In progress']]
+                    : [['421', tally(job421(s.b2, false)), 'Finished 10:02'], ['423', { total: 12, office: 12, phone: 0 }, 'In progress'], ['424', { total: 22, office: 19, phone: 3 }, 'Finished 11:40']];
+    const ADDR = { '421': '#421 · 18 Oak St', '423': '#423 · 7 Birch Ln', '424': '#424 · 31 Cedar Rd' };
+    const ptT = jt.reduce((n, x) => n + x[1].total, 0), ptO = jt.reduce((n, x) => n + x[1].office, 0), ptP = jt.reduce((n, x) => n + x[1].phone, 0);
+    const pct = (a, b) => Math.round(a / b * 1000) / 10 + '%';
+    let accN = 6, accD = 7; if (s.a401) { accD++; if (s.a401 === 'acc') accN++; } if (s.pkg.answer) { accD++; if (s.pkg.answer === 'acc') accN++; }
+    const homeBadge = needN;
+    const homeFor = u => 'today';
+    const shEmail = s.share.email || (s.job && META[s.job].email) || '';
+    const setMiss = jv.spotMissing && jv.spotMissing.length ? ' ' + jv.spotMissing.join(', ') + ' has no photo; the link says so and shows the crew’s reason.' : '';
+    const pkgEmailOk = /.+@.+\..+/.test(s.pkg.email);
+    const setPkg = p => this.setState(st => ({ pkg: { ...st.pkg, ...p } }));
+    const setShare = p => this.setState(st => ({ share: { ...st.share, ...p } }));
+
+    return {
+      panelTitle: ONLY.join('') === 'AB' ? 'Sean · project manager' : ONLY.join('') === 'C' ? 'Priya · insurance claims' : 'One office app for Sean and Priya',
+      flows: ONLY.map(k => ({ kicker: FLOWS[k].kicker, title: FLOWS[k].title, bg: s.flow === k ? '#FFFFFF' : 'transparent', border: s.flow === k ? '1.5px solid #1B1A17' : '1px solid #DEDAD1', go: () => { this.clear(); this.setState(base(k)); } })),
+      steps,
+      doneWhen: s.flow === 'A' ? 'Done when every required photo is in the office or has a reason.' : s.flow === 'B' ? 'Done when the link is sent.' : 'Done when the package is sent. The answer feeds the accepted-claims metric.',
+      showSim: A && s.b2 === 'missing' && (s.scr === 'today' || (s.scr === 'job' && s.job === '421')),
+      hint: s.flow === 'B' && !s.share.sent ? 'Lena Marsh calls: the gutter seam fixed on 3 Oct is leaking again. Search “Lena”, “Maple” or “388”.' : s.flow === 'C' && !s.pkg.sent ? 'Same #421 Sean worked on this morning, after the “spot already covered” path.' : '',
+      restart: () => { this.clear(); this.setState(base(s.flow)); },
+      simTake: () => this.take(), simCover: () => this.cover(),
+      nav: sean ? [navItem('today', 'Home', homeBadge, gapCount > 0), navItem('jobs', 'Jobs', 0)] : [navItem('today', 'Home', homeBadge, false), navItem('claims', 'Claims', 0), navItem('jobs', 'Jobs', 0)],
+      userName: sean ? 'Sean Doyle' : 'Priya Shah', userRole: sean ? 'Project manager' : 'Insurance claims',
+      seanBg: sean ? '#EFEBE3' : 'transparent', priyaBg: sean ? 'transparent' : '#EFEBE3',
+      asSean: () => this.setState({ user: 'sean', scr: homeFor('sean'), sel: null }), asPriya: () => this.setState({ user: 'priya', scr: homeFor('priya'), sel: null, notif: null }),
+      clock: A ? (s.b2 === 'missing' ? '9:30' : '9:33') : s.flow === 'B' ? '14:05' : '14:20',
+      searchBorder: s.scr === 'jobs' && s.searched ? '#1B1A17' : '#CFC9BD',
+      q: s.q, onQ: e => this.setState({ q: e.target.value }),
+      onKey: e => { if (e.key === 'Enter' && s.q.trim()) this.setState({ searched: s.q.trim(), scr: 'jobs', notif: null }); },
+      notif: !!NOTIF && sean, notifKicker: NOTIF && NOTIF[0], notifTime: NOTIF && NOTIF[1], notifTitle: NOTIF && NOTIF[2], notifBody: NOTIF && NOTIF[3],
+      notifCall: s.notif === 'gap', notifCallGo: e => { e.stopPropagation(); this.setState({ calling: true, scr: 'job', job: '421', sel: null, from: 'today', notif: null }); },
+      notifTap: () => this.setState({ scr: 'job', job: '421', sel: null, from: 'today', notif: null }),
+      isToday: s.scr === 'today', isJobs: s.scr === 'jobs', isClaims: s.scr === 'claims', isJob: s.scr === 'job', isPackage: s.scr === 'package',
+      todaySections,
+      needGroups, needCount: needN ? String(needN) : '', noNeeds: !needN,
+      needTitle: sean ? 'Needs your decision' : 'Your claims',
+      needText: needN ? (needN === 1 ? '1 thing needs you' : needN + ' things need you') : 'nothing needs you',
+      isSeanHome: sean, isPriyaHome: !sean,
+      ptOffice: String(ptO), ptTotal: String(ptT), ptOfficePct: pct(ptO, ptT), ptPhonePct: pct(ptP, ptT),
+      ptPhoneText: ptP + ' on phones, safe until they have signal', ptRestText: (ptT - ptO - ptP) + (live ? ' not taken yet or missing' : ' missing with reason'),
+      todayJobs: jt.map(x => ({ title: ADDR[x[0]], state: x[2], officePct: pct(x[1].office, x[1].total), phonePct: pct(x[1].phone, x[1].total), count: x[1].office + ' of ' + x[1].total + ' in office' + (x[1].phone ? ' · ' + x[1].phone + ' on phone' : ''), go: x[0] === '421' ? goJob('421') : () => {}, cursor: x[0] === '421' ? 'pointer' : 'default' })),
+      goJobsNav: () => this.setState({ scr: 'jobs', sel: null }), goClaimsNav: () => this.setState({ scr: 'claims', sel: null }),
+      accN: String(accN), accD: String(accD), accPct: pct(accN, accD),
+      recentSent: [...(s.pkg.sent && s.pkg.answer ? [{ title: '#421 · 18 Oak St', sub: 'Today', chip: s.pkg.answer === 'acc' ? 'ACCEPTED' : 'ASKED FOR MORE', bg: s.pkg.answer === 'acc' ? '#E2EDE6' : '#EFEBE3', fg: s.pkg.answer === 'acc' ? '#2F6B4F' : '#1B1A17' }] : []), ...(s.a401 ? [{ title: '#401 · Paul Grant', sub: '22 Oct', chip: s.a401 === 'acc' ? 'ACCEPTED' : 'ASKED FOR MORE', bg: s.a401 === 'acc' ? '#E2EDE6' : '#EFEBE3', fg: s.a401 === 'acc' ? '#2F6B4F' : '#1B1A17' }] : []), { title: '#388 · Lena Marsh', sub: '6 Oct', chip: 'ACCEPTED', bg: '#E2EDE6', fg: '#2F6B4F' }, { title: '#362 · Lena Ortiz', sub: '15 Sep', chip: 'ACCEPTED', bg: '#E2EDE6', fg: '#2F6B4F' }],
+      confirmLabel: () => this.setState(st => ({ labels: { ...st.labels, A2: { to: 'Opened up', at: st.b2 === 'missing' ? '9:30' : '9:33', by: 'Sean', confirm: true } } })),
+      greet: (A ? 'Good morning, ' : 'Good afternoon, ') + (sean ? 'Sean' : 'Priya'),
+      greetSub: live ? (s.b2 === 'missing' ? '25 Oct · 1 photo at risk · 3 jobs on site' : '25 Oct · nothing at risk · 3 jobs on site') : '25 Oct · 1 job on site · 3 photos not in office yet',
+      needNow: live && s.b2 === 'missing',
+      openGapJob: () => this.setState({ scr: 'job', job: '421', sel: null, from: 'today', notif: null }),
+      phoneWatch: !live, noPhoneWatch: live, noop: () => {},
+      shares: [...(s.share.sent && s.job === '388' ? [{ title: '#388 · Lena Marsh', sub: 'Gutter seam · today 14:05 · not opened yet' }] : []), { title: '#401 · Paul Grant', sub: 'Pipe boot set · 22 Oct · opened 22 Oct' }, { title: '#362 · Lena Ortiz', sub: 'North slope set · 16 Sep · opened 16 Sep' }],
+      hasSearch: !!s.searched, noSearch: !s.searched, results, noResults: !!q && !matches.length,
+      resultsTitle: matches.length ? matches.length + (matches.length === 1 ? ' job' : ' jobs') + ' for “' + s.searched + '”' : 'Results for “' + s.searched + '”',
+      clearSearch: () => this.setState({ searched: '', q: '' }),
+      jobRows: ['421', '388', '362'].map(id => { const n = tally(this.groupsFor(id, s)); const m = META[id]; return { title: '#' + id + ' · ' + m.cust + ' · ' + m.addr, sub: m.date + ' · ' + m.work + ' · ' + m.crew, summary: (id === '421' && live) ? 'In progress' : n.office + ' of ' + n.total + ' photos', go: () => this.openJob(id, null, 'jobs') }; }),
+      readyRows, noReady: !readyRows.length, sentRows,
+      ...jv,
+      back: () => this.setState({ scr: s.from === 'job' ? 'today' : s.from, sel: null }), backLabel: { today: 'Home', jobs: 'Jobs', claims: 'Claims' }[s.from] || 'Back',
+      call: () => this.setState({ calling: true }), callLabel: s.calling ? 'Calling Ravi…' : 'Call Ravi',
+      noteOpen: s.noteOpen && jv.gCall, toggleNote: () => this.setState({ noteOpen: !s.noteOpen }), noteLabel: s.noteOpen ? 'Hide note' : 'Add internal note',
+      fixOpen: s.fixOpen, fixLabel: s.fixOpen ? 'Done' : 'Fix label', toggleFix: () => this.setState({ fixOpen: !s.fixOpen }),
+      onFix: e => { const v = e.target.value, id = s.sel; let orig = null; this.groupsFor(s.job, s).forEach(g => g.items.forEach(x => { if (x.id === id) orig = x.name; })); this.setState(st => { const L = { ...st.labels }; if (v === orig) delete L[id]; else L[id] = { to: v, at: s.flow === 'B' ? '14:06' : '14:20', by: sean ? 'Sean' : 'Priya' }; return { labels: L }; }); },
+      shareBg: sean ? '#1B1A17' : '#FFFFFF', shareFg: sean ? '#F5F3EE' : '#1B1A17', shareBorder: sean ? 'none' : '1.5px solid #1B1A17',
+      shareMsg: s.share.sent || '',
+      openShare: () => setShare({ open: true, sending: false }),
+      shareOpen: s.share.open, closeShare: () => setShare({ open: false }),
+      shEmail, onShEmail: e => setShare({ email: e.target.value }),
+      pickOne: () => setShare({ what: 'one' }), pickSet: () => setShare({ what: 'set' }),
+      oneBorder: s.share.what === 'one' ? '2px solid #1B1A17' : '1px solid #CFC9BD', setBorder: s.share.what === 'set' ? '2px solid #1B1A17' : '1px solid #CFC9BD',
+      previewText: s.share.what === 'set' ? 'The customer gets a link to ' + (jv.spotLabel || '') + ': Before, Opened up and Fixed side by side, each with when it was taken, when the office received it, and where.' + setMiss + ' Expires in 30 days.' : 'The customer gets a link to this photo with when it was taken, when the office received it, and where. Expires in 30 days.',
+      shSendLabel: s.share.sending ? 'Sending…' : 'Send link',
+      sendShare: () => { if (s.share.sending || !/.+@.+\..+/.test(shEmail)) return; setShare({ sending: true, email: shEmail }); this.t2 = setTimeout(() => setShare({ sending: false, open: false, sent: 'Link sent to ' + shEmail + ' · ' + (s.flow === 'B' ? '14:05' : '14:20') + ' · expires 24 Nov' }), 1200); },
+      goPackage: () => this.setState({ scr: 'package' }), backJob: () => this.setState({ scr: 'job' }),
+      pkgNotSent: !s.pkg.sent, pkgIsSent: !!s.pkg.sent,
+      pkgEmail: s.pkg.email, onPkgEmail: e => setPkg({ email: e.target.value, failed: false }), pkgEmailBorder: pkgEmailOk ? '#CFC9BD' : '#A23B1E',
+      pickLink: () => setPkg({ fmt: 'link' }), pickPdf: () => setPkg({ fmt: 'pdf' }),
+      linkBg: s.pkg.fmt === 'link' ? '#FFFFFF' : 'transparent', pdfBg: s.pkg.fmt === 'pdf' ? '#FFFFFF' : 'transparent',
+      fmtNote: s.pkg.fmt === 'link' ? 'Email with a link to this page (expires in 30 days) and the PDF attached.' : 'Email with the PDF attached. Same photos, times and disclosures.',
+      pkgFailed: s.pkg.failed, pkgSendLabel: s.pkg.sending ? 'Sending…' : s.pkg.failed ? 'Try again' : 'Send to adjuster',
+      sendPkg: () => { if (s.pkg.sending || !pkgEmailOk) return; setPkg({ sending: true, failed: false }); this.t4 = setTimeout(() => { if (this.state.pkg.failOnce) setPkg({ sending: false, failed: true, failOnce: false }); else setPkg({ sending: false, sent: { to: this.state.pkg.email, at: '14:32' } }); }, 1200); },
+      pkgSentTitle: s.pkg.sent ? 'Sent to ' + s.pkg.sent.to : '',
+      pkgSentSub: s.pkg.sent ? 'Today 14:32 · 16 photos, 1 missing and 1 no GPS disclosed. ' + (s.pkg.fmt === 'link' ? 'Link expires 24 Nov.' : 'PDF attached.') + ' This exact version is saved on the job.' : '',
+      noAnswer: !s.pkg.answer,
+      answerText: s.pkg.answer === 'acc' ? 'Accepted on first send. Counts toward accepted claims.' : s.pkg.answer === 'more' ? 'Adjuster asked for more. Logged on the job.' : '',
+      ansAccepted: () => setPkg({ answer: 'acc' }), ansMore: () => setPkg({ answer: 'more' })
+    };
+  }
+}
+</script>
+</body>
+</html>

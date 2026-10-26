@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>@keyframes spBar{from{transform:scaleX(0)}to{transform:scaleX(1)}}@keyframes spGlow{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:.9;transform:scale(1.08)}}@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -10px}}@keyframes shimmer{to{background-position:-200% 0}}@keyframes aurora{from{transform:translateX(-30px)}to{transform:translateX(30px)}}@keyframes dash{to{stroke-dashoffset:-2.3}}@keyframes ping{0%{box-shadow:0 0 0 0 rgba(255,255,255,0.7)}100%{box-shadow:0 0 0 18px rgba(255,255,255,0)}}@keyframes fly{0%{left:56%;top:50%;transform:scale(1);opacity:0}10%{opacity:1}80%{opacity:1}100%{left:72%;top:19%;transform:scale(.4);opacity:0}}@keyframes travel{0%{left:0;opacity:0}8%{opacity:1}45%,55%{left:calc(50% - 7px)}92%{opacity:1}100%{left:calc(100% - 14px);opacity:0}}body{margin:0;background:#ECEAE5;color:#16150F;font-family:'Manrope',sans-serif}a{color:#16150F;text-decoration:none}a:hover{color:#B8341F}button{font-family:'Manrope',sans-serif;cursor:pointer}</style>
+</helmet>
+<div style="height:100vh;display:flex;flex-direction:column">
+  <sc-if value="{{ isSplash }}" hint-placeholder-val="{{ true }}">
+  <div onClick="{{ spGo }}" style="position:fixed;inset:0;z-index:100;overflow:hidden;background:#000000;color:#FFFFFF;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;opacity:{{ spOp }};transition:opacity 500ms ease">
+    <x-import component-from-global-scope="portal-intro" from="./portal-intro.js" style="position:absolute;inset:0;z-index:2" hint-size="100%,100%"></x-import>
+  </div>
+  </sc-if>
+  <header style="flex-shrink:0;height:60px;display:{{ hdDisp }};align-items:center;gap:20px;padding:0 24px;background:{{ hdBg }};box-shadow:{{ hdLine }}">
+    <button onClick="{{ goIntro }}" style="border:none;background:none;padding:0;display:flex;align-items:center;gap:10px;color:{{ hdFg }}"><span style="width:28px;height:28px;border-radius:7px;background:url('assets/zuper-logo.png') center/24px no-repeat #FFFFFF"></span><span style="font-size:15px;font-weight:800;letter-spacing:0.02em">ZUPER</span><span style="width:1px;height:18px;background:rgba(255,255,255,0.18)"></span><span style="font-size:13px;font-weight:600;color:{{ hdSub }}">Design assignment</span></button>
+    <sc-if value="{{ showTabs }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:4px;padding:4px;border-radius:10px;background:rgba(255,255,255,0.06)">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+        <button onClick="{{ t.go }}" style="height:32px;padding:0 14px;border:none;border-radius:7px;background:{{ t.bg }};color:{{ t.fg }};font-size:13px;font-weight:600;white-space:nowrap">{{ t.label }}</button>
+      </sc-for>
+    </div></sc-if>
+  </header>
+
+  <sc-if value="{{ isIntro }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;overflow:auto;position:relative;background:#121110;display:flex;flex-direction:column;padding:32px 40px;isolation:isolate;overflow-x:hidden"><div style="position:absolute;inset:-20%;z-index:-1;pointer-events:none;background:radial-gradient(40% 50% at 20% 30%,rgba(192,57,43,0.45),transparent 70%),radial-gradient(35% 45% at 80% 70%,rgba(232,120,60,0.30),transparent 70%),radial-gradient(30% 40% at 60% 20%,rgba(90,70,160,0.28),transparent 70%);filter:blur(40px);animation:aurora 9s ease-in-out infinite alternate"></div>
+      <div style="width:100%;max-width:1200px;margin:auto;flex-shrink:0;display:flex;flex-direction:column;background:#FFFFFF;border-radius:28px;box-shadow:0 40px 100px -30px rgba(0,0,0,0.6);overflow:hidden;animation:fadeUp .6s both">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:0">
+          <div style="display:flex;flex-direction:column;justify-content:space-between;gap:48px;padding:44px 48px">
+            <img src="assets/zuper-wordmark.png" alt="Zuper" style="height:30px;width:auto;align-self:flex-start;display:block">
+            <div style="display:flex;flex-direction:column;gap:32px">
+              <div style="display:flex;flex-direction:column;gap:16px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.08em;color:#6B6860">PRODUCT DESIGN CASE STUDY</span>
+                <span style="font-size:52px;line-height:1.06;font-weight:600;letter-spacing:-0.03em;color:#16150F;text-wrap:balance">Proof of every repair, from the roof to the claim</span>
+                <span style="max-width:460px;font-size:17px;line-height:1.55;color:#6B6860;text-wrap:pretty">Crews capture the right photo at each stage, even without signal. The office sees gaps while the crew is still on site, and finds proof in seconds when a customer or insurer asks.</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+                <button onClick="{{ goHome }}" style="height:50px;padding:0 26px;border:none;border-radius:25px;background:#16150F;color:#FFFFFF;font-size:15px;font-weight:600" style-hover="background:#33312B">View assignment</button>
+              </div>
+            </div>
+          </div>
+          <div style="padding:16px;display:flex">
+            <div style="position:relative;flex:1;align-self:center;aspect-ratio:1 / 1;border-radius:20px;background:#EEEDEA url(assets/cover-crew-2.png) center/cover no-repeat;overflow:hidden">
+              <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible"><path d="M56 50 C 57 40, 63 31, 72 19" fill="none" stroke="#FFFFFF" stroke-width="0.6" stroke-linecap="round" stroke-dasharray="0.1 2.2" vector-effect="non-scaling-stroke" style="stroke-width:3px;animation:dash 1.4s linear infinite;opacity:0.9"></path></svg>
+              <span style="position:absolute;left:56%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:rgba(255,255,255,0.9);box-shadow:0 0 0 0 rgba(255,255,255,0.7);animation:ping 1.8s ease-out infinite"></span>
+              <span style="position:absolute;left:56%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#FFFFFF;animation:fly 2.4s cubic-bezier(.5,0,.3,1) infinite"></span>
+              <div style="position:absolute;right:4%;top:6%;max-width:60%;box-sizing:border-box;display:flex;align-items:center;gap:12px;padding:8px 14px 8px 8px;border-radius:14px;background:rgba(255,255,255,0.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 12px 32px -12px rgba(0,0,0,0.35);animation:fadeUp .7s .3s both">
+                <span style="width:48px;height:48px;border-radius:9px;background:#D9D6CE url(assets/oak/14.jpg) center/cover;flex-shrink:0"></span>
+                <div style="min-width:0;display:flex;flex-direction:column;gap:4px">
+                  <span style="font-size:14px;font-weight:700;color:#16150F;white-space:nowrap">Vent pipe · Before</span>
+                  <div style="display:flex;align-items:center;gap:8px;white-space:nowrap"><span style="font-size:12px;color:#6B6860">Spot A · 8:20 AM</span><span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#2F6B4F"><span style="width:6px;height:6px;border-radius:50%;background:#2F6B4F"></span>In office</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-top:1px solid #EEEDE9">
+          <div style="display:flex;align-items:center;gap:12px;padding:20px 48px"><span style="width:40px;height:40px;border-radius:50%;background:#F1EFEA;color:#16150F;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">TA</span><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:12.5px;color:#6B6860">Designed by</span><span style="font-size:15px;font-weight:700;color:#16150F">Thageer Ashraf</span></div></div>
+          <div style="display:flex;flex-direction:column;justify-content:center;gap:2px;padding:20px 32px;border-left:1px solid #EEEDE9"><span style="font-size:12.5px;color:#6B6860">Deliverables</span><span style="font-size:15px;font-weight:700;color:#16150F">Crew app · Office web</span></div>
+          <div style="display:flex;flex-direction:column;justify-content:center;gap:2px;padding:20px 32px;border-left:1px solid #EEEDE9"><span style="font-size:12.5px;color:#6B6860">Submitted</span><span style="font-size:15px;font-weight:700;color:#16150F">26 Oct 2026</span></div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;position:relative;background:#121110;display:flex;flex-direction:column;padding:32px 40px;isolation:isolate;overflow-x:hidden"><div style="position:absolute;inset:-20%;z-index:-1;pointer-events:none;background:radial-gradient(40% 50% at 20% 30%,rgba(192,57,43,0.45),transparent 70%),radial-gradient(35% 45% at 80% 70%,rgba(232,120,60,0.30),transparent 70%),radial-gradient(30% 40% at 60% 20%,rgba(90,70,160,0.28),transparent 70%);filter:blur(40px);animation:aurora 9s ease-in-out infinite alternate"></div>
+      <div style="width:100%;max-width:1200px;margin:auto;flex-shrink:0;box-sizing:border-box;padding:44px 48px 48px;background:#FFFFFF;border-radius:28px;box-shadow:0 40px 100px -30px rgba(0,0,0,0.6);animation:fadeUp .6s both">
+      <div style="display:flex;flex-direction:column;gap:32px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap">
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#16150F">Choose a flow</span><span style="font-size:15px;color:#6B6860">One photo system, three people.</span></div>
+          <button onClick="{{ goIntro }}" style="border:none;background:none;padding:0;font-size:14px;font-weight:600;color:#16150F;text-decoration:underline;text-underline-offset:3px">Back to case study</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(max(280px,calc(50% - 14px)),1fr));gap:16px">
+          <sc-for list="{{ cards }}" as="c" hint-placeholder-count="3">
+            <button onClick="{{ c.go }}" style="text-align:left;border:none;background:#FFFFFF;box-shadow:inset 0 0 0 1px #E8E6E1;border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:16px;color:#16150F;cursor:pointer;transition:box-shadow .2s,transform .2s" style-hover="box-shadow:inset 0 0 0 1px #CFCCC5,0 8px 24px -12px rgba(16,15,12,0.18);transform:translateY(-1px)">
+              <span style="width:52px;height:52px;border-radius:14px;background:{{ c.tint }};color:{{ c.ink }};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ c.d }}"></path></svg>
+              </span>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+                <span style="font-size:12px;font-weight:600;color:#8A867D">{{ c.where }}</span>
+                <span style="font-size:17px;font-weight:700">{{ c.title }}</span>
+                <span style="font-size:14px;color:#6B6860">{{ c.who }}</span>
+              </div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B6860" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M9 6l6 6-6 6"></path></svg>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ isSean }}" hint-placeholder-val="{{ false }}"><iframe src="Sean Web.dc.html" title="Sean flow" style="flex:1;width:100%;border:none;display:block"></iframe></sc-if>
+  <sc-if value="{{ isPriya }}" hint-placeholder-val="{{ false }}"><iframe src="Priya Web.dc.html" title="Priya flow" style="flex:1;width:100%;border:none;display:block"></iframe></sc-if>
+  <sc-if value="{{ isApp }}" hint-placeholder-val="{{ false }}"><iframe src="Ravi App No Signal.dc.html" title="App flow" style="flex:1;width:100%;border:none;display:block"></iframe></sc-if>
+  <sc-if value="{{ isLog }}" hint-placeholder-val="{{ false }}"><iframe src="Process Highlights.dc.html" title="Process log" style="flex:1;width:100%;border:none;display:block"></iframe></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { v: 'splash', w: typeof window!=='undefined'?window.innerWidth:1400 };
+  componentDidMount(){ this._sp=setTimeout(()=>this.spGo(),4200); this.onGR=()=>clearTimeout(this._sp); this.onGD=()=>this.spGo(); document.addEventListener('glass-ready',this.onGR); document.addEventListener('glass-done',this.onGD); this.onR=()=>this.setState({w:window.innerWidth}); window.addEventListener('resize',this.onR); }
+  componentWillUnmount(){ document.removeEventListener('glass-ready',this.onGR); document.removeEventListener('glass-done',this.onGD); clearTimeout(this._sp); clearTimeout(this._sp2); window.removeEventListener('resize',this.onR); }
+  spGo(){ if (this.state.v!=='splash' || this.state.spOut) return; clearTimeout(this._sp); this.setState({ spOut: true }); this._sp2=setTimeout(()=>this.setState({ v: 'intro' }),500); }
+  renderVals() {
+    const v = this.state.v, go = k => () => this.setState({ v: k });
+    const tab = (k, label) => ({ label, go: go(k), bg: v === k ? '#FFFFFF' : 'transparent', fg: v === k ? '#16150F' : '#CFCBC2' });
+    return {
+      isSplash: v === 'splash', spOp: this.state.spOut ? 0 : 1, spGo: () => this.spGo(),
+      isIntro: v === 'intro' || v === 'splash', wide: this.state.w >= 1100, goSean: go('sean'), goPriya: go('priya'), goApp: go('app'),
+      hdDisp: (v==='home'||v==='intro'||v==='splash')?'none':'flex', hdBg: v==='intro'?'#FFFFFF':'#16150F', hdFg: v==='intro'?'#16150F':'#FFFFFF', hdSub: v==='intro'?'#6B6860':'#CFCBC2', hdLine: v==='intro'?'0 1px 0 #EEEDEA':'none',
+      steps: [
+        { icon:'📷', bg:'#FFE7DA', fg:'#B8341F', where:'CREW APP · RAVI', title:'Capture on the roof', desc:'Guided photos at each repair stage. Saved on the phone, sent when there is signal.' },
+        { icon:'◎', bg:'#E2EDE6', fg:'#2F6B4F', where:'OFFICE WEB · SEAN', title:'Catch gaps, find proof', desc:'See what is missing before the crew leaves. Find a job’s photos when a customer calls.' },
+        { icon:'✦', bg:'#ECE7FF', fg:'#5B3FD9', where:'OFFICE WEB · PRIYA', title:'Send to the adjuster', desc:'A dated, located photo set for each claim, with reasons for anything not taken.' }
+      ], goIntro: go('intro'), showTabs: v !== 'intro', isHome: v === 'home', isSean: v === 'sean', isPriya: v === 'priya', isApp: v === 'app', isLog: v === 'log', goHome: go('home'),
+      tabs: [tab('sean', 'Sean flow'), tab('priya', 'Priya flow'), tab('app', 'App flow'), tab('log', 'Process log')],
+      cards: [
+        { ini: 'SD', tint: '#E2EDE6', ink: '#2F6B4F', title: 'Sean flow', who: 'Sean Doyle · Project manager', desc: 'Catch photo gaps before the crew leaves. Find and share proof when a customer calls.', where: 'Office web', img: 'assets/flow-sean.png', d: 'M4 5h16v10H4zM2 19h20M9 9h6M9 12h4', go: go('sean') },
+        { ini: 'PS', tint: '#ECE7FF', ink: '#5B3FD9', title: 'Priya flow', who: 'Priya Shah · Insurance claims', desc: 'Send a complete, dated photo set to the adjuster and answer their questions.', where: 'Office web', img: 'assets/flow-priya.png', d: 'M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6zM9 12l2 2 4-4', go: go('priya') },
+        { ini: 'RV', tint: '#FBEBC9', ink: '#7A4B00', title: 'App flow', who: 'Ravi · Crew lead', desc: 'Take the required photos while working on the roof, with reminders before a spot is covered.', where: 'Crew phone app', img: 'assets/flow-ravi.png', d: 'M8 2h8a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zM11 18h2', go: go('app') },
+        { ini: 'PL', tint: '#EFEDE8', ink: '#16150F', title: 'Process log', who: 'Thageer Ashraf · How I used AI', desc: 'Every prompt, what the AI returned, and what I kept, changed or rejected.', where: 'Case study', img: '', d: 'M7 3h7l4 4v14H7zM14 3v4h4M10 12h5M10 16h5', go: go('log') }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

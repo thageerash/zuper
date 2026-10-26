@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#F5F3EE;color:#1B1A17;font-family:'Instrument Sans',sans-serif;-webkit-font-smoothing:antialiased}a{color:#1B1A17}a:hover{color:#A23B1E}*::-webkit-scrollbar{display:none}@keyframes scanY{0%{top:0%;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}@keyframes scanTint{0%{opacity:0}20%{opacity:1}100%{opacity:0}}@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:.7}}@keyframes wave{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}@keyframes rise{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}@media (prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+</helmet>
+<div style="min-height:100vh;display:flex;gap:48px;justify-content:center;align-items:flex-start;padding:40px 32px;box-sizing:border-box;flex-wrap:wrap">
+
+  <div style="width:320px;display:flex;flex-direction:column;gap:20px;padding-top:12px">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#5E5A52">Crew app v3 · daylight mode</div>
+      <div style="font-size:28px;line-height:1.1;font-weight:600;letter-spacing:-0.01em">One camera. The AI files each photo.</div>
+      <div style="font-size:15px;line-height:1.5;color:#3D3A34;text-wrap:pretty">Ravi shoots in any order. Every photo is filed straight away and he can change it with one tap. New job: a full re-roof with an insurance claim, 14 required photos in three stages.</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;padding:16px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:10px">
+      <div style="font-size:14px;font-weight:600">Phone signal</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        <div onClick="{{ goOffline }}" style="height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;cursor:pointer;background:{{ offBtnBg }};color:{{ offBtnFg }}">No signal</div>
+        <div onClick="{{ goOnline }}" style="height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;cursor:pointer;background:{{ onBtnBg }};color:{{ onBtnFg }}">Signal</div>
+      </div>
+      <div style="font-size:13px;line-height:1.45;color:#5E5A52">With signal, small previews send first, then the full originals.</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <div style="font-size:14px;font-weight:600;padding-bottom:6px">Try this</div>
+      <sc-for list="{{ guide }}" as="g" hint-placeholder-count="6">
+        <div style="display:grid;grid-template-columns:22px 1fr;gap:8px;padding:7px 0;border-bottom:1px solid #E3DED4;font-size:14px;line-height:1.4;color:{{ g.color }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;padding-top:2px">{{ g.mark }}</span><span>{{ g.text }}</span></div>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;padding:14px 16px;background:#FFFFFF;border:1px solid #DEDAD1;border-radius:10px">
+      <div style="font-size:14px;font-weight:600">Changed from <a href="Crew Prototype.dc.html">v1</a></div>
+      <div style="font-size:13px;line-height:1.55;color:#3D3A34">Free order instead of a shot list · AI files, crew corrects · house side from the compass · hold to talk · damage close-up paired with a wide shot · previews first, originals later.</div>
+    </div>
+    <div onClick="{{ reset }}" style="align-self:flex-start;padding:9px 14px;border:1.5px solid #1B1A17;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer">Restart</div>
+  </div>
+
+  <div style="width:390px;height:844px;border-radius:52px;background:#F8FAFC;color:#090D16;font-family:'Inter',sans-serif;font-feature-settings:'cv11','ss03';box-shadow:0 0 0 11px #090D16,0 30px 60px rgba(27,26,23,0.25);box-sizing:border-box;display:flex;flex-direction:column;overflow:hidden;position:relative;flex-shrink:0;margin:11px">
+    <div style="height:54px;display:flex;justify-content:space-between;align-items:center;padding:0 32px;font-size:16px;font-weight:600;flex-shrink:0;background:{{ barBg }};color:{{ barFg }}"><span>{{ clock }}</span><span style="width:122px;height:34px;background:#000000;border-radius:20px"></span><span style="font-size:12px;font-weight:600;color:{{ sigColor }}">{{ sigLabel }}</span></div>
+    <sc-if value="{{ showOfflineBar }}" hint-placeholder-val="{{ true }}">
+      <div style="margin:0 16px 4px;padding:8px 12px;border-radius:10px;background:#FEF3C7;border:1px solid #F59E0B;color:#78350F;font-size:13px;font-weight:600;flex-shrink:0">No signal · photos save on this phone</div>
+    </sc-if>
+
+    <div style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column">
+
+      <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+        <div style="padding:14px 20px 20px;display:flex;flex-direction:column;gap:16px;flex-shrink:0">
+          <div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;flex-direction:column;gap:3px"><div style="font-size:14px;color:#475569">Thu 23 Oct</div><div style="font-size:26px;font-weight:700;letter-spacing:-0.02em;white-space:nowrap">Good morning, Ravi</div></div><div style="width:40px;height:40px;border-radius:50%;background:#E2E8F0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600">RM</div></div>
+          <div style="padding:12px 14px;border-radius:14px;background:#FFFFFF;border:1.5px solid #CBD5E1;box-shadow:none;font-size:14px;color:#334155">{{ siteLine }}</div>
+          <div style="font-size:17px;font-weight:600;padding-top:4px">Today · 1 job</div>
+          <div onClick="{{ openJob }}" style="border-radius:20px;background:#FFFFFF;border:1.5px solid #CBD5E1;box-shadow:none;overflow:hidden;cursor:pointer">
+            <img src="https://images.pexels.com/photos/15505770/pexels-photo-15505770.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" style="width:100%;height:150px;object-fit:cover;display:block">
+            <div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#475569">HR-4092 · 7:00–17:00</span><span style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#E2E8F0">{{ jobStatus }}</span></div>
+              <div style="font-size:20px;font-weight:700">24 Oak Street</div>
+              <div style="font-size:14px;color:#475569">Miller residence · Full re-roof · insurance claim</div>
+              <div style="font-size:14px;color:#334155;padding-top:8px;border-top:1.5px solid #CBD5E1">{{ homeNext }}</div>
+              <div style="height:50px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;margin-top:4px">{{ homeBtn }}</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isJob }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;flex:1">
+          <div style="position:relative;flex-shrink:0">
+            <img src="https://images.pexels.com/photos/15505770/pexels-photo-15505770.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" style="width:100%;height:140px;object-fit:cover;display:block">
+            <div onClick="{{ goHome }}" style="position:absolute;top:12px;left:16px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,0.92);font-size:14px;font-weight:600;cursor:pointer">‹ Jobs</div>
+          </div>
+          <div style="padding:14px 20px 20px;display:flex;flex-direction:column;gap:12px;flex:1">
+            <div style="display:flex;flex-direction:column;gap:3px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#475569">HR-4092 · {{ jobStatus }}</span><div style="font-size:24px;font-weight:700">24 Oak Street</div></div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ stageRows }}" as="p" hint-placeholder-count="3">
+                <div style="display:grid;grid-template-columns:52px 1fr auto;gap:14px;align-items:center;padding:12px 14px;border-radius:16px;background:#FFFFFF;border:1px solid {{ p.border }};opacity:{{ p.opacity }}">
+                  <div style="width:52px;height:52px;border-radius:50%;background:{{ p.ring }};display:flex;align-items:center;justify-content:center"><div style="width:42px;height:42px;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">{{ p.count }}</div></div>
+                  <div style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-size:16px;font-weight:600">{{ p.name }}</span><span style="font-size:13px;line-height:1.35;color:#475569">{{ p.sub }}</span></div>
+                  <span style="font-size:12px;font-weight:600;color:{{ p.tagColor }}">{{ p.tag }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ hasDamage }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:12px 14px;border-radius:14px;background:#FFFFFF;border:1px solid #F59E0B;display:flex;flex-direction:column;gap:4px">
+                <div style="font-size:14px;font-weight:600">Already damaged · 1 flagged</div>
+                <div style="font-size:13px;line-height:1.4;color:#334155">{{ damageLine }}</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ hasUnfiled }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:12px 14px;border-radius:14px;background:#FFFFFF;border:1.5px solid #CBD5E1;font-size:14px;color:#334155">{{ unfiledLine }}</div>
+            </sc-if>
+            <div style="flex:1"></div>
+            <div onClick="{{ jobPrimary }}" style="height:56px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600;cursor:pointer">{{ jobBtn }}</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isCamera }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column;background:#000000;color:#F5F3EE;padding:4px 14px 18px;gap:10px;min-height:0">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span onClick="{{ closeCamera }}" style="width:40px;height:40px;border-radius:50%;background:#1E1D1B;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer">✕</span><span style="font-size:13px;font-weight:600;padding:7px 12px;border-radius:999px;background:#1E1D1B;white-space:nowrap;flex-shrink:0">{{ stagePill }}</span><span style="width:40px"></span></div>
+          <div style="display:flex;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#C9C3B8;flex-wrap:wrap"><span style="padding:5px 8px;border-radius:6px;background:#161514">At address ±5 m</span><span style="padding:5px 8px;border-radius:6px;background:#161514">Facing {{ facing }}</span><span style="padding:5px 8px;border-radius:6px;background:#161514">{{ clock }} · 23 Oct</span></div>
+          <div style="flex:1;border-radius:18px;overflow:hidden;position:relative;min-height:0">
+            <div style="position:absolute;inset:0;background:#1E1D1B center/cover no-repeat;background-image:{{ camBg }}"></div>
+            <div style="position:absolute;inset:16px;border:1.5px dashed rgba(245,243,238,0.45);border-radius:12px"></div>
+            <sc-if value="{{ hasCoach }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:12px;left:12px;right:12px;padding:10px 12px;border-radius:12px;background:rgba(9,13,22,0.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(242,185,75,0.45);font-size:13px;line-height:1.4;color:#F7DBA3;font-weight:500">{{ coach }}</div></sc-if>
+            <sc-if value="{{ showAim }}" hint-placeholder-val="{{ true }}"><div style="position:absolute;top:12px;left:12px;right:12px;padding:10px 12px;border-radius:12px;background:rgba(9,13,22,0.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;flex-direction:column;gap:2px"><span style="font-size:11px;font-weight:700;letter-spacing:0.06em;color:#A39D92">{{ aimKicker }}</span><span style="font-size:17px;font-weight:700">{{ aimTitle }}</span><span style="font-size:13px;color:#C9C3B8">{{ aimTip }}</span></div></sc-if>
+            <sc-if value="{{ listening }}" hint-placeholder-val="{{ false }}">{{ recEl }}</sc-if>
+            <sc-if value="{{ scanning }}" hint-placeholder-val="{{ false }}">{{ scanEl }}</sc-if>
+            <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">{{ toastEl }}</sc-if>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;font-weight:700;letter-spacing:0.04em;color:#C9C3B8">{{ trayTitle }}</span><span onClick="{{ aimOther }}" style="font-size:12px;font-weight:600;cursor:pointer;padding:5px 10px;border-radius:999px;color:{{ otherFg }};background:{{ otherBg }};border:1px solid #3A3833">Something else</span></div>
+            <div style="display:grid;grid-template-columns:{{ trayCols }};gap:6px">
+              <sc-for list="{{ tray }}" as="t" hint-placeholder-count="4">
+                <div onClick="{{ t.aim }}" style="height:76px;border-radius:12px;position:relative;overflow:hidden;cursor:pointer;box-sizing:border-box;border:2px solid {{ t.border }};background:#161514 center/cover no-repeat;background-image:{{ t.bg }}">
+                  <div style="position:absolute;inset:0;background:{{ t.shade }}"></div>
+                  <span style="position:absolute;left:6px;right:6px;bottom:5px;font-size:10px;line-height:1.2;font-weight:600;color:{{ t.fg }}">{{ t.label }}</span>
+                  <sc-if value="{{ t.done }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:5px;right:5px;width:18px;height:18px;border-radius:50%;background:#F5F3EE;color:#0A0908;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">✓</span></sc-if>
+                  <sc-if value="{{ t.now }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:5px;left:5px;padding:2px 6px;border-radius:999px;background:#C0392B;font-size:9px;font-weight:700;color:#FFFFFF">NOW</span></sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding-top:4px">
+            <div style="width:48px;height:48px;border-radius:10px;border:1px solid #3A3833;background:#161514 center/cover no-repeat;background-image:{{ lastBg }}"></div>
+            <div onClick="{{ shutter }}" style="width:76px;height:76px;border-radius:50%;border:4px solid #F5F3EE;display:flex;align-items:center;justify-content:center;cursor:pointer"><div style="width:60px;height:60px;border-radius:50%;background:#F5F3EE"></div></div>
+            <div style="display:flex;justify-content:flex-end"><div onMouseDown="{{ micDown }}" onMouseUp="{{ micUp }}" onMouseLeave="{{ micUp }}" onTouchStart="{{ micDown }}" onTouchEnd="{{ micUp }}" style="width:58px;height:58px;border-radius:50%;background:{{ micBg }};border:1.5px solid {{ micBorder }};display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;opacity:{{ micOpacity }}"><div style="display:flex;flex-direction:column;align-items:center;pointer-events:none"><div style="width:11px;height:17px;border-radius:6px;background:{{ micFg }}"></div><div style="width:17px;height:8px;border:2px solid {{ micFg }};border-top:none;border-radius:0 0 10px 10px;margin-top:-5px;box-sizing:border-box"></div><div style="width:2px;height:4px;background:{{ micFg }}"></div></div></div></div>
+          </div>
+          <div style="font-size:12px;text-align:center;color:#A39D92;margin-top:-4px">{{ micHint }}</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isUploads }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:14px 20px 20px;display:flex;flex-direction:column;gap:14px;flex-shrink:0">
+          <div style="font-size:28px;font-weight:700;letter-spacing:-0.02em">Uploads</div>
+          <div style="padding:16px;border-radius:18px;background:#FFFFFF;border:1.5px solid #CBD5E1;box-shadow:none;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:#334155">Previews sent</span><span style="font-weight:700">{{ pvCount }} / {{ capCount }}</span></div><div style="height:6px;border-radius:3px;background:#CBD5E1;overflow:hidden"><div style="height:100%;width:{{ pvPct }};background:#475569"></div></div></div>
+            <div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:#334155">Originals uploaded</span><span style="font-weight:700">{{ ogCount }} / {{ capCount }}</span></div><div style="height:6px;border-radius:3px;background:#CBD5E1;overflow:hidden"><div style="height:100%;width:{{ ogPct }};background:#2F7A4F"></div></div></div>
+            <div style="font-size:13px;line-height:1.45;color:{{ upColor }}">{{ upSummary }}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ upRows }}" as="u" hint-placeholder-count="3">
+              <div style="display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center;padding:8px 12px;border-radius:14px;background:#FFFFFF;border:1.5px solid #CBD5E1;box-shadow:none">
+                <div style="width:48px;height:48px;border-radius:8px;background:#E2E8F0 center/cover no-repeat;background-image:{{ u.bg }}"></div>
+                <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:14px;font-weight:600">{{ u.name }}</span><span style="font-size:13px;color:{{ u.color }}">{{ u.state }}</span></div>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ noPhotos }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;color:#475569">No photos yet.</div></sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isFinish }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column;padding:10px 20px 20px;gap:12px">
+          <div onClick="{{ openJobBack }}" style="font-size:15px;font-weight:600;cursor:pointer;align-self:flex-start">‹ 24 Oak Street</div>
+          <div style="font-size:26px;font-weight:700">Leave site</div>
+          <sc-for list="{{ finRows }}" as="r" hint-placeholder-count="4">
+            <div style="padding:14px 16px;border-radius:14px;background:#FFFFFF;border:1px solid {{ r.border }};display:flex;flex-direction:column;gap:3px"><div style="display:flex;justify-content:space-between;font-size:15px"><span>{{ r.l }}</span><span style="font-weight:700;color:{{ r.c }}">{{ r.r }}</span></div><span style="font-size:13px;color:#475569">{{ r.sub }}</span></div>
+          </sc-for>
+          <div style="font-size:14px;line-height:1.5;color:#475569">You can leave. Originals keep uploading on their own. Don't sign out until they're done.</div>
+          <div style="flex:1"></div>
+          <div onClick="{{ markDone }}" style="height:52px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;cursor:pointer">Mark job done · check out</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;flex-direction:column;padding:40px 24px 20px;gap:12px;align-items:center;text-align:center">
+          <div style="width:72px;height:72px;border-radius:50%;background:#E2E8F0;display:flex;align-items:center;justify-content:center;font-size:32px">✓</div>
+          <div style="font-size:26px;font-weight:700">24 Oak Street done</div>
+          <div style="display:flex;flex-direction:column;gap:4px;font-size:15px;line-height:1.4;color:#334155"><span>Checked out {{ clock }}</span><span>{{ capCount }} captured · {{ ogCount }} originals uploaded</span></div>
+          <div style="font-size:14px;color:{{ upColor }}">{{ upSummary }}</div>
+          <div style="flex:1"></div>
+          <div onClick="{{ goHome }}" style="width:100%;height:52px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;cursor:pointer">Back to jobs</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isProfile }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:14px 20px;display:flex;flex-direction:column;gap:14px;flex-shrink:0">
+          <div style="font-size:28px;font-weight:700">Profile</div>
+          <div style="padding:14px 16px;border-radius:14px;background:#FFFFFF;border:1.5px solid #CBD5E1;box-shadow:none;display:flex;justify-content:space-between;font-size:15px"><span>Ravi Menon</span><span style="color:#475569">Crew lead</span></div>
+          <div style="padding:14px 16px;border-radius:14px;background:#FFFFFF;border:1.5px solid #CBD5E1;box-shadow:none;display:flex;justify-content:space-between;font-size:15px"><span>Originals on mobile data</span><span style="font-weight:600">Wi-Fi only</span></div>
+        </div>
+      </sc-if>
+    </div>
+
+    <sc-if value="{{ showTabs }}" hint-placeholder-val="{{ true }}">
+      <div style="height:78px;border-top:1.5px solid #CBD5E1;display:grid;grid-template-columns:repeat(3,1fr);align-items:start;padding-top:10px;flex-shrink:0;background:#FFFFFF">
+        <div onClick="{{ tabJobs }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;font-size:12px;font-weight:600;color:{{ tabJobsColor }}"><span style="font-size:18px">▦</span>Jobs</div>
+        <div onClick="{{ tabUploads }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;font-size:12px;font-weight:600;color:{{ tabUpColor }};position:relative"><span style="font-size:18px">↑</span>Uploads<sc-if value="{{ hasBadge }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:-4px;left:62%;min-width:18px;height:18px;padding:0 5px;box-sizing:border-box;border-radius:9px;background:#F2B94B;color:#0A0908;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ badge }}</span></sc-if></div>
+        <div onClick="{{ tabProfile }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;font-size:12px;font-weight:600;color:{{ tabProfColor }}"><span style="font-size:18px">◉</span>Profile</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasStageDone }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:rgba(9,13,22,0.45)"></div>
+      <div style="position:absolute;left:0;right:0;bottom:0;background:#FFFFFF;border-top:1.5px solid #CBD5E1;border-radius:28px 28px 52px 52px;padding:14px 22px 34px;display:flex;flex-direction:column;gap:12px;animation:rise .3s ease-out both">
+        <div style="width:40px;height:5px;border-radius:3px;background:#CBD5E1;align-self:center"></div>
+        <div style="display:flex;gap:12px;align-items:center"><div style="width:44px;height:44px;border-radius:50%;background:#090D16;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;flex-shrink:0">✓</div><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:22px;font-weight:700">{{ sdTitle }}</span><span style="font-size:14px;color:#475569">{{ sdSub }}</span></div></div>
+        <div style="display:grid;grid-template-columns:{{ sdCols }};gap:6px">
+          <sc-for list="{{ sdThumbs }}" as="t" hint-placeholder-count="4"><div style="height:64px;border-radius:10px;background:#E2E8F0 center/cover no-repeat;background-image:{{ t.bg }}"></div></sc-for>
+        </div>
+        <sc-for list="{{ sdRows }}" as="r" hint-placeholder-count="2">
+          <div style="display:flex;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:#F1F5F9;font-size:14px"><span style="color:#334155">{{ r.l }}</span><span style="font-weight:600;text-align:right;color:{{ r.c }}">{{ r.r }}</span></div>
+        </sc-for>
+        <div style="font-size:14px;line-height:1.5;color:#334155">{{ sdNext }}</div>
+        <div onClick="{{ sdGo }}" style="height:52px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;cursor:pointer">{{ sdBtn }}</div>
+        <div onClick="{{ sdStay }}" style="font-size:15px;font-weight:600;text-align:center;cursor:pointer;color:#334155">Keep shooting</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasSheet }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(9,13,22,0.45)"></div>
+      <div style="position:absolute;left:0;right:0;bottom:0;background:#FFFFFF;border-top:1.5px solid #CBD5E1;border-radius:28px 28px 52px 52px;padding:14px 22px 34px;display:flex;flex-direction:column;gap:10px;max-height:78%;overflow-y:auto">
+        <div style="width:40px;height:5px;border-radius:3px;background:#CBD5E1;align-self:center;flex-shrink:0"></div>
+        <div style="font-size:22px;font-weight:700">{{ sheetTitle }}</div>
+        <div style="font-size:14px;line-height:1.5;color:#475569">{{ sheetNote }}</div>
+        <sc-for list="{{ sheetRows }}" as="r" hint-placeholder-count="2">
+          <div onClick="{{ r.go }}" style="display:flex;justify-content:space-between;gap:10px;padding:13px 14px;border-radius:12px;background:#F1F5F9;border:1px solid {{ r.border }};font-size:14px;cursor:pointer"><span style="font-weight:{{ r.w }}">{{ r.l }}</span><span style="font-weight:600;color:#475569">{{ r.r }}</span></div>
+        </sc-for>
+        <sc-if value="{{ hasSheetBtn }}" hint-placeholder-val="{{ false }}"><div onClick="{{ sheetGo }}" style="height:52px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;cursor:pointer;flex-shrink:0">{{ sheetBtn }}</div></sc-if>
+        <div onClick="{{ closeSheet }}" style="font-size:15px;font-weight:600;text-align:center;cursor:pointer;color:#334155;padding-top:4px">{{ sheetCancel }}</div>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const PX = id => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=600`;
+const STAGES = [
+  { name: 'Pre-start', shots: [['front','Front · north','15505770','north'],['right','Right · east','32608171','east'],['back','Back · south','37623623','south'],['left','Left · west','36884206','west'],['gutb','Gutters & downspouts','36884223','north']] },
+  { name: 'Tear-off', shots: [['deck','Bare decking','39623734','north'],['rot','Rotted decking','7788269','north'],['ice','Ice & water shield','37623618','north'],['drip','Drip edge','38781381','east'],['valley','Valley flashing','37704237','east']] },
+  { name: 'Final', shots: [['slopes','Finished slopes','9431615','north'],['ridge','Ridge vents','36884206','north'],['guta','Gutters, after','36884223','north'],['drive','Driveway swept','39238318','south']] }
+];
+const ALL = STAGES.flatMap((p, si) => p.shots.map(s => ({ id: s[0], name: s[1], img: PX(s[2]), facing: s[3], stage: si })));
+const byId = Object.fromEntries(ALL.map(s => [s.id, s]));
+const OTHER = { id: 'other', name: 'Something else', img: PX('6338827'), facing: 'south' };
+const WIDE = { id: 'wide', name: 'Wide shot', img: PX('15505770'), facing: 'north' };
+const TIPS = { front: 'Whole house from the street', right: 'Full side, roofline in frame', back: 'Full side, roofline in frame', left: 'Full side, roofline in frame', gutb: 'Every run, close enough to see dents', deck: 'Each slope once the shingles are off', rot: 'Close-up with a tape measure', ice: 'Valleys and eaves before shingles', drip: 'Along the eave edge', valley: 'Where two slopes meet', slopes: 'Each slope from the ground', ridge: 'Along the top of the roof', guta: 'Same angle as the before', drive: 'After the magnet sweep' };
+const FIRST = ['', 'First: bare decking, before anything goes down', 'First: finished slopes from the ground'];
+const SAY = { gutb: 'Front right downspout already crushed before we unloaded the truck.', ctx: 'Front right downspout already crushed before we unloaded the truck.', rot: 'About three sheets soft by the chimney, north slope.' };
+const fmt = m => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;
+const bg = u => u ? `url("${u}")` : 'none';
+const init = () => ({ screen: 'home', tab: 'jobs', checkedIn: false, stage: 0, unlocked: 0, aim: 'front', photos: {}, order: [], toast: null, scanning: false, listening: false, online: false, done: false, min: 420, sheet: null, blurDone: false, damage: null, pairing: false, uCount: 0, lastId: null });
+
+class Component extends DCLogic {
+  state = init();
+  componentDidMount() { this.t = setInterval(() => this.tick(), 900); }
+  componentWillUnmount() { clearInterval(this.rt); clearInterval(this.t); clearTimeout(this.sc); clearTimeout(this.lt); clearTimeout(this.st); }
+  tick() {
+    const s = this.state; if (!s.online || !s.order.length) return;
+    const photos = { ...s.photos };
+    const pv = s.order.filter(k => photos[k].pv === 'phone');
+    if (pv.length) { pv.slice(0, 3).forEach(k => photos[k] = { ...photos[k], pv: 'sent' }); this.setState({ photos }); return; }
+    const up = s.order.find(k => photos[k].og === 'uploading');
+    if (up) photos[up] = { ...photos[up], og: 'uploaded' };
+    const nx = s.order.find(k => photos[k].og === 'phone');
+    if (nx) photos[nx] = { ...photos[nx], og: 'uploading' };
+    if (up || nx) this.setState({ photos });
+  }
+  stageStats(i) { const sh = STAGES[i].shots; return { c: sh.filter(x => this.state.photos[x[0]]).length, n: sh.length }; }
+  firstMissing(i) { const m = STAGES[i].shots.find(x => !this.state.photos[x[0]]); return m ? m[0] : 'other'; }
+  openCamera() { this.setState({ screen: 'camera', aim: this.state.pairing ? 'wide' : this.firstMissing(this.state.stage), toast: null }); }
+  addPhoto(key, rec) { const s = this.state; const order = s.order.includes(key) ? s.order : [...s.order, key]; return { photos: { ...s.photos, [key]: { pv: 'phone', og: 'phone', t: s.min, ...rec } }, order, lastId: key }; }
+  shoot() {
+    const s = this.state; if (s.scanning) return;
+    const aim = s.aim; let patch = { min: s.min + 2 }, toast;
+    if (aim === 'wide') { Object.assign(patch, this.addPhoto('ctx', { name: 'Wide shot · front right corner', img: WIDE.img, extra: true }), { pairing: false, damage: { ...s.damage, paired: true } }); toast = { k: 'paired' }; }
+    else if (aim === 'other') { const k = 'u' + (s.uCount + 1); Object.assign(patch, this.addPhoto(k, { name: 'Unfiled photo', img: OTHER.img, unfiled: true }), { uCount: s.uCount + 1 }); toast = { k: 'unfiled', key: k }; }
+    else if (aim === 'rot' && !s.blurDone) { toast = { k: 'blur' }; }
+    else { Object.assign(patch, this.addPhoto(aim, { name: byId[aim].name, img: byId[aim].img })); toast = { k: aim === 'gutb' ? 'dent' : 'filed', key: aim }; }
+    clearTimeout(this.sc);
+    this.setState({ ...patch, scanning: true, toast: null });
+    this.sc = setTimeout(() => {
+      const after = { scanning: false, toast };
+      if (toast.k === 'filed' || toast.k === 'paired') { const st = this.state.stage; const left = STAGES[st].shots.filter(x => !this.state.photos[x[0]]); after.aim = this.state.pairing ? 'wide' : (left[0] ? left[0][0] : 'other'); if (!left.length && !this.state.pairing) { this.st = setTimeout(() => this.setState({ stageDone: true }), 1100); } }
+      this.setState(after);
+    }, 1300);
+  }
+
+  renderVals() {
+    const s = this.state; const P = s.photos;
+    const req = s.order.filter(k => byId[k]);
+    const capReq = req.length, capCount = s.order.length;
+    const pvCount = s.order.filter(k => P[k].pv === 'sent').length;
+    const ogCount = s.order.filter(k => P[k].og === 'uploaded').length;
+    const ogPending = capCount - ogCount;
+    const allCaptured = capReq === ALL.length;
+    const st = STAGES[s.stage]; const ss = this.stageStats(s.stage);
+    const aimObj = s.aim === 'wide' ? WIDE : s.aim === 'other' ? OTHER : byId[s.aim];
+    const unfiled = s.order.filter(k => P[k].unfiled);
+    const upSummary = !capCount ? 'Nothing taken yet' : !ogPending ? 'All originals uploaded · the office has every photo' : !s.online ? `${ogPending} originals safe on this phone · waiting for signal` : pvCount < capCount ? 'Sending previews first…' : `Office can see all previews · ${ogPending} originals uploading`;
+    const T = s.toast; const tk = T && T.k;
+    const btn = (label, fn, primary) => React.createElement('span', { key: label, onClick: fn, style: { padding: '8px 12px', borderRadius: 999, fontSize: 13, fontWeight: 600, cursor: 'pointer', background: primary ? '#F5F3EE' : 'transparent', color: primary ? '#0A0908' : '#F5F3EE', border: '1px solid ' + (primary ? '#F5F3EE' : '#334155') } }, label);
+    const fileInto = (from, to) => { const ph = { ...P }; const rec = ph[from]; delete ph[from]; ph[to] = { ...rec, name: byId[to].name, img: rec.img, unfiled: false }; const order = s.order.filter(k => k !== from && k !== to).concat(to); this.setState({ photos: ph, order, sheet: null, toast: { k: 'filed', key: to }, lastId: to }); };
+    let toastBody = null;
+    if (T) {
+      const name = T.key && P[T.key] ? P[T.key].name : '';
+      const stat = T.key && byId[T.key] ? `${STAGES[byId[T.key].stage].name} · ${this.stageStats(byId[T.key].stage).c} of ${STAGES[byId[T.key].stage].shots.length}` : '';
+      const D = {
+        filed: ['✦ AI · FILED', `Filed as ${name}`, stat + (P[T.key] && P[T.key].note ? ' · voice note attached' : ''), [btn('Change', () => this.setState({ sheet: 'change' }))]],
+        hint: ['VOICE NOTE', 'Hold the mic while you talk', 'Let go when you finish. The note goes on ' + name + '.', []],
+        dent: ['✦ AI · FILED', `Filed as ${name}`, 'Dent visible on the left downspout. Was it there before you started?', [btn('Already damaged', () => this.setState({ damage: { key: 'gutb' }, pairing: true, aim: 'wide', toast: null }), true), btn('Not damage', () => this.setState({ toast: { k: 'filed', key: 'gutb' }, aim: this.firstMissingAfter('gutb') }))]],
+        blur: ['✦ AI · CHECK', 'Too close for the insurer', 'Step back so the roofline is in frame too. Saved anyway.', [btn('Step back, retake', () => this.setState({ toast: null, blurDone: true }), true), btn('Keep anyway', () => { this.setState({ ...this.addPhoto('rot', { name: byId.rot.name, img: byId.rot.img }), blurDone: true, toast: { k: 'filed', key: 'rot' }, aim: this.firstMissingAfter('rot') }); })]],
+        unfiled: ['✦ AI · NOT SURE', 'Saved as Unfiled', "Couldn't match this to a required shot. File it now or later.", [btn('File it', () => this.setState({ sheet: 'file', fileKey: T.key }))]],
+        paired: ['✦ AI · LINKED', 'Wide shot linked to the dent', 'The insurer can see the close-up is from this house. Hold the mic to say what you saw.', []],
+        note: ['VOICE NOTE · 0:' + String((P[T.key] && P[T.key].noteSec) || 3).padStart(2, '0'), '"' + ((P[T.key] && P[T.key].note) || '') + '"', `Attached to ${name} · ${s.online ? 'transcribed' : 'transcribed on this phone'}`, [btn('▶ Play', () => {}), btn('Edit', () => {}), btn('Delete', () => { const ph = { ...P, [T.key]: { ...P[T.key], note: null } }; this.setState({ photos: ph, toast: { k: 'filed', key: T.key } }); })]]
+      }[tk];
+      toastBody = React.createElement('div', { key: tk + (T.key || ''), style: { position: 'absolute', left: 12, right: 12, bottom: 12, padding: '12px 14px', borderRadius: 14, background: 'rgba(16,15,22,0.92)', border: '1px solid ' + (tk === 'blur' || tk === 'dent' ? 'rgba(242,185,75,0.5)' : 'rgba(165,168,240,0.45)'), display: 'flex', flexDirection: 'column', gap: 6, animation: 'rise .25s ease-out both' } },
+        React.createElement('span', { style: { fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', color: '#A5A8F0' } }, D[0]),
+        React.createElement('span', { style: { fontSize: 15, fontWeight: 600 } }, D[1]),
+        React.createElement('span', { style: { fontSize: 13, lineHeight: 1.4, color: '#C9C3B8' } }, D[2]),
+        D[3].length ? React.createElement('div', { style: { display: 'flex', gap: 8, paddingTop: 4, flexWrap: 'wrap' } }, D[3]) : null);
+    }
+    const sheets = {
+      checkin: { title: 'Check in at 24 Oak Street', note: 'Saved on the job as proof of who was on site and when. Works without signal.', rows: [{ l: 'Location', r: 'At this address ✓' }, { l: 'Time', r: '7:04' }, { l: 'Crew on site', r: 'Ravi, Jay' }], btn: 'Check in · open camera', cancel: 'Not yet', go: () => this.setState({ checkedIn: true, sheet: null, min: 424 }, () => this.openCamera()) },
+      change: { title: 'File this photo as', note: `${st.name} shots. Your choice overrides the AI.`, rows: st.shots.map(x => ({ l: x[1], r: P[x[0]] && x[0] !== (T && T.key) ? 'taken' : '', go: () => T && T.key && T.key !== x[0] && fileInto(T.key, x[0]) })), cancel: 'Keep as is' },
+      file: { title: 'File unfiled photo', note: 'Pick the required shot it shows.', rows: ALL.filter(x => !P[x.id]).map(x => ({ l: x.name, r: STAGES[x.stage].name, go: () => fileInto(s.fileKey, x.id) })), cancel: 'Leave unfiled' },
+      stage: (() => { const last = s.stage === STAGES.length - 1; return { title: `${st.name} complete · ${ss.c} of ${ss.n}`, note: last ? 'All required photos captured. Originals keep uploading in the background.' : `Once ${STAGES[s.stage + 1].name.toLowerCase()} starts, this stage can't be photographed again.`, rows: [], btn: last ? 'Leave site' : `Start ${STAGES[s.stage + 1].name}`, cancel: 'Keep shooting', go: () => last ? this.setState({ sheet: null, screen: 'finish' }) : this.setState({ sheet: null, stage: s.stage + 1, unlocked: s.stage + 1, aim: STAGES[s.stage + 1].shots[0][0], toast: null }) }; })()
+    };
+    const sh = s.sheet ? sheets[s.sheet] : null;
+    const lastStage = s.stage === STAGES.length - 1;
+    const sdPv = st.shots.filter(x => P[x[0]] && P[x[0]].pv === 'sent').length;
+    const recSec = s.listening ? Math.floor((Date.now() - (this.recStart || Date.now())) / 1000) : 0;
+    const sayFull = SAY[s.lastId] || 'Note for the office about this shot.';
+    const words = sayFull.split(' '); const shown = s.listening ? words.slice(0, Math.min(words.length, Math.floor((Date.now() - (this.recStart || Date.now())) / 260))).join(' ') : '';
+    const bars = Array.from({ length: 18 }, (_, i) => React.createElement('span', { key: i, style: { width: 4, height: 30, borderRadius: 2, background: '#F5F3EE', transformOrigin: 'center', animation: 'wave ' + (0.6 + (i % 5) * 0.12) + 's ease-in-out ' + (i * 0.05) + 's infinite' } }));
+    const step = !s.checkedIn ? 0 : !P.gutb ? 1 : !(s.damage && s.damage.paired) ? 2 : s.unlocked < 1 ? 3 : !allCaptured ? 4 : !s.done ? 5 : 6;
+    const guideTxt = ['Tap the job card, check in', 'Shoot in any order: tap a tile to switch shots, then the shutter', 'On Gutters & downspouts: mark Already damaged, take the wide shot, then press and hold the mic', 'Finish Pre-start, then Done for now. Try Something else, then File it', 'Tear-off and Final. Rotted decking gets a too-close warning', 'Switch Signal on: previews first, then originals. Leave site', 'Done. Restart to try again'];
+    const facingMap = { north: 'north', east: 'east', south: 'south', west: 'west' };
+    return {
+      clock: fmt(s.min), sigLabel: s.online ? '5G' : 'No signal', sigColor: s.online ? 'inherit' : (s.screen === 'camera' ? '#FBBF24' : '#92400E'),
+      barBg: s.screen === 'camera' ? '#000000' : '#F8FAFC', barFg: s.screen === 'camera' ? '#F5F3EE' : '#090D16',
+      showOfflineBar: !s.online && s.screen !== 'camera',
+      offBtnBg: s.online ? '#F5F3EE' : '#090D16', offBtnFg: s.online ? '#090D16' : '#F5F3EE', onBtnBg: s.online ? '#090D16' : '#F5F3EE', onBtnFg: s.online ? '#F5F3EE' : '#090D16',
+      goOffline: () => this.setState({ online: false }), goOnline: () => this.setState({ online: true }),
+      reset: () => { clearTimeout(this.sc); clearTimeout(this.st); this.setState(init()); },
+      guide: guideTxt.map((t, i) => ({ text: t, mark: i < step ? '✓' : i === step ? '→' : String(i + 1), color: i === step ? '#090D16' : '#5E5A52' })),
+      isHome: s.screen === 'home', isJob: s.screen === 'job', isCamera: s.screen === 'camera', isUploads: s.screen === 'uploads', isFinish: s.screen === 'finish', isDone: s.screen === 'done', isProfile: s.screen === 'profile',
+      showTabs: ['home', 'uploads', 'profile', 'done', 'job'].includes(s.screen),
+      siteLine: s.done ? `Checked out ${fmt(s.min)}` : s.checkedIn ? 'On site · 24 Oak Street · since 7:04' : 'Not on site yet',
+      jobStatus: s.done ? 'Done' : !s.checkedIn ? 'Not started' : allCaptured ? 'Ready to finish' : `In progress · ${st.name}`,
+      homeNext: !s.checkedIn ? `${ALL.length} required photos · any order` : `${capReq} of ${ALL.length} captured · ${st.name} now`, homeBtn: !s.checkedIn ? 'Check in at site' : 'Continue',
+      openJob: () => s.checkedIn ? this.setState({ screen: 'job', tab: 'jobs' }) : this.setState({ sheet: 'checkin' }),
+      goHome: () => this.setState({ screen: 'home', tab: 'jobs' }), openJobBack: () => this.setState({ screen: 'job' }),
+      stageRows: STAGES.map((p, i) => { const x = this.stageStats(i); const cur = i === s.stage && !allCaptured; const locked = i > s.unlocked; const miss = p.shots.filter(y => !P[y[0]]).map(y => y[1]); const pct = Math.round(x.c / x.n * 100); return { name: p.name, count: `${x.c}/${x.n}`, sub: !miss.length ? 'All captured' : locked ? 'Later' : (x.c === 0 && i > 0) ? `When you're on the roof. ${FIRST[i]}` : `Still needed: ${miss.join(', ')}`, ring: `conic-gradient(${x.c === x.n ? '#090D16' : '#C0392B'} ${pct}%, #CBD5E1 0)`, border: cur ? '#C0392B' : '#CBD5E1', opacity: locked ? '0.5' : '1', tag: x.c === x.n ? '✓' : cur ? (x.c === 0 && i > 0 ? 'Next' : 'Now') : '', tagColor: cur ? '#C0392B' : '#475569' }; }),
+      hasDamage: !!(s.damage && s.damage.paired), damageLine: 'Gutters & downspouts + wide shot of the front right corner' + ((P.ctx && P.ctx.note) || (P.gutb && P.gutb.note) ? ' · voice note' : ''),
+      hasUnfiled: unfiled.length > 0, unfiledLine: `${unfiled.length} unfiled photo · saved, file it from the camera`,
+      jobBtn: allCaptured ? 'Leave site' : `Open camera · ${st.name}`, jobPrimary: () => allCaptured ? this.setState({ screen: 'finish' }) : this.openCamera(),
+      closeCamera: () => this.setState({ screen: 'job', toast: null }),
+      stagePill: `${st.name} · ${ss.c} of ${ss.n}`, facing: facingMap[aimObj.facing], camBg: bg(aimObj.img),
+      hasCoach: s.pairing, coach: 'Now a wide shot: step back so the downspout and the house are both in frame.',
+      scanning: s.scanning,
+      scanEl: React.createElement(React.Fragment, null, React.createElement('div', { key: 't', style: { position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(130,134,230,0) 0%, rgba(130,134,230,0.2) 100%)', animation: 'scanTint 1.3s ease-out 1 both' } }), React.createElement('div', { key: 'l', style: { position: 'absolute', left: 0, right: 0, height: 2, background: '#A5A8F0', boxShadow: '0 0 18px 6px rgba(165,168,240,0.55)', animation: 'scanY 1.2s ease-in-out 1 both' } }), React.createElement('div', { key: 'x', style: { position: 'absolute', left: 12, bottom: 12, padding: '6px 10px', borderRadius: 999, background: 'rgba(16,15,22,0.85)', fontSize: 12, fontWeight: 600, color: '#A5A8F0' } }, '✦ Checking on this phone…')),
+      hasToast: !!T && !s.scanning && !s.listening, toastEl: toastBody,
+      showAim: !s.pairing && !s.listening, aimKicker: s.aim === 'other' ? 'EXTRA PHOTO' : 'POINT AT', aimTitle: aimObj.name, aimTip: s.aim === 'other' ? "Anything not on the list. The AI will try to file it." : (TIPS[s.aim] || ''),
+      trayTitle: s.pairing ? 'LINKED WIDE SHOT FOR THE DENT' : `${st.name.toUpperCase()} · ${ss.c} OF ${ss.n} · TAP A TILE TO SWITCH`,
+      trayCols: `repeat(${st.shots.length},minmax(0,1fr))`,
+      tray: st.shots.map(x => { const has = !!P[x[0]]; const now = s.aim === x[0]; return { label: x[1], bg: has ? bg(P[x[0]].img) : 'none', shade: has ? 'linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,0.75))' : 'transparent', border: now ? '#C0392B' : has ? '#334155' : '#2A2825', fg: has || now ? '#F5F3EE' : '#A39D92', done: has, now: now && !has, aim: () => this.setState({ aim: x[0], toast: null }) }; }),
+      aimOther: () => this.setState({ aim: 'other', toast: null }), otherBg: s.aim === 'other' ? '#F5F3EE' : 'transparent', otherFg: s.aim === 'other' ? '#0A0908' : '#C9C3B8',
+      listening: !!s.listening,
+      recEl: React.createElement('div', { style: { position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.72)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 16, gap: 12, animation: 'rise .2s ease-out both' } },
+        React.createElement('div', { style: { fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', color: '#F7A49A' } }, '● RECORDING · NOTE FOR ' + (s.lastId && P[s.lastId] ? P[s.lastId].name.toUpperCase() : '')),
+        React.createElement('div', { style: { display: 'flex', gap: 4, alignItems: 'center', height: 34 } }, bars),
+        React.createElement('div', { style: { fontSize: 17, lineHeight: 1.4, fontWeight: 600, minHeight: 48 } }, shown ? '"' + shown + '"' : 'Listening…'),
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: 13, color: '#C9C3B8' } }, React.createElement('span', null, '0:' + String(recSec).padStart(2, '0')), React.createElement('span', null, 'Release to attach'))),
+      micDown: e => { e && e.preventDefault && e.preventDefault(); if (!s.lastId || s.listening) return; this.recStart = Date.now(); this.setState({ listening: true, toast: null }); clearInterval(this.rt); this.rt = setInterval(() => this.forceUpdate(), 150); },
+      micUp: () => { if (!this.state.listening) return; clearInterval(this.rt); const dur = Date.now() - this.recStart; const key = this.state.lastId; if (dur < 600) { this.setState({ listening: false, toast: { k: 'hint', key } }); return; } const ph = { ...this.state.photos, [key]: { ...this.state.photos[key], note: SAY[key] || 'Note for the office about this shot.', noteSec: Math.max(1, Math.round(dur / 1000)) } }; this.setState({ photos: ph, listening: false, toast: { k: 'note', key } }); },
+      micBg: s.listening ? '#C0392B' : '#1E1D1B', micBorder: s.listening ? '#C0392B' : '#334155', micFg: s.lastId ? '#F5F3EE' : '#7A756C', micOpacity: s.lastId ? '1' : '0.5',
+      micHint: s.listening ? 'Release to attach' : s.lastId && P[s.lastId] ? `Hold mic for a voice note on ${P[s.lastId].name}` : 'Take a photo, then hold the mic to add a note',
+      hasStageDone: !!s.stageDone, sdTitle: `${st.name} complete`, sdSub: `${ss.c} of ${ss.n} captured · ${fmt(s.min)}`, sdCols: `repeat(${st.shots.length},minmax(0,1fr))`,
+      sdThumbs: st.shots.map(x => ({ bg: P[x[0]] ? bg(P[x[0]].img) : 'none' })),
+      sdRows: [{ l: 'Already damaged', r: s.stage === 0 && s.damage ? '1 flagged · wide shot linked' : 'None flagged', c: '#090D16' }, { l: 'Office', r: s.online ? (sdPv === ss.n ? 'Previews sent' : 'Sending previews…') : 'Previews wait for signal', c: s.online ? '#090D16' : '#92400E' }],
+      sdNext: lastStage ? `All ${ALL.length} required photos captured. You can leave site.` : `Next: ${STAGES[s.stage + 1].name}, when you're on the roof. ${FIRST[s.stage + 1]}.`,
+      sdBtn: lastStage ? 'Leave site' : 'Done for now',
+      sdGo: () => lastStage ? this.setState({ stageDone: false, screen: 'finish' }) : this.setState({ stageDone: false, stage: s.stage + 1, unlocked: s.stage + 1, screen: 'job', tab: 'jobs', toast: null, aim: STAGES[s.stage + 1].shots[0][0] }),
+      sdStay: () => this.setState({ stageDone: false }),
+      chips: [...(s.pairing ? [{ id: 'wide', label: 'Wide shot' }] : []), ...st.shots.filter(x => !P[x[0]]).map(x => ({ id: x[0], label: x[1] })), { id: 'other', label: 'Something else' }].map(c => ({ label: c.label, bg: s.aim === c.id ? '#F5F3EE' : '#161514', fg: s.aim === c.id ? '#0A0908' : '#F5F3EE', border: s.aim === c.id ? '#F5F3EE' : '#3A3833', aim: () => this.setState({ aim: c.id, toast: null }) })),
+      lastBg: s.lastId && P[s.lastId] ? bg(P[s.lastId].img) : 'none',
+      shutter: () => this.shoot(),
+      talk: () => this.talkNow(s.lastId), talkLabel: s.listening ? 'Listening…' : 'Hold to talk', talkBg: s.listening ? '#C0392B' : '#161514', talkFg: s.lastId ? '#F5F3EE' : '#7A756C',
+      capCount, pvCount, ogCount, pvPct: capCount ? `${Math.round(pvCount / capCount * 100)}%` : '0%', ogPct: capCount ? `${Math.round(ogCount / capCount * 100)}%` : '0%',
+      upSummary, upColor: !capCount ? '#475569' : !ogPending ? '#2F7A4F' : '#92400E', noPhotos: !capCount,
+      upRows: [...s.order].reverse().map(k => { const r = P[k]; return { name: r.name + (r.note ? ' · voice note' : ''), bg: bg(r.img), state: r.og === 'uploaded' ? 'Original uploaded' : r.og === 'uploading' ? 'Original uploading…' : r.pv === 'sent' ? 'Preview sent · original on this phone' : 'On this phone · waiting for signal', color: r.og === 'uploaded' ? '#2F7A4F' : r.og === 'uploading' ? '#090D16' : '#475569' }; }),
+      finRows: [
+        { l: 'Required photos', r: `${capReq} of ${ALL.length} captured`, c: '#090D16', sub: 'Any order · filed by AI, checked by you', border: '#CBD5E1' },
+        { l: 'Previews sent', r: `${pvCount} of ${capCount}`, c: '#090D16', sub: 'Sean can already see what was taken', border: '#CBD5E1' },
+        { l: 'Originals uploaded', r: `${ogCount} of ${capCount}`, c: ogPending ? '#92400E' : '#2F7A4F', sub: ogPending ? `${ogPending} still on this phone` : 'The office has every original', border: ogPending ? '#F59E0B' : '#CBD5E1' },
+        { l: 'Already damaged', r: s.damage ? '1 flagged' : 'None', c: '#090D16', sub: s.damage ? 'Downspout · close-up + wide shot' : 'Nothing flagged on arrival', border: '#CBD5E1' }],
+      markDone: () => this.setState({ done: true, screen: 'done', tab: 'jobs', min: Math.max(s.min, 565) }),
+      hasBadge: ogPending > 0, badge: ogPending,
+      tabJobs: () => this.setState({ screen: s.checkedIn ? 'job' : 'home', tab: 'jobs' }), tabUploads: () => this.setState({ screen: 'uploads', tab: 'uploads' }), tabProfile: () => this.setState({ screen: 'profile', tab: 'profile' }),
+      tabJobsColor: s.tab === 'jobs' ? '#C0392B' : '#64748B', tabUpColor: s.tab === 'uploads' ? '#C0392B' : '#64748B', tabProfColor: s.tab === 'profile' ? '#C0392B' : '#64748B',
+      hasSheet: !!sh, sheetTitle: sh ? sh.title : '', sheetNote: sh ? sh.note : '', sheetRows: sh ? sh.rows.map(r => ({ l: r.l, r: r.r || '', w: '600', border: '#CBD5E1', go: r.go || (() => {}) })) : [],
+      hasSheetBtn: !!(sh && sh.btn), sheetBtn: sh && sh.btn || '', sheetCancel: sh ? sh.cancel : '', sheetGo: () => sh && sh.go && sh.go(), closeSheet: () => this.setState({ sheet: null })
+    };
+  }
+  firstMissingAfter(id) { const st = this.state.stage; const m = STAGES[st].shots.find(x => !this.state.photos[x[0]] && x[0] !== id); return m ? m[0] : 'other'; }
+  talkNow(key) {
+    if (!key || !this.state.photos[key] || this.state.listening) return;
+    this.setState({ listening: true });
+    clearTimeout(this.lt);
+    this.lt = setTimeout(() => { const ph = { ...this.state.photos, [key]: { ...this.state.photos[key], note: true } }; this.setState({ photos: ph, listening: false, toast: { k: 'note', key } }); }, 1400);
+  }
+}
+</script>
+</body>
+</html>

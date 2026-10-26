@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=IBM+Plex+Mono:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#ECEAE5;color:#16150F;font-family:'Manrope',sans-serif}a{color:#16150F}a:hover{color:#B8341F}button{font-family:'Manrope',sans-serif;cursor:pointer}</style>
+</helmet>
+<div style="min-height:100vh;width:max-content;min-width:100%;background:#ECEAE5;display:flex;flex-direction:column;align-items:safe center;justify-content:safe center;gap:14px;padding:24px 40px 40px;box-sizing:border-box">
+<div style="width:1280px;display:flex;align-items:center;gap:10px;font-size:12.5px;color:#4A4842"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.06em;color:#6B6860">PROTOTYPE · ON THE ROOF</span><button onClick="{{ simTake }}" style="height:30px;padding:0 12px;border:none;border-radius:8px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #DEDBD4;font-size:12.5px;font-weight:600;color:{{ simCol }}" style-hover="background:#F7F6F3">Ravi takes the photo</button><button onClick="{{ simCover }}" style="height:30px;padding:0 12px;border:none;border-radius:8px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #DEDBD4;font-size:12.5px;font-weight:600;color:{{ simCol }}" style-hover="background:#F7F6F3">Spot already covered</button><span style="width:1px;height:18px;background:#D4D1CA;margin:0 4px"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.06em;color:#6B6860">DISPUTE CALL</span><button onClick="{{ simSearch }}" style="height:30px;padding:0 12px;border:none;border-radius:8px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #DEDBD4;font-size:12.5px;font-weight:600;color:#16150F" style-hover="background:#F7F6F3">Lena calls: search “Lena gutter Oct”</button><span style="flex:1"></span><button onClick="{{ reset }}" style="height:30px;padding:0 10px;border:none;background:none;font-size:12.5px;color:#6B6860;text-decoration:underline;text-underline-offset:2px">Reset</button></div>
+<div style="position:relative;width:1280px;height:800px;flex-shrink:0;border-radius:14px;background:#16150F;box-shadow:0 0 0 1px #2A2925,0 30px 60px -20px rgba(16,15,12,0.35);overflow:hidden;display:flex;font-family:'Manrope',sans-serif;color:#16150F">
+
+  <div style="width:228px;flex-shrink:0;padding:14px 12px;display:flex;flex-direction:column;gap:2px">
+    <div style="display:flex;align-items:center;gap:10px;height:40px;padding:0 8px;margin-bottom:10px"><div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(180deg,#D24636,#B3321F);color:#FFFFFF;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center">H</div><div style="flex:1;display:flex;flex-direction:column;line-height:1.15"><span style="font-size:13.5px;font-weight:700;color:#FFFFFF">Halden Roofing</span><span style="font-size:11.5px;color:#8A877F">Office</span></div></div>
+    <div style="height:6px"></div>
+    <div onClick="{{ goHome }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 10px;border-radius:8px;font-size:13.5px;background:{{ homeNavBg }};box-shadow:{{ homeNavSh }};font-weight:600;color:#FFFFFF;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E5604E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 4l9 6.5V20a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"></path></svg><span style="flex:1">Home</span><span style="font-size:11.5px;font-weight:700;min-width:20px;height:18px;padding:0 6px;border-radius:999px;background:#C0392B;color:#FFFFFF;display:flex;align-items:center;justify-content:center;box-sizing:border-box">{{ openCount }}</span></div>
+    <div onClick="{{ goJobs }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 10px;border-radius:8px;font-size:13.5px;font-weight:{{ jobsNavFw }};color:{{ jobsNavCol }};background:{{ jobsNavBg }};cursor:pointer" style-hover="background:rgba(255,255,255,0.08)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ jobsNavIc }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"></path></svg><span style="flex:1">Jobs</span></div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.06em;color:#6F6C64;padding:20px 10px 6px">ON SITE NOW</div>
+    <sc-for list="{{ todayJobs }}" as="j" hint-placeholder-count="3">
+      <div onClick="{{ j.go }}" style="display:flex;align-items:center;gap:10px;height:30px;padding:0 10px;border-radius:8px;font-size:13px;color:{{ j.navCol }};background:{{ j.navBg }};cursor:{{ j.cursor }}" style-hover="background:rgba(255,255,255,0.08)"><span style="width:7px;height:7px;border-radius:50%;background:{{ j.dot }}"></span>{{ j.addr }}</div>
+    </sc-for>
+    <div style="flex:1"></div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px"><div style="width:30px;height:30px;border-radius:50%;background:#2E2C27;color:#FFFFFF;font-size:11.5px;font-weight:700;display:flex;align-items:center;justify-content:center">SD</div><div style="display:flex;flex-direction:column;gap:1px"><span style="font-size:13px;font-weight:600;color:#FFFFFF">Sean Doyle</span><span style="font-size:11.5px;color:#8A877F">Project manager</span></div></div>
+  </div>
+
+  <div style="flex:1;margin:8px 8px 8px 0;background:#FFFFFF;border-radius:12px;box-shadow:0 0 0 1px #E4E6EA,0 1px 3px rgba(16,15,12,0.05);display:flex;flex-direction:column;min-width:0;overflow:hidden">
+    <div style="height:56px;flex-shrink:0;display:grid;grid-template-columns:minmax(0,1fr) 440px minmax(0,1fr);align-items:center;gap:16px;padding:0 20px;border-bottom:1px solid #F1EFEB">
+      <div style="display:flex;align-items:center;gap:12px;min-width:0"><sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}"><button onClick="{{ goBack }}" style="height:28px;padding:0 10px 0 6px;border:none;border-radius:7px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #E7E5E1;display:flex;align-items:center;gap:4px;font-size:12.5px;font-weight:600;color:#4A4842" style-hover="background:#F7F6F3"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4A4842" stroke-width="1.8" stroke-linecap="round"><path d="M15 6l-6 6 6 6"></path></svg>{{ backLabel }}</button></sc-if><span style="font-size:14px;font-weight:600">{{ pageTitle }}</span></div>
+      <div style="display:flex;align-items:center;gap:10px;height:36px;padding:0 12px;border-radius:10px;background:#F5F6F8;box-shadow:inset 0 0 0 1px #E4E6EA;font-size:13px;color:#8A877F;cursor:text" style-hover="box-shadow:inset 0 0 0 1px #D5D8DE;background:#F0F2F5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B6860" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg><input value="{{ q }}" onChange="{{ onQ }}" onKeyDown="{{ onKey }}" placeholder="Customer, address, job # or “Lena gutter Oct”" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font-family:'Manrope',sans-serif;font-size:13px;color:#16150F"><span style="display:inline-flex;align-items:center;gap:4px;height:20px;padding:0 7px;border-radius:6px;background:#EEF0FF;color:#4338CA;font-size:11px;font-weight:600">✦ AI</span><span style="font-size:11px;font-weight:600;padding:1px 6px;border-radius:4px;background:#FFFFFF;color:#6B6860;box-shadow:0 0 0 1px #E2E0DB">⌘K</span></div>
+      <div style="display:flex;align-items:center;justify-content:flex-end;gap:12px">
+        <span style="font-size:12.5px;color:#8A877F;white-space:nowrap">Synced {{ now }}</span>
+        <span style="position:relative;width:32px;height:32px;border-radius:8px;box-shadow:inset 0 0 0 1px #E7E5E1;display:flex;align-items:center;justify-content:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4A4842" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0112 0c0 7 3 8 3 8H3s3-1 3-8"></path><path d="M10 20a2 2 0 004 0"></path></svg><span style="position:absolute;top:7px;right:8px;width:6px;height:6px;border-radius:50%;background:#C0392B"></span></span>
+      </div>
+    </div>
+
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;display:flex;flex-direction:column;gap:32px;padding:36px 44px 44px;min-height:0;overflow:auto;background:#F5F6F8">
+      <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:24px;font-weight:700;letter-spacing:-0.02em">Good morning, Sean</span><span style="font-size:13.5px;color:#6B6860">25 October · <b style="font-weight:600;color:#16150F">{{ needText }}</b></span></div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:40px;align-items:start">
+
+        <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+          <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px;font-weight:700;letter-spacing:-0.01em">Needs your decision</span><span style="font-size:12px;font-weight:700;color:#FFFFFF;padding:1px 8px;border-radius:999px;background:#16150F">{{ openCount }}</span><span style="flex:1"></span><span style="font-size:12.5px;color:#6B6860">Most urgent first</span></div>
+
+          <sc-if value="{{ gapOpen }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #F6C9C2,0 1px 2px rgba(16,15,12,0.04),0 8px 24px -12px rgba(180,35,24,0.18);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid #F8DCD7;background:#FEF6F5"><span style="width:7px;height:7px;border-radius:50%;background:#D92D20;box-shadow:0 0 0 3px rgba(217,45,32,0.18)"></span><span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#B42318">NOW</span><span style="font-size:12px;color:#8A877F">· photo can still be taken</span></div>
+            <div onClick="{{ openGap }}" style="display:grid;grid-template-columns:minmax(0,1fr) auto 16px;gap:14px;align-items:center;padding:14px 16px;cursor:pointer" style-hover="background:#F9FAFB">
+              <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:14px;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Soft decking · Opened up photo not taken</span><span style="font-size:12.5px;color:#8A877F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">18 Oak St · spot open since 9:12 · Ravi last heard 9:29</span></div>
+              <button onClick="{{ call }}" style="height:32px;padding:0 14px;border:none;border-radius:9px;background:linear-gradient(180deg,#CF4433,#B8341F);color:#FFFFFF;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;white-space:nowrap" style-hover="filter:brightness(1.06)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.4 1.8.7 2.7a2 2 0 01-.5 2.1L8 9.8a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.7.7a2 2 0 011.7 2z"></path></svg>{{ callLabel }}</button>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A19E96" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"></path></svg>
+            </div>
+          </div>
+          </sc-if>
+
+          <div style="display:flex;flex-direction:column;background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,15,12,0.04);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid #ECEEF1;background:#FAFBFC"><span style="width:7px;height:7px;border-radius:50%;background:#A19E96"></span><span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#4A4842">WHEN YOU CAN</span><span style="font-size:12px;color:#8A877F">· doesn’t block work</span></div>
+            <sc-if value="{{ whenEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:14px 16px;font-size:13px;color:#6B6860;display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2F9E62" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5 9-10"></path></svg>Nothing else is waiting on you.</div></sc-if>
+            <sc-if value="{{ labelOpen }}" hint-placeholder-val="{{ true }}"><div onClick="{{ openLabel }}" style="display:grid;grid-template-columns:minmax(0,1fr) auto 16px;gap:14px;align-items:center;padding:14px 16px;border-bottom:{{ labelLine }};cursor:pointer" style-hover="background:#F9FAFB">
+              <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:14px;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Confirm label: Vent pipe leak · Opened up</span><span style="font-size:12.5px;color:#8A877F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">18 Oak St · AI suggested, Ravi didn’t confirm · 40 min ago</span></div>
+              <span style="display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:999px;background:#EEF0FF;color:#4338CA;font-size:11.5px;font-weight:600;white-space:nowrap">✦ AI label</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A19E96" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"></path></svg>
+            </div></sc-if>
+            
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+          <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,15,12,0.04),0 8px 24px -12px rgba(16,15,12,0.08);padding:16px 18px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:14.5px;font-weight:700">Photos today</span><span style="font-size:12.5px;font-weight:600;color:#4A4842;cursor:pointer" style-hover="color:#B8341F">View all ›</span></div>
+            <div style="display:flex;align-items:center;gap:18px">
+              <div style="position:relative;width:104px;height:104px;flex-shrink:0">
+                <svg width="104" height="104" viewBox="0 0 104 104" style="transform:rotate(-90deg)"><circle cx="52" cy="52" r="42" fill="none" stroke="#F1EFEB" stroke-width="11"></circle><circle cx="52" cy="52" r="42" fill="none" stroke="#2F9E62" stroke-width="11" stroke-linecap="round" stroke-dasharray="{{ gDash }}"></circle><circle cx="52" cy="52" r="42" fill="none" stroke="#F0A43A" stroke-width="11" stroke-linecap="round" stroke-dasharray="{{ aDash }}" stroke-dashoffset="{{ aOff }}"></circle></svg>
+                <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1"><span style="font-size:24px;font-weight:700;letter-spacing:-0.03em">{{ recv }}</span><span style="font-size:11.5px;color:#6B6860">of {{ taken }}</span></div>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:10px;font-size:12.5px">
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="display:flex;align-items:center;gap:6px;color:#6B6860"><span style="width:8px;height:8px;border-radius:2px;background:#2F9E62"></span>In office</span><span style="font-size:16px;font-weight:700;padding-left:14px">{{ recv }} <span style="font-size:12px;font-weight:600;color:#6B6860">{{ recvPct }}</span></span></div>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="display:flex;align-items:center;gap:6px;color:#6B6860"><span style="width:8px;height:8px;border-radius:2px;background:#F0A43A"></span>On phones</span><span style="font-size:16px;font-weight:700;padding-left:14px">{{ onPhone }} <span style="font-size:12px;font-weight:600;color:#6B6860">safe, not sent</span></span></div>
+              </div>
+            </div>
+            <div style="border-top:1px solid #F1EFEB;padding-top:12px;display:flex;align-items:center;gap:12px">
+              <div style="display:flex">
+                <span style="width:30px;height:30px;margin-right:-6px;border-radius:50%;background:#F1EFEB;box-shadow:0 0 0 2px #FFFFFF;color:#3D3A34;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">RV</span>
+                <span style="width:30px;height:30px;margin-right:-6px;border-radius:50%;background:#F1EFEB;box-shadow:0 0 0 2px #FFFFFF;color:#3D3A34;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">MC</span>
+                <span style="width:30px;height:30px;margin-right:-6px;border-radius:50%;background:#F1EFEB;box-shadow:0 0 0 2px #FFFFFF;color:#3D3A34;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">DN</span>
+              </div>
+              <span style="flex:1;font-size:12.5px;line-height:1.4;color:#4A4842;padding-left:6px">{{ onPhone }} still on Dana’s and Ravi’s phones, safe until they have signal.</span>
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,15,12,0.04),0 8px 24px -12px rgba(16,15,12,0.08);padding:14px 18px 6px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:4px"><span style="font-size:14.5px;font-weight:700">On site now</span><span style="font-size:12.5px;font-weight:600;color:#4A4842;cursor:pointer" style-hover="color:#B8341F">All jobs ›</span></div>
+            <sc-for list="{{ todayJobs }}" as="j" hint-placeholder-count="3">
+              <div onClick="{{ j.go }}" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:{{ j.line }};cursor:{{ j.cursor }}" style-hover="opacity:0.8">
+                <span style="width:36px;height:36px;border-radius:9px;flex-shrink:0;background:url('{{ j.thumb }}') center/cover #E9E7E2"></span>
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+                  <div style="display:flex;justify-content:space-between;gap:8px"><span style="font-size:13.5px;font-weight:600">{{ j.addr }}</span><span style="font-size:12px;color:{{ j.statusCol }};white-space:nowrap">{{ j.status }}</span></div>
+                  <div style="height:5px;border-radius:999px;background:#F1EFEB;display:flex;overflow:hidden"><span style="width:{{ j.g }};background:#2F9E62"></span><span style="width:{{ j.a }};background:#F0A43A"></span></div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,24,40,0.04);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:8px;padding:14px 18px 10px"><span style="font-size:14.5px;font-weight:700">Shared with customers</span></div>
+            <sc-if value="{{ homeSent }}" hint-placeholder-val="{{ false }}"><div style="display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 18px;border-top:1px solid #F0F1F4">
+              <img src="assets/est-gutter.png" alt="" style="width:40px;height:40px;border-radius:9px;object-fit:cover">
+              <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">14 Maple Dr · Lena</span><span style="font-size:12px;color:#6B6860;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ homeSent }}</span></div>
+              <span style="font-size:12px;font-weight:600;color:#8A877F;white-space:nowrap">Not opened</span>
+            </div></sc-if>
+            <div style="display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 18px;border-top:1px solid #F0F1F4">
+              <img src="assets/est-pipe-boot.png" alt="" style="width:40px;height:40px;border-radius:9px;object-fit:cover">
+              <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">6 Ash Rd · Paul Grant</span><span style="font-size:12px;color:#6B6860;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Pipe boot set · sent 22 Oct</span></div>
+              <span style="font-size:12px;font-weight:600;color:#2F9E62;white-space:nowrap">Opened</span>
+            </div>
+            <div style="display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 18px 14px;border-top:1px solid #F0F1F4">
+              <img src="assets/est-gutter.png" alt="" style="width:40px;height:40px;border-radius:9px;object-fit:cover">
+              <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">14 Maple Dr · Lena Marsh</span><span style="font-size:12px;color:#6B6860;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Gutter seam set · sent 6 Oct</span></div>
+              <span style="font-size:12px;font-weight:600;color:#2F9E62;white-space:nowrap">Opened</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isJobs }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;display:flex;flex-direction:column;gap:20px;padding:28px 36px 36px;min-height:0;overflow:auto;background:#F5F6F8">
+      <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:22px;font-weight:700;letter-spacing:-0.02em">Jobs</span><span style="font-size:13px;color:#6B6860">Every job’s photos, newest first. Search the top bar for a customer or address.</span></div>
+      <sc-for list="{{ jobGroups }}" as="g" hint-placeholder-count="2">
+        <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,15,12,0.04);overflow:hidden">
+          <div style="display:grid;grid-template-columns:minmax(0,1.6fr) 110px minmax(0,1.3fr) 150px 16px;gap:16px;align-items:center;padding:11px 18px;background:#FAFBFC;border-bottom:1px solid #ECEEF1;font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6B6860"><span>{{ g.label }}</span><span>CREW</span><span>PHOTOS</span><span>STATUS</span><span></span></div>
+          <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="3">
+            <div onClick="{{ r.go }}" style="display:grid;grid-template-columns:minmax(0,1.6fr) 110px minmax(0,1.3fr) 150px 16px;gap:16px;align-items:center;padding:12px 18px;border-bottom:{{ r.line }};cursor:{{ r.cursor }}" style-hover="background:{{ r.hover }}">
+              <div style="display:flex;align-items:center;gap:12px;min-width:0"><span style="width:36px;height:36px;border-radius:9px;flex-shrink:0;background:url('{{ r.thumb }}') center/cover #E9E7E2"></span><div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.title }}</span><span style="font-size:12px;color:#6B6860;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.sub }}</span></div></div>
+              <span style="font-size:13px;color:#3D3A34">{{ r.crew }}</span>
+              <div style="display:flex;flex-direction:column;gap:5px;min-width:0"><div style="height:5px;border-radius:999px;background:#F1EFEB;display:flex;overflow:hidden"><span style="width:{{ r.g }};background:#2F9E62"></span><span style="width:{{ r.a }};background:#F0A43A"></span></div><span style="font-size:12px;color:#6B6860;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.count }}</span></div>
+              <span style="justify-self:start;display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:999px;background:{{ r.tagBg }};color:{{ r.tagFg }};font-size:11.5px;font-weight:600;white-space:nowrap">{{ r.tag }}</span>
+              <span style="display:flex;opacity:{{ r.chev }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A19E96" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"></path></svg></span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isSearch }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;display:flex;flex-direction:column;gap:18px;padding:24px 32px 32px;min-height:0;overflow:auto;background:#F5F6F8">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:22px;font-weight:700;letter-spacing:-0.02em">{{ resTitle }}</span>
+        <sc-if value="{{ hasParse }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span style="display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 9px;border-radius:999px;background:#EEF0FF;color:#4338CA;font-size:11.5px;font-weight:600">✦ Searched for</span>
+            <sc-for list="{{ parse }}" as="p" hint-placeholder-count="3"><span style="display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:999px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #E4E6EA;font-size:12.5px;color:#4A4842"><span style="color:#8A877F">{{ p.k }}</span><b style="font-weight:600;color:#16150F">{{ p.v }}</b></span></sc-for>
+          </div>
+        </sc-if>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 336px;gap:20px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+          <sc-for list="{{ results }}" as="j" hint-placeholder-count="1">
+            <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,15,12,0.04);overflow:hidden">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid #F0F1F4">
+                <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:15px;font-weight:700">{{ j.title }}</span><span style="font-size:12.5px;color:#6B6860">{{ j.sub }}</span></div>
+                <span style="display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:999px;background:{{ j.tagBg }};color:{{ j.tagFg }};font-size:11.5px;font-weight:600;white-space:nowrap">{{ j.tag }}</span>
+              </div>
+              <sc-for list="{{ j.spots }}" as="sp" hint-placeholder-count="2">
+                <div style="padding:14px 18px;border-bottom:1px solid #F0F1F4;display:flex;flex-direction:column;gap:10px">
+                  <span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#4A4842">{{ sp.label }}</span>
+                  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+                    <sc-for list="{{ sp.ph }}" as="p" hint-placeholder-count="3">
+                      <button onClick="{{ p.pick }}" style="padding:0;text-align:left;border:none;border-radius:11px;background:#FFFFFF;box-shadow:{{ p.ring }};overflow:hidden;display:flex;flex-direction:column;color:#16150F" style-hover="box-shadow:0 0 0 1.5px #16150F">
+                        <span style="height:96px;width:100%;background:{{ p.bg }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0 10px;box-sizing:border-box;text-align:center"><span style="font-size:12px;font-weight:600;color:#6B6860">{{ p.empty }}</span><span style="font-size:11px;line-height:1.35;color:#8A877F">{{ p.reason }}</span></span>
+                        <span style="padding:8px 10px 10px;display:flex;justify-content:space-between;align-items:center;gap:6px"><span style="font-size:12.5px;font-weight:600">{{ p.st }}</span><span style="font-size:11.5px;font-weight:600;color:{{ p.metaCol }};white-space:nowrap">{{ p.meta }}</span></span>
+                      </button>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-for>
+          <sc-if value="{{ hasOthers }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,15,12,0.04);padding:12px 18px;display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:12.5px;color:#6B6860">{{ othersTitle }}</span>
+              <sc-for list="{{ others }}" as="o" hint-placeholder-count="1"><div onClick="{{ o.go }}" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;cursor:pointer" style-hover="opacity:0.75"><span style="font-size:13.5px;font-weight:600">{{ o.title }}</span><span style="font-size:12.5px;font-weight:600;color:#4A4842">Show ›</span></div></sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}"><div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,15,12,0.04);padding:18px;font-size:13.5px;color:#4A4842">No jobs match. Try a customer name, street or job number.</div></sc-if>
+        </div>
+
+        <div style="position:sticky;top:0;background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,15,12,0.04),0 8px 24px -12px rgba(16,15,12,0.08);overflow:hidden;display:flex;flex-direction:column">
+          <sc-if value="{{ rNone }}" hint-placeholder-val="{{ true }}"><div style="padding:18px;font-size:13px;line-height:1.5;color:#6B6860">Pick a photo to see when and where it was taken.</div></sc-if>
+          <sc-if value="{{ rPhoto }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column">
+              <div style="aspect-ratio:4/3;background:{{ rImg }}"></div>
+              <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:14px">
+                <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6B6860">{{ rKicker }}</span><span style="font-size:17px;font-weight:700;letter-spacing:-0.01em">{{ rTitle }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <sc-for list="{{ rRows }}" as="r" hint-placeholder-count="4"><div style="display:grid;grid-template-columns:118px minmax(0,1fr);gap:10px;font-size:12.5px;line-height:1.45"><span style="color:#6B6860">{{ r.k }}</span><span style="font-weight:500;color:{{ r.col }}">{{ r.v }}</span></div></sc-for>
+                </div>
+                <sc-if value="{{ sentMsg }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:10px;background:#E8F5EE;font-size:12.5px;line-height:1.45;color:#1F7A4A;font-weight:600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A4A" stroke-width="2.2" stroke-linecap="round" style="flex-shrink:0;margin-top:2px"><path d="M5 12l5 5 9-10"></path></svg><span>{{ sentMsg }}</span></div></sc-if>
+                <button onClick="{{ openShare }}" style="height:40px;border:none;border-radius:10px;background:{{ shBtnBg }};box-shadow:{{ shBtnRing }};color:{{ shBtnFg }};font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px" style-hover="filter:brightness(1.06)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7" stroke="{{ shBtnFg }}"></path><path d="M16 6l-4-4-4 4"></path><path d="M12 2v13"></path></svg>{{ shareBtn }}</button>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ rMissing }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#4A4842">NO PHOTO · REASON GIVEN</span>
+              <span style="font-size:17px;font-weight:700;letter-spacing:-0.01em">{{ rTitle }}</span>
+              <div style="padding:10px 12px;border-radius:10px;background:#FAF9F7;box-shadow:inset 0 0 0 1px #F1EFEB;font-size:13px;line-height:1.5;color:#3D3A34">{{ rReason }}</div>
+              <span style="font-size:12px;line-height:1.45;color:#6B6860">Anything shared from this spot says this stage has no photo.</span>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isJob }}" hint-placeholder-val="{{ false }}">
+    <div data-jobbody="1" style="flex:1;display:flex;flex-direction:column;gap:20px;padding:24px 32px 32px;min-height:0;overflow:auto;background:#F5F6F8">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:5px;min-width:0">
+          <span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6B6860">JOB #421 · LEAK REPAIR · 2 SPOTS</span>
+          <span style="font-size:22px;font-weight:700;letter-spacing:-0.02em">18 Oak St · Ruth Okafor</span>
+          <span style="font-size:13px;color:#6B6860">Ravi · on site since 8:04 · last heard {{ lastHeard }}</span>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ counts }}" as="c" hint-placeholder-count="4"><span style="display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:999px;font-size:11.5px;font-weight:600;white-space:nowrap;background:{{ c.bg }};color:{{ c.fg }};box-shadow:{{ c.ring }}">{{ c.label }}</span></sc-for>
+        </div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,15,12,0.04);padding:12px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6B6860">CREW MILESTONES</span>
+        <sc-for list="{{ milestones }}" as="m" hint-placeholder-count="5"><span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:#3D3A34"><span style="width:7px;height:7px;border-radius:50%;background:{{ m.dot }}"></span><span style="font-weight:{{ m.fw }};color:{{ m.col }}">{{ m.label }}</span><span style="color:#8A877F">{{ m.time }}</span></span></sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 336px;gap:20px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:18px;min-width:0">
+          <sc-for list="{{ groups }}" as="g" hint-placeholder-count="6">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#4A4842">{{ g.label }}</span><span style="font-size:12px;color:#8A877F">{{ g.sub }}</span></div>
+              <div style="display:flex;flex-wrap:wrap;gap:10px">
+                <sc-for list="{{ g.tiles }}" as="t" hint-placeholder-count="3">
+                  <button data-tile="{{ t.id }}" onClick="{{ t.pick }}" style="width:118px;padding:0;text-align:left;border:none;border-radius:11px;background:#FFFFFF;box-shadow:{{ t.ring }};overflow:hidden;display:flex;flex-direction:column;color:#16150F" style-hover="box-shadow:0 0 0 1.5px #16150F">
+                    <span style="height:74px;width:100%;background:{{ t.bg }};display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:600;color:{{ t.emptyCol }}">{{ t.empty }}</span>
+                    <span style="padding:8px 10px 10px;display:flex;flex-direction:column;gap:5px;align-items:flex-start"><span style="font-size:12.5px;font-weight:600;line-height:1.25">{{ t.name }}</span><span style="display:inline-flex;align-items:center;height:20px;padding:0 7px;border-radius:999px;background:{{ t.chipBg }};color:{{ t.chipFg }};font-size:11px;font-weight:600;white-space:nowrap">{{ t.chip }}</span></span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="position:sticky;top:0;background:#FFFFFF;border-radius:14px;box-shadow:0 0 0 1px #E4E6EA,0 1px 2px rgba(16,15,12,0.04),0 8px 24px -12px rgba(16,15,12,0.08);overflow:hidden;display:flex;flex-direction:column">
+          <sc-if value="{{ pGap }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column">
+              <div style="display:flex;align-items:center;gap:8px;padding:12px 18px;border-bottom:1px solid {{ gHeadLine }};background:{{ gHeadBg }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ gDot }}"></span><span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:{{ gLabelCol }}">{{ gLabel }}</span><span style="font-size:12px;color:#8A877F">· {{ gHint }}</span></div>
+              <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:14px">
+                <sc-if value="{{ gHasImg }}" hint-placeholder-val="{{ false }}"><div style="aspect-ratio:4/3;border-radius:10px;background:{{ gImg }}"></div></sc-if>
+                <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:17px;font-weight:700;letter-spacing:-0.01em">{{ selTitle }}</span><span style="font-size:13px;line-height:1.5;color:#4A4842">{{ gBody }}</span></div>
+                <sc-if value="{{ gQuote }}" hint-placeholder-val="{{ false }}"><div style="padding:10px 12px;border-radius:10px;background:#FAF9F7;box-shadow:inset 0 0 0 1px #F1EFEB;font-size:13px;line-height:1.5;color:#3D3A34">{{ gQuote }}</div></sc-if>
+                <div style="display:flex;flex-direction:column;gap:7px;padding-top:2px">
+                  <sc-for list="{{ gRows }}" as="r" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:118px minmax(0,1fr);gap:10px;font-size:12.5px;line-height:1.45"><span style="color:#6B6860">{{ r.k }}</span><span style="font-weight:500">{{ r.v }}</span></div></sc-for>
+                </div>
+                <sc-if value="{{ gCall }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <button onClick="{{ call }}" style="height:40px;border:none;border-radius:10px;background:linear-gradient(180deg,#CF4433,#B8341F);color:#FFFFFF;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px" style-hover="filter:brightness(1.06)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.4 1.8.7 2.7a2 2 0 01-.5 2.1L8 9.8a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.7.7a2 2 0 011.7 2z"></path></svg>{{ callLabel }}</button>
+                    <span style="font-size:12px;line-height:1.45;color:#6B6860;text-align:center">Ravi’s app already reminded him at 9:20.</span>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ gNote }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;line-height:1.45;color:#6B6860">{{ gNote }}</span></sc-if>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ pPhoto }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column">
+              <div style="aspect-ratio:4/3;background:{{ pImg }}"></div>
+              <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:14px">
+                <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#2F9E62">IN OFFICE</span><span style="font-size:17px;font-weight:700;letter-spacing:-0.01em">{{ selTitle }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <div style="display:grid;grid-template-columns:118px minmax(0,1fr);gap:10px;font-size:12.5px;line-height:1.45"><span style="color:#6B6860">Taken (phone)</span><span style="font-weight:500;color:{{ pTakenCol }}">{{ pTaken }}</span></div>
+                  <div style="display:grid;grid-template-columns:118px minmax(0,1fr);gap:10px;font-size:12.5px;line-height:1.45"><span style="color:#6B6860">Received (office)</span><span style="font-weight:500;color:{{ pRecvCol }}">{{ pRecv }}</span></div>
+                  <div style="display:grid;grid-template-columns:118px minmax(0,1fr);gap:10px;font-size:12.5px;line-height:1.45"><span style="color:#6B6860">Location</span><span style="font-weight:500;color:{{ pLocCol }}">{{ pLoc }}</span></div>
+                  <div style="display:grid;grid-template-columns:118px minmax(0,1fr);gap:10px;font-size:12.5px;line-height:1.45"><span style="color:#6B6860">Label</span><span style="font-weight:500;color:{{ pLabelCol }}">{{ pLabel }}</span></div>
+                </div>
+                <sc-if value="{{ pUnconf }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:10px;background:#F7F7FF;box-shadow:inset 0 0 0 1px #DCDDFB">
+                    <span style="font-size:12.5px;line-height:1.45;color:#3D3A34"><b style="font-weight:700;color:#4338CA">✦ AI suggests “Opened up”.</b> Ravi didn’t confirm it on site. Check the photo shows the open vent flashing.</span>
+                    <button onClick="{{ confirmLabel }}" style="height:34px;border:none;border-radius:9px;background:#16150F;color:#FFFFFF;font-size:13px;font-weight:600" style-hover="background:#2E2C27">Confirm “Opened up”</button>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ pConfirmed }}" hint-placeholder-val="{{ false }}"><span style="font-size:12.5px;color:#2F9E62;font-weight:600">{{ pConfirmed }}</span></sc-if>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+  </div>
+  <sc-if value="{{ shOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;background:rgba(16,15,12,0.32)">
+    <div style="width:720px;max-height:700px;background:#FFFFFF;border-radius:16px;box-shadow:0 24px 60px -12px rgba(16,15,12,0.35);display:flex;flex-direction:column;overflow:hidden">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:20px 24px 16px;border-bottom:1px solid #ECEEF1">
+        <div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:18px;font-weight:700;letter-spacing:-0.01em">Share with Lena Marsh</span><span style="font-size:12.5px;color:#6B6860">14 Maple Dr · #388 · Gutter seam · fixed 3 Oct</span></div>
+        <button onClick="{{ closeShare }}" style="width:32px;height:32px;border:none;border-radius:8px;background:none;display:flex;align-items:center;justify-content:center" style-hover="background:#F1F2F4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A4842" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+      </div>
+      <div style="display:grid;grid-template-columns:260px minmax(0,1fr);min-height:0;flex:1">
+        <div style="padding:18px 20px 20px 24px;border-right:1px solid #ECEEF1;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;font-weight:700;color:#4A4842">What to send</span>
+            <button onClick="{{ pickSet }}" style="text-align:left;padding:10px 12px;border:none;border-radius:10px;background:#FFFFFF;box-shadow:{{ setRing }};display:flex;flex-direction:column;gap:2px;color:#16150F"><span style="font-size:13.5px;font-weight:600">Before, opened up, fixed</span><span style="font-size:12px;color:#6B6860">Shows what was there and what was done</span></button>
+            <button onClick="{{ pickOne }}" style="text-align:left;padding:10px 12px;border:none;border-radius:10px;background:#FFFFFF;box-shadow:{{ oneRing }};display:flex;flex-direction:column;gap:2px;color:#16150F"><span style="font-size:13.5px;font-weight:600">Only this photo</span><span style="font-size:12px;color:#6B6860">{{ oneSub }}</span></button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:700;color:#4A4842">To</span><input value="{{ shTo }}" onChange="{{ onTo }}" style="height:38px;border:none;border-radius:9px;box-shadow:inset 0 0 0 1px {{ toRing }};padding:0 12px;font-family:'Manrope',sans-serif;font-size:13px;color:#16150F;outline:none"><sc-if value="{{ toBad }}" hint-placeholder-val="{{ false }}"><span style="font-size:11.5px;color:#B42318">Enter a valid email.</span></sc-if></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:700;color:#4A4842">Note</span><textarea value="{{ shNote }}" onChange="{{ onNote }}" style="min-height:92px;border:none;border-radius:9px;box-shadow:inset 0 0 0 1px #E4E6EA;padding:9px 12px;font-family:'Manrope',sans-serif;font-size:13px;line-height:1.45;color:#16150F;resize:none;outline:none"></textarea></div>
+          <div style="padding:10px 12px;border-radius:10px;background:#F7F7FF;box-shadow:inset 0 0 0 1px #DCDDFB;font-size:12px;line-height:1.45;color:#3D3A34"><b style="font-weight:700;color:#4338CA">✦ Checked</b> Before and Fixed show the same gutter section, taken 1 m apart. You decide what to send.</div>
+        </div>
+        <div style="padding:18px 24px 20px;background:#F5F6F8;display:flex;flex-direction:column;gap:10px;overflow:auto">
+          <span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6B6860">WHAT LENA SEES</span>
+          <div style="background:#FFFFFF;border-radius:12px;box-shadow:0 0 0 1px #E4E6EA;padding:16px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:700">Your gutter at 14 Maple Dr</span><span style="font-size:12px;color:#6B6860">Repaired 3 Oct by Halden Roofing</span></div>
+            <div style="display:grid;grid-template-columns:repeat({{ pvCols }},minmax(0,1fr));gap:8px">
+              <sc-for list="{{ pv }}" as="p" hint-placeholder-count="3">
+                <div style="display:flex;flex-direction:column;gap:4px"><span style="height:78px;border-radius:8px;background:{{ p.bg }}"></span><span style="font-size:12px;font-weight:600">{{ p.st }}</span><span style="font-size:11px;line-height:1.35;color:#6B6860">{{ p.meta }}</span></div>
+              </sc-for>
+            </div>
+            <span style="font-size:11.5px;line-height:1.45;color:#6B6860">Times are from the crew’s phone and the office server. Location is where each photo was taken.</span>
+          </div>
+          <span style="font-size:11.5px;color:#8A877F">Link expires 24 Nov. You’ll see when it’s opened.</span>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;align-items:center;gap:10px;padding:14px 24px;border-top:1px solid #ECEEF1">
+        <sc-if value="{{ shFailed }}" hint-placeholder-val="{{ false }}"><span style="flex:1;font-size:12.5px;color:#B42318">Not sent. Check the connection and try again.</span></sc-if>
+        <button onClick="{{ closeShare }}" style="height:36px;padding:0 14px;border:none;border-radius:9px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #DEDBD4;font-size:13px;font-weight:600;color:#16150F" style-hover="background:#F7F6F3">Cancel</button>
+        <button onClick="{{ sendShare }}" style="height:36px;padding:0 16px;border:none;border-radius:9px;background:linear-gradient(180deg,#CF4433,#B8341F);color:#FFFFFF;font-size:13px;font-weight:600" style-hover="filter:brightness(1.06)">{{ sendLabel }}</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ notif }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;top:72px;right:24px;z-index:15;width:372px;background:#16150F;color:#FFFFFF;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;box-shadow:0 18px 40px -10px rgba(16,15,12,0.5)">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:0.08em;color:{{ nKickCol }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ nDot }}"></span>{{ nKicker }}</span><button onClick="{{ dismiss }}" style="width:24px;height:24px;border:none;border-radius:6px;background:none;display:flex;align-items:center;justify-content:center" style-hover="background:rgba(255,255,255,0.1)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8A877F" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+    <span style="font-size:14.5px;font-weight:700;line-height:1.3">{{ nTitle }}</span>
+    <span style="font-size:12.5px;line-height:1.45;color:#CFCBC2">{{ nBody }}</span>
+    <div style="display:flex;gap:8px;padding-top:6px">
+      <sc-if value="{{ nCall }}" hint-placeholder-val="{{ false }}"><button onClick="{{ nCallGo }}" style="height:32px;padding:0 14px;border:none;border-radius:9px;background:linear-gradient(180deg,#CF4433,#B8341F);color:#FFFFFF;font-size:13px;font-weight:600" style-hover="filter:brightness(1.08)">Call Ravi</button></sc-if>
+      <button onClick="{{ nOpen }}" style="height:32px;padding:0 12px;border:none;border-radius:9px;background:rgba(255,255,255,0.1);color:#FFFFFF;font-size:13px;font-weight:600" style-hover="background:rgba(255,255,255,0.16)">Open job</button>
+    </div>
+  </div>
+  </sc-if>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const IMG = n => "url('assets/est-" + n + ".png') center/cover #E9E7E2";
+const T = (id, name, t, r, loc, img, st) => ({ id, name, t, r, loc, img, st: st || 'office' });
+const PAST = [
+  { id: '388', cust: 'Lena Marsh', addr: '14 Maple Dr', month: 'oct', date: '3 Oct', work: 'Gutter repair', crew: 'Ravi', tag: 'Claim accepted', spots: [
+    { label: 'A · GUTTER SEAM', words: 'gutter seam', ph: [T('m1', 'Before', '10:12', '10:14', 18, 'gutter'), T('m2', 'Opened up', '10:41', '10:44', 21, 'flashing'), T('m3', 'Fixed', '11:20', '11:23', 19, 'gutter')] },
+    { label: 'B · PIPE BOOT', words: 'pipe boot vent', ph: [T('m4', 'Before', '10:15', '10:17', 24, 'pipe-boot'), { id: 'm5', name: 'Opened up', st: 'reason', reason: '“Boot swapped from above; deck not opened.” Ravi, 10:52' }, T('m6', 'Fixed', '11:02', '13:40', null, 'pipe-boot')] }] },
+  { id: '362', cust: 'Lena Ortiz', addr: '9 Elm Ct', month: 'sep', date: '12 Sep', work: 'Slope repair', crew: 'Marco', tag: 'Claim accepted', spots: [
+    { label: 'A · NORTH SLOPE', words: 'north slope decking', ph: [T('e1', 'Before', '8:40', '8:41', 12, 'north'), T('e2', 'Opened up', '9:30', '9:32', 15, 'attic'), T('e3', 'Fixed', '12:05', '12:06', 11, 'north')] }] },
+  { id: '401', cust: 'Paul Grant', addr: '6 Ash Rd', month: 'oct', date: '22 Oct', work: 'Pipe boot repair', crew: 'Marco', tag: 'Claim sent', spots: [
+    { label: 'A · PIPE BOOT', words: 'pipe boot vent', ph: [T('g1', 'Before', '9:05', '9:06', 16, 'pipe-boot'), T('g2', 'Opened up', '9:40', '9:41', 18, 'attic'), T('g3', 'Fixed', '10:30', '10:31', 15, 'pipe-boot')] }] },
+  { id: '421', cust: 'Ruth Okafor', addr: '18 Oak St', month: 'oct', date: 'Today', work: 'Leak repair', crew: 'Ravi', tag: 'On site now', spots: [
+    { label: 'A · VENT PIPE LEAK', words: 'vent pipe leak boot', ph: [T('A1', 'Before', '8:35', '8:36', 21, 'pipe-boot'), T('A2', 'Opened up', '8:50', '8:51', 20, 'flashing'), { id: 'A3', name: 'Fixed', st: 'phone' }] },
+    { label: 'B · SOFT DECKING', words: 'soft decking deck', ph: [T('B1', 'Before', '8:40', '8:41', 26, 'ceiling'), { id: 'B2', name: 'Opened up', st: 'live' }, { id: 'B3', name: 'Fixed', st: 'later' }] }] }
+];
+const MONTHS = { jan: 'January', feb: 'February', mar: 'March', apr: 'April', may: 'May', jun: 'June', jul: 'July', aug: 'August', sep: 'September', oct: 'October', nov: 'November', dec: 'December' };
+function parseQ(q) {
+  const words = q.toLowerCase().split(/\s+/).filter(Boolean); const out = { names: [], spot: [], month: null };
+  words.forEach(w => {
+    const m = Object.keys(MONTHS).find(k => w.startsWith(k)); if (m) { out.month = m; return; }
+    if (PAST.some(j => [j.id, j.cust, j.addr].join(' ').toLowerCase().includes(w))) { out.names.push(w); return; }
+    if (PAST.some(j => j.spots.some(sp => sp.words.includes(w)))) { out.spot.push(w); return; }
+    out.names.push(w);
+  });
+  return out;
+}
+class Component extends DCLogic {
+  state = { scr: 'home', sel: null, b2: 'missing', calling: false, labelOk: null, q: '', searched: '', rsel: null, showAll: null, sh: null, notif: 'gap' };
+  componentWillUnmount() { clearTimeout(this.t1); clearTimeout(this.t2); clearTimeout(this.t3); }
+  scrollTo(id) {
+    if (!id) return;
+    setTimeout(() => {
+      const el = document.querySelector('[data-tile="' + id + '"]'), box = document.querySelector('[data-jobbody]');
+      if (el && box) box.scrollTop = Math.max(0, el.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop - 160);
+    }, 80);
+  }
+  groups(b2) {
+    const b2it = b2 === 'phone' || b2 === 'office' ? T('B2', 'Opened up', '9:31', '9:33', 25, 'attic', b2) : { id: 'B2', name: 'Opened up', st: b2 };
+    return [
+      { label: 'PROPERTY BEFORE', sub: 'closed at setup 8:12', items: [T('p1', 'Front', '8:06', '8:07', 14, 'north'), T('p2', 'Back', '8:08', '8:09', 16, 'ceiling'), T('p3', 'Gutters', '8:09', '8:10', 12, 'gutter'), T('p4', 'Ground below', '8:10', '8:11', 13, 'flashing')] },
+      { label: 'ROOF BEFORE', sub: 'closed at tear-off 8:28', items: [T('r1', 'North slope', '8:20', '8:21', 22, 'north'), T('r2', 'South slope', '8:22', '8:23', 24, 'attic')] },
+      { label: 'A · VENT PIPE LEAK', sub: 'opened 8:45 · covered 9:15', items: [T('A1', 'Before', '8:35', '8:36', 21, 'pipe-boot'), T('A2', 'Opened up', '8:50', '8:51', 20, 'flashing'), T('A3', 'Fixed', '9:20', null, null, 'pipe-boot', 'phone')] },
+      { label: 'B · SOFT DECKING', sub: b2 === 'reason' ? 'opened 9:12 · covered 9:33' : 'opened 9:12 · still open', items: [T('B1', 'Before', '8:40', '8:41', 26, 'ceiling'), b2it, { id: 'B3', name: 'Fixed', st: 'later' }] },
+      { label: 'ROOF AFTER', sub: 'after the repair', items: [{ id: 'a1', name: 'North slope', st: 'later' }, { id: 'a2', name: 'South slope', st: 'later' }] },
+      { label: 'CLEAN UP', sub: 'before check-out', items: [{ id: 'c1', name: 'Gutters after', st: 'later' }, { id: 'c2', name: 'Ground below after', st: 'later' }, { id: 'c3', name: 'Debris cleared', st: 'later' }] }
+    ];
+  }
+  take() { if (this.state.b2 !== 'missing') return; clearTimeout(this.t1); clearTimeout(this.t3); this.setState({ b2: 'phone', calling: false, notif: 'taken', sel: this.state.scr === 'job' ? 'B2' : this.state.sel }); this.t3 = setTimeout(() => this.setState(st => st.notif === 'taken' ? { notif: null } : null), 6000); this.t1 = setTimeout(() => this.setState({ b2: 'office' }), 2500); }
+  cover() { if (this.state.b2 !== 'missing') return; clearTimeout(this.t3); this.setState({ b2: 'reason', calling: false, notif: 'covered', sel: this.state.scr === 'job' ? 'B2' : this.state.sel }); this.t3 = setTimeout(() => this.setState(st => st.notif === 'covered' ? { notif: null } : null), 6000); }
+  renderVals() {
+    const s = this.state, gs = this.groups(s.b2);
+    const n = { office: 0, phone: 0, missing: 0, reason: 0, later: 0 };
+    gs.forEach(g => g.items.forEach(it => n[it.st]++));
+    const sel = s.sel || (s.b2 === 'missing' ? 'B2' : null);
+    const CH = {
+      office: ['In office', '#E8F5EE', '#1F7A4A'], phone: ['On phone', '#FEF4E6', '#B54708'],
+      missing: ['Spot open', '#FDECEA', '#B42318'], reason: ['Missing · reason', '#F1EFEB', '#4A4842'], later: ['Later', '#F5F6F8', '#8A877F']
+    };
+    const groups = gs.map(g => ({ label: g.label, sub: g.sub, tiles: g.items.map(it => {
+      const on = it.id === sel, c = CH[it.st], photo = it.st === 'office' || it.st === 'phone';
+      let chip = c[0];
+      if (it.st === 'office') chip = it.t + (it.loc == null ? ' · No GPS' : ' · ' + it.loc + ' m');
+      if (it.id === 'A2' && !s.labelOk) chip = '✦ Confirm label';
+      return { id: it.id, name: it.name, chip, chipBg: it.id === 'A2' && !s.labelOk ? '#EEF0FF' : c[1], chipFg: it.id === 'A2' && !s.labelOk ? '#4338CA' : c[2],
+        bg: photo ? IMG(it.img) : it.st === 'missing' ? '#FEF6F5' : '#F5F6F8', empty: photo ? '' : it.st === 'later' ? 'Not yet' : 'Not taken', emptyCol: it.st === 'missing' ? '#B42318' : '#A19E96',
+        ring: on ? '0 0 0 2px #16150F' : it.st === 'missing' ? '0 0 0 1.5px #E5604E' : it.st === 'later' ? 'inset 0 0 0 1px #E4E6EA' : '0 0 0 1px #E4E6EA,0 1px 2px rgba(16,15,12,0.04)',
+        pick: () => this.setState({ sel: it.id }) };
+    }) }));
+    let f = null; gs.forEach(g => g.items.forEach(it => { if (it.id === sel) f = { g, it }; }));
+    const it = f && f.it;
+    const tc = l => l.toLowerCase().replace(/(^|· )([a-z])/g, (m, a, b) => a + b.toUpperCase()).replace(/\b(a|b)\b/g, c => c.toUpperCase());
+    const selTitle = f ? tc(f.g.label) + ' · ' + it.name : '';
+    const lastHeard = s.b2 === 'missing' ? '9:29' : s.b2 === 'reason' ? '9:33' : '9:31';
+    const isPhoto = it && it.st === 'office';
+    const G = {
+      missing: { gLabel: 'NOW', gHint: 'photo can still be taken', gDot: '#D92D20', gLabelCol: '#B42318', gHeadBg: '#FEF6F5', gHeadLine: '#F8DCD7', gBody: 'Once new boards go on, the soft decking can’t be photographed. This is the only proof of how much was replaced.', gRows: [{ k: 'Spot opened', v: '9:12 by Ravi' }, { k: 'Covered', v: 'Not yet' }, { k: 'Last heard', v: '9:29 from Ravi’s phone' }], gCall: true },
+      phone: { gLabel: 'ON PHONE', gHint: 'safe, uploading', gDot: '#F0A43A', gLabelCol: '#B54708', gHeadBg: '#FFFAF2', gHeadLine: '#FBE7C8', gBody: 'Ravi took it. It’s saved on his phone and will reach the office when it has signal.', gRows: [{ k: 'Taken (phone)', v: '9:31' }, { k: 'Received (office)', v: 'Not yet' }], gHasImg: true },
+      reason: { gLabel: 'MISSING · REASON', gHint: 'spot already covered', gDot: '#A19E96', gLabelCol: '#4A4842', gHeadBg: '#FAFBFC', gHeadLine: '#ECEEF1', gBody: 'The decking was covered before the photo. Ravi gave this reason:', gQuote: '“Rain started, boards went on fast. Soft area was about 1 m², replaced 4 sheets.” Ravi, 9:33', gRows: [{ k: 'Spot opened', v: '9:12' }, { k: 'Covered', v: '9:33' }], gNote: 'Can’t be retaken. Priya’s claim package shows it as missing with this reason.' },
+      later: { gLabel: 'LATER', gHint: 'not due yet', gDot: '#D4D1CA', gLabelCol: '#6B6860', gHeadBg: '#FAFBFC', gHeadLine: '#ECEEF1', gBody: 'The crew takes this after the repair. Nothing to do now.', gRows: [] }
+    };
+    const phoneA3 = { gLabel: 'ON PHONE', gHint: 'safe, not sent yet', gDot: '#F0A43A', gLabelCol: '#B54708', gHeadBg: '#FFFAF2', gHeadLine: '#FBE7C8', gBody: 'Taken on Ravi’s phone. It reaches the office when the phone has signal; you get an alert if it’s still there 4 h after check-out.', gRows: [{ k: 'Taken (phone)', v: '9:20' }, { k: 'Received (office)', v: 'Not yet' }], gHasImg: true };
+    let gv = {};
+    if (it && !isPhoto) gv = it.id === 'A3' ? phoneA3 : G[it.st];
+    const counts = [
+      { label: n.office + ' in office', bg: '#E8F5EE', fg: '#1F7A4A', ring: 'none' },
+      ...(n.phone ? [{ label: n.phone + ' on phone', bg: '#FEF4E6', fg: '#B54708', ring: 'none' }] : []),
+      ...(n.missing ? [{ label: n.missing + ' spot open', bg: '#FDECEA', fg: '#B42318', ring: 'none' }] : []),
+      ...(n.reason ? [{ label: n.reason + ' missing · reason', bg: '#F1EFEB', fg: '#4A4842', ring: 'none' }] : []),
+      { label: n.later + ' later · 17 required', bg: '#FFFFFF', fg: '#6B6860', ring: 'inset 0 0 0 1px #E4E6EA' }
+    ];
+    const ms = [
+      { label: 'Setup', time: '8:12', dot: '#2F9E62' }, { label: 'Tear-off', time: '8:28', dot: '#2F9E62' },
+      { label: 'A opened', time: '8:45', dot: '#2F9E62' }, { label: 'A covered', time: '9:15', dot: '#2F9E62' },
+      s.b2 === 'reason' ? { label: 'B covered', time: '9:33', dot: '#2F9E62' } : { label: 'B opened, not covered', time: '9:12', dot: s.b2 === 'missing' ? '#D92D20' : '#F0A43A', fw: '600', col: s.b2 === 'missing' ? '#B42318' : '#16150F' }
+    ].map(m => ({ fw: '500', col: '#3D3A34', ...m }));
+    // home numbers
+    const ravi = { office: n.office, phone: n.phone };
+    const recv = ravi.office + 6 + 11, phone = ravi.phone + 3, taken = recv + phone, C = 2 * Math.PI * 42;
+    const g = C * recv / taken, a = C * phone / taken;
+    const open = (s.b2 === 'missing' ? 1 : 0) + (s.labelOk ? 0 : 1);
+    const jobs = [
+      { addr: '18 Oak St', thumb: 'assets/est-north.png', office: n.office, phone: n.phone, total: 17, risk: s.b2 === 'missing', key: '421' },
+      { addr: '7 Birch Ln', thumb: 'assets/est-gutter.png', office: 6, phone: 0, total: 12 },
+      { addr: '31 Cedar Rd', thumb: 'assets/est-flashing.png', office: 11, phone: 3, total: 22 }
+    ];
+    // search
+    const P = s.searched ? parseQ(s.searched) : null;
+    const byName = P ? PAST.filter(j => !P.names.length || P.names.every(w => [j.id, j.cust, j.addr].join(' ').toLowerCase().includes(w))) : [];
+    const fits = j => (!P.month || j.month === P.month) && (!P.spot.length || j.spots.some(sp => P.spot.some(w => sp.words.includes(w))));
+    const extra = s.showAll || [];
+    const byAll = P ? byName.filter(j => fits(j) || extra.includes(j.id)) : [];
+    const others = P ? byName.filter(j => !byAll.includes(j)) : [];
+    let rf = null;
+    const results = byAll.map(j => ({ title: j.addr + ' · ' + j.cust, sub: '#' + j.id + ' · ' + j.work + ' · ' + j.crew + ' · ' + j.date, tag: j.tag, tagBg: j.id === '421' ? '#FDECEA' : j.tag === 'Claim accepted' ? '#E8F5EE' : '#F1EFEB', tagFg: j.id === '421' ? '#B42318' : j.tag === 'Claim accepted' ? '#1F7A4A' : '#4A4842',
+      spots: j.spots.filter(sp => extra.includes(j.id) || !P.spot.length || P.spot.some(w => sp.words.includes(w))).map(sp => ({ label: sp.label, ph: sp.ph.map(p => {
+        if (p.id === s.rsel) rf = { j, sp, p };
+        const photo = p.st === 'office', on = p.id === s.rsel;
+        const meta = photo ? (p.loc == null ? 'No GPS' : p.t) : p.st === 'reason' ? 'Reason given' : p.st === 'phone' ? 'On phone' : p.st === 'live' ? 'Spot open' : 'Later';
+        return { st: p.name, bg: photo ? IMG(p.img) : '#F5F6F8', empty: photo ? '' : 'No photo', reason: p.st === 'reason' ? 'Crew gave a reason' : p.st === 'live' ? 'Job in progress' : p.st === 'phone' ? 'Not in office yet' : p.st === 'later' ? 'Not due yet' : '',
+          meta, metaCol: photo && p.loc == null ? '#B42318' : p.st === 'live' ? '#B42318' : '#6B6860',
+          ring: on ? '0 0 0 2px #16150F' : photo ? '0 0 0 1px #E4E6EA,0 1px 2px rgba(16,15,12,0.04)' : 'inset 0 0 0 1.5px #E4E6EA',
+          pick: () => this.setState({ rsel: p.id }) };
+      }) })) }));
+    const parse = P ? [...(P.names.length ? [{ k: 'Customer or address', v: P.names.join(' ') }] : []), ...(P.spot.length ? [{ k: 'Spot', v: P.spot.join(' ') }] : []), ...(P.month ? [{ k: 'Date', v: MONTHS[P.month] }] : [])] : [];
+    const rp = rf && rf.p, rPh = rp && rp.st === 'office';
+    const rv = rf ? {
+      rTitle: tc(rf.sp.label) + ' · ' + rp.name, rKicker: rf.j.addr.toUpperCase() + ' · ' + rf.j.date.toUpperCase(), rImg: rPh ? IMG(rp.img) : '', rReason: rp.reason || '',
+      rRows: rPh ? [{ k: 'Taken (phone)', v: rf.j.date + ' · ' + rp.t, col: '#16150F' }, { k: 'Received (office)', v: rf.j.date + ' · ' + rp.r, col: '#16150F' }, { k: 'Location', v: rp.loc == null ? 'No GPS on this photo' : rp.loc + ' m from ' + rf.j.addr, col: rp.loc == null ? '#B42318' : '#16150F' }, { k: 'Label', v: 'AI suggested · ' + rf.j.crew + ' confirmed ' + rp.t, col: '#16150F' }] : []
+    } : { rRows: [] };
+    const goJob = sel => () => { this.setState({ scr: 'job', sel: sel || null, from: 'home' }); this.scrollTo(sel || (s.b2 === 'missing' ? 'B2' : null)); };
+    return {
+      isHome: s.scr === 'home', isJob: s.scr === 'job', isSearch: s.scr === 'search', isJobs: s.scr === 'jobs', showBack: s.scr === 'job' || s.scr === 'search', pageTitle: { home: 'Home', search: 'Search', jobs: 'Jobs', job: '18 Oak St' }[s.scr],
+      goJobs: () => this.setState({ scr: 'jobs', sel: null, q: '' }),
+      ...(() => {
+        const N = { gap: ['ALERT · 9:30 · 18 OAK ST', '#F07A6A', '#E5604E', 'Soft decking · Opened up photo not taken', 'Spot still open. Ravi’s app reminded him at 9:20; no photo yet.', true],
+          taken: ['UPDATE · 9:31 · 18 OAK ST', '#7FD3A2', '#3FB273', 'Soft decking · Opened up taken 9:31', 'Ravi took it. It reaches the office when his phone has signal.', false],
+          covered: ['UPDATE · 9:33 · 18 OAK ST', '#CFCBC2', '#A19E96', 'Soft decking covered without the photo', 'Ravi gave a reason. It goes to Priya’s claim as missing with that reason.', false] }[s.notif];
+        if (!N) return { notif: false };
+        return { notif: true, nKicker: N[0], nKickCol: N[1], nDot: N[2], nTitle: N[3], nBody: N[4], nCall: N[5],
+          dismiss: () => this.setState({ notif: null }),
+          nCallGo: () => { this.setState({ notif: null, calling: true, scr: 'job', sel: 'B2', from: 'home' }); this.scrollTo('B2'); },
+          nOpen: () => { this.setState({ notif: null, scr: 'job', sel: 'B2', from: 'home' }); this.scrollTo('B2'); } };
+      })(),
+      homeSent: s.sh && s.sh.sent && s.sh.job === '388' ? (s.sh.what === 'set' ? 'Gutter seam set' : 'Gutter seam photo') + ' · today 9:31' : '',
+      jobsNavBg: s.scr === 'jobs' ? 'rgba(255,255,255,0.08)' : 'transparent', jobsNavCol: s.scr === 'jobs' ? '#FFFFFF' : '#CFCBC2', jobsNavFw: s.scr === 'jobs' ? '600' : '500', jobsNavIc: s.scr === 'jobs' ? '#E5604E' : '#8A877F',
+      jobGroups: (() => {
+        const R = (o, last) => ({ hover: o.go ? '#F9FAFB' : '#FFFFFF', cursor: o.go ? 'pointer' : 'default', chev: o.go ? '1' : '0', go: o.go || (() => {}), line: last ? 'none' : '1px solid #F0F1F4', g: (o.office / o.total * 100).toFixed(1) + '%', a: (o.phone / o.total * 100).toFixed(1) + '%', count: o.office + ' of ' + o.total + ' in office' + (o.phone ? ' · ' + o.phone + ' on phone' : '') + (o.miss ? ' · ' + o.miss : ''), ...o });
+        const openPast = id => () => this.setState({ scr: 'search', q: '#' + id, searched: id, rsel: null, showAll: null, from: 'jobs' });
+        const live = [
+          { title: '18 Oak St · Ruth Okafor', sub: '#421 · Leak repair · since 8:04', thumb: 'assets/est-north.png', crew: 'Ravi', office: n.office, phone: n.phone, total: 17, miss: s.b2 === 'missing' ? '1 spot open' : s.b2 === 'reason' ? '1 reason' : '', tag: s.b2 === 'missing' ? '1 photo at risk' : 'On site', tagBg: s.b2 === 'missing' ? '#FDECEA' : '#F1EFEB', tagFg: s.b2 === 'missing' ? '#B42318' : '#4A4842', go: () => { this.setState({ scr: 'job', sel: null, from: 'jobs' }); this.scrollTo(s.b2 === 'missing' ? 'B2' : null); } },
+          { title: '7 Birch Ln · Ana Ruiz', sub: '#423 · Gutter repair · since 8:30', thumb: 'assets/est-gutter.png', crew: 'Marco', office: 6, phone: 0, total: 12, tag: 'On site', tagBg: '#F1EFEB', tagFg: '#4A4842' },
+          { title: '31 Cedar Rd · Tom Weller', sub: '#424 · Re-roof · since 7:45', thumb: 'assets/est-flashing.png', crew: 'Dana', office: 11, phone: 3, total: 22, tag: 'On site', tagBg: '#F1EFEB', tagFg: '#4A4842' }
+        ];
+        const past = [
+          { title: '6 Ash Rd · Paul Grant', sub: '#401 · Pipe boot repair · 22 Oct', thumb: 'assets/est-pipe-boot.png', crew: 'Marco', office: 9, phone: 0, total: 9, tag: 'Claim sent', tagBg: '#F1EFEB', tagFg: '#4A4842', go: openPast('401') },
+          { title: '14 Maple Dr · Lena Marsh', sub: '#388 · Gutter repair · 3 Oct', thumb: 'assets/est-gutter.png', crew: 'Ravi', office: 8, phone: 0, total: 9, miss: '1 reason', tag: 'Claim accepted', tagBg: '#E8F5EE', tagFg: '#1F7A4A', go: openPast('388') },
+          { title: '9 Elm Ct · Lena Ortiz', sub: '#362 · Slope repair · 12 Sep', thumb: 'assets/est-north.png', crew: 'Marco', office: 5, phone: 0, total: 5, tag: 'Claim accepted', tagBg: '#E8F5EE', tagFg: '#1F7A4A', go: openPast('362') }
+        ];
+        return [{ label: 'ON SITE NOW', rows: live.map((o, i) => R(o, i === live.length - 1)) }, { label: 'EARLIER', rows: past.map((o, i) => R(o, i === past.length - 1)) }];
+      })(),
+      q: s.q, onQ: e => this.setState({ q: e.target.value }), onKey: e => { if (e.key === 'Enter' && s.q.trim()) this.setState({ scr: 'search', searched: s.q.trim(), rsel: null, showAll: null, from: s.scr === 'search' ? s.from : (s.scr === 'jobs' ? 'jobs' : 'home') }); },
+      goBack: () => this.setState({ scr: s.from === 'jobs' ? 'jobs' : 'home', sel: null, q: '' }), backLabel: s.from === 'jobs' ? 'Jobs' : 'Home',
+      resTitle: P ? (byAll.length ? byAll.length + (byAll.length === 1 ? ' job' : ' jobs') + ' for “' + s.searched + '”' : 'Nothing for “' + s.searched + '”') : '',
+      hasParse: parse.length > 0, parse, results, noResults: !!P && !byAll.length && !others.length,
+      hasOthers: others.length > 0, othersTitle: 'Same customer name, didn’t match the spot or date:',
+      others: others.map(j => ({ title: j.addr + ' · ' + j.cust + ' · ' + j.date + ' · ' + j.spots.map(sp => tc(sp.label).replace(/^[AB] · /, '')).join(', '), go: () => this.setState({ showAll: [...extra, j.id] }) })),
+      rNone: !rf, rPhoto: !!rPh, rMissing: !!(rp && rp.st === 'reason'), ...rv,
+      shareBtn: (s.sh && s.sh.sent && rf && s.sh.job === rf.j.id ? 'Share again' : 'Share with ' + (rf ? rf.j.cust.split(' ')[0] : 'customer')),
+      shBtnBg: s.sh && s.sh.sent && rf && s.sh.job === rf.j.id ? '#FFFFFF' : 'linear-gradient(180deg,#CF4433,#B8341F)', shBtnFg: s.sh && s.sh.sent && rf && s.sh.job === rf.j.id ? '#16150F' : '#FFFFFF', shBtnRing: s.sh && s.sh.sent && rf && s.sh.job === rf.j.id ? 'inset 0 0 0 1px #DEDBD4' : 'none',
+      sentMsg: s.sh && s.sh.sent && rf && s.sh.job === rf.j.id ? s.sh.sent : '',
+      openShare: () => this.setState({ sh: { open: true, what: 'set', to: rf.j.id === '388' ? 'lena.marsh@mail.com' : rf.j.id === '362' ? 'lena.ortiz@mail.com' : '', note: 'Hi ' + rf.j.cust.split(' ')[0] + ', here are the photos from the repair on ' + rf.j.date + ', with when and where each was taken.', job: rf.j.id, sending: false, failed: false, tries: 0 } }),
+      ...(() => {
+        const sh = s.sh; if (!sh || !sh.open || !rf) return { shOpen: false, pv: [] };
+        const set = sh.what === 'set', spot = rf.sp;
+        const items = set ? spot.ph : [rp];
+        const ok = /.+@.+\..+/.test(sh.to);
+        const up = p => this.setState(st => ({ sh: { ...st.sh, ...p } }));
+        return {
+          shOpen: true, setRing: set ? '0 0 0 2px #16150F' : 'inset 0 0 0 1px #E4E6EA', oneRing: set ? 'inset 0 0 0 1px #E4E6EA' : '0 0 0 2px #16150F', oneSub: rp.name + ' · ' + rp.t,
+          shTo: sh.to, onTo: e => up({ to: e.target.value, failed: false }), toBad: !ok, toRing: ok ? '#E4E6EA' : '#E5604E',
+          shNote: sh.note, onNote: e => up({ note: e.target.value }),
+          pickSet: () => up({ what: 'set' }), pickOne: () => up({ what: 'one' }),
+          pvCols: String(items.length), pv: items.map(p => p.st === 'office' ? { st: p.name, bg: IMG(p.img), meta: rf.j.date + ' · ' + p.t + ' · ' + (p.loc == null ? 'no GPS' : p.loc + ' m away') } : { st: p.name, bg: '#F5F6F8', meta: 'No photo · crew gave a reason' }),
+          shFailed: sh.failed, sendLabel: sh.sending ? 'Sending…' : sh.failed ? 'Try again' : 'Send link',
+          closeShare: () => up({ open: false }),
+          sendShare: () => {
+            if (sh.sending || !ok) return;
+            up({ sending: true, failed: false });
+            clearTimeout(this.t2);
+            this.t2 = setTimeout(() => {
+              const cur = this.state.sh;
+              if (cur.tries === 0) this.setState({ sh: { ...cur, sending: false, failed: true, tries: 1 } });
+              else this.setState({ sh: { ...cur, sending: false, open: false, sent: 'Sent to ' + cur.to + ' · 9:31 · ' + (cur.what === 'set' ? '3 photos' : '1 photo') + ' · expires 24 Nov' } });
+            }, 1100);
+          }
+        };
+      })(),
+      goHome: () => this.setState({ scr: 'home', sel: null, q: '' }),
+      homeNavBg: s.scr === 'home' ? 'rgba(255,255,255,0.08)' : 'transparent', homeNavSh: s.scr === 'home' ? 'inset 0 0 0 1px rgba(255,255,255,0.06)' : 'none',
+      openCount: String(open), needText: open === 1 ? '1 thing needs you' : open + ' things need you', now: lastHeard,
+      gapOpen: s.b2 === 'missing', openGap: goJob('B2'),
+      labelOpen: !s.labelOk, openLabel: goJob('A2'), labelLine: 'none', whenEmpty: !!s.labelOk,
+      call: e => { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ calling: true }); },
+      callLabel: s.calling ? 'Calling Ravi…' : 'Call Ravi',
+      recv: String(recv), onPhone: String(phone), taken: String(taken), recvPct: Math.round(recv / taken * 100) + '%',
+      gDash: g.toFixed(1) + ' ' + C.toFixed(1), aDash: a.toFixed(1) + ' ' + C.toFixed(1), aOff: (-g).toFixed(1),
+      todayJobs: jobs.map((j, i) => ({ addr: j.addr, thumb: j.thumb, dot: j.risk ? '#E5604E' : j.phone ? '#F0A43A' : '#3FB273',
+        status: j.risk ? '1 photo at risk · ' + j.office + '/' + j.total : 'In progress · ' + j.office + '/' + j.total, statusCol: j.risk ? '#B42318' : '#6B6860',
+        g: (j.office / j.total * 100).toFixed(1) + '%', a: (j.phone / j.total * 100).toFixed(1) + '%', line: i === jobs.length - 1 ? 'none' : '1px solid #F1EFEB',
+        go: j.key ? goJob(null) : () => {}, cursor: j.key ? 'pointer' : 'default',
+        navCol: j.key && s.scr === 'job' ? '#FFFFFF' : '#CFCBC2', navBg: j.key && s.scr === 'job' ? 'rgba(255,255,255,0.08)' : 'transparent' })),
+      lastHeard, counts, milestones: ms, groups, selTitle,
+      pGap: !!it && !isPhoto, pPhoto: !!isPhoto, ...gv,
+      gHasImg: !!gv.gHasImg, gImg: it && it.img ? IMG(it.img) : '', gQuote: gv.gQuote || '', gCall: !!gv.gCall, gNote: gv.gNote || '', gRows: gv.gRows || [],
+      pImg: isPhoto ? IMG(it.img) : '',
+      pTaken: isPhoto ? '25 Oct · ' + it.t : '', pTakenCol: '#16150F',
+      pRecv: isPhoto ? '25 Oct · ' + it.r : '', pRecvCol: '#16150F',
+      pLoc: isPhoto ? (it.loc == null ? 'No GPS on this photo' : it.loc + ' m from 18 Oak St') : '', pLocCol: isPhoto && it.loc == null ? '#B42318' : '#16150F',
+      pLabel: isPhoto ? (it.id === 'A2' ? (s.labelOk ? 'AI suggested · confirmed by Sean ' + s.labelOk : '✦ AI suggested · not confirmed') : 'AI suggested · Ravi confirmed ' + it.t) : '', pLabelCol: isPhoto && it.id === 'A2' && !s.labelOk ? '#4338CA' : '#16150F',
+      pUnconf: !!(isPhoto && it.id === 'A2' && !s.labelOk), pConfirmed: isPhoto && it.id === 'A2' && s.labelOk ? 'Label confirmed. The record shows AI suggested it and you confirmed.' : '',
+      confirmLabel: () => this.setState({ labelOk: lastHeard }), changeLabel: () => {},
+      simSearch: () => this.setState({ q: 'Lena gutter Oct', scr: 'search', searched: 'Lena gutter Oct', rsel: null, showAll: null }), simTake: () => this.take(), simCover: () => this.cover(), simCol: s.b2 === 'missing' ? '#16150F' : '#A19E96',
+      reset: () => { clearTimeout(this.t1); this.setState({ scr: 'home', sel: null, b2: 'missing', calling: false, labelOk: null, q: '', searched: '', rsel: null, showAll: null, sh: null, notif: 'gap' }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

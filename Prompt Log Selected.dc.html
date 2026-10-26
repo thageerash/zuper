@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF;color:#1B1A17;font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#1B1A17;text-decoration:underline;text-underline-offset:2px}
+a:hover{color:#A23B1E}
+</style>
+</helmet>
+<div style="max-width:1560px;margin:0 auto;padding:24px 40px 120px;display:flex;flex-direction:column;gap:80px">
+
+<header style="background:#FBF6EC;border-radius:28px;box-shadow:none;overflow:hidden">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:20px 40px;border-bottom:1px solid #EFE6D4;background:#FFFFFF">
+    <div style="display:flex;align-items:center;gap:12px"><img src="assets/zuper-logo.png" alt="Zuper" style="width:32px;height:32px;border-radius:8px"><span style="font-size:17px;font-weight:700;letter-spacing:0.02em">ZUPER</span><span style="width:1px;height:18px;background:#E3DFD6"></span><span style="font-size:14px;color:#5E5A52">Roofing photo documentation</span></div>
+    <div style="display:flex;gap:24px;font-size:14px;font-weight:500"><a href="Journey Map.dc.html" style="color:#3D3A34;text-decoration:none">Journey map</a><a href="Problem Statement.dc.html" style="color:#3D3A34;text-decoration:none">Problem statement</a><a href="User Flows.dc.html" style="color:#3D3A34;text-decoration:none">User flows</a></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:48px;padding:56px 40px 48px">
+    <div style="display:flex;flex-direction:column;gap:24px;justify-content:center">
+      <span style="align-self:flex-start;height:30px;padding:0 12px;display:flex;align-items:center;gap:8px;border-radius:15px;background:#F3E3DC;color:#A23B1E;font-size:13px;font-weight:600"><span style="width:6px;height:6px;border-radius:50%;background:#A23B1E"></span>Process log</span>
+      <h1 style="margin:0;font-size:60px;line-height:1.02;font-weight:600;letter-spacing:-0.035em;text-wrap:balance">100 prompts that shaped the design.</h1>
+      <p style="margin:0;font-size:18px;line-height:1.55;color:#5E5A52;max-width:560px;text-wrap:pretty">How I worked with AI on this assignment: what I asked, what came back, and what I kept, changed or rejected.</p>
+      <div style="display:flex;align-items:center;gap:12px;padding-top:4px"><span style="width:40px;height:40px;border-radius:50%;background:#1B1A17;color:#FFFFFF;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center">TA</span><div style="display:flex;flex-direction:column"><span style="font-size:15px;font-weight:600">Thageer Ashraf</span><span style="font-size:13px;color:#5E5A52">Product designer · Zuper design assignment</span></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;justify-content:center;background:#FFFFFF;border-radius:20px;padding:12px 28px 8px;box-shadow:0 0 0 1px #EFE6D4">
+      <div style="display:flex;flex-direction:column;gap:4px;padding:20px 0 24px"><span style="font-size:14px;color:#5E5A52">Prompts shown</span><span style="font-size:72px;font-weight:600;letter-spacing:-0.04em;line-height:1">100</span></div>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px"><div style="display:flex;flex-direction:column;gap:4px;padding:20px 0;border-top:1px solid #EEEBE4"><div style="display:flex;align-items:center;gap:10px"><span style="width:8px;height:8px;border-radius:50%;background:#1B1A17"></span><span style="font-size:14px;color:#5E5A52">Steered</span></div><span style="font-size:40px;font-weight:600;letter-spacing:-0.03em;line-height:1.05;color:#1B1A17">10</span></div><div style="display:flex;flex-direction:column;gap:4px;padding:20px 0;border-top:1px solid #EEEBE4"><div style="display:flex;align-items:center;gap:10px"><span style="width:8px;height:8px;border-radius:50%;background:#A23B1E"></span><span style="font-size:14px;color:#5E5A52">Overruled</span></div><span style="font-size:40px;font-weight:600;letter-spacing:-0.03em;line-height:1.05;color:#1B1A17">87</span></div><div style="display:flex;flex-direction:column;gap:4px;padding:20px 0;border-top:1px solid #EEEBE4"><div style="display:flex;align-items:center;gap:10px"><span style="width:8px;height:8px;border-radius:50%;background:#2F6B4F"></span><span style="font-size:14px;color:#5E5A52">Kept</span></div><span style="font-size:40px;font-weight:600;letter-spacing:-0.03em;line-height:1.05;color:#1B1A17">0</span></div><div style="display:flex;flex-direction:column;gap:4px;padding:20px 0;border-top:1px solid #EEEBE4"><div style="display:flex;align-items:center;gap:10px"><span style="width:8px;height:8px;border-radius:50%;background:#B5B0A6"></span><span style="font-size:14px;color:#5E5A52">Discarded</span></div><span style="font-size:40px;font-weight:600;letter-spacing:-0.03em;line-height:1.05;color:#1B1A17">3</span></div></div>
+    </div>
+  </div>
+  <nav style="display:flex;justify-content:center;padding:0 40px 32px;margin-top:-8px"><div style="width:100%;max-width:880px;display:flex;flex-wrap:wrap;align-items:center;background:#FFFFFF;border-radius:40px;padding:6px 6px 6px 6px;box-shadow:0 0 0 1px #EDE5D3,0 6px 20px -8px rgba(90,70,30,0.18)"><a href="#summary" style="flex:1;min-width:120px;display:flex;flex-direction:column;gap:2px;padding:12px 22px;border-radius:32px;text-decoration:none;color:#1B1A17" style-hover="background:#F5EEDF"><span style="font-size:12px;font-weight:700">Summary</span><span style="font-size:13px;color:#6B6558">How AI was used</span></a><span style="width:1px;height:28px;background:#EDE5D3;flex-shrink:0"></span><a href="#overruled" style="flex:1;min-width:120px;display:flex;flex-direction:column;gap:2px;padding:12px 22px;border-radius:32px;text-decoration:none;color:#1B1A17" style-hover="background:#F5EEDF"><span style="font-size:12px;font-weight:700">Overruled</span><span style="font-size:13px;color:#6B6558">87 times</span></a><span style="width:1px;height:28px;background:#EDE5D3;flex-shrink:0"></span><a href="#checklist" style="flex:1;min-width:120px;display:flex;flex-direction:column;gap:2px;padding:12px 22px;border-radius:32px;text-decoration:none;color:#1B1A17" style-hover="background:#F5EEDF"><span style="font-size:12px;font-weight:700">Checklist</span><span style="font-size:13px;color:#6B6558">Deliverables</span></a><span style="width:1px;height:28px;background:#EDE5D3;flex-shrink:0"></span><a href="#decisions" style="flex:1;min-width:120px;display:flex;flex-direction:column;gap:2px;padding:12px 22px;border-radius:32px;text-decoration:none;color:#1B1A17" style-hover="background:#F5EEDF"><span style="font-size:12px;font-weight:700">Decisions</span><span style="font-size:13px;color:#6B6558">What was settled</span></a><span style="width:1px;height:28px;background:#EDE5D3;flex-shrink:0"></span><a href="#prompt-log" style="flex:1;min-width:120px;display:flex;flex-direction:column;gap:2px;padding:12px 22px;border-radius:32px;text-decoration:none;color:#1B1A17" style-hover="background:#F5EEDF"><span style="font-size:12px;font-weight:700">Prompt log</span><span style="font-size:13px;color:#6B6558">100 selected prompts</span></a><a href="#prompt-log" aria-label="Go to prompt log" style="width:48px;height:48px;border-radius:50%;background:#A23B1E;color:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:6px;text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"></path></svg></a></div></nav>
+</header>
+
+<section id="summary" style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;flex-direction:column;gap:10px;max-width:860px">
+    <span style="font-size:14px;font-weight:600;color:#A23B1E">Summary</span>
+    <h2 style="margin:0;font-size:36px;line-height:1.1;font-weight:600;letter-spacing:-0.025em;text-wrap:balance">How AI was used on this project</h2>
+    <p style="margin:0;font-size:17px;line-height:1.6;color:#484848;text-wrap:pretty">Claude was the main tool for research, flows, audits and building the mobile and web prototypes. Mobbin was used for layout references, and a second AI tool wrote the master brief and several outside reviews, which were pasted back in and audited before anything was applied. Every decision was checked against the <a href="Problem Statement.dc.html">problem statement</a>: capture, custody and proof.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:32px">
+    <div style="display:flex;flex-direction:column">
+      <h3 style="margin:0 0 12px;font-size:20px;font-weight:600;letter-spacing:-0.01em">The arc</h3>
+      <div style="display:grid;grid-template-columns: 40px 160px minmax(0,1fr);gap:16px;padding:16px 0;border-top:1px solid #EBEBEB;align-items:baseline"><span style="font-size:12px;color:#717171">01</span><span style="font-size:15px;font-weight:600">Framing</span><span style="font-size:15px;line-height:1.55;color:#484848;text-wrap:pretty">Audited the brief before designing. Reframed it as chain of custody: capture, custody, proof.</span></div>
+      <div style="display:grid;grid-template-columns: 40px 160px minmax(0,1fr);gap:16px;padding:16px 0;border-top:1px solid #EBEBEB;align-items:baseline"><span style="font-size:12px;color:#717171">02</span><span style="font-size:15px;font-weight:600">Research</span><span style="font-size:15px;line-height:1.55;color:#484848;text-wrap:pretty">Desk research on job lifecycle and the three personas, turned into a <a href="Journey Map.dc.html">journey map</a>.</span></div>
+      <div style="display:grid;grid-template-columns: 40px 160px minmax(0,1fr);gap:16px;padding:16px 0;border-top:1px solid #EBEBEB;align-items:baseline"><span style="font-size:12px;color:#717171">03</span><span style="font-size:15px;font-weight:600">Flows</span><span style="font-size:15px;line-height:1.55;color:#484848;text-wrap:pretty">Crew and office flows sharing one set of photo states, then cut back to one simple path per person.</span></div>
+      <div style="display:grid;grid-template-columns: 40px 160px minmax(0,1fr);gap:16px;padding:16px 0;border-top:1px solid #EBEBEB;align-items:baseline"><span style="font-size:12px;color:#717171">04</span><span style="font-size:15px;font-weight:600">Wireframes</span><span style="font-size:15px;line-height:1.55;color:#484848;text-wrap:pretty">Low-fi crew screens, critiqued with outside reviews.</span></div>
+      <div style="display:grid;grid-template-columns: 40px 160px minmax(0,1fr);gap:16px;padding:16px 0;border-top:1px solid #EBEBEB;align-items:baseline"><span style="font-size:12px;color:#717171">05</span><span style="font-size:15px;font-weight:600">Office web</span><span style="font-size:15px;line-height:1.55;color:#484848;text-wrap:pretty">Sean and Priya on one dashboard with a shared entry point, then each section refined against Mobbin.</span></div>
+      <div style="display:grid;grid-template-columns: 40px 160px minmax(0,1fr);gap:16px;padding:16px 0;border-top:1px solid #EBEBEB;align-items:baseline"><span style="font-size:12px;color:#717171">06</span><span style="font-size:15px;font-weight:600">Crew app</span><span style="font-size:15px;line-height:1.55;color:#484848;text-wrap:pretty">Ravi’s app rebuilt to match the office data: job #421, 17 photos, offline-first uploads, guided AI camera.</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column">
+      <h3 style="margin:0 0 12px;font-size:20px;font-weight:600;letter-spacing:-0.01em">Where I overruled the AI</h3>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1fr);gap:16px;padding:14px 0;border-top:1px solid #EBEBEB"><span style="font-size:12px;color:#A23B1E">#05</span><div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:15px;font-weight:600">Separated two kinds of “before” photo</span><span style="font-size:14px;line-height:1.5;color:#484848;text-wrap:pretty">The AI had merged inspection photos with day-of arrival photos. Arrival became its own required phase.</span></div></div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1fr);gap:16px;padding:14px 0;border-top:1px solid #EBEBEB"><span style="font-size:12px;color:#A23B1E">#35</span><div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:15px;font-weight:600">Removed check-in as a payroll feature</span><span style="font-size:14px;line-height:1.5;color:#484848;text-wrap:pretty">It went beyond the problem. Site check-in stayed only as evidence of time and place.</span></div></div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1fr);gap:16px;padding:14px 0;border-top:1px solid #EBEBEB"><span style="font-size:12px;color:#A23B1E">#70</span><div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:15px;font-weight:600">Rejected the first web layout</span><span style="font-size:14px;line-height:1.5;color:#484848;text-wrap:pretty">Asked for Mobbin references and a dark sidebar; the office UI was rebuilt from there.</span></div></div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1fr);gap:16px;padding:14px 0;border-top:1px solid #EBEBEB"><span style="font-size:12px;color:#A23B1E">#339</span><div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:15px;font-weight:600">Made the crew app match the office</span><span style="font-size:14px;line-height:1.5;color:#484848;text-wrap:pretty">Job, address, photo count and missing-photo rules differed between apps. One job now runs through all three.</span></div></div>
+    </div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:14px"><span style="font-size:11px;color:#717171">Deliverables</span><a href="Start.dc.html">Prototypes (Sean, Priya, Ravi)</a><a href="Ravi App No Signal.dc.html">Crew app</a><a href="Problem Statement.dc.html">Problem statement</a><a href="Journey Map.dc.html">Journey map</a><a href="User Flows.dc.html">User flows</a></div>
+</section>
+
+
+
+<section id="checklist" style="display:grid;grid-template-columns:minmax(0,720px);gap:16px">
+  <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 0 0 1px #EBEBEB,0 6px 20px rgba(0,0,0,0.06);padding:28px;display:flex;flex-direction:column;gap:16px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><h2 style="margin:0;font-size:26px;font-weight:600;letter-spacing:-0.02em">Project checklist</h2><div style="font-size:12px;color:#717171">14 / 23</div></div>
+    <div style="display:flex;flex-direction:column;gap:2px;font-size:14px;line-height:1.4">
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#2F6B4F">✓</span><span>Brief audit and scope</span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#2F6B4F">✓</span><span>Process log framework</span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#2F6B4F">✓</span><span>Desk research: job lifecycle and personas</span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#2F6B4F">✓</span><span>Journey map</span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#2F6B4F">✓</span><span>Problem statement</span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#2F6B4F">✓</span><span>User flows: crew, office, shared view</span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#2F6B4F">✓</span><span>Crew app screens and journey (from existing Zuper app)</span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#2F6B4F">✓</span><span>Crew app v2: standalone, from sign-in</span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#2F6B4F">✓</span><span>App screens: A1 Company, 3 options</span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#2F6B4F">✓</span><span>Wireframes 01: sign-in flow</span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#2F6B4F">✓</span><span>Wireframes 02: home (Today)</span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#2F6B4F">✓</span><span>Wireframes 03: job &amp; capture, phase check</span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#2F6B4F">✓</span><span>Wireframes 04: report issue, finish job, check-out</span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#2F6B4F">✓</span><span>Wireframes 05: office web + customer view</span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#A23B1E">!</span><span>Apply "two kinds of before photo" fix to journey map</span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#8C877D">○</span><span>Shot list template (by phase and area)</span><span></span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#8C877D">○</span><span>Low-fi wireframes</span><span></span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#8C877D">○</span><span>Hi-fi crew prototype</span><span></span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#8C877D">○</span><span>Hi-fi office or shared view</span><span></span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#8C877D">○</span><span>Edge states: offline, failed upload, wrong AI</span><span></span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#8C877D">○</span><span>Critique pass against criteria</span><span></span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid #F0F0F0"><span style="color:#8C877D">○</span><span>Write final process log summary</span><span></span></div>
+      <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:8px 0"><span style="color:#8C877D">○</span><span>Submission check: links, permissions</span><span></span></div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    
+    
+  </div>
+</section>
+
+<section id="decisions" style="display:flex;flex-direction:column;gap:16px">
+  <h2 style="margin:0;font-size:26px;font-weight:600;letter-spacing:-0.02em">Decisions so far</h2>
+  <div style="overflow-x:auto;background:#FFFFFF;border-radius:20px;box-shadow:0 0 0 1px #EBEBEB,0 6px 20px rgba(0,0,0,0.06)">
+    <div style="min-width:900px;display:flex;flex-direction:column">
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:11px;color:#717171;border-bottom:2px solid #1B1A17">
+        <div style="padding:14px 12px">ID</div><div style="padding:14px 12px">Decision</div><div style="padding:14px 12px">Alternative rejected</div><div style="padding:14px 12px">Why</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D1</div><div style="padding:14px 12px">Photos belong to the job, organized by phase and area</div><div style="padding:14px 12px;color:#484848">Generic photo gallery</div><div style="padding:14px 12px;color:#484848">Retrieval and completeness both need job context</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D2</div><div style="padding:14px 12px">AI suggests, a person confirms, and the record shows which</div><div style="padding:14px 12px;color:#484848">AI auto-labels and auto-completes requirements</div><div style="padding:14px 12px;color:#484848">Wrong damage labels create liability</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D3</div><div style="padding:14px 12px">Arrival condition set is its own required phase</div><div style="padding:14px 12px;color:#484848">Rely on PM's inspection photos as "before"</div><div style="padding:14px 12px;color:#484848">Inspection photos show roof damage, not gutters or siding on the day</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D4</div><div style="padding:14px 12px">One shared set of photo states across both apps; office sees photos only after upload is confirmed</div><div style="padding:14px 12px;color:#484848">Show "synced" as soon as the photo is visible in-app</div><div style="padding:14px 12px;color:#484848">Silent loss is Ravi's core problem</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45">
+        <div style="padding:14px 12px;color:#717171">D5</div><div style="padding:14px 12px">Out of scope: scheduling, invoicing, video, drones, AI damage verdicts, insurer integrations</div><div style="padding:14px 12px;color:#484848">Broader field-service app</div><div style="padding:14px 12px;color:#484848">2 days; judgment is scored on what's left out</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-top:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D6</div><div style="padding:14px 12px">Extend the existing Zuper job (new Photos tab, upload chip in top bar) instead of a separate photo app</div><div style="padding:14px 12px;color:#484848">Standalone capture app; photos kept as Notes attachments</div><div style="padding:14px 12px;color:#484848">Crew already opens the job daily; Notes attachments carry no phase, area or per-photo time</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-top:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D7</div><div style="padding:14px 12px">Phase checks open from the existing "Update status" action</div><div style="padding:14px 12px;color:#484848">Separate gate screen or timer-based prompts</div><div style="padding:14px 12px;color:#484848">Status change is the moment the crew declares a new phase</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-top:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D8</div><div style="padding:14px 12px">Standalone crew app with its own sign-in: company → email &amp; password</div><div style="padding:14px 12px;color:#484848">Extend the existing Zuper job (D6)</div><div style="padding:14px 12px;color:#484848">User's call in #10</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-top:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D9</div><div style="padding:14px 12px">Phase checks open from "Start tear-off" / "Start install" / "Finish job" on the Job screen</div><div style="padding:14px 12px;color:#484848">Zuper's "Update status" (D7)</div><div style="padding:14px 12px;color:#484848">Same moment, now owned by our app</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-top:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D10</div><div style="padding:14px 12px">Sign-in order: company name → email &amp; password (option 1a). Permissions asked at first camera open, not during sign-in. Sessions don't expire offline. No "getting ready" screen; offline copy saves in the background and status shows only when offline.</div><div style="padding:14px 12px;color:#484848">Company code (1b), email-first (1c); permissions screen A3</div><div style="padding:14px 12px;color:#484848">1a matches the brief; just-in-time permissions explain themselves; crew can't re-login on a roof</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-top:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D11</div><div style="padding:14px 12px">Today card shows progress in words; "taken" and "office has" always shown separately; offline round-trip is part of the main path</div><div style="padding:14px 12px;color:#484848">Unlabeled 4-segment phase bar; single "uploaded" count</div><div style="padding:14px 12px;color:#484848">Bar was ambiguous (work or photos?); offline is the core claim and needs to be shown</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-top:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D12</div><div style="padding:14px 12px">Tabs: Jobs · Uploads · Profile. Jobs shows Now, Tomorrow, Recent. No camera tab.</div><div style="padding:14px 12px;color:#484848">Today · Uploads · Profile; a free camera tab</div><div style="padding:14px 12px;color:#484848">Office asks for photos on past jobs; every photo must belong to a job</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-top:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D13</div><div style="padding:14px 12px">Site check-in/out ("I'm here" / "Finish job") stamped with time and location on the job record</div><div style="padding:14px 12px;color:#484848">Payroll clock-in and an hours dashboard (user suggestion)</div><div style="padding:14px 12px;color:#484848">Site times are evidence; payroll hours are outside the brief</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-top:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D14</div><div style="padding:14px 12px">Crew flow (11 steps): any capture order; Ravi records milestones (Setup, Tear-off, Opening up and About to cover per spot) that trigger warnings; labels Before · As found · Opened up · Fixed; AI checks quality and context; every gap shot or excepted; outcome per spot; check-out allowed with pending uploads; gap report syncs first; escalate to Sean 4 h after check-out</div><div style="padding:14px 12px;color:#484848">Fixed photo order during repair; AI decides category; check-out blocked until uploaded</div><div style="padding:14px 12px;color:#484848">Crew shoots as they work; short windows still protected; honest offline handoff</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-top:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D15</div><div style="padding:14px 12px">One lock-screen reminder from check-in to check-out: the most at-risk photo and why. Tap opens the right spot. Milestones stay in the app. Buzz only when a photo is at risk. Missed photo shows "Add a reason". Locked-camera access to validate later.</div><div style="padding:14px 12px;color:#484848">"Work Mode" to switch on; milestone buttons on the notification; timed reminders; camera without unlock as a core dependency</div><div style="padding:14px 12px;color:#484848">Phone stays in the pocket during repair; Android needs unlock to open the app</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-top:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D18</div><div style="padding:14px 12px">Sean flow kept simple: Flow A (alert → Job · Call Ravi → photo arrives) and Flow B (search → pick photo → share link). Three statuses: In office, On phone, Missing. Three screens; search is a bar.</div><div style="padding:14px 12px;color:#484848">Detailed version with 3 alerts, 7 states, Lost, escalation timers (Sean Flow Final)</div><div style="padding:14px 12px;color:#484848">Must match the Problem Statement; detail was going too deep</div>
+      </div>
+      <div style="display:grid;grid-template-columns:56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);font-size:13px;line-height:1.45;border-top:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">D19</div><div style="padding:14px 12px">One office web app for Sean and Priya. Sidebar: Today, Jobs, Claims. One Job page (photos in crew order + detail panel) serves live gaps, disputes and claims. Role sets the landing section and the primary action. Sidebar by role: Sean sees Today and Jobs; Priya sees Claims and Jobs; Sean gets a read-only claim status on the job (#253).</div><div style="padding:14px 12px;color:#484848">Separate Sean and Priya prototypes with their own photo and claim-set screens</div><div style="padding:14px 12px;color:#484848">User’s call: one source for both; same evidence records, no duplicated screens</div>
+    </div>
+  </div>
+</section>
+
+<section id="prompt-log" style="display:flex;flex-direction:column;gap:16px">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap">
+    <h2 style="margin:0;font-size:26px;font-weight:600;letter-spacing:-0.02em">Prompt log</h2>
+    <div style="font-size:12px;color:#717171">100 selected prompts, out of 466 · in order · tool: Claude unless noted</div>
+  </div>
+  <p style="margin:0;font-size:14px;line-height:1.55;color:#484848;max-width:760px">These are 100 prompts selected from the full log of 466: every time I overruled or discarded what the AI gave me, plus the first prompt of each phase. Numbers are the original log numbers, so gaps are expected. Each row is one prompt. Spelling in prompts is corrected; the wording is mine. Type says what I did with the AI's answer: <b>Steered</b> (redirected it), <b>Overruled</b> (rejected it), <b>Kept</b> (used as given), <b>Discarded</b> (dropped the work).</p>
+  <div style="overflow-x:auto;background:#FFFFFF;border-radius:20px;box-shadow:0 0 0 1px #EBEBEB,0 6px 20px rgba(0,0,0,0.06)">
+    <div style="min-width:1320px;display:flex;flex-direction:column">
+      <div style="position:sticky;top:0;z-index:1;background:#FFFFFF;display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:11px;color:#717171;border-bottom:2px solid #1B1A17">
+        <div style="padding:14px 12px">#</div><div style="padding:14px 12px">Phase</div><div style="padding:14px 12px">Prompt</div><div style="padding:14px 12px">AI output</div><div style="padding:14px 12px">Type</div><div style="padding:14px 12px">My judgment</div>
+      </div>
+      <div id="p1" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">01</div>
+        <div style="padding:14px 12px;color:#717171">Framing</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Do a deep audit on how to solve this first, let's not design it / Explain me what is it”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Reframed as chain-of-custody; 3 quotes mapped to capture, sync, proof failures; scope cuts; 2-day plan</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#1B1A17;color:#F5F3EE;border-radius:999px">STEERED</span></div>
+        <div style="padding:14px 12px;color:#484848">Chose analysis before design on purpose.</div>
+        
+      </div>
+            <div id="p3" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">03</div>
+        <div style="padding:14px 12px;color:#717171">Research</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“[Pasted master brief from another AI tool] + "let's first research about the the day to day lifecycle clearly about each persona … so we can state the journey map”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Desk research with sources: job phases, crew day, PM day, adjuster photo expectations; 7 ideation seeds</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#1B1A17;color:#F5F3EE;border-radius:999px">STEERED</span></div>
+        <div style="padding:14px 12px;color:#484848">Used a second AI to write the master brief, then brought it here as context. Tool: fill in.</div>
+        
+      </div>
+            <div id="p5" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">05</div>
+        <div style="padding:14px 12px;color:#717171">Research</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Inspects roof photographs damage writes estimate so the pm has the before pic right- then why in the persona says its on someone else phone?”</div>
+        
+        <div style="padding:14px 12px;color:#484848">AI had merged two different "before" photos. Separated: inspection photos (roof damage, weeks earlier) vs day-of condition photos (gutters, siding) taken by crew.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">I spotted the PM already holds "before" photos, which broke the persona logic.</div>
+        
+      </div>
+                        <div id="p9" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">09</div>
+        <div style="padding:14px 12px;color:#717171">Flows</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Ok now let's focus on the mobile app user flow noe in a separate page- let's define the screens / Also let me share some screenshot of existing super app- these are old screenshots of Zuper app. Let's have this for understandings. Create a new page for user app flow let's define the screens and map the journey" + 5 screenshots”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Audit of 5 screens (photos today = Notes attachments); proposal to extend the job with a Photos tab and tie checks to Update status; 10 screens M1–M10; day mapped to screens</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#1B1A17;color:#F5F3EE;border-radius:999px">STEERED</span></div>
+        <div style="padding:14px 12px;color:#8C877D">—</div>
+        
+      </div>
+      <div id="p10" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">10</div>
+        <div style="padding:14px 12px;color:#717171">Flows</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Let's forget about the Zuper app- let's work on our version- from the start I mean login- let's ask for the company name→ then mail and password→ the the homepage and others can occur as an app.let's do this”</div>
+        
+        <div style="padding:14px 12px;color:#484848">v2 flow: A1 Company → A2 Email &amp; password → A3 Permissions → Today, Job loop, phase checkpoints, Uploads/Profile tabs; sign-out blocked while photos are on device</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#ECEAE4;color:#717171;border-radius:999px">DISCARDED</span></div>
+        <div style="padding:14px 12px;color:#484848">Dropped the extend-Zuper direction from #09; chose our own version.</div>
+        
+      </div>
+      <div id="p11" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">11</div>
+        <div style="padding:14px 12px;color:#717171">Critique</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“[Pasted critique of Crew App Flow v2: 5 points + smaller points, source: fill in] + "audit this”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Agreed with most points; pushed back on 2: save at the shutter (not after review); a waiver can't block the phase change while offline</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#1B1A17;color:#F5F3EE;border-radius:999px">STEERED</span></div>
+        <div style="padding:14px 12px;color:#8C877D">—</div>
+        
+      </div>
+            <div id="p13" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">13</div>
+        <div style="padding:14px 12px;color:#717171">Wireframes</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Let's not do screens let's do wirefrmaes I mean in the same theme this is fine for now. Map the flows horizontally like login etc. First let's figure out the login part”</div>
+        
+        <div style="padding:14px 12px;color:#484848">6 rows: first sign-in L1→L2→L3→L4→Today; company not found; no signal; wrong details / wrong company; forgot password; coming back. Permissions moved to first camera open.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#1B1A17;color:#F5F3EE;border-radius:999px">STEERED</span></div>
+        <div style="padding:14px 12px;color:#484848">Chose wireframes over hi-fi screens at this stage.</div>
+        
+      </div>
+      <div id="p14" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">14</div>
+        <div style="padding:14px 12px;color:#717171">Wireframes</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“After entering the company name let's not show the name at the top just have back and why do we have ready for offline?”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Company chip replaced with Back on L3, L3a, L3b. Explained L4's purpose; proposed moving the download to the background with a status on Today.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Removed the company name from the sign-in header; challenged whether the offline-ready screen is needed.</div>
+        
+      </div>
+                  <div id="p17" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">17</div>
+        <div style="padding:14px 12px;color:#717171">Wireframes</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Should we show the progress bar here" + [pasted critique: missing offline scenario, fix state logic, source: fill in]”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Removed the unlabeled bar (words instead). Split "taken" from "office has". New Home row 2: offline → Uploads waiting → uploading → "Office has all 8". No badge while online.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Questioned the progress bar; brought in critique that offline must be in the main story.</div>
+        
+      </div>
+                        <div id="p21" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">21</div>
+        <div style="padding:14px 12px;color:#717171">Wireframes</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“These are now in right direction- just have the checkin as well- and also make sure all the cards have right info" + screenshot”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Added K1 check-in sheet (time, location match, crew on site). Fixed AI data errors: two overlapping jobs for one crew, same address on two jobs, past day showing "Not on site yet" status, job-count tile duplicating "Jobs (n)", missing customer on past card.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Direction approved; asked for check-in and correct info on every card.</div>
+        
+      </div>
+                  <div id="p24" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">24</div>
+        <div style="padding:14px 12px;color:#717171">Wireframes</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Ok next flows”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Section 05: Needs you inbox → job evidence (by phase/shot, before/after) → proof pack (AI-drafted summary) → share → customer link. Issue approval, waiver approval. Edge: photos not received yet, pack history. AI draft claimed "no damage caused by crew"; removed, since photos show timing, not cause.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#8C877D">—</div>
+        
+      </div>
+      <div id="p25" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">25</div>
+        <div style="padding:14px 12px;color:#717171">Wireframes</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Please audit" + pasted external AI audit of the wireframes (P0/P1 changes, screen-by-screen)”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Accepted most items (state labels, issue lifecycle + ref ID, audit trail, legend, state diagram). Rejected two P0s: hard-block next phase offline, and block checkout on pending uploads. Both would strand a crew with no signal.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Brought in an outside AI review and asked for an audit.</div>
+        
+      </div>
+                        <div id="p29" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">29</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Ok now let's move on to the app final designs / Make a new page and let's start with the screens one by one start with the login. Before that refer Mobbin on which app theme will suit as this is mainly for the roof builders etc the pp can have nice typography big buttons etc”</div>
+        
+        <div style="padding:14px 12px;color:#484848">New page App Design: three themes on L1 (1a Daylight, 1b Ink, 1c Work order), same fonts and palette. Mobbin not accessible (login), so used common field-app patterns instead.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#1B1A17;color:#F5F3EE;border-radius:999px">STEERED</span></div>
+        <div style="padding:14px 12px;color:#484848">Asked for big buttons and strong typography for roofers.</div>
+        
+      </div>
+                        <div id="p33" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">33</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Please fix this the bg and other doesn't have right contrast- refer Mobbin Airbnb and others how to make sure the right contrast is made so far each data should be shown neatly" + screenshot”</div>
+        
+        <div style="padding:14px 12px;color:#484848">AI's surfaces were 3 near-identical greys and muted text was ~4.4:1. Darker base #0F0E0D, cards with 1px borders, photo area lifted, muted text #A8A296 (6:1+), secondary #D3CDC2. Status pill and directions button switched to paper. Tomorrow line became a card. Applied to screens 01–03.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Flagged that the background and surfaces lacked contrast.</div>
+        
+      </div>
+            <div id="p35" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">35</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Contrast is not right can we change the color a. Please refer Mobbin of some neater pap reference add pics form Pexels or unsplash. Also add multiple job cards so it looks realistic also remove the checking feature not needed for this problem statement but we need the dashboard for the user. Total jobs etc please audit similar apps in Mobbin”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Rebuilt screen 03: Today dashboard (jobs, photos taken, not uploaded) + week line, active job card with Unsplash photo and phase progress, two compact job rows. Removed site check-in. New surface/text scale for contrast; primary #F2B94B.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Removed my check-in feature as outside the problem; asked for a user dashboard and multiple jobs.</div>
+        
+      </div>
+                  <div id="p38" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">38</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“This color is not neater. Also can we move from the curved edge to more professional theme and easier to understandable theme refer Mobbin”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Dropped the graphite band: neutral panel #181716 with a hairline rule, no curved edge. Radii cut across all screens (cards 12, fields/buttons/tiles 10, chips 6).</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Rejected the graphite band colour and the rounded, consumer-app shapes.</div>
+        
+      </div>
+                        <div id="p42" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">42</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Let's audit are the details everything required for the users is in this screen as this is the screen acts as a confirmation to the user to start arrival photos right. Make sure to. Make it simple and neater" + screenshot”</div>
+        
+        <div style="padding:14px 12px;color:#484848">AI's version missed job scope (where the leak is) and duplicated the customer. Added Scope + Access card, total "12 photos needed", "Works offline". Removed Job details label, status pill, phase subtitles, Customer & access header.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Framed the screen as a confirmation step; asked for simpler, neater.</div>
+        
+      </div>
+            <div id="p44" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">44</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Pasted external audit of Jobs + Job details (P0–P2)”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Fixed AI data error: tiles said 31/52, jobs add to 19/44. "Photos to upload" (count = photos, matches badge). Card CTA "Open job"; job start recorded by "Start job · arrival photos". Groups Upcoming / Completed today. Scope split into task + location; counts 0 / n; "Saved offline". Rejected: check-in state (removed in #35), shorter hero (already 88px).</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Brought in an outside review.</div>
+        
+      </div>
+                                    <div id="p50" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">50</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Pasted review of the camera screen (P0/P1 + metadata note)”</div>
+        
+        <div style="padding:14px 12px;color:#484848">AI had implied the stamp is burned into the file; changed to: original untouched, metadata stored alongside, visible stamp only as a derived copy. GPS accuracy shown only when reported. Save-then-confirm rule. Reference opens side-by-side. Four-step bar, flash state shown.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Brought in an outside review.</div>
+        
+      </div>
+      <div id="p51" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">51</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“I have a doubt0 how will app lay out these sections for arrival photos- for each job it may differ right" / "I feel the ref is not coming out well is there any good layout and we have next as well as the below CTA as a user please audit”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Explained: list = job-type template + shots from tagged estimate photos + PM edits, cached offline. Rebuilt 7a: one "Up next" card with large labelled reference, compact "Still to take" list, Next tag removed (duplicated the CTA).</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Said the reference didn't work and Next duplicated the button.</div>
+        
+      </div>
+            <div id="p53" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">53</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Without the reference photo- how can we make it possible or with reference photo we need to make it smaller not bigger and the UI should feel like entering or capturing more photos in a simpler manner”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Replaced the large "Up next" card with a 2×2 grid of empty photo slots (camera icon, name, tip). Reference shrunk to a 30px corner thumbnail. Single "0 / 4" count.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Rejected the big reference card; wanted capture to feel simple.</div>
+        
+      </div>
+            <div id="p55" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">55</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Can we have list view because this view can't have more then 4 or5 in a screen”</div>
+        
+        <div style="padding:14px 12px;color:#484848">2×2 grid replaced with a list: 68px rows, empty photo square that fills on capture, red edge on the next row. Fits 8–9 shots (re-roof Install has 9).</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Pointed out the grid can't hold more than 4–5 shots.</div>
+        
+      </div>
+                  <div id="p58" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">58</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“For the flash- have the icon also the front, noteht slope can the like this this is wrong feels like filters pls refer Mobbin for all the inputs I give" + screenshot”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Camera-mode text row replaced with a numbered slot tray that fills with photos (reads as progress). Flash got a bolt icon with A badge; zoom moved to the left control. Mobbin not accessible; used common checklist-camera patterns.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Said the shot row looked like filters; asked for a flash icon.</div>
+        
+      </div>
+                                                <div id="p66" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">66</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“The flow between taking pics, working and finish is quite not right the flow is missing here. What are the screens missing" / "yes do it”</div>
+        
+        <div style="padding:14px 12px;color:#484848">AI had jumped from arrival check to uploads/finish, skipping the work. Added section 09b: job in progress (home, steps done/now/later), repair photos grouped before/after the fix, report issue mid-repair, Sean's reply on the job + all steps checked → Finish job.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Spotted the missing middle of the job.</div>
+        
+      </div>
+      <div id="p67" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">67</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Please audit if the flow is finished now" + pasted external audit (P0 states, phase rules, closeout, checklist)”</div>
+        
+        <div style="padding:14px 12px;color:#484848">AI had used green for captured, AI-passed and uploaded alike. Now: captured = neutral check, AI = indigo, green only for server-confirmed uploads. "With the office" → "Uploaded". Finish done lists work complete / closed / uploaded / office review. Added Rules section: state table, phase-complete rule, issue ownership, closeout facts, 8-item handoff checklist.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Brought in an outside review.</div>
+        
+      </div>
+            <div id="p69" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">69</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“This doesn feel like a real screen please make it polished refer Mobbin web screen reference we have many design reference in Mobbin for web”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Rebuilt W1 in a modern SaaS shell: inset content panel on warm grey, icon nav with workspace group, breadcrumb, ⌘K search, bell, segmented Today/Week, filter tabs on Needs you, dot pills, avatar stacks, Crew sync and Latest uploads side cards.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Said W1 didn't feel like a real screen.</div>
+        
+      </div>
+      <div id="p70" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">70</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Noo this is not neat-- refer Mobbin have the left part in dark bg an make the right side more nicer and cleaner layout" + screenshot”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Sidebar dark (#141312) with crew sync moved into it. Main area: no boxed cards; inline metric strip with dividers, two open columns (Needs you, Today's jobs) separated by whitespace and hairlines. Dropped Latest uploads and the inset panel.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Rejected the boxed layout; asked for a dark sidebar.</div>
+        
+      </div>
+      <div id="p71" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">71</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Pasted review of W1 (P0 counts, Done vs evidence, sync labels) + "also the UI is not even neater m make it look professional access Mobbin web tan see the references”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Full-width bordered tables: Needs your decision (item, decision, waiting, action; sorted by age, blocking flagged) and Today's jobs (job, work, evidence with counts, crew). Labels: "of 21 captured today", "Awaiting upload", "Work done", "Last sync 9:12 · 3 awaiting upload". Numbers scoped by toggle; open items global.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Brought in an outside review; said the UI still wasn't professional.</div>
+        
+      </div>
+      <div id="p72" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">72</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“The layout is not coming ut right the colors. Did you refer Mobbin for web references?" / "hey we have a connector access right for Mobbin///?”</div>
+        
+        <div style="padding:14px 12px;color:#484848">AI had said Mobbin was inaccessible without checking for the connector; it was connected. Pulled web refs (Jobber, Rox, ClickUp). Rebuilt W1 on Jobber's home pattern: big date + greeting, "Needs your decision" as a to-do list with icon tiles and waiting chips, jobs card with a stat strip, right rail for awaiting-upload and retake.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Pointed out the Mobbin connector was available.</div>
+        
+      </div>
+                                                                  <div id="p83" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">83</div>
+        <div style="padding:14px 12px;color:#717171">Visual design</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Please audit is the info too much. " / "yes and also 2. Fix these before sign-off" + pasted external review (P0 metrics, work vs uploaded, queue priority; P1 sync, report states)”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Removed KPI strip, Recent reports, duplicate search, greeting. Numbers reconciled: 6 jobs listed, 21 captured = 16 uploaded + 5 on phones. Queue sorted by impact with reason tags. Crew sync per phone. Kept review's sync and queue fixes; rejected keeping KPI cards and reports table (duplicate the lists).</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Agreed info was too much; brought outside review to fix before sign-off.</div>
+        
+      </div>
+                  <div id="p86" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">86</div>
+        <div style="padding:14px 12px;color:#717171">Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Add nice interaction animation all over the interaction / On clicking the search and searching anything have the AI finding and analyse it refer Mobbin.”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Screen fade-in, hover lift on buttons, row hovers, toast slide-in. Search: real input, suggestions, Perplexity-style step list (spinner → ✓ with finding), shimmer placeholders, AI FOUND summary with proof checks, then results. Ref: Perplexity on Mobbin.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#1B1A17;color:#F5F3EE;border-radius:999px">STEERED</span></div>
+        <div style="padding:14px 12px;color:#484848">Asked for AI finding and analysis to be shown during search.</div>
+        
+      </div>
+      <div id="p87" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">87</div>
+        <div style="padding:14px 12px;color:#717171">Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Please review and make changes for customer dispute flow" + pasted external audit”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Internal finding + rationale required on Report; selection summary; AI split into facts / not established; office banner separated from Lena's view; delivery tracked (delivered → opened → replied); Lena gets a reply button; close step records customer response, defaults to Keep open, can escalate. Sending never closes.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Brought in an outside review of the dispute flow.</div>
+        
+      </div>
+                  <div id="p90" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">90</div>
+        <div style="padding:14px 12px;color:#717171">Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Still this is not coming gout nice the layout needs to be very nice" + screenshot”</div>
+        
+        <div style="padding:14px 12px;color:#484848">AI's numbered-card version overflowed (preview clipped left) and stacked boxes in boxes. Rebuilt: title row with Copy link + Send at top (Square), one-layer preview paper, AI note as a dashed annotation on the summary itself, plain right rail with dividers.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Rejected the layout as not nice enough.</div>
+        
+      </div>
+            <div id="p92" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">92</div>
+        <div style="padding:14px 12px;color:#717171">Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“How to close dispute it is not shown nicely and make the screen relevant and n nicer" + screenshot”</div>
+        
+        <div style="padding:14px 12px;color:#484848">AI had routed step 5 back to the job photo grid, with the outcome squeezed into a clipped side card. Added a dedicated Close dispute screen: timeline of what happened, evidence sent, outcome radios with what each does, note, one red button. Job screen keeps a small "Dispute still open" link.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Said the close step wasn't shown well or relevant.</div>
+        
+      </div>
+                  <div id="p95" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">95</div>
+        <div style="padding:14px 12px;color:#717171">Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Audit" + pasted external AI review: replace the 5-step bar with one dispute workspace”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Agreed: one dispute workspace with stages (Evidence → Report → Response), Lena's view as a preview, non-linear return. Disagreed: removing the walkthrough bar (reviewers need it; move it outside the app frame instead), adding Settings (filler), workspace for issue/waiver (single decisions, keep as pages).</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Brought in an outside review of the web structure and asked for an audit.</div>
+        
+      </div>
+            <div id="p97" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">97</div>
+        <div style="padding:14px 12px;color:#717171">Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Let's audit the current flow for customer dispute- think carefully is it right UX flow”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Shape is right (find → judge → share → track → close). Found: Lena's complaint never shown; AI pre-selects the evidence; finding buried inside the customer report; only the "not our fault" branch exists; outcome list mixes customer response with resolution; no no-reply end.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Asked to think carefully whether the dispute flow is right.</div>
+        
+      </div>
+            <div id="p99" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">99</div>
+        <div style="padding:14px 12px;color:#717171">Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“What does this mean si this making any see - w need to make it very simple flow for the users even the steppers are not that good how to make it look nicer and cleaner refer Mobbin check we have connector access as well / Also read the problem statement only let's show what is necessary in these steps" + screenshot of AI-draft note”</div>
+        
+        <div style="padding:14px 12px;color:#484848">AI had put its own process-log note ("AI wrote X, Sean removed it") inside the product. Removed. Mobbin: Meetup + Square segmented progress bars. Stepper → 3 thin bars (Pick photos · Send to Lena · Close dispute). Each step titled as a question. Hid Details, Activity, open-tracking, duplicate close card in the workspace.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">"what does this mean"; asked for a very simple flow showing only what's necessary.</div>
+        
+      </div>
+      <div id="p100" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">100</div>
+        <div style="padding:14px 12px;color:#717171">Office web</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“This is looking wrong see the hierarchy- check Mobbin web layouts how can we keep this clean and looking right" + screenshot”</div>
+        
+        <div style="padding:14px 12px;color:#484848">From Mobbin image pickers (Square, Base44): one title, a quiet step bar, a smaller question heading, AI note as a full-width line above the grid, denser photo grid, empty right column removed.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#1B1A17;color:#F5F3EE;border-radius:999px">STEERED</span></div>
+        <div style="padding:14px 12px;color:#484848">Said the hierarchy looked wrong; asked for Mobbin web layouts.</div>
+        
+      </div>
+            <div id="p102" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">102</div>
+        <div style="padding:14px 12px;color:#717171">Prototype v2</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Ok leave it. Let's build another version of the app now / Have all this in min for now for the app please analyse the task" + pasted external AI strategy (shoot-first capture, proof passport, two-tier sync)”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Kept: shoot-first capture with AI filing, wide + close-up pairing, house side from compass, hold-to-talk notes, previews-first sync, arrival damage flag. Rejected: green "Safe to leave" while uploads pending, confidence %, AI-drafted $ supplement, "atomic time"/crypto claims on the phone, peer-to-peer mesh.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Asked for a second app version informed by the pasted strategy.</div>
+        
+      </div>
+            <div id="p104" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">104</div>
+        <div style="padding:14px 12px;color:#717171">Prototype v2</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Ok here once the arrival images are clicked what happen next first ideate and also the hold to talk is also not coming out well" → "yes go with 1b also the photo taking for the 4 files in arrivals can e make it more easier and evident”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Proposed 3 options; user picked 1B: "Arrival complete" panel → Done for now → job screen with Repair as Next. Chips replaced by a photo tray (one tile per shot, NOW / ✓) and a "Point at" card on the viewfinder. Mic is a real press-and-hold with waveform, live transcript, Release to attach.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#1B1A17;color:#F5F3EE;border-radius:999px">STEERED</span></div>
+        <div style="padding:14px 12px;color:#484848">Picked 1B; said hold to talk wasn't working; asked for easier arrival capture.</div>
+        
+      </div>
+      <div id="p105" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">105</div>
+        <div style="padding:14px 12px;color:#717171">Prototype v3</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“For the crew prototype 2- let's go with diff approach te cards and details everything / Have all this in context for this new mobile app this can be in white theme only" + pasted strategy”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Crew Prototype v3 (v2 kept): light screens, camera stays dark. Job HR-4092, full re-roof with insurance claim: Pre-start (4 sides + gutters), Tear-off (decking, rotted decking, ice &amp; water, drip edge, valley), Final (slopes, ridge, gutters, driveway) = 14. Rotted decking triggers "too close for the insurer". Kept earlier rejections: no green before upload, no confidence %, no AI price.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#1B1A17;color:#F5F3EE;border-radius:999px">STEERED</span></div>
+        <div style="padding:14px 12px;color:#484848">Wanted a different approach, white theme only.</div>
+        
+      </div>
+            <div id="p107" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">107</div>
+        <div style="padding:14px 12px;color:#717171">Crew App v4</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Let's build the Mobile Crew App (Ravi's view) systematically, screen by screen… Screen 1 of 5: Job Proof Checklist &amp; Stage Gates" + ASCII wireframe screenshot”</div>
+        
+        <div style="padding:14px 12px;color:#484848">New file Crew App v4, screen 1. Fixed wireframe math: 10/12 + 83% didn't match stages 6+6+3=15, now 10/15. Green check for captured replaced with dark tick (green = uploaded only). "Locked on device / vault" copy → "saved on this phone".</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Set a 5-screen plan and gave a wireframe for screen 1.</div>
+        
+      </div>
+            <div id="p109" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">109</div>
+        <div style="padding:14px 12px;color:#717171">Crew App v4</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Theme: True Black Camera HUD… Walk-and-Talk Voice Tagging… 88px circular button" + ASCII wireframe”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Screen 2: black viewfinder, telemetry pill (address ±3 ft, 45° NE, 07:48), yellow-bordered voice card with transcript + AI suggested tag, Flash/Level pills, 88px shutter. Dropped Signal Green (green = office has it) and "cryptographic seal" wording: metadata is stored with the photo, file unedited.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Gave camera spec and wireframe.</div>
+        
+      </div>
+      <div id="p110" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">110</div>
+        <div style="padding:14px 12px;color:#717171">Crew App v4</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Screen 3 of 5: Edge AI Quality Guardrail ('Too Close' Coaching)…" + ASCII wireframe”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Amber banner (verbatim copy), dashed ghost frame, AI suggested pair (close-up saved + wide missing), Retake with Guide / Keep Anyway (Override). Changed "Shutter held – waiting for correction" to "Close-up saved": photo is saved at shutter, AI never holds it. Dropped pulse animation and "SQLite vault" from UI.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Gave screen 3 spec and wireframe.</div>
+        
+      </div>
+            <div id="p112" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">112</div>
+        <div style="padding:14px 12px;color:#717171">Crew App v4</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Screen 5 of 5: The 'Safe to Leave Site' Two-Tier Offline Sync Queue…" + ASCII wireframe”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Green Safe-to-leave banner, tier 1 synced (green), tier 2 originals 8/18 · 44% (amber), on-phone vault summary, Force full sync / Back to job list. Fixed contradiction: wireframe said OFFLINE while metadata synced 100%; pill now "1 bar · weak".</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Gave screen 5 spec and wireframe.</div>
+        
+      </div>
+                                    <div id="p118" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">118</div>
+        <div style="padding:14px 12px;color:#717171">Crew Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“This doesn't feel like a card so the user feels like clicking also see other nice apps as well. So it feels nicer and professional”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Rebuilt 01 from Fresha, Luma, Airbnb: grey ground, white rounded card with shadow, inset photo with time + distance pills, chevron, 2 fact tiles, directions + Check in inside the card. Tomorrow as grouped list card. Floating pill tab bar.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">First Airbnb version was flat; didn't read as clickable.</div>
+        
+      </div>
+                                                                                          <div id="p133" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">133</div>
+        <div style="padding:14px 12px;color:#717171">Crew Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Here how come the 2 of the arrival is already pre filled please tell me" → "yes do it”</div>
+        
+        <div style="padding:14px 12px;color:#484848">AI had set 03 at 7:42 with 2 photos done, right after the 7:31 check-in screen, so it read as pre-filled. Moved 03 to 7:32: 0 of 4, Front elevation next. Removed the wrong worker thumbnail.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Spotted that the flow jumped from check-in to 2 photos already captured.</div>
+        
+      </div>
+                  <div id="p136" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">136</div>
+        <div style="padding:14px 12px;color:#717171">Crew Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“3e is not looking right the section and something feels off”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Uneven wrapping chips replaced with a single-choice list card. Missing photo shown as a card at top; centred "Waiver request" title; extra "Sean decides" card and offline pill removed; rule moved above the button.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Said 03e looked off.</div>
+        
+      </div>
+                  <div id="p139" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">139</div>
+        <div style="padding:14px 12px;color:#717171">Crew Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“I think we need to think carefully we can't show the voice like thing please think holistically on how will these camera flows nicely.”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Voice notes removed from camera (moved to Report issue). New rhythm: 04a frame → 04b saved pill + next shot loaded → 04c All 6 sheet to switch → 04d phase done sheet → back to job. No per-photo review; AI only interrupts on a problem (05). Mic replaced by Extra photo.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Rejected the voice-note UI; asked for a holistic camera flow.</div>
+        
+      </div>
+                                          <div id="p146" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">146</div>
+        <div style="padding:14px 12px;color:#717171">Crew Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Please let's do carefully the 07a we need to make it look clean and nicer the bottom nav is also not correct refer the above designs”</div>
+        
+        <div style="padding:14px 12px;color:#484848">AI had invented a new pill tab bar. Replaced on 07a and 07b with 01's icon tab bar (Uploads active in red, amber badge). 07a: one big "10 of 13 in the office" card, On this phone list with real thumbnails and one status line each, Retry as a grey pill, In the office row with stacked thumbnails.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Said 07a looked messy and the nav didn't match earlier screens.</div>
+        
+      </div>
+            <div id="p148" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">148</div>
+        <div style="padding:14px 12px;color:#717171">Office Web</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Also audit this flow for the web. Let's audit and make the necessary flow changes for the web then let's do one by one first audit" + pasted W0–W5 spec (pipeline, triage, spatial hub, State Farm packet, proof link, closure)”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Adopt: one job (421 Oak St) end to end, ready-for-review signal, voice-note search, carrier template packet for Priya, file fingerprint. Reject: roof map from compass/GPS, AI-detected $450 supplement, "0% AI manipulation", raw GPS coords on customer link, OCR claim, pipeline kanban + billing/archive.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Asked to audit first, then change one screen at a time.</div>
+        
+      </div>
+            <div id="p150" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">150</div>
+        <div style="padding:14px 12px;color:#717171">Crew Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“The web UI design is not looking right can we make it look professional and clean. Remove the top browser header and minimize and close not needed”</div>
+        
+        <div style="padding:14px 12px;color:#484848">AI had reused phone styling (pills, big radii, grey canvas) on desktop. Rebuilt: no browser bar, light sidebar with border, top bar with search, 4-stat strip, bordered cards with table header for Needs your decision, small 6px-radius tags, 8px buttons.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Said the web UI didn't look professional; remove the browser header.</div>
+        
+      </div>
+                  <div id="p153" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">153</div>
+        <div style="padding:14px 12px;color:#717171">Crew Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Please make the flow right- in the first screen the search was on top in 2and it is in bottom.we need to make sure al the screens are made in right order and the UI UX is seamless”</div>
+        
+        <div style="padding:14px 12px;color:#484848">AI had added a second search box lower on W2. Now the top-bar search is the only one on every screen; on W2 it holds "gutter · in 421 Oak St". Lower row is results count + stage filters. Also swapped W2 stand-in photos for a residential gutter and fixed right-column overflow.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Search moved between screens; wants consistent order and seamless UX.</div>
+        
+      </div>
+      <div id="p154" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">154</div>
+        <div style="padding:14px 12px;color:#717171">Crew Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Still the hierarchy and the pills color is not co I g out well as a user what is right info make sure if it is there" + screenshot”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Three coloured pills removed; one red eyebrow "Customer claim · waiting 2 h". Title now states the claim. Added Sarah's email (the claim itself was missing). Photo time as the large number; proof as label/value rows. Red photo outlines and checks made neutral; stage chips became a segmented control; All photos card became a link.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Hierarchy and pill colours off; asked what info a user actually needs.</div>
+        
+      </div>
+      <div id="p155" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">155</div>
+        <div style="padding:14px 12px;color:#717171">Crew Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Is the "add 2 to report " a right CTA action please review also the all photos and the chips is it aligned properly please fix”</div>
+        
+        <div style="padding:14px 12px;color:#484848">"Add 2 to report" named a system step, not Sean's goal. Now "Send proof to Sarah" (opens a preview first). Filter row moved inside the photo column so chips end at the photo edge; "All 13 photos" became an inline "view all 13" link; right column aligned to the photos. Received lines shortened to stop wrapping.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Questioned the CTA and the chip alignment.</div>
+        
+      </div>
+            <div id="p157" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">157</div>
+        <div style="padding:14px 12px;color:#717171">Crew Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Also the preview how is it going to the customer through mail.then can we have the preview also like mail setup or something please audit na make it nicer”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Preview was a web page with no delivery shown. Now an email preview: From Sean, To Sarah, Subject; greeting + message, before/after inline, "View full photo report" button, signature, 30-day note. Email / Report page toggle. Right panel gains Subject; Summary renamed Message.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Asked how it reaches the customer; wants an email preview.</div>
+        
+      </div>
+                  <div id="p160" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">160</div>
+        <div style="padding:14px 12px;color:#717171">Crew Prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“I think we can skip 24- as this is not needed to show right please audit”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Agreed: W3's email preview already shows what Sarah gets, with both photos inline; W4 repeated it. Removed W4 and the Email / Report page toggle in W3. Brief needs one office or customer view; office covers it.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#ECEAE4;color:#717171;border-radius:999px">DISCARDED</span></div>
+        <div style="padding:14px 12px;color:#484848">Thinks W4 isn't needed.</div>
+        
+      </div>
+                                                                              <div id="p173" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">173</div>
+        <div style="padding:14px 12px;color:#717171">Web prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“This is not working out well- can we make it more clear and simpler so it serves purpose / Also can we bring the search below will it be good?" + screenshot”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Removed filter chips, column headers and group headers. One plain list in priority order; each row: title, job · detail, one urgency line (Blocks work / Waiting / Due), one button. Search field in the card header filters the list; top search stays global.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Said the grouped list wasn't working; wanted it clearer and simpler.</div>
+        
+      </div>
+                              <div id="p178" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">178</div>
+        <div style="padding:14px 12px;color:#717171">Web prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Check w3 in crew prototype. The screen is different take that and attach it here nicely it doesn't have steps but let's refine it so the flow ends”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Stepper removed. Breadcrumb flow: W3 Gutter claim → W4 Send proof (email preview + settings) → Close (outcome + reason) → inbox shows claim closed. After photo aligned to crew file: 15:40, Kim, received 16:18.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">The screen is different from W3; it doesn't have steps.</div>
+        
+      </div>
+                                          <div id="p185" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">185</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Also the s steps we have may not be suitable also right for the use case of work. What happens in that case. Also the after working steps can be more clear and also the main CTA us not coming out well it should be simple. Refer Mobbin. And also the next steps to be clear" + screenshot of a crash”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Crash fixed. "This step doesn't fit?" sheet: not needed (skip, Sean sees), found something extra (photo → extra work), doing another step first. New Step done screen with Up next card. CTA is a plain 60 px pill with short verb; Up next list on Working mode.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Steps may not suit the job; main CTA not coming out well, should be simple; next steps should be clear.</div>
+        
+      </div>
+      <div id="p186" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">186</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Still the steps we have after beginning work. Is it harder to define for all cases right how can we make it universal it should be simple it can't be overloading. Simple steps like vertical timeline view or something which all layman can understand”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Vertical timeline for every job: Checked in → Before work → Before you fix → Opened up → Fixed → Clean up → Check out. Job only changes the photos under each moment. Photos move the line; no "mark done" tap. One CTA: Take photo.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Steps are hard to define for all cases; should be universal, simple, not overloading, like a vertical timeline a layman understands.</div>
+        
+      </div>
+            <div id="p188" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">188</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Highlighting in red is feels like error and this sections are overloading how can we make it ceatwr refer Mobbin" + screenshot”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Current state is now black (filled dot, black pill), red only on the main button. No borders on spot cards; other spots collapse to one line. Next photo is a plain white row with a black camera icon; hint clamped to 2 lines; secondary links grey.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Red highlighting feels like an error; the sections are overloading.</div>
+        
+      </div>
+      <div id="p189" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">189</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Also should the user see the uploaded document delete or remove please audit and fix the steps for after booking still how can we make it one by one not all grouped its confusing”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Audit: crew can view, retake or mark as mistake; never delete (proof, Problem 03). Photo sheet with time, place, by, status, history. Timeline flattened: each spot moment is its own line with the spot name above.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Grouped steps are confusing; make them one by one.</div>
+        
+      </div>
+      <div id="p190" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">190</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“This also does feel like clicking or uploading how to make it simpler" + screenshot of arrival checklist”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Arrival moved onto the same timeline. Rows are photo slots: dashed empty square, black Take button on the next one, thumbnail + On phone / In office pill once taken. Main CTA becomes Start repair when all before photos are in.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Doesn't feel like clicking or uploading.</div>
+        
+      </div>
+      <div id="p191" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">191</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Can't take this one found another problem these should sit somewhere else and the whole cards and others should be neater and easier for users to see. The contrast is not there please fix the UX of this. And before start repairing as well" + screenshot”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Links moved to a "⋯" More sheet next to the main button (Can't take, Found a problem, Phone away, All photos). Timeline sits on grey; only the current moment is a white card. Duplicate Take pill removed; spot name shown once per spot; darker greys and rings.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Links should sit somewhere else; cards should be neater; contrast is not there.</div>
+        
+      </div>
+      <div id="p192" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">192</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Does this needed. After taking why can t we show the timeline please think the UX refer Mobbin.also the timeline showed all the steps. Should it be in phases and according only the current can opened please map the UX nicely. Also for the" + screenshot of "Arrival photos done”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Phase-done screen removed: back to timeline with a toast. Timeline = 5 phases (Before work, Repair, Clean up, Finish, After you leave); only one open; current opens itself; Repair holds spot moments as a small checklist.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Is this screen needed? Show the timeline after taking. Timeline should be phases and accordions, only current opened.</div>
+        
+      </div>
+                  <div id="p195" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">195</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Finish and checkout us not coming out right pls make the end user flow right also cross check with the problem statement”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Finish is now inside the timeline: checklist (photos taken / missing, waivers, AI-kept, 0 in office), Check out sheet (time, place, crew, photos). After you leave tracks uploads with a bar, locks sign-out until all are in, then all phases go green. Mapped to Problems 01–03.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Finish and checkout not coming out right.</div>
+        
+      </div>
+      <div id="p196" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">196</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“I think we need to fix the flow here- the repair has to be one by one right when doing repair in should not be able to shoot the images for cleanup. Please check the problem and make the flow right and simple”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Only the next photo in the current step is tappable. Later repair steps show "Unlocks after the step above"; Clean up shows "Unlocks when every repair step is done". Taken photos stay viewable; done phases can still catch up.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Repair must go one by one; cleanup must not be shootable during repair.</div>
+        
+      </div>
+      <div id="p197" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">197</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“The black fill icons are too much and noisy we need to figure out the way of hierarchy to be made and the affordance is not there still. Refer Mobbin for the right UX”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Step tiles replaced by 28px status circles (done = grey tick, current = red ring + dot, later = grey ring). Next photo is a raised white card with a dashed red slot and a red "Take" button; later rows are flat and grey.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Black fill icons too noisy; no hierarchy; affordance missing. Refer to Mobbin.</div>
+        
+      </div>
+      <div id="p198" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">198</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“The before you touch it - can we not show this here. As anyway this is shown on the camera app also we need to think carefully if the users will read this or not. Think in diff perspective in that working scenario what is the better solution or information to be shown”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Shot hints removed from timeline (they live in the camera). Current step shows "0 of 1 photo"; next photo row shows "Next photo · 1 of 1". Duplicate camera icon in the empty slot removed.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Hint text duplicates the camera; crew may not read it on the job.</div>
+        
+      </div>
+      <div id="p199" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">199</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“As a us r audit this. Is this understandable for the user. Please think and let's make the design simpler according will work or not or should it be si pelr rows to appear one by one. Like to show the relevant info alone and not to how the cleanup and others now”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Audit: 4 nesting levels, two camera buttons, locked rows looked tappable, Clean up/Finish competed. Now: only done + current phase shown, later phases as one "Then:" line; only the current spot's steps listed, other spots one line each; later steps have no chevron; bottom Take photo is the single CTA.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Show relevant info only; rows one by one; hide Clean up and the rest for now.</div>
+        
+      </div>
+      <div id="p200" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">200</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“While repairing why should we have before you fix and other stages are these causing the UX badly. Connect with the problem statement. The user should be freely clicking the images right can we have AI in place here like we can make the process easier for the user please think of a solution”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Repair = free capture. Camera stays open, any order; each shot gets an "AI filed · spot · stage" pill. Timeline shows each spot as Before / Opened / Fixed tiles that fill in; empty tiles are gaps, tap to shoot. One amber nudge only for closing windows ("Vent pipe leak is open. Shoot it before it is covered."). Old guided version kept as Crew App Working (guided repair).</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Forced stages hurt the UX; crew should shoot freely; use AI to make it easier.</div>
+        
+      </div>
+      <div id="p201" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">201</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Please check this screen- how to make it less cluttered and what is important for the user at this point. We can't show many info”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Removed "SHOT 1 OF 4" (dots already show it), the hint line and the orange Offline/time/GPS stamp (still saved with each photo; signal shown in status bar). Shot name is now one small pill. Shutter tip shows only before the first photo.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Too much info on the camera screen; cannot show many things.</div>
+        
+      </div>
+      <div id="p202" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">202</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Pls fix the alignment. It should not break”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Title and helper text now stack in one column (title 17px, helper 14px grey) with the chevron on the right, so the title no longer wraps word by word.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Alignment should not break.</div>
+        
+      </div>
+      <div id="p203" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">203</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“In the camera flow. It doesn't feel correct the each and every capture doesn't feel like the user is taking the right shot for the right heading. Or should the camera close and show the next option. Will it be right and simple UX. Also please audit where can we show the AI part. In which part the AI can come and analyse the result and make the user problem easier”</div>
+        
+        <div style="padding:14px 12px;color:#484848">After each save the viewfinder is replaced by a check-and-next screen: saved thumbnail + AI quality line, "Retake this one", then NEXT · 2 OF 4 with big name + hint and a "Take it" button (tap anywhere). Repair keeps free capture. AI audit: shot check (built), repair filing (built), gap check before leaving and office packet (suggested).</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Auto-advance makes shots feel detached from their heading.</div>
+        
+      </div>
+      <div id="p204" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">204</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“The problem I feel is : I take 6 pictures fastly but I am not able to understand which headings it is and should we show the heading clearly with steppers and camera app as well. How to make the UX right for t this view”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Camera (repair): top chip shows the spot name + stepper Before → Opened → Fixed; the stage the last photo was filed to is yellow, full stages get a tick. Timeline: finished Repair shows the same per-spot Before/Opened/Fixed thumbnail tiles instead of collapsed rows, so every photo is visible under its heading.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">After 6 fast photos, cannot tell which heading each belongs to; wants clear headings with steppers in camera too.</div>
+        
+      </div>
+      <div id="p205" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">205</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“The thing si the before, opened and other state in the repair. How much time gap is it that the UX issue we need to care about. Please do UX audit so we can come up with the right solution for this. Refer Mobbin for right UX reference”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Audit only, no build. Gaps in the job data are 12–25 min with hands busy, so the real risk is forgetting the Opened shot before it is covered, not shooting fast. Proposed: one live "Next photo" card (lock screen + home) that changes per stage, a reminder when a spot has been open a while, and AI filing kept as backup. Awaiting go-ahead.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Asked how long the gaps are and whether that is the UX issue to solve.</div>
+        
+      </div>
+      <div id="p206" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">206</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“We have Mobbin connector access”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Mobbin lock-screen live activities (Hevy, Transit, Instacart, sweetgreen, Zomato) confirm the pattern: one current item, a short stepper, one time cue. Proposed Live Activity card for repair: spot + Before/Opened/Fixed stepper + "Opened 9 min ago" + camera shortcut. Awaiting go-ahead.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Mobbin is available; use it for references.</div>
+        
+      </div>
+      <div id="p207" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">207</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Yes let's do it”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Live card on lock screen and top of Today's job during repair: spot name, time since last photo, Before / Opened up / Fixed bar stepper, one cue line and a camera button that opens on the right heading. Opened up with no photo for 10+ min turns the card amber ("Open 12 min"). Old amber timeline nudge removed.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Approved building the card.</div>
+        
+      </div>
+      <div id="p208" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">208</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“During photo clicking. Is the current flow fine. Please check. We need to make the photo click app nicer it should say what is next nicely. Also audit the stepper is it right UX.”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Audit (Mobbin: alias, Zocdoc, Doji): full-screen check-and-next screen added a tap per photo and hid the viewfinder; top dots were nameless; All duplicated the list. Now: no interstitial; heading pill flashes NEXT + name in place; labelled thumbnail strip above the shutter is the stepper (current = yellow ring, done = photo + tick, tap any to jump); repair strip shows the current spot's Before / Opened up / Fixed; dots and All button removed.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Is the capture flow fine? Make it say what is next nicely; audit the stepper.</div>
+        
+      </div>
+      <div id="p209" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">209</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Also in the camera app - on clicking each headings like before and etc. Can we have the screen to change or scroll so the interaction is nicer. Please audit the whole flow we need to make the user problem seamless”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Tapping a heading or auto-advance: strip scrolls to centre the current slot and lifts it, viewfinder cross-fades, heading pill drops in. Whole-flow audit given in chat; awaiting pick of next fixes.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Screen should change/scroll when tapping headings; make the whole flow seamless.</div>
+        
+      </div>
+                                                                                                                  <div id="p228" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">228</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Why there are 3 actions here.think of the user UX as well. Please audit this as a please level designer form now for all the prompts I give audit check the design visually compare and think please don't be careless update this in memory" (+ screenshot of S03)”</div>
+        
+        <div style="padding:14px 12px;color:#484848">S03: one main button with its reason, only the next milestone as a text link, banner removed (said the same as the button), rows grouped, › on every row, upload count fixed (5 → 1). Same fix on S06. Rule added to CLAUDE.md.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Three actions on one screen is too many. Audit every design visually, think about the user, don't be careless.</div>
+        
+      </div>
+            <div id="p230" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">230</div>
+        <div style="padding:14px 12px;color:#717171">Crew prototype</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Record and shoot what does this mean?" (+ screenshot of workspace)”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Milestone link rewritten in first person ("I'm starting tear-off", with "Tap first. The app checks nothing is missed."). "Shoot" replaced with "Take photo". Roof after and Clean up show "After the repair" until tear-off, since the screenshot showed Roof after done before tear-off.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Labels not understood.</div>
+        
+      </div>
+                                                                                                <div id="p246" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">246</div>
+        <div style="padding:14px 12px;color:#717171">Office web</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Wait let's do a simple flow we can dive too deep in solving things. We need simple flow that's it it should match the problem statement ;let's not complicate”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Simple flow: Flow A (alert → Job, Call Ravi → photo arrives) and Flow B (search → pick photo → share link). 3 statuses (In office, On phone, Missing), 3 screens, search as a bar.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Too deep; keep it simple and matched to the Problem Statement</div>
+        
+      </div>
+                                    <div id="p252" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">252</div>
+        <div style="padding:14px 12px;color:#717171">Prototypes</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Not like this have a common entry point- like Sean flow, Priya flow, app flow. Once clicking we can show their prototype so all I one page”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Prototypes hub: landing with Ravi / Sean / Priya cards and tabs; each opens its prototype in the same page (Crew App v3, Office Prototype v2 filtered to flows A+B or C).</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Common entry point: Sean flow, Priya flow, app flow, all in one page</div>
+        
+      </div>
+                                                                        <div id="p264" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">264</div>
+        <div style="padding:14px 12px;color:#717171">Office web</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“I think what we should do is. The customer saying gutter damaged should be the main flow. The opened up photo not taken these can be a separate section alerting the user which is Sean. Let's think of the home dashboard to show thing in a better way let's not have two diff flows (+ screenshot of Home with alert toast)”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Home rebuilt: main column “Customers asking for proof” (Lena’s call, AI-found gutter seam set, primary “Check and share with Lena”), then Shared with customers. Right: “Alerts from site” (photo at risk with outlined Call Ravi, AI label to confirm), On site now. Removed alert toast and Photos today donut; removed the Lena button from the prototype strip. Old version kept as Sean Web v1.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Customer gutter dispute is the main flow; open-up gap is a separate alert section; no two flows</div>
+        
+      </div>
+      <div id="p265" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">265</div>
+        <div style="padding:14px 12px;color:#717171">Office web</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“This can't be the dashboard right. Think realistically if there are 10 or 20 customer request how will the dashboard show- please refer Mobbin how how and what should the dashboard even show. (+ screenshot of Home)”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Replaced the single Lena card with a request queue (support-inbox pattern): tabs Waiting for photos 7 / Sent, not confirmed 2 / Done this week 3; compact rows with customer, what they said, AI photo match chip (found / stage missing / no match), job, waiting time; longest waiting first; 5 shown, Show all. Rows open search with the AI match selected. Header: “7 customers waiting · oldest 2 days”. Mobbin not reachable; used common inbox/queue patterns.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">One big card can’t be the dashboard; design for 10–20 requests</div>
+        
+      </div>
+      <div id="p266" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">266</div>
+        <div style="padding:14px 12px;color:#717171">Office web</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“See this. These are reference. We need to make section cleaner and neater not overloaded all in one section hence this is home. Sean should be able to see overall what is happening nt everything (+ 2 reference screenshots)”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Home rebuilt to the reference layout: Needs action · 9 (top 4, most urgent first, one row type with icon, chip and one button; only the top row’s button is filled; View all +5), Crew sync (Ravi, Marco, Dana: last sync, photos on phone), Today’s jobs · 3 (26 of 30 in office, per-job bar). Removed request tabs and Alerts column. Lena moved to longest waiting so she is visible.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Home is an overview of what’s happening, not everything; cleaner sections</div>
+        
+      </div>
+                                                                                                                                                                                    <div id="p296" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">296</div>
+        <div style="padding:14px 12px;color:#717171">Office web</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Ps rethink this layout for Sean and the job details.it should be simple and neater and easier for him to understand and proceed with the flow have the user requested gutter damage also in mind (+ screenshot)”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Job page rebuilt: header band (job, crew, “9 of 17 in office”); one full-width “why you’re here” card with the single action (Photo at risk → Call Ravi; Customer request → Share with Lena); Repair spots table (Spot · Before · Opened up · Fixed) with labelled empty tiles; Site photos as compact thumbnail rows. Removed crew milestones strip and side panel; photos open in a viewer (taken, in office, location, label; ✦ Confirm label; Share with Lena). Lena’s Needs action row now opens job #388 with spot A marked “✦ Matches Lena’s request”.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Job page too complex; keep the gutter dispute in mind</div>
+        
+      </div>
+                                                      <div id="p305" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">305</div>
+        <div style="padding:14px 12px;color:#717171">Office web</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Not like this- there should be a button to draft reply. Only on clicking it AI should draft. Have the same flow as Priya I draft. Also make the side bar also to be have more wider”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Panel 460 → 600 px. Opens with “✦ What Lena needs” + Draft reply for me / Write it myself. Drafting: glowing card, ticked steps, typed text, photos attached. Done: collapsed steps line, Shorter / More formal / Try again. Send disabled until there is a message.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">AI must not auto-draft; same pattern as Priya; wider panel</div>
+        
+      </div>
+                                                            <div id="p315" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">315</div>
+        <div style="padding:14px 12px;color:#717171">Office web</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“But there is one thing- Ravi says there is not signal right then does this message feature help?”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Audit: with no signal, neither message nor call arrives. The reminder on Ravi's phone (works offline) is the real safeguard; Sean's message is a backup that lands when the phone reconnects. Proposed: honest "Waiting for Ravi's phone" status instead of "Delivered".</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Questioned whether messaging helps if Ravi has no signal</div>
+        
+      </div>
+                                                                                                <div id="p331" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">331</div>
+        <div style="padding:14px 12px;color:#717171">Office web</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Why are we showing not sent? Is it even needed?”</div>
+        
+        <div style="padding:14px 12px;color:#484848">It was a scripted demo that failed every first send. Removed; Send link now sends on first click. Failure copy remains only for a real error.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Questioned whether "Not sent" is needed</div>
+        
+      </div>
+                                                                  <div id="p342" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">342</div>
+        <div style="padding:14px 12px;color:#717171">Crew app</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“What is your problem? Check the Sean and Priya web app we did see the primary color and color scheme why are you making mistakes”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Read Sean Web source: Manrope, primary = red gradient #CF4433→#B8341F, ink #16150F, greys #6B6860/#4A4842, borders #E4E6EA, bg #F5F6F8. Ravi App switched from Instrument Sans + black CTA to Manrope + the same red-gradient Check in; greys/borders aligned.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Use the primary color and scheme from Sean and Priya’s web app</div>
+        
+      </div>
+                                                            <div id="p352" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">352</div>
+        <div style="padding:14px 12px;color:#717171">Crew app</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“This is wrong have the previous card but change the styles we can't have the images for the job these are wrong”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Restored previous card content (no job photo, no icon rows); kept soft shadow, pill buttons, amber note. Removed thumbnails from Later rows.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Job images are wrong; keep previous card, change only styles</div>
+        
+      </div>
+                                                <div id="p360" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">360</div>
+        <div style="padding:14px 12px;color:#717171">Crew app</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Also I think checkin can't come here it should come in job details only I feel Ravi can't clicking directly checkin here without seeing details. Please use your brain”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Home card is now a tappable row (time, address, job · customer, chevron). New Job details screen: back, title, The job (distance, site note + gate code, crew), Photos to take (11 site + 3 + 3 = 17), sticky Directions + Check in. Bottom nav hidden on details.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Ravi must see details before checking in</div>
+        
+      </div>
+                        <div id="p364" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">364</div>
+        <div style="padding:14px 12px;color:#717171">Crew app</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“It looks ugly- refer some other apps reference in Mobbin please”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Referenced Fresha, Luma, Zocdoc, Superpower on Mobbin. Up next card: short photo band with title, date line + one meta line, two outline pills (Directions, View job); removed stat strip, avatars, black button. Smaller headings and compact Luma-style rows with clock line.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Looked ugly</div>
+        
+      </div>
+                                                                                                                                                                                                                                                                                                                                                                                                <div id="p428" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">428</div>
+        <div style="padding:14px 12px;color:#717171">Crew app</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Instead of rotating phone landscape we can have the same portrait view but make it 4:3 version. Even if they rotate the view won't change”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Removed the rotate prompt and sideways layout. Camera stays portrait; viewfinder is a fixed 4:3 landscape frame, AI card moved below the frame so it no longer covers the photo.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Rotating the phone is extra work; keep portrait UI with a 4:3 frame</div>
+        
+      </div>
+                  <div id="p431" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">431</div>
+        <div style="padding:14px 12px;color:#717171">Entry</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Why is this looking like AI slop. Refer Mobbin for nice landing pages references”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Dropped gradient text, shimmer pill, aurora, floating chips and emoji icons. Rebuilt like Quo/Cursor (Mobbin): plain ink headline, one black CTA, text link, Jump-to flow links, and a live preview of Sean’s Home with Ravi’s phone app on a warm stage.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Called the previous version AI slop; asked for Mobbin landing references</div>
+        
+      </div>
+      <div id="p432" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">432</div>
+        <div style="padding:14px 12px;color:#717171">Entry</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Not needed”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Removed the browser + phone preview stage under the hero; page is now hero only.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#ECEAE4;color:#717171;border-radius:999px">DISCARDED</span></div>
+        <div style="padding:14px 12px;color:#484848">Preview of Sean + Ravi screens not needed</div>
+        
+      </div>
+                                    <div id="p438" style="display:grid;grid-template-columns:52px 96px minmax(280px,1.5fr) minmax(240px,1.3fr) 112px minmax(200px,1fr);font-size:13px;line-height:1.5;border-bottom:1px solid #F0F0F0">
+        <div style="padding:14px 12px;color:#717171">438</div>
+        <div style="padding:14px 12px;color:#717171">Entry</div>
+        <div style="padding:14px 12px;color:#1B1A17;font-weight:500">“Not like a detail page we want like a hero page hence this is the cover page.”</div>
+        
+        <div style="padding:14px 12px;color:#484848">Replaced listing-style detail layout with a hero: wordmark + name bar, centred label, large title, pill View assignment + problem statement link, one wide rounded roof photo below.</div>
+        <div style="padding:14px 12px"><span style="font-size:12px;font-weight:600;padding:4px 10px;background:#F3E3DC;color:#7A2A14;border-radius:999px">OVERRULED</span></div>
+        <div style="padding:14px 12px;color:#484848">Cover should be a hero page, not a detail page</div>
+        
+      </div>
+                                                                                                    </div>
+  </div>
+</section>
+
+
+
+</div>
+</x-dc>
+</body>
+</html>
