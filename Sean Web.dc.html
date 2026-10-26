@@ -8,6 +8,7 @@
 <body>
 <x-dc>
 <helmet>
+<script src="mobile-gate.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=IBM+Plex+Mono:wght@500;600&amp;display=swap" rel="stylesheet">
 <style>body{margin:0;background:#ECEAE5;color:#16150F;font-family:'Manrope',sans-serif}a{color:#16150F}a:hover{color:#B8341F}button{font-family:'Manrope',sans-serif;cursor:pointer}@keyframes aiflow{0%{background-position:0% 50%}100%{background-position:200% 50%}}@keyframes aispin{to{transform:rotate(360deg)}}@keyframes aishim{0%{background-position:200% 0}100%{background-position:-200% 0}}</style>
@@ -255,8 +256,9 @@
           <div style="display:grid;grid-template-columns:minmax(120px,0.8fr) repeat(3,minmax(0,1fr));gap:14px;align-items:center;padding:14px 18px;border-bottom:{{ sp.line }};background:{{ sp.bg }}">
             <div style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-size:14px;font-weight:700">{{ sp.name }}</span><span style="font-size:12.5px;font-weight:{{ sp.stFw }};color:{{ sp.stCol }}">{{ sp.state }}</span></div>
             <sc-for list="{{ sp.cells }}" as="c" hint-placeholder-count="3">
-              <button onClick="{{ c.open }}" data-tile="{{ c.tid }}" style="padding:0;border:{{ c.bd }};border-radius:10px;background:{{ c.cardBg }};box-shadow:{{ c.ring }};overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:{{ c.cur }};min-width:0">
+              <button onClick="{{ c.open }}" data-tile="{{ c.tid }}" style="padding:0;border:{{ c.bd }};border-radius:10px;background:{{ c.cardBg }};box-shadow:{{ c.ring }};animation:{{ c.anim }};overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:{{ c.cur }};min-width:0;position:relative">
                       <span style="height:84px;background:{{ c.bg }};display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:{{ c.emptyCol }}">{{ c.empty }}</span>
+                      <sc-if value="{{ c.isNew }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:8px;left:8px;height:22px;padding:0 8px;border-radius:11px;background:#1F7A4A;color:#FFFFFF;font-size:11px;font-weight:700;display:flex;align-items:center;gap:5px;box-shadow:0 2px 6px rgba(16,15,12,0.25)"><span style="width:6px;height:6px;border-radius:50%;background:#FFFFFF"></span>{{ c.newTxt }}</span></sc-if>
                       <span style="padding:7px 10px 8px;font-size:12px;font-weight:600;color:{{ c.metaCol }};text-wrap:pretty">{{ c.meta }}</span>
                     </button>
             </sc-for>
@@ -294,12 +296,12 @@
             </div>
           </sc-for>
         </div>
-        <sc-if value="{{ jb.hasQuick }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-wrap:wrap;gap:6px;padding:8px 8px 0;border-top:1px solid #F0F1F4"><sc-for list="{{ jb.quick }}" as="qk" hint-placeholder-count="2"><button onClick="{{ qk.go }}" style="height:28px;padding:0 10px;border:none;border-radius:999px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #DEDBD4;font-family:'Manrope',sans-serif;font-size:12px;font-weight:600;color:#16150F;cursor:pointer" style-hover="background:#F5F6F8">{{ qk.t }}</button></sc-for></div></sc-if>
-          <div data-spot-target="ravi-msg" style="display:flex;align-items:flex-end;gap:6px;padding:8px;border-top:1px solid #F0F1F4">
-          <textarea value="{{ jb.draft }}" onChange="{{ jb.onDraft }}" placeholder="Message Ravi" rows="4" style="min-height:84px;flex:1;min-width:0;resize:none;border:none;outline:none;border-radius:8px;padding:7px 9px;background:#F5F6F8;font-family:'Manrope',sans-serif;font-size:12.5px;line-height:1.4;color:#16150F"></textarea>
-          <button onClick="{{ jb.send }}" title="Send to Ravi’s app" style="flex-shrink:0;width:30px;height:30px;border:none;border-radius:8px;background:{{ jb.sendBg }};box-shadow:{{ jb.sendRing }};color:{{ jb.sendFg }};display:flex;align-items:center;justify-content:center;cursor:{{ jb.sendCur }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+        <sc-if value="{{ jb.hasQuick }}" hint-placeholder-val="{{ false }}"><div data-spot-target="ravi-quick" style="display:flex;flex-direction:column;gap:8px;padding:12px 12px 0;border-top:1px solid #F0F1F4"><span style="font-size:11px;font-weight:700;letter-spacing:0.05em;color:#6B6860">QUICK REPLY · TAP TO SEND</span><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ jb.quick }}" as="qk" hint-placeholder-count="2"><button onClick="{{ qk.go }}" style="max-width:100%;min-height:32px;padding:6px 12px;border:none;border-radius:16px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #DEDBD4;font-family:'Manrope',sans-serif;font-size:12.5px;line-height:1.35;font-weight:600;color:#16150F;cursor:pointer;text-align:left;white-space:normal" style-hover="background:#F5F6F8;box-shadow:inset 0 0 0 1px #16150F">{{ qk.t }}</button></sc-for></div></div></sc-if>
+          <div data-spot-target="ravi-msg" style="display:flex;align-items:flex-end;gap:8px;padding:12px 12px 8px">
+          <textarea value="{{ jb.draft }}" onChange="{{ jb.onDraft }}" placeholder="Message Ravi" rows="3" style="min-height:72px;flex:1;min-width:0;resize:none;border:none;outline:none;border-radius:10px;padding:10px 12px;background:#F5F6F8;font-family:'Manrope',sans-serif;font-size:13px;line-height:1.4;color:#16150F"></textarea>
+          <button onClick="{{ jb.send }}" title="Send to Ravi’s app" style="flex-shrink:0;width:36px;height:36px;border:none;border-radius:10px;background:{{ jb.sendBg }};box-shadow:{{ jb.sendRing }};color:{{ jb.sendFg }};display:flex;align-items:center;justify-content:center;cursor:{{ jb.sendCur }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
         </div>
-          <span style="padding:0 10px 9px;font-size:11px;color:#6B6860">{{ jb.chan }}</span>
+          <span style="padding:0 12px 12px;font-size:11.5px;color:#6B6860">{{ jb.chan }}</span>
           
       </aside>
       </sc-if>
@@ -621,7 +623,7 @@ class Component extends DCLogic {
     return tg.or ? this.spotFind(tg.or) : null;
   }
   spotInit() {
-    if (!document.getElementById('spot-kf')) { const st = document.createElement('style'); st.id = 'spot-kf'; st.textContent = '@keyframes curTap{0%,55%,100%{transform:translate(0,0) scale(1)}70%{transform:translate(-2px,-2px) scale(.88)}}@keyframes curRip{0%,55%{transform:translate(-50%,-50%) scale(.2);opacity:0}65%{opacity:.55}100%{transform:translate(-50%,-50%) scale(1.6);opacity:0}}'; document.head.appendChild(st); }
+    if (!document.getElementById('spot-kf')) { const st = document.createElement('style'); st.id = 'spot-kf'; st.textContent = '@keyframes spotPulse{0%,100%{box-shadow:0 0 0 3px #2F9E62,0 0 0 6px rgba(47,158,98,0.22)}50%{box-shadow:0 0 0 3px #2F9E62,0 0 0 14px rgba(47,158,98,0)}}@keyframes curTap{0%,55%,100%{transform:translate(0,0) scale(1)}70%{transform:translate(-2px,-2px) scale(.88)}}@keyframes curRip{0%,55%{transform:translate(-50%,-50%) scale(.2);opacity:0}65%{opacity:.55}100%{transform:translate(-50%,-50%) scale(1.6);opacity:0}}'; document.head.appendChild(st); }
     const cur = document.createElement('div'); cur.setAttribute('data-spot', '1');
     cur.style.cssText = 'position:fixed;pointer-events:none;z-index:250;display:none;width:0;height:0;transition:top .7s cubic-bezier(.22,1,.36,1),left .7s cubic-bezier(.22,1,.36,1)';
     cur.innerHTML = '<span style="position:absolute;left:0;top:0;width:34px;height:34px;border-radius:50%;background:rgba(215,68,47,0.35);animation:curRip 1.6s ease-out infinite"></span><svg width="26" height="30" viewBox="0 0 26 30" style="position:absolute;left:-3px;top:-2px;filter:drop-shadow(0 3px 5px rgba(16,15,12,0.35));animation:curTap 1.6s ease-in-out infinite;transform-origin:3px 2px"><path d="M3 2 L3 23 L8.5 18 L12.5 27 L16.5 25.2 L12.6 16.5 L20 16.2 Z" fill="#16150F" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg>';
@@ -654,7 +656,7 @@ class Component extends DCLogic {
       { label: 'CLEAN UP', sub: 'before check-out', items: [{ id: 'c1', name: 'Gutters after', st: 'later' }, { id: 'c2', name: 'Ground below after', st: 'later' }, { id: 'c3', name: 'Debris cleared', st: 'later' }] }
     ];
   }
-  take(keep) { if (this.state.b2 !== 'missing') return; clearTimeout(this.t1); clearTimeout(this.t3); this.setState(x => ({ b2: 'phone', calling: false, nudge: 0, msgs: keep ? x.msgs : [], draft: keep ? x.draft : null, notif: null, sel: x.scr === 'job' ? 'B2' : x.sel })); this.t3 = setTimeout(() => this.setState(st => st.notif === 'taken' ? { notif: null } : null), 6000); this.t1 = setTimeout(() => this.setState({ b2: 'office' }), 2500); }
+  take(keep) { if (this.state.b2 !== 'missing') return; clearTimeout(this.t1); clearTimeout(this.t3); this.setState(x => ({ b2: 'phone', calling: false, nudge: 0, msgs: keep ? x.msgs : [], draft: keep ? x.draft : null, notif: null, sel: x.scr === 'job' ? 'B2' : x.sel })); this.t3 = setTimeout(() => this.setState(st => st.notif === 'taken' ? { notif: null } : null), 6000); this.t1 = setTimeout(() => { this.setState({ b2: 'office' }); this.scrollTo('B2'); clearTimeout(this.tHot); this.tHot = setTimeout(() => this.setState({ hot: false }), 9000); }, 2500); if (keep) { this.setState({ hot: true }); this.scrollTo('B2'); } }
   cover() { if (this.state.b2 !== 'missing') return; clearTimeout(this.t3); this.setState({ b2: 'reason', calling: false, nudge: 0, msgs: [], draft: null, notif: null, sel: this.state.scr === 'job' ? 'B2' : this.state.sel }); this.t3 = setTimeout(() => this.setState(st => st.notif === 'covered' ? { notif: null } : null), 6000); }
   renderVals() {
     const v = this._rv(), s = this.state;
@@ -670,10 +672,10 @@ class Component extends DCLogic {
       else if (v.isHome) g = [1, 'A customer complaint', 'Lena Marsh says the crew damaged her gutter on 3 Oct. Find #388 in Needs action and click View photos.'];
       else g = [1, 'Go to Home', 'Go back to Home and find #388 Lena Marsh in Needs action.'];
     } else if (tour === 'ravi') {
-      if (b2 === 'office') g = [4, 'Done', 'The photo is in the office. Nothing is missing on this job now.'];
-      else if (b2 === 'phone') g = [3, 'Ravi took the photo', 'It is sending from his phone. It shows here as soon as it arrives.'];
+      if (b2 === 'office') g = [4, 'Done', 'The Opened up photo of Spot B is in the office. It’s highlighted in green in the table. Nothing is missing on this job now.'];
+      else if (b2 === 'phone') g = [3, 'Ravi took the photo', 'Watch Spot B · Opened up in the table, highlighted in green. The photo appears there as soon as it arrives.'];
       else if (b2 === 'reason') g = [3, 'Ravi gave a reason', 'The spot was covered without a photo. His reason is saved on the job.'];
-      else if (v.isJob && s.jobId === '421') g = [2, 'Message Ravi', s.msgs && s.msgs.length ? 'Message sent. Wait a few seconds: Ravi replies and the photo arrives in the table.' : 'Spot B still needs a photo. Send Ravi a message on the right, or call him.'];
+      else if (v.isJob && s.jobId === '421') g = [2, 'Message Ravi', s.msgs && s.msgs.length ? 'Message sent. Wait a few seconds: Ravi replies and the photo arrives in the table.' : 'Spot B still needs a photo. Tap a quick reply on the right to message Ravi, or call him.'];
       else if (v.isHome) g = [1, 'A photo is missing', 'Ravi is on a roof and hasn’t taken a photo he needs. Click #421 in Needs action.'];
       else g = [1, 'Go to Home', 'Go back to Home and open #421 Ruth Okafor.'];
     } else if (tour === 'jobs') {
@@ -691,7 +693,7 @@ class Component extends DCLogic {
     const tours = TT.map(([k, l], i) => ({ l, n: String(i + 1), bg: k === tour ? 'rgba(255,255,255,0.1)' : 'transparent', fg: k === tour ? '#FFFFFF' : '#A19E96', fw: k === tour ? 700 : 500, go: () => this.setState({ tour: k, scr: 'home', sel: null, q: '', jobId: null, from: null, jv: null, shOpen: false }) }));
     const tot = { lena: 5, ravi: 4, jobs: 3, search: 3 }[tour];
     const hid = !!s.guideOff;
-    const TG = { lena: { 1: { t: 'View photos', row: '#388' }, 2: { has: 'Find matching photos' }, 3: { starts: 'Share' }, 4: { starts: 'Next: email', or: { any: ['Send link', 'Send reply', 'Send', 'Draft reply', 'Draft reply for me'] } } }, ravi: { 1: { t: 'Open job', row: '#421' }, 2: s.msgs && s.msgs.length ? null : { sel: 'ravi-msg' }, 3: { tile: 'B2' } }, jobs: { 1: { t: 'Jobs', nav: true } }, search: { 1: { ph: 'Ask about any job' } } };
+    const TG = { lena: { 1: { t: 'View photos', row: '#388' }, 2: { has: 'Find matching photos' }, 3: { starts: 'Share' }, 4: { starts: 'Next: email', or: { any: ['Send link', 'Send reply', 'Send', 'Draft reply', 'Draft reply for me'] } } }, ravi: { 1: { t: 'Open job', row: '#421' }, 2: s.msgs && s.msgs.length ? null : { sel: 'ravi-quick' }, 3: { tile: 'B2' } }, jobs: { 1: { t: 'Jobs', nav: true } }, search: { 1: { ph: 'Ask about any job' } } };
     this._tg = hid ? null : ((TG[tour] || {})[g[0]] || null);
     const N = s.shOpen ? ['Share photos and reply', 'Pick photos and reply to the customer.', 'The AI suggests photos. Sean decides which ones to send. The AI writes a reply only if he asks.']
       : v.isSearch ? ['Search results', 'Jobs and photos that match the search.', 'Best matches come first. Click one to open the job.']
@@ -807,9 +809,10 @@ class Component extends DCLogic {
       const live = s.jobId === '421'; const crewN = live ? 'Ravi' : ((PAST.find(j => j.id === s.jobId) || {}).crew || 'crew');
       const mk = (it, spot, date) => {
         const ph = it.st === 'office', pend = it.st === 'phone';
-        const base = { tid: it.id, cur: ph ? 'zoom-in' : 'default', open: ph ? () => this.setState({ jv: { ...it, spot, date } }) : () => {} };
+        const hot = it.id === 'B2' && s.hot && (it.st === 'phone' || it.st === 'office');
+        const base = { tid: it.id, isNew: hot, newTxt: it.st === 'office' ? 'Just arrived' : 'Sending…', anim: hot ? 'spotPulse 1.6s ease-in-out infinite' : 'none', cur: ph ? 'zoom-in' : 'default', open: ph ? () => this.setState({ jv: { ...it, spot, date } }) : () => {} };
         if (ph) { const noGps = it.loc == null, ai = it.id === 'A2' && !s.labelOk;
-          return { ...base, bd: 'none', cardBg: '#FFFFFF', bg: IMG(it.img), empty: '', emptyCol: '', meta: it.t + (noGps ? ' · No GPS' : ' · ' + it.loc + ' m') + (ai ? ' · ✦ check' : ''), metaCol: noGps ? '#B42318' : ai ? '#4338CA' : '#4A4842', ring: '0 0 0 1px #E4E6EA' }; }
+          return { ...base, bd: 'none', cardBg: '#FFFFFF', bg: IMG(it.img), ringHot: hot, empty: '', emptyCol: '', meta: it.t + (noGps ? ' · No GPS' : ' · ' + it.loc + ' m') + (ai ? ' · ✦ check' : ''), metaCol: noGps ? '#B42318' : ai ? '#4338CA' : '#4A4842', ring: '0 0 0 1px #E4E6EA' }; }
         const M = { phone: ['On ' + crewN + '’s phone', 'transparent', '#9A4A06', '1.5px dashed #E3A867', '#FFFAF3'], missing: ['Not taken', 'transparent', '#A3241A', '1.5px dashed #D9473A', '#FEF6F5'], reason: ['No photo', 'transparent', '#4A4842', '1.5px dashed #C9CDD3', '#FAFBFC'], live: ['Not taken', 'transparent', '#A3241A', '1.5px dashed #D9473A', '#FEF6F5'], later: ['Later', 'transparent', '#6B6860', '1.5px dashed #D5D8DE', '#FAFBFC'] }[it.st] || ['—', 'transparent', '#A19E96', '1.5px dashed #E4E6EA', '#FAFBFC'];
         return { ...base, bg: M[1], empty: M[0], emptyCol: M[2], ring: 'none', bd: M[3], cardBg: M[4], meta: pend ? 'Not received yet' : it.st === 'reason' ? 'Crew gave a reason' : it.st === 'later' ? 'Taken after the repair' : 'Needed before it’s covered', metaCol: M[2] };
       };

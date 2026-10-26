@@ -8,6 +8,7 @@
 <body>
 <x-dc>
 <helmet>
+<script src="mobile-gate.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;display=swap" rel="stylesheet">
 <style>@keyframes spBar{from{transform:scaleX(0)}to{transform:scaleX(1)}}@keyframes spGlow{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:.9;transform:scale(1.08)}}@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -10px}}@keyframes shimmer{to{background-position:-200% 0}}@keyframes aurora{from{transform:translateX(-30px)}to{transform:translateX(30px)}}@keyframes dash{to{stroke-dashoffset:-2.3}}@keyframes ping{0%{box-shadow:0 0 0 0 rgba(255,255,255,0.7)}100%{box-shadow:0 0 0 18px rgba(255,255,255,0)}}@keyframes fly{0%{left:56%;top:50%;transform:scale(1);opacity:0}10%{opacity:1}80%{opacity:1}100%{left:72%;top:19%;transform:scale(.4);opacity:0}}@keyframes travel{0%{left:0;opacity:0}8%{opacity:1}45%,55%{left:calc(50% - 7px)}92%{opacity:1}100%{left:calc(100% - 14px);opacity:0}}body{margin:0;background:#ECEAE5;color:#16150F;font-family:'Manrope',sans-serif}a{color:#16150F;text-decoration:none}a:hover{color:#B8341F}button{font-family:'Manrope',sans-serif;cursor:pointer}</style>
@@ -118,11 +119,11 @@ class Component extends DCLogic {
         { icon:'◎', bg:'#E2EDE6', fg:'#2F6B4F', where:'OFFICE WEB · SEAN', title:'Catch gaps, find proof', desc:'See what is missing before the crew leaves. Find a job’s photos when a customer calls.' },
         { icon:'✦', bg:'#ECE7FF', fg:'#5B3FD9', where:'OFFICE WEB · PRIYA', title:'Send to the adjuster', desc:'A dated, located photo set for each claim, with reasons for anything not taken.' }
       ], goIntro: go('intro'), showTabs: v !== 'intro', isHome: v === 'home', isSean: v === 'sean', isPriya: v === 'priya', isApp: v === 'app', isLog: v === 'log', goHome: go('home'),
-      tabs: [tab('sean', 'Sean flow'), tab('priya', 'Priya flow'), tab('app', 'App flow'), tab('log', 'Process log')],
+      tabs: [tab('app', 'App flow'), tab('sean', 'Sean flow'), tab('priya', 'Priya flow'), tab('log', 'Process log')],
       cards: [
+        { ini: 'RV', tint: '#FBEBC9', ink: '#7A4B00', title: 'App flow', who: 'Ravi · Crew lead', desc: 'Take the required photos while working on the roof, with reminders before a spot is covered.', where: 'Crew phone app', img: 'assets/flow-ravi.png', d: 'M8 2h8a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zM11 18h2', go: go('app') },
         { ini: 'SD', tint: '#E2EDE6', ink: '#2F6B4F', title: 'Sean flow', who: 'Sean Doyle · Project manager', desc: 'Catch photo gaps before the crew leaves. Find and share proof when a customer calls.', where: 'Office web', img: 'assets/flow-sean.png', d: 'M4 5h16v10H4zM2 19h20M9 9h6M9 12h4', go: go('sean') },
         { ini: 'PS', tint: '#ECE7FF', ink: '#5B3FD9', title: 'Priya flow', who: 'Priya Shah · Insurance claims', desc: 'Send a complete, dated photo set to the adjuster and answer their questions.', where: 'Office web', img: 'assets/flow-priya.png', d: 'M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6zM9 12l2 2 4-4', go: go('priya') },
-        { ini: 'RV', tint: '#FBEBC9', ink: '#7A4B00', title: 'App flow', who: 'Ravi · Crew lead', desc: 'Take the required photos while working on the roof, with reminders before a spot is covered.', where: 'Crew phone app', img: 'assets/flow-ravi.png', d: 'M8 2h8a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zM11 18h2', go: go('app') },
         { ini: 'PL', tint: '#EFEDE8', ink: '#16150F', title: 'Process log', who: 'Thageer Ashraf · How I used AI', desc: 'Every prompt, what the AI returned, and what I kept, changed or rejected.', where: 'Case study', img: '', d: 'M7 3h7l4 4v14H7zM14 3v4h4M10 12h5M10 16h5', go: go('log') }
       ]
     };
